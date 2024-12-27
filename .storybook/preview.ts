@@ -1,13 +1,14 @@
-/** @type { import('@storybook/react').Preview } */
+import type { Preview, ReactRenderer } from '@storybook/react'
+// /** @type { import('@storybook/react').Preview } */
 // .storybook/preview.js
 // import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import { withThemeByClassName } from '@storybook/addon-themes';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import { withThemeByClassName } from "@storybook/addon-themes";
 const basePath = location.pathname.split('/').slice(0, -1).join('/');
 const apiMockServiceWorkerUrl = `${basePath}/apiMockServiceWorker.js`;
 
 import React from 'react';
-import '../src/index.css';
+import '../src/globals.css';
 initialize({
   serviceWorker: {
     url: apiMockServiceWorkerUrl,
@@ -27,18 +28,14 @@ const preview = {
     },
   },
   loaders: [mswLoader], // 👈 Add the MSW loader to all stories
-  decorators: [ withThemeByClassName<Renderer>({
+  decorators: [withThemeByClassName({
         themes: {
           light: '',
           dark: 'dark',
           green: 'green',
         },
         defaultTheme: 'light',
-      }),
-  (Story) => (
-      <Story />
-  ),
-]
+      })]
 };
 
 export default preview;

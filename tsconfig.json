@@ -2,7 +2,12 @@
   "extends": "./config-typescript/react-library.json",
   "compilerOptions": {
     "lib": ["dom", "ES2015"],
-    "types": ["vitest", "node"]
+    "types": ["vitest", "node"],
+    "paths": {
+      "@/lib/utils": ["./src/utils"],
+      "@/components/*": ["./src/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+    }
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
