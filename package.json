@@ -1,0 +1,58 @@
+{
+  "name": "corex-react-components",
+  "author": "Cortex Reply",
+  "private": false,
+  "version": "0.0.0",
+  "description": "A library of React components with styles. Designed to seamlessly integrate with React and Next.js.",
+  "license": "MPL-2.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": "github:cortex-reply/react-components",
+  "sideEffects": false,
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig-build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsup --watch && tsc -p tsconfig-build.json -w",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "test": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^2.1.8",
+    "esbuild-plugin-rdi": "^0.0.0",
+    "esbuild-plugin-react18": "0.2.6",
+    "esbuild-plugin-react18-css": "^0.0.4",
+    "jsdom": "^25.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "semantic-release": "^24.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "r18gs": "^3.0.1"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.8",
+    "next": ">=10",
+    "react": ">=16.8"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  }
+}
