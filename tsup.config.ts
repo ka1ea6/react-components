@@ -13,6 +13,13 @@ export default defineConfig(
       clean: !options.watch,
       bundle: true,
       minify: !options.watch,
+      ignoreWatch: ['**/*.mdx'], // Ignore .mdx during watch
+      esbuildOptions(options) {
+        options.loader = {
+          ...options.loader,
+          '.mdx': 'text', // Treat .mdx files as plain text
+        };
+      },
       esbuildPlugins: [
         react18Plugin({ disableJSXRequireDedup: true }),
         cssPlugin({ generateScopedName: "[folder]__[local]" }),
