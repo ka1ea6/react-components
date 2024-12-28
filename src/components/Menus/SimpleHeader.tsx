@@ -22,7 +22,7 @@ interface SimpleHeaderProps {
 }
 const themes = ['light', 'dark', 'green']
 
-export default function SimpleHeader({ title, logo, menuItems }: SimpleHeaderProps) {
+export function SimpleHeader({ title, logo, menuItems }: SimpleHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [currentTheme, setCurrentTheme] = useState('light')

@@ -2,8 +2,6 @@
 
 Reusable components for use internally and externally.
 
-✅ Fully Treeshakable (import from `cortex-react-components/client/loader-container`)
-
 ✅ Fully TypeScript Supported
 
 ✅ Leverages the power of React 18 Server components
@@ -62,39 +60,10 @@ For selective imports:
 Using loaders is straightforward.
 
 ```tsx
-import { Bars1 } from "cortex-react-components/dist/server/bars/bars1";
+import { Bars1 } from "cortex-react-components";
 
 export default function MyComponent() {
   return someCondition ? <Bars1 /> : <>Something else...</>;
 }
 ```
 
-
-**Using LoaderContainer**
-
-`LoaderContainer` is a fullscreen component. You can add this component directly in your layout and then use `useLoader` hook to toggle its visibility.
-
-```tsx
-// layout.tsx
-<LoaderContainer />
-	 ...
-```
-
-```tsx
-// some other page or component
-import { useLoader } from "cortex-react-components/dist/hooks";
-
-export default MyComponent() {
-	const { setLoading } = useLoader();
-	useCallback(()=>{
-		setLoading(true);
-		...do some work
-		setLoading(false);
-	}, [])
-	...
-}
-```
-
-## License
-
-This library is licensed under the MPL-2.0 open-source license.
