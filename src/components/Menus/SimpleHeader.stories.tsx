@@ -1,7 +1,7 @@
 import React from 'react'
 import type { StoryObj, Meta } from '@storybook/react'
 
-import SimpleHeader from './SimpleHeader'
+import { SimpleHeader } from './SimpleHeader'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { DynamicIcon } from '../Images'
