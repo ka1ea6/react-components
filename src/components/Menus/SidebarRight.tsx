@@ -73,7 +73,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
 
 const GithubIcon = () => <DynamicIcon iconName={'github'} size="10x" />
 
-export default function SidebarRight({
+export function SidebarRight({
   relatedContent,
   tableOfContents,
   editorComponent,

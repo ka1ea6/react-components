@@ -29,7 +29,7 @@ import {
 import { DynamicIcon } from '../Images'
 
 import React from 'react'
-import SidebarLeft from './SidebarLeft'
+import { SidebarLeft } from './SidebarLeft'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { fn } from '@storybook/test'
 export default {

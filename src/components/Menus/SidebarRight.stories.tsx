@@ -1,5 +1,5 @@
 import React from 'react'
-import SidebarRight from './SidebarRight'
+import { SidebarRight } from './SidebarRight'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { fn } from '@storybook/test'
 

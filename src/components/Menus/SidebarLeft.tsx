@@ -76,7 +76,7 @@ interface SidebarLeftProps extends React.ComponentProps<typeof Sidebar> {
   LinkComponent?: React.ComponentType<React.ComponentProps<'a'>>
 }
 
-export default function SidebarLeft({
+export function SidebarLeft({
   mainNav,
   secondaryNav,
   title,
