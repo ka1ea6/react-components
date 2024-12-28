@@ -5,8 +5,11 @@
     "types": ["vitest", "node"],
     "paths": {
       "@/lib/utils": ["./src/utils"],
+      "@/lib/utils/*": ["./src/utils/*"],
       "@/components/*": ["./src/*"],
       "@/hooks/*": ["./src/hooks/*"],
+      "@/payload-types" : ["./src/payload-types"]
+
     }
   },
   "include": ["."],

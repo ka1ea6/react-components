@@ -11,7 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from './alert'
 const meta = {
   title: 'Base/Alert',
   component: Alert,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'server'],
   argTypes: {
     variant: {
       options: ['default', 'destructive'],

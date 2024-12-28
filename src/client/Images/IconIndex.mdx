@@ -1,0 +1,17 @@
+import DynamicIcon from './DynamicIcon';
+import { customIconList } from './customIconList';
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Style Guide/Custom Icon Index" />
+
+# Custom Icon Index
+
+      <div className="grid gap-6" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))' }}>
+    {customIconList.map((icon, index) => (
+          <div key={index} className="flex flex-col items-center mb-4 p-8" >
+
+  <DynamicIcon key={index} type="kit" iconName={icon} size="5x" />
+  <span className="mt-2 text-center">{icon}</span>
+</div>
+    ))}
+    </div>

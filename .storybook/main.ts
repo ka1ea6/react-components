@@ -49,8 +49,11 @@ const config = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@/components": path.resolve(__dirname, "../src/components"),
+      "@/lib/utils": path.resolve(__dirname,"../src/utils"),
+      "@/lib/utils/*": path.resolve(__dirname,"../src/utils/*"),
       "@/styles": path.resolve(__dirname, "../src/styles"),
-      "@/lib": path.resolve(__dirname, "../src/lib"),
+      "@/payload-types" :path.resolve(__dirname, "../src/payload-types"),
+
     };
     // Remove any existing rule handling SVG files
     config.module.rules = config.module.rules.filter(
