@@ -14,3 +14,4 @@ export * from "./Payload";
 export * from "./Images";
 export * from "./Blocks";
 export * from "./Menus";
+export * from "./Heros";
