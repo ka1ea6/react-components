@@ -68,7 +68,7 @@ export function EventCard({
         <div className="flex flex-col">
           <CardTitle className="text-xl">{title || 'Untitled Event'}</CardTitle>
           <p className="text-sm text-white/80">
-            <CalendarDays className="mr-1 inline-block h-4 w-4" />
+            {/* <CalendarDays className="mr-1 inline-block h-4 w-4" /> */}
             {date ? new Date(date).toLocaleDateString() : 'Date not specified'}
           </p>
         </div>
