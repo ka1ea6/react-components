@@ -78,6 +78,8 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "@payloadcms/richtext-lexical": "^3.11.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.3",

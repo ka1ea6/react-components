@@ -1,12 +1,12 @@
 import { Copy, Check } from 'lucide-react'
 import React, { useState } from 'react'
-import { Button } from '@/components/client/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/client/ui/tooltip'
+} from '@/components/ui/tooltip'
 
 const brandColors = [
   {

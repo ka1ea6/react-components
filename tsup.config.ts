@@ -15,6 +15,7 @@ export default defineConfig(
       clean: !options.watch,
       bundle: true,
       minify: !options.watch,
+      ignore: ['**/*.mdx', '**/*.stories.*'], // Ignore .mdx files and Storybook
       metafile: true,
       ignoreWatch: ['**/*.mdx'], // Ignore .mdx during watch
       esbuildOptions(options) {

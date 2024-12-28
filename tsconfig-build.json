@@ -9,7 +9,7 @@
     "paths": {
       "@/lib/utils": ["./src/utils"],
       "@/lib/utils/*": ["./src/utils/*"],
-      "@/components/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
       "@/hooks/*": ["./src/hooks/*"],
     "@/payload-types" : ["./src/payload-types"]
     }
