@@ -7,4 +7,4 @@
  * */
 
 // client component exports
-export * from "./loader-container";
+export * from "./ui";

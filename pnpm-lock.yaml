@@ -147,6 +147,9 @@ importers:
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.97.1(esbuild@0.24.2))
+      esbuild-plugin-preserve-directives:
+        specifier: ^0.0.11
+        version: 0.0.11(esbuild@0.24.2)
       esbuild-plugin-rdi:
         specifier: ^0.0.0
         version: 0.0.0
@@ -3904,6 +3907,12 @@ packages:
   es-object-atoms@1.0.0:
     resolution: {integrity: sha512-MZ4iQ6JwHOBQjahnjwaC1ZtIBH+2ohjamzAO3oaHcXYup7qxjF2fixyH+Q71voWHeOkI2q/TnJao/KfXYIZWbw==}
     engines: {node: '>= 0.4'}
+
+  esbuild-plugin-preserve-directives@0.0.11:
+    resolution: {integrity: sha512-OolFhx1h/1ADEEoPjVi0hYWru1pTZBHki7XozawYVkhRhO63mwZT6isLylbwPs7dJ72doVQJGHCT2I1l9z8DcA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      esbuild: ^0.21.0
 
   esbuild-plugin-rdi@0.0.0:
     resolution: {integrity: sha512-wlv4qWPN6SEbQ/nhZpCeTK9JW5aw+DH3SQEvDbhd4fjiOvdQIR3qgrCs4PWiGXoV//Ph9WjIKquB2cZOg5cIZg==}
@@ -10999,6 +11008,10 @@ snapshots:
   es-object-atoms@1.0.0:
     dependencies:
       es-errors: 1.3.0
+
+  esbuild-plugin-preserve-directives@0.0.11(esbuild@0.24.2):
+    dependencies:
+      esbuild: 0.24.2
 
   esbuild-plugin-rdi@0.0.0: {}
 

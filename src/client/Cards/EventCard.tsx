@@ -1,3 +1,5 @@
+"use strict";
+
 import * as React from 'react'
 import {
   Card,
@@ -7,7 +9,7 @@ import {
 } from '@/components/client/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/client/ui/avatar'
 import { Badge } from '@/components/client/ui/badge'
-// import { CalendarDays, Cake, Award, PartyPopper } from 'lucide-react'
+import { CalendarDays, Cake, Award, PartyPopper } from 'lucide-react'
 
 type EventType = 'birthday' | 'workAnniversary' | 'companyEvent' | 'other'
 
@@ -26,18 +28,18 @@ export function EventCard({
   description = '',
   avatarSrc,
 }: EventCardProps) {
-  // const getEventIcon = (eventType: EventType) => {
-  //   switch (eventType) {
-  //     case 'birthday':
-  //       return <Cake className="h-4 w-4" />
-  //     case 'workAnniversary':
-  //       return <Award className="h-4 w-4" />
-  //     case 'companyEvent':
-  //       return <PartyPopper className="h-4 w-4" />
-  //     default:
-  //       return <CalendarDays className="h-4 w-4" />
-  //   }
-  // }
+  const getEventIcon = (eventType: EventType) => {
+    switch (eventType) {
+      case 'birthday':
+        return <Cake className="h-4 w-4" />
+      case 'workAnniversary':
+        return <Award className="h-4 w-4" />
+      case 'companyEvent':
+        return <PartyPopper className="h-4 w-4" />
+      default:
+        return <CalendarDays className="h-4 w-4" />
+    }
+  }
 
   const getEventColor = (eventType: EventType) => {
     switch (eventType) {
@@ -68,7 +70,7 @@ export function EventCard({
         <div className="flex flex-col">
           <CardTitle className="text-xl">{title || 'Untitled Event'}</CardTitle>
           <p className="text-sm text-white/80">
-            {/* <CalendarDays className="mr-1 inline-block h-4 w-4" /> */}
+            <CalendarDays className="mr-1 inline-block h-4 w-4" />
             {date ? new Date(date).toLocaleDateString() : 'Date not specified'}
           </p>
         </div>
@@ -80,7 +82,7 @@ export function EventCard({
           className={`bg-gradient-to-br ${getEventColor(eventType)} text-white/80`}
         >
           {/* <Badge variant="secondary" className="bg-white text-gray-800 hover:bg-gray-100"> */}
-          {/* {getEventIcon(eventType)} */}
+          {getEventIcon(eventType)}
           <span className="ml-1">
             {eventType
               ? eventType
