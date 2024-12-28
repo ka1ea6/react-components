@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta, StoryFn } from '@storybook/react'
-import { FeatureCard } from 'cortex-design-system/components/Cards/FeatureCard'
-import FeatureGrid from 'cortex-design-system/components/Layouts/FeatureGrid'
+import { FeatureCard } from '@/components/client/Cards/FeatureCard'
+import FeatureGrid from '@/components/client/Layouts/FeatureGrid'
 
 export default {
   title: 'Layouts/FeatureGrid',
