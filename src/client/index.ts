@@ -8,3 +8,8 @@
 
 // client component exports
 export * from "./ui";
+export * from "./Cards";
+export * from "./Layouts";
+export * from "./Payload";
+export * from "./Images";
+export * from "./Blocks";

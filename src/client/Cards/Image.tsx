@@ -162,7 +162,7 @@ function ImageComponent({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export default function Image({ props, baseContext }: { props: any; baseContext: ContentItem }) {
+export function Image({ props, baseContext }: { props: any; baseContext: ContentItem }) {
   let { src } = props
 
   src = getAPIUrl(src, baseContext)
