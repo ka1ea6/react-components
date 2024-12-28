@@ -14,7 +14,7 @@ coverage
 
 # temporary files
 tsup.config.bundled*
-.pnpm-store/*
+.pnpm-store
 
 *storybook.log
 .idea

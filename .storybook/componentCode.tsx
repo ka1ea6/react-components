@@ -20,7 +20,9 @@ const extractComponentNames = (element: React.ReactNode): string[] => {
         componentNames.push(type.displayName || type.name || 'Unknown')
       }
 
-      React.Children.forEach(node.props.children, traverse)
+      if (node.props && typeof node.props === 'object' && 'children' in node.props) {
+        React.Children.forEach(node.props.children as React.ReactNode, traverse)
+      }
     }
   }
 
@@ -47,7 +49,7 @@ export const ComponentCode = ({ of }) => {
     }
     clientOrServer = resolvedOf.story.tags.includes('server') ? '/server' : '/client'
   }
-  const path = `import { ${componentNames.join(', ')} } from 'cortex-react-components/dist/components${clientOrServer}'`
+  const path = `import { ${componentNames.join(', ')} } from '@/components/components${clientOrServer}'`
 
   switch (resolvedOf.type) {
     case 'story': {
