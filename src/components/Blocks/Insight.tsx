@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import DynamicIcon, { type IconType } from '@/components/Images/DynamicIcon'
+import {DynamicIcon, type IconType } from '@/components/Images/DynamicIcon'
 
 type InsightProps = {
   icon: { type: string; name: string }

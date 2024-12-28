@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef } from 'react'
-import DynamicIcon, { type IconType } from '@/components//Images/DynamicIcon'
+import {DynamicIcon, type IconType } from '@/components/Images/DynamicIcon'
 import Image from 'next/image'
 
 type Apps = {
