@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
-    './src/client/**/*.{html,js,jsx,ts,tsx}',
+    './src/components/**/*.{html,js,jsx,ts,tsx}',
     './src/server/**/*.{html,js,jsx,ts,tsx}',
     './src/styles/**/*.{html,js,jsx,ts,tsx}',
   ],
