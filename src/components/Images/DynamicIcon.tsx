@@ -40,4 +40,4 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
   return <i className={icon} />
 }
 
-export default DynamicIcon
+export { DynamicIcon }

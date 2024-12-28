@@ -31,7 +31,7 @@ import IndexPage from './IndexPage'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
-import { DynamicIcon } from '@/components//Images'
+import { DynamicIcon } from '@/components/Images'
 import { StoryObj } from '@storybook/react';
 
 const GithubIcon = () => <DynamicIcon iconName="github" size="4x" type="brands" />

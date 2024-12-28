@@ -1,2 +1,2 @@
-import DynamicIcon from './DynamicIcon'
-export { DynamicIcon }
+export * from './DynamicIcon'
+
