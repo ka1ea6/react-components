@@ -1,37 +1,10 @@
 import React from 'react'
-import {
-  BadgeCheck,
-  Bell,
-  BookOpen,
-  Bot,
-  Check,
-  ChevronRight,
-  ChevronsUpDown,
-  Command,
-  CreditCard,
-  FilePlus,
-  Edit,
-  Printer,
-  Folder,
-  Frame,
-  LifeBuoy,
-  LogOut,
-  Map,
-  MoreHorizontal,
-  PieChart,
-  Send,
-  Settings2,
-  Share,
-  Plus,
-  Sparkles,
-  SquareTerminal,
-  Trash2,
-} from 'lucide-react'
-import Page from './Page'
+
+import Website from './Website'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
-import { DynamicIcon } from '@/components//Images'
+import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react';
 
 const GithubIcon = () => (
@@ -47,21 +20,21 @@ const ServiceIcon = () => <DynamicIcon iconName="cloud-network-sharing" size="4x
 const ProductIcon = () => <DynamicIcon iconName="development" size="4x" type="kit" />
 
 export default {
-  title: 'Pages/Page',
-  component: Page,
-  decorators: [
-    (Story: React.FC) => (
-      <div className="bg-sidebar">
-        <Story />
-      </div>
-    ),
-  ],
+  title: 'Pages/Website',
+  component: Website,
+  // decorators: [
+  //   (Story: React.FC) => (
+  //     <div>
+  //       <Story />
+  //     </div>
+  //   ),
+  // ],
 }
 
-const Template = (args: any) => <Page {...args} />
+const Template = (args: any) => <Website {...args} />
 
 
-type PageStory = StoryObj<typeof Page>;
+type PageStory = StoryObj<typeof Website>;
 
 export const Default: PageStory = {
   render: Template,
@@ -345,7 +318,7 @@ export const HighImpactHero = {
     ...Default.args,
     hero: {
       type: 'highImpact',
-      children: <h1 className="text-4xl font-bold">High Impact Hero</h1>,
+      children: <h1 className="text-4xl font-bold">Low Impact Hero</h1>,
     },
     heroBackgroundImage: 'stock1.jpg?height=400&width=800',
   },

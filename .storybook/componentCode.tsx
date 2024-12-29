@@ -47,9 +47,8 @@ export const ComponentCode = ({ of }) => {
       //   resolvedOf.story.originalStoryFn(resolvedOf.story, resolvedOf) as React.ReactNode,
       // )
     }
-    clientOrServer = resolvedOf.story.tags.includes('server') ? '/server' : '/client'
   }
-  const path = `import { ${componentNames.join(', ')} } from '@/components/components${clientOrServer}'`
+  const path = `import { ${componentNames.join(', ')} } from 'cortex-react-components'`
 
   switch (resolvedOf.type) {
     case 'story': {

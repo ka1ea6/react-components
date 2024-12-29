@@ -24,7 +24,8 @@
       "extensions": [
         "esbenp.prettier-vscode",
         "GitHub.copilot-labs",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   }

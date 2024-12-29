@@ -5,6 +5,7 @@ import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
 import logoLight from '../../images/cortex-reply-light.png'
 import logoDark from '../../images/cortex-reply-dark.png'
+import { Moon, Sun } from 'lucide-react'
 
 interface HeaderProps {
   isMenuOpen: boolean
@@ -12,7 +13,24 @@ interface HeaderProps {
 }
 
 export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled , setIsScrolled] = useState(false)
+    const [currentTheme, setCurrentTheme] = useState('light')
+    const themes = ['light', 'dark']
+
+  useEffect(() => {
+      // Load theme from local storage or set to default 'light'
+      const storedTheme = localStorage.getItem('theme') || 'light'
+      console.log('storedTheme', storedTheme)
+      setCurrentTheme(storedTheme)
+      document.documentElement.setAttribute('class', storedTheme)
+    }, [])
+  
+    const toggleTheme = () => {
+      const nextTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length]
+      setCurrentTheme(nextTheme)
+      document.documentElement.setAttribute('class', nextTheme)
+      localStorage.setItem('theme', nextTheme) // Save theme to local storage
+    }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,46 +60,59 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
       >
         <Container>
           <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
-            <div className="flex items-center justify-between bg-primary px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl">
+            <div className="flex items-center justify-between bg-accent px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl dark:border dark:border-accent">
               <BrandLogo logoDark={logoDark} logoLight={logoLight}/>
               <ul className="flex items-center justify-center flex-grow space-x-8 text-md">
                 <li>
                   <a href="/services" className="relative transition-colors group">
                     Services
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-primary transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
                   </a>
                 </li>
                 <li>
                   <a href="/insights" className="relative transition-colors group">
                     Insights
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-primary transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
                   </a>
                 </li>
                 <li>
                   <a href="/about" className="relative transition-colors group">
                     About Us
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-primary transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
                   </a>
                 </li>
                 <li>
                   <a href="/contact" className="relative transition-colors group">
                     Contact
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-primary transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
                   </a>
                 </li>
               </ul>
+              <div className='flex items-center space-x-4'>
+              <button
+                  className="fixed right-16 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-white dark:hover:text-accent"
+                  onClick={toggleTheme}
+                >
+                  <div className="relative">
+
+                    <Sun className="absolute h-6 w-6 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absoulte h-6 w-6 rotate-0 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
+                    {/* <X className="w-6 h-6 text-white" /> */}
+                  </div>
+                </button>
               {!isScrolled && setIsMenuOpen && (
                 <button
-                  className="fixed right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                  className="fixed right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-white dark:hover:text-accent"
                   onClick={toggleMenu}
                 >
                   {isMenuOpen ? (
-                    <X className="w-6 h-6 text-white" />
+                    <X className="w-6 h-6" />
                   ) : (
-                    <Menu className="w-6 h-6 text-white" />
+                    <Menu className="w-6 h-6 " />
                   )}
                 </button>
               )}
+              </div>
             </div>
           </nav>
         </Container>
