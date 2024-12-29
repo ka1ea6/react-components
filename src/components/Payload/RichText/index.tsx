@@ -40,4 +40,4 @@ const RichText: React.FC<Props> = ({
   )
 }
 
-export default RichText
+export { RichText }

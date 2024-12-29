@@ -4,7 +4,7 @@ import type { Page } from '@/payload-types'
 import Image from 'next/image'
 
 import { Media } from '@/components/Payload/Media'
-import RichText from '@/components/Payload/RichText'
+import { RichText } from '@/components/Payload/RichText'
 
 type MediumImpactHeroType =
   | {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BellIcon } from '@heroicons/react/24/outline'
-import { SimpleHeader } from '../Menus'
+import { SimpleHeader } from '../HeaderFooter'
 import { InfoTile } from '../Blocks/InfoTile'
 import { MOTD } from '../Blocks/MOTD'
 import { NewsGrid } from '../Layouts/NewsGrid'

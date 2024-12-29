@@ -2,7 +2,7 @@ import type { FeaturesBlock as FeaturesBlockProps } from '@/payload-types'
 
 import { cn } from '@/lib/utils/cn'
 import React from 'react'
-import RichText from '@/components/Payload/RichText'
+import { RichText } from '@/components/Payload/RichText'
 import type { Page } from '@/payload-types'
 
 // type Props = {
