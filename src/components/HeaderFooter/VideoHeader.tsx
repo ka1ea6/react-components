@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import logoBw from '../../../.storybook/public/cortex-reply-bw.png'
+
 // import styles from './video.module.css'
 import { HeaderDesktop } from './HeaderDesktop'
 

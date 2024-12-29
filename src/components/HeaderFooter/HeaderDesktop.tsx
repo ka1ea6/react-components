@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
+import logoLight from '../../../.storybook/public/cortex-reply-light.png'
+import logoDark from '../../../.storybook/public/cortex-reply-light.png'
 
 interface HeaderProps {
   isMenuOpen: boolean
@@ -41,7 +43,7 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         <Container>
           <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
             <div className="flex items-center justify-between bg-primary px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl">
-              <BrandLogo />
+              <BrandLogo logoDark={logoDark} logoLight={logoLight}/>
               <ul className="flex items-center justify-center flex-grow space-x-8 text-md">
                 <li>
                   <a href="/services" className="relative transition-colors group">
