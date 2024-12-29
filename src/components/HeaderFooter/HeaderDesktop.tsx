@@ -32,7 +32,7 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
   const toggleMenu = () => {
     setIsMenuOpen && setIsMenuOpen(!isMenuOpen)
   }
-
+  console.log('logo: ', logoLight)
   return (
     <>
       <header

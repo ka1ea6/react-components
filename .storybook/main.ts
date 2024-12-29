@@ -8,7 +8,7 @@ const config = {
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@chromatic-com/storybook',
+    // '@chromatic-com/storybook',
     '@storybook/addon-interactions',
     // This addon handles CSS framework integration
     '@storybook/addon-themes',
