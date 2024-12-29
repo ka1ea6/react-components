@@ -44,7 +44,7 @@ const config = {
     name: '@storybook/nextjs',
     options: {},
   },
-  staticDirs: ['./public', './msw'],
+  staticDirs: ['./public', './msw', '../src/images'],
   webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -64,13 +64,13 @@ const config = {
       use: ['@svgr/webpack'],
     })
     // add image support
-    config.module?.rules?.push({
-      test: /\.(png|jpe?g|gif|svg)$/i,
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/media/[name].[hash][ext]',
-      },
-    })
+    // config.module?.rules?.push({
+    //   test: /\.(png|jpe?g|gif|svg)$/i,
+    //   type: 'asset/resource',
+    //   generator: {
+    //     filename: 'static/media/[name].[hash][ext]',
+    //   },
+    // })
     return config
   }, // No need for webpackFinal if you're using the addon-styling-webpack
 }

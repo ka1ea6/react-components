@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
-import logoLight from '../../../.storybook/public/cortex-reply-light.png'
-import logoDark from '../../../.storybook/public/cortex-reply-light.png'
+import logoLight from '../../images/cortex-reply-light.png'
+import logoDark from '../../images/cortex-reply-dark.png'
 
 interface HeaderProps {
   isMenuOpen: boolean

@@ -6,9 +6,6 @@ const nextConfig = {
   eslint: {
     dirs: ['src'], // Add your folders here
   },
-  images: {
-    
-  },
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
