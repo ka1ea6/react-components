@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import Image from 'next/image'
-import logoBw from '../../../.storybook/public/cortex-reply-bw.png'
-
-// import styles from './video.module.css'
+import Image, { StaticImageData } from 'next/image'
 import { HeaderDesktop } from './HeaderDesktop'
 
-export function VideoHeader() {
+export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: StaticImageData, logoLight: StaticImageData, logoDark: StaticImageData }) {
+  
+  console.log('logoVideo', logoVideo)
+  
   const [isScrolled, setIsScrolled] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,6 +27,8 @@ export function VideoHeader() {
         setIsMenuOpen(false)
       } else {
         setIsHeaderVisible(false)
+        setIsMenuOpen(true)
+
       }
     }
 
@@ -54,10 +56,10 @@ export function VideoHeader() {
   }
 
   return (
-    <>
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+    <div className="relative h-screen">
+      <div className="absolute inset-0 w-full h-screen overflow-hidden">
         <video className="object-cover w-full h-full" autoPlay loop muted playsInline>
-          <source src="/assets/videos/background.mov" type="video/mp4" />
+          <source src="videos/background.mov" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-primary-900/50" />
@@ -74,37 +76,9 @@ export function VideoHeader() {
           )}
         </button>
       )}
-      <HeaderDesktop isMenuOpen={isMenuOpen} />
-      {/* <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isMenuOpen ? 'translate-y-0 bg-primary' : '-translate-y-full bg-transparent'
-        }`}
-      >
-        <nav className="bg-primary/80 backdrop-blur-sm text-white p-6">
-          <ul className="flex justify-center space-x-8 text-lg">
-            <li>
-              <a href="#" className="hover:text-primary-300 transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-primary-300 transition-colors">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-primary-300 transition-colors">
-                Services
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-primary-300 transition-colors">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header> */}
+      <div className="fixed top-0 left-0 right-0 z-50" >
+      <HeaderDesktop isMenuOpen={isScrolled} logoLight={logoLight} logoDark={logoDark} />
+      </div>
       <div
         className={`fixed top-4 left-4 z-50 transition-all duration-300 ${
           isHeaderVisible || isMenuOpen ? 'opacity-0' : 'opacity-100'
@@ -112,32 +86,33 @@ export function VideoHeader() {
       >
         {/* <Image
           src={logoBw}
-          //   src="../../../../public/assets/images/brand/cortex-reply.png"
           alt="Cortex Reply Logo"
           width={180}
           height={80}
           className="h-auto w-auto"
         /> */}
       </div>
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white text-center px-4">
+      <div className="absolute inset-0 h-full z-10 flex flex-col items-center justify-between text-white text-center px-4">
         <Image
-          src={logoBw}
-          //   src="../../../../public/assets/images/brand/cortex-reply.png"
+          src={logoVideo}
           alt="Cortex Reply Logo"
           width={720}
           height={320}
-          className="h-auto w-auto"
+          className="h-auto w-auto mt-8"
         />
-        <h1 className="text-4xl font-bold mb-4">We are Cortex Reply.</h1>
-        <p className="text-2xl mb-8 max-w-2xl">Efficiency through technology.</p>
-
-        <div
-          className="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:text-primary"
-          onClick={scrollToNextSection}
-        >
-          <ChevronDown size={64} />
+        <div>
+          <h1 className="text-4xl font-bold mb-4">We are Cortex Reply.</h1>
+          <p className="text-2xl mb-8 max-w-2xl">Efficiency through technology.</p>
+        </div>
+        <div className="flex justify-center items-center w-full mb-8">
+          <div
+            className="animate-bounce cursor-pointer hover:text-accent"
+            onClick={scrollToNextSection}
+          >
+            <ChevronDown size={64} />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

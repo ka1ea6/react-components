@@ -283,13 +283,6 @@ export const Default: PageStory = {
   },
 }
 
-export const WithHeroBackgroundImage = {
-  args: {
-    ...Default.args,
-    heroBackgroundImage: 'stock1.jpg?height=400&width=800',
-  },
-}
-
 export const LowImpactHero = {
   args: {
     ...Default.args,
@@ -318,8 +311,22 @@ export const HighImpactHero = {
     ...Default.args,
     hero: {
       type: 'highImpact',
-      children: <h1 className="text-4xl font-bold">Low Impact Hero</h1>,
+      children: <h1 className="text-4xl font-bold">High Impact Hero</h1>,
+      media: 'stock1.jpg?height=400&width=800',
     },
-    heroBackgroundImage: 'stock1.jpg?height=400&width=800',
+    media: 'stock1.jpg?height=400&width=800',
+  },
+}
+
+
+export const PostHero = {
+  args: {
+    ...Default.args,
+    hero: {
+      type: 'highImpact',
+      children: <h1 className="text-4xl font-bold">Post Hero</h1>,
+      media: 'stock1.jpg?height=400&width=800',
+    },
+    media: 'stock1.jpg?height=400&width=800',
   },
 }

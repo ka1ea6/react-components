@@ -1,7 +1,7 @@
 import { CustomLink } from '@/components/Other/CustomLink'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 
-export function BrandLogo({logoLight, logoDark}:{logoLight: any, logoDark: any}) {
+export function BrandLogo({logoLight, logoDark}:{logoLight: StaticImageData, logoDark: StaticImageData}) {
   return (
     <CustomLink href="/" className="py-2">
       <Image

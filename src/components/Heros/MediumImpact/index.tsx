@@ -3,6 +3,7 @@ import React from 'react'
 import type { Page } from '@/payload-types'
 import Image from 'next/image'
 
+import { CMSLink } from '@/components/Payload/Link'
 import { Media } from '@/components/Payload/Media'
 import { RichText } from '@/components/Payload/RichText'
 
@@ -51,8 +52,8 @@ export const MediumImpactHero: React.FC<MediumImpactHeroType> = ({
           className="mix-blend-overlay opacity-50"
         />
       )} */}
-      <div className="container mx-0 min-w-full relative z-9">
-        <div className="text-brand-one-foreground px-16">
+      <div className="mx-0 min-w-full relative z-9">
+        <div className="container text-brand-one-foreground">
           {children ||
             (richText && (
               <RichText

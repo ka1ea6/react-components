@@ -2,7 +2,6 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from '@/lib/utils/cn'
 import React from 'react'
-import { RichText } from '@/components/Payload/RichText'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 

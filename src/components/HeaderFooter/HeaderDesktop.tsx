@@ -1,18 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
 import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
-import logoLight from '../../images/cortex-reply-light.png'
-import logoDark from '../../images/cortex-reply-dark.png'
+
 import { Moon, Sun } from 'lucide-react'
+import { StaticImageData } from 'next/image'
 
 interface HeaderProps {
   isMenuOpen: boolean
-  setIsMenuOpen?: (isOpen: boolean) => void
+  logoLight: StaticImageData
+  logoDark: StaticImageData
 }
 
-export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
+export function HeaderDesktop({ isMenuOpen, logoLight, logoDark }: HeaderProps) {
   const [isScrolled , setIsScrolled] = useState(false)
     const [currentTheme, setCurrentTheme] = useState('light')
     const themes = ['light', 'dark']
@@ -47,17 +47,18 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleMenu = () => {
-    setIsMenuOpen && setIsMenuOpen(!isMenuOpen)
-  }
-  console.log('logo: ', logoLight)
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 mx-auto transition-all duration-300 ${
+     <header
+        className={`z-50 pb-10 transition-all duration-300 hidden lg:block ${
           isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
         }`}
       >
+      {/* <header
+        className={`fixed top-0 left-0 right-0 z-50 mx-auto transition-all duration-300 ${
+          isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
+        }`}
+      > */}
         <Container>
           <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
             <div className="flex items-center justify-between bg-accent px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl dark:border dark:border-accent">
@@ -90,7 +91,7 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
               </ul>
               <div className='flex items-center space-x-4'>
               <button
-                  className="fixed right-16 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-white dark:hover:text-accent"
+                  className="fixed right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-white dark:hover:text-accent"
                   onClick={toggleTheme}
                 >
                   <div className="relative">
@@ -100,18 +101,7 @@ export function HeaderDesktop({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
                     {/* <X className="w-6 h-6 text-white" /> */}
                   </div>
                 </button>
-              {!isScrolled && setIsMenuOpen && (
-                <button
-                  className="fixed right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-white dark:hover:text-accent"
-                  onClick={toggleMenu}
-                >
-                  {isMenuOpen ? (
-                    <X className="w-6 h-6" />
-                  ) : (
-                    <Menu className="w-6 h-6 " />
-                  )}
-                </button>
-              )}
+              
               </div>
             </div>
           </nav>

@@ -77,6 +77,8 @@ import { Toaster } from '@/components//ui/toaster'
 import { LowImpactHero } from '@/components/Heros/LowImpact'
 import { MediumImpactHero } from '@/components/Heros/MediumImpact'
 import { HighImpactHero } from '@/components/Heros/HighImpact'
+import { PostHero } from '@/components/Heros/PostHero'
+
 
 export default function Website({ ...args }) {
   return (
@@ -88,6 +90,8 @@ export default function Website({ ...args }) {
         {args.hero && args.hero.type === 'lowImpact' && <LowImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'mediumImpact' && <MediumImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'highImpact' && <HighImpactHero {...args.hero} />}
+        {args.hero && args.hero.type === 'postHero' && <PostHero {...args.hero} />}
+
         {/* <div className="relative bg-brand-one pb-12 pt-10">
           {args.heroBackgroundImage && (
             <Image

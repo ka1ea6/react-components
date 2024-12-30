@@ -1,12 +1,13 @@
+'use client'
 // import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Payload/Link'
 import { Media } from '@/components/Payload/Media'
-import { RichText } from '@/components/Payload/RichText'
+import  { RichText } from '@/components/Payload/RichText'
 
 type HighImpactHeroType =
   | {
@@ -42,7 +43,13 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
       <div className="container mb-8 z-10 relative flex items-center justify-center">
         <div className="max-w-[36.5rem] text-center">
           {children ||
-            (richText && <RichText className="mb-6" content={richText} enableGutter={false} />)}
+            (richText && (
+              <RichText
+                className="mb-6 prose prose-h1:text-2xl dark:prose-headings:text-white prose-headings:text-gray-900  dark:prose-p:text-white prose-p:text-gray-900"
+                content={richText}
+                enableGutter={false}
+              />
+            ))}
 
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex justify-center gap-4">
@@ -61,7 +68,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
         {media && typeof media === 'object' && (
           <Media
             fill
-            imgClassName="-z-10 object-cover"
+            imgClassName="z-5 object-cover"
             priority={false}
             loading="lazy"
             resource={media}
@@ -72,6 +79,8 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
             <Image className="-z-10 object-cover" alt="" fill priority src={media} />
           </div>
         )}
+        {/* Overlay  */}
+        <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-accent-900/0 dark:to-accent-900"></span>
       </div>
     </div>
   )
