@@ -6,9 +6,7 @@ import Image, { StaticImageData } from 'next/image'
 import { HeaderDesktop } from './HeaderDesktop'
 
 export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: StaticImageData, logoLight: StaticImageData, logoDark: StaticImageData }) {
-  
-  console.log('logoVideo', logoVideo)
-  
+    
   const [isScrolled, setIsScrolled] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
