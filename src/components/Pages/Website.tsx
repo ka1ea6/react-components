@@ -78,13 +78,17 @@ import { LowImpactHero } from '@/components/Heros/LowImpact'
 import { MediumImpactHero } from '@/components/Heros/MediumImpact'
 import { HighImpactHero } from '@/components/Heros/HighImpact'
 import { PostHero } from '@/components/Heros/PostHero'
+import logoVideo from '../../images/cortex-reply-bw.png'
+import logoLight from '../../images/cortex-reply-light.png'
+import logoDark from '../../images/cortex-reply-dark.png'
 
 
 export default function Website({ ...args }) {
   return (
 
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
-              <HeaderDesktop isMenuOpen={true}  />
+              <HeaderDesktop isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+
 
         {/* Hero Section */}
         {args.hero && args.hero.type === 'lowImpact' && <LowImpactHero {...args.hero} />}

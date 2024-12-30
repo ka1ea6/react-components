@@ -3,7 +3,7 @@ import { ImageProps, LinkProps } from '@/common-types'
 // import { Container } from '@/components/ui'
 import { CustomLink } from '@/components/Other/CustomLink'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { BrandLogo } from './BrandLogo'
 import { FaChevronRight, FaEnvelope, FaPaperPlane, FaPhone, FaCalendarDays } from 'react-icons/fa6'
 import { ClassValue } from 'clsx'
@@ -22,8 +22,8 @@ interface SocialLinkProps {
 
 export interface SectionProps {
   className?: ClassValue
-  logoLight: ImageProps
-  logoDark: ImageProps
+  logoLight: StaticImageData
+  logoDark: StaticImageData
   footerData: FooterSectionProps
 }
 
