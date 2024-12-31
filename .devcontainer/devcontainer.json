@@ -25,7 +25,8 @@
         "esbenp.prettier-vscode",
         "GitHub.copilot-labs",
         "GitHub.copilot",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "mutantdino.resourcemonitor"
       ]
     }
   }

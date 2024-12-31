@@ -19,7 +19,7 @@ export interface HeroSectionProps {
 
 export function SectionHero({ title, breadcrumbItems, image = bannerImage.src }: HeroSectionProps) {
   return (
-    <section className="section-padding-primary -mt-[10.4rem] relative flex min-h-[250px] items-end">
+    <section className="section-padding-primary -z-10 relative flex min-h-[250px] items-end">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image

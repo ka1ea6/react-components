@@ -87,72 +87,73 @@ export default function WebsiteSection({ ...args }) {
   return (
 
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
-              <HeaderDesktop isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+                    <div className="fixed top-0 left-0 right-0 z-50">
 
+              <HeaderDesktop isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+</div>
 
         {/* Hero Section */}
         {args.hero && args.hero.type === 'lowImpact' && <LowImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'mediumImpact' && <MediumImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'highImpact' && <HighImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'postHero' && <PostHero {...args.hero} />}
-        {/* {args.hero && args.hero.type === 'sectionHero' && <SectionHero {...args.hero} />} */}
-
-        {/* <div className="relative bg-brand-one pb-12 pt-10">
-          {args.heroBackgroundImage && (
-            <Image
-              src={args.heroBackgroundImage}
-              alt="Hero background"
-              layout="fill"
-              objectFit="cover"
-              className="mix-blend-overlay opacity-50"
-            />
-          )}
-          <div className="container relative z-10">
-            <div className="text-slate-400">{args.section}</div>
-            <h1 className="mt-2 text-4xl font-bold text-white">{args.title}</h1>
-            <p className="mt-4 max-w-3xl text-slate-400">{args.description}</p>
-          </div>
-        </div> */}
+        {args.hero && args.hero.type === 'sectionHero' && <SectionHero {...args.hero} />}
 
         {/* Main Content */}
+               <div className="container py-8">
+                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                   {/* Main Content Area */}
+                   <div className="lg:col-span-2">{args.children}</div>
        
-      {/* <SidebarProvider className="top-14 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip">
-        <SidebarLeft {...args.sidebarLeft} className="flex-none" />
-        <SidebarInset className="grow overflow-hidden">
-          <header className="flex h-16 shrink-0 items-center gap-2">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-            </div>
-            <div className="flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-          </div>
-        </SidebarInset>
-        <SidebarRight
-          {...args.sidebarRight}
-          editorComponent={<GithubControl {...args.github} />}
-          className="flex-none"
-        />
-      </SidebarProvider>
-      <Toaster /> */}
+                   {/* Sidebar */}
+                   <div className="space-y-6">
+                     <Card>
+                       <CardHeader>
+                         <CardTitle>Quick Actions</CardTitle>
+                       </CardHeader>
+                       <CardContent>
+                         <p className="mb-4 text-sm text-muted-foreground">
+                           Get started with your first action in just a few clicks.
+                         </p>
+                         <Button className="w-full">Create New</Button>
+                       </CardContent>
+                     </Card>
+       
+                     <Card>
+                       <CardHeader>
+                         <CardTitle>Resources</CardTitle>
+                       </CardHeader>
+                       <CardContent>
+                         <nav className="flex flex-col space-y-2">
+                           <a
+                             href="#"
+                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
+                           >
+                             User Guide
+                             <ExternalLink className="ml-1 h-3 w-3" />
+                           </a>
+                           <a
+                             href="#"
+                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
+                           >
+                             API Documentation
+                             <ExternalLink className="ml-1 h-3 w-3" />
+                           </a>
+                           <a
+                             href="#"
+                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
+                           >
+                             View Pricing Details
+                             <ExternalLink className="ml-1 h-3 w-3" />
+                           </a>
+                         </nav>
+                       </CardContent>
+                     </Card>
+                   </div>
+                 </div>
+               </div>
+             </div>
     
-    </div>
+
   )
 }

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { HeaderDesktop } from './HeaderDesktop';
 
+import logoLight from '@/images/cortex-reply-light.png'
+import logoDark from '@/images/cortex-reply-dark.png'
+
 export default {
   title: 'Header/HeaderDesktop',
   component: HeaderDesktop,
@@ -18,12 +21,14 @@ export default {
 } as Meta;
 
 const Template: StoryFn<typeof HeaderDesktop> = (args) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(args.isMenuOpen);
 
-  return <HeaderDesktop {...args} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />;
+  return <HeaderDesktop {...args}  />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
   isMenuOpen: true,
+  logoDark: logoDark,
+  logoLight: logoLight,
+
 };
