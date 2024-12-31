@@ -1,9 +1,8 @@
 import { Container } from '@/components/Other/Container'
 import { CustomLink } from '@/components/Other/CustomLink'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import React from 'react'
-import bannerImage from '../../../images/hero/hero-3.jpg'
 
 
 interface BreadcrumbItem {
@@ -13,18 +12,18 @@ interface BreadcrumbItem {
 
 export interface HeroSectionProps {
   title: string
-  image?: string
+  image?: StaticImageData
   breadcrumbItems: BreadcrumbItem[]
 }
 
-export function SectionHero({ title, breadcrumbItems, image = bannerImage.src }: HeroSectionProps) {
+export function SectionHero({ title, breadcrumbItems, image }: HeroSectionProps) {
   return (
     <section className="section-padding-primary -z-10 relative flex min-h-[250px] items-end">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <Image
+       { image && <Image
           priority
-          src={image}
+          src={image.src}
           alt={`${process.env.NEXT_PUBLIC_SITE_NAME}`}
           layout="fill"
           // layout="contain"
@@ -34,6 +33,7 @@ export function SectionHero({ title, breadcrumbItems, image = bannerImage.src }:
           sizes="100vw"
           className="pointer-events-none object-cover"
         />
+}
         {/* Overlay */}
         {/* <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-accent/0 dark:to-accent"></span> */}
         </div>
