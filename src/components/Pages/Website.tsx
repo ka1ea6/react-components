@@ -95,7 +95,7 @@ export default function WebsiteSection({ ...args }) {
         {args.hero && args.hero.type === 'mediumImpact' && <MediumImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'highImpact' && <HighImpactHero {...args.hero} />}
         {args.hero && args.hero.type === 'postHero' && <PostHero {...args.hero} />}
-        {args.hero && args.hero.type === 'sectionHero' && <SectionHero {...args.hero} />}
+        {/* {args.hero && args.hero.type === 'sectionHero' && <SectionHero {...args.hero} />} */}
 
         {/* <div className="relative bg-brand-one pb-12 pt-10">
           {args.heroBackgroundImage && (
