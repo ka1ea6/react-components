@@ -44,11 +44,11 @@ export function EventCard({
   const getEventColor = (eventType: EventType) => {
     switch (eventType) {
       case 'birthday':
-        return 'from-brand-one-500 to-brand-one-800'
+        return 'bg-brand-one'
       case 'workAnniversary':
-        return 'from-brand-two-500 to-brand-two-700'
+        return 'bg-brand-two'
       case 'companyEvent':
-        return 'from-brand-two-300 to-brand-two-700'
+        return 'bg-brand-three'
       default:
         return 'from-gray-500 to-slate-500'
     }
@@ -79,7 +79,7 @@ export function EventCard({
         {description && <p className="mb-2 text-sm text-gray-700">{description}</p>}
         <Badge
           variant="secondary"
-          className={`bg-gradient-to-br ${getEventColor(eventType)} text-white/80`}
+          className={`${getEventColor(eventType)} text-white/80`}
         >
           {/* <Badge variant="secondary" className="bg-white text-gray-800 hover:bg-gray-100"> */}
           {getEventIcon(eventType)}
