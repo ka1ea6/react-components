@@ -71,7 +71,7 @@ import {
 
 import { SidebarRight } from '@/components//Menus/SidebarRight'
 import { SidebarLeft } from '@/components//Menus/SidebarLeft'
-import { HeaderDesktop } from '../HeaderFooter'
+import { HeaderDesktop, HeaderMobile } from '../HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
 import { LowImpactHero } from '@/components/Heros/LowImpact'
@@ -90,6 +90,8 @@ export default function WebsiteSection({ ...args }) {
                     <div className="fixed top-0 left-0 right-0 z-50">
 
               <HeaderDesktop isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+              <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header}/>
+
 </div>
 
         {/* Hero Section */}
