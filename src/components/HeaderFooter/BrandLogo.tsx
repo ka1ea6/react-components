@@ -17,8 +17,8 @@ export function BrandLogo({logoLight, logoDark, mobile = false}:{logoLight: Stat
         // fill
         priority
         style={{
-          // width: '200px',
-          height: 'auto',
+          width: 'auto',
+          height : mobile ? 35 : 50
         }}
       />
       <Image

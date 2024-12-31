@@ -12,7 +12,7 @@ export interface ServiceSectionProps {
 export function ServiceSection({ services, className }: ServiceSectionProps) {
   return (
     <section id="next-section" className={cn('section-padding-primary', className)}>
-      <Container>
+      <Container className='py-8'>
         {services && services.length > 0 && (
           <div className="flex flex-wrap justify-center gap-y-8">
             {services.map((service, index) => (

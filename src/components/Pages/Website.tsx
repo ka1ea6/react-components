@@ -117,7 +117,7 @@ export default function WebsiteSection({ ...args }) {
                          <p className="mb-4 text-sm text-muted-foreground">
                            Get started with your first action in just a few clicks.
                          </p>
-                         <Button className="w-full">Create New</Button>
+                         <Button className="w-full bg-accent text-accent-foreground">Create New</Button>
                        </CardContent>
                      </Card>
        
