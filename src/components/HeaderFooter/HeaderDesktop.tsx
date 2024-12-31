@@ -59,7 +59,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark }: HeaderProps) 
           isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
         }`}
       > */}
-        <Container>
+        <Container className='px-0'>
           <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
             <div className="flex items-center justify-between bg-accent px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl dark:border dark:border-accent">
               <BrandLogo logoDark={logoDark} logoLight={logoLight}/>

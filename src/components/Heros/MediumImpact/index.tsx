@@ -88,7 +88,7 @@ export const MediumImpactHero: React.FC<MediumImpactHeroType> = ({
 
 
   return (
-    <div className="relative bg-brand-one pb-12 pt-10">
+    <div className="relative bg-brand-one pb-12 mt-20 pt-10">
       {media && <BackgroundImage media={media as MediaObject | string} />}
       {/* <Image
         src={args.heroBackgroundImage}

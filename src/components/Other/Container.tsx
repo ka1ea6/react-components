@@ -19,11 +19,17 @@ export interface IContainer {
    * @type {boolean}
    */
   isNoPadding?: boolean
+
+  /**
+   * Additional class names to apply to the container.
+   * @type {string}
+   */
+  className?: string
 }
 
 /** Container provide content containment, padding, and alignment within specific devices or viewports. */
-export function Container({ children, isFluid = false, isNoPadding = false }: IContainer) {
-  const containerClasses = cn( 'container', isFluid && 'full-width' ,  isNoPadding && 'no-padding' )
+export function Container({ children, isFluid = false, isNoPadding = false, className = '' }: IContainer) {
+  const containerClasses = cn('container', isFluid && 'full-width', isNoPadding && 'no-padding', className)
     
   return <div className={containerClasses}>{children}</div>
 }
