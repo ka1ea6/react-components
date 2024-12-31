@@ -8,6 +8,8 @@ const basePath = location.pathname.split('/').slice(0, -1).join('/');
 const apiMockServiceWorkerUrl = `${basePath}/apiMockServiceWorker.js`;
 import { ComponentCode } from './componentCode';
 import React from 'react';
+import { AOSInit } from '@/lib/utils/AOSInit';
+
 import '../src/globals.css';
 initialize({
   serviceWorker: {
@@ -41,7 +43,12 @@ const preview = {
     },
   },
   loaders: [mswLoader], // 👈 Add the MSW loader to all stories
-  decorators: [withThemeByClassName({
+  decorators: [(Story) => (
+    <>
+      <AOSInit />
+      <Story />
+    </>
+  ),withThemeByClassName({
         themes: {
           light: '',
           dark: 'dark',

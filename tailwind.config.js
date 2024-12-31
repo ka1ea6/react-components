@@ -4,11 +4,16 @@ const config = {
     './src/components/**/*.{html,js,jsx,ts,tsx}',
     './src/server/**/*.{html,js,jsx,ts,tsx}',
     './src/styles/**/*.{html,js,jsx,ts,tsx}',
+    './src/sections/**/*.{html,js,jsx,ts,tsx}',
   ],
   darkMode: ['selector'],
+  corePlugins: {
+    // preflight: false
+  },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
   prefix: '',
   safelist: [
+    { pattern: /(md|lg|xl):w-(.*)/ },
     'lg:col-span-4',
     'lg:col-span-6',
     'lg:col-span-8',
@@ -119,6 +124,13 @@ const config = {
     // Add other dynamic class names as needed
   ],
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1400px',
+    },
     container: {
       center: true,
       padding: {
@@ -323,6 +335,11 @@ const config = {
       //   mono: ['var(--font-geist-mono)'],
       //   sans: ['var(--font-geist-sans)'],
       // },
+      boxShadow: {
+        1: '0px 0px 60px 0px rgba(0, 0, 0, 0.05)',
+        2: '0px 0px 15px 10px rgba(255, 255, 255, 0.1)',
+        3: '0px 4px 25px 0px rgba(0, 0, 0, 0.06)',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -338,6 +355,10 @@ const config = {
       },
       backgroundImage: {
         'gradient-1': 'linear-gradient(180deg,var(--tw-gradient-stops))',
+      },
+      transitionDuration: {
+        350: '350ms',
+        400: '400ms',
       },
       typography: ({ theme }) => ({
         DEFAULT: {
