@@ -37,10 +37,10 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
 
   return (
     <div
-      className="relative -mt-[10.4rem] flex items-center justify-center text-white"
+      className="relative -mt-[10.4rem] flex items-end justify-center text-white"
       data-theme="dark"
     >
-      <div className="container mb-8 z-10 relative flex items-center justify-center">
+      <div className="container mb-8 z-10 relative flex items-end justify-center">
         <div className="max-w-[36.5rem] text-center">
           {children ||
             (richText && (
@@ -80,7 +80,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
           </div>
         )}
         {/* Overlay  */}
-        <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-accent-900/0 dark:to-accent-900"></span>
+        <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-background/0 dark:to-background"></span>
       </div>
     </div>
   )

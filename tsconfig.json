@@ -7,10 +7,10 @@
       "@/lib/utils": ["./src/utils"],
       "@/lib/utils/*": ["./src/utils/*"],
       "@/components/*": ["./src/components/*"],
+      "@/images/*": ["./src/images/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/payload-types" : ["./src/payload-types"],
-      "@/common-types" : ["./src/common-types"]
-
+      "@/common-types" : ["./src/common-types"],
     }
   },
   "include": ["."],

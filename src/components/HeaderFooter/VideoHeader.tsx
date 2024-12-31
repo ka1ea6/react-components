@@ -57,7 +57,7 @@ export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: St
     <div className="relative h-screen">
       <div className="absolute inset-0 w-full h-screen overflow-hidden">
         <video className="object-cover w-full h-full" autoPlay loop muted playsInline>
-          <source src="videos/background.mov" type="video/mp4" />
+          <source src="assets/videos/background.mov" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-primary-900/50" />

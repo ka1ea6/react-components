@@ -6,6 +6,7 @@ import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
 import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react';
+import pattern1 from '@/images/hero/image-hero1.webp'
 
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
@@ -311,7 +312,7 @@ export const HighImpactHero = {
     ...Default.args,
     hero: {
       type: 'highImpact',
-      children: <h1 className="text-4xl font-bold">High Impact Hero</h1>,
+      children: (<div class="max-w-none mx-auto prose dark:prose-invert mb-6"><h1 class="col-start-2">High Impact Hero</h1><p class="col-start-2"></p><p class="col-start-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.</p><p class="col-start-2"></p><p class="col-start-2">Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu pellentesque. Phasellus imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.</p></div>),
       media: 'stock1.jpg?height=400&width=800',
     },
     media: 'stock1.jpg?height=400&width=800',
@@ -323,10 +324,63 @@ export const PostHero = {
   args: {
     ...Default.args,
     hero: {
-      type: 'highImpact',
-      children: <h1 className="text-4xl font-bold">Post Hero</h1>,
-      media: 'stock1.jpg?height=400&width=800',
+      type: 'postHero',
+      post: {
+        id: '1',
+  title: 'Sample Post Title',
+  categories: [
+    { id: '1', title: 'Category 1' },
+    { id: '2', title: 'Category 2' },
+  ],
+  meta: {
+    image: 'stock1.jpg',
+  },
+  populatedAuthors: [
+    {
+      id: '1',
+      name: 'Author 1',
+      avatar: {
+        id: '1',
+        url: '/path/to/avatar1.jpg',
+        alt: 'Author 1 Avatar',
+      },
+    },
+    {
+      id: '2',
+      name: 'Author 2',
+      avatar: {
+        id: '2',
+        url: '/path/to/avatar2.jpg',
+        alt: 'Author 2 Avatar',
+      },
+    },
+  ],
+  publishedAt: '2023-10-01T12:00:00Z',
+  content: 'Sample post content...',
+      }
     },
     media: 'stock1.jpg?height=400&width=800',
+  },
+}
+
+
+export const SectionHero = {
+  args: {
+    ...Default.args,
+    hero: {
+      type: 'sectionHero',
+      image: pattern1,
+      title: "Services",
+        breadcrumbItems: [
+          {
+            label: 'Home',
+            href: '/',
+          },
+          {
+            label: 'Service',
+          },
+        ]
+      
+    },
   },
 }

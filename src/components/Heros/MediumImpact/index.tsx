@@ -21,26 +21,98 @@ type MediumImpactHeroType =
       richText?: Page['hero']['richText']
     })
 
+    interface MediaObject {
+      alt: string;
+      filename: string;
+      height: number;
+      url: string;
+      width: number;
+    }
+
+    interface BackgroundImageProps {
+      media: MediaObject | string;
+    }
+
+    const BackgroundImage: React.FC<BackgroundImageProps> = ({ media }) => {
+      if (media && typeof media === 'object') {
+        const {
+          alt: altFromResource,
+          filename: fullFilename,
+          height: fullHeight,
+          url,
+          width: fullWidth,
+        } = media as MediaObject;
+        return (
+          <Image
+            className="mix-blend-overlay opacity-50"
+            alt={altFromResource || ''}
+            fill
+            priority
+            src={url || ''}
+            width={fullWidth || 0}
+            height={fullHeight || 0}
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+        );
+      } else if (media && typeof media === 'string') {
+        return (
+          <div>
+            <Image
+              className="mix-blend-overlay opacity-50"
+              alt=""
+              fill
+              priority
+              src={media}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+        );
+      }
+      return null;
+    };
+
+
 export const MediumImpactHero: React.FC<MediumImpactHeroType> = ({
   links,
   media,
   children,
   richText,
 }) => {
+
+ 
+
+
+
   return (
     <div className="relative bg-brand-one pb-12 pt-10">
+      {media && <BackgroundImage media={media as MediaObject | string} />}
+      {/* <Image
+        src={args.heroBackgroundImage}
+        alt="Hero background"
+        layout="fill"
+        objectFit="cover"
+        className="mix-blend-overlay opacity-50"
       {media && typeof media === 'object' && (
-        <Media
-          // className="-mx-4 md:-mx-8 2xl:-mx-16"
-          imgClassName="mix-blend-overlay opacity-50"
-          fill
-          priority
-          resource={media}
-        />
+        
+        
+            width = fullWidth!
+            height = fullHeight!
+            alt = altFromResource || ''
+        
+            src = `${getClientSideURL()}${url}`
+        <Image className="mix-blend-overlay opacity-50" alt="" fill priority src={media.url} style={{
+          objectFit: 'cover',
+        }}/>
       )}
       {media && typeof media === 'string' && (
         <div>
-          <Image className="mix-blend-overlay opacity-50" alt="" fill priority src={media} />
+          <Image className="mix-blend-overlay opacity-50" alt="" fill priority src={media} style={{
+        objectFit: 'cover',
+      }}/>
         </div>
       )}
       {/* {args.heroBackgroundImage && (

@@ -336,6 +336,9 @@ const config = {
       clipPath: {
         shape: 'polygon(0 0, 100% 0%, 100% 85%, 0 100%)', // Customize this to get the curve or shape you need
       },
+      backgroundImage: {
+        'gradient-1': 'linear-gradient(180deg,var(--tw-gradient-stops))',
+      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
