@@ -13,7 +13,6 @@ const config = {
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
   prefix: '',
   safelist: [
-    { pattern: /(md|lg|xl):w-(.*)/ },
     'lg:col-span-4',
     'lg:col-span-6',
     'lg:col-span-8',

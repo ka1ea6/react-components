@@ -19,7 +19,7 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
       <article
         className={cn([
           // General
-          'group/service bg-white shadow-3 transition-transform duration-350 dark:bg-stone-900 dark:text-white  dark:shadow-none',
+          'group/service bg-white shadow-3 transition-transform duration-350 dark:bg-card dark:text-white  dark:shadow-none',
   
           // Layout
           'relative z-1 block h-full space-y-6 overflow-hidden rounded-5 p-6 md:space-y-7 md:p-10',
@@ -54,7 +54,7 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
             'border-current bg-transparent text-foreground hover:bg-transparent hover:text-accent',
   
             // Dark
-            'dark:bg-stone-950',
+            'dark:bg-background',
             // 'dark:border-accent-900 dark:bg-accent-900 dark:text-white dark:hover:text-primary  group-hover/service:dark:bg-transparent',
   
             // stop default button hover effects
