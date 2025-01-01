@@ -164,7 +164,16 @@ html[data-theme='light'] {
   opacity: initial;
 } */
 
-/* global.css or similar file */
+/* adds padding around every section */
+.section-padding-primary {
+  @apply py-[3.75rem] md:py-[6.25rem] xl:py-[7.5rem];
+}
+
+
+
+/* padding for Storybook in DEV only */
 .sb-main-padded {
   padding: 0 !important; /* Override the default Storybook padding */
 }
+
+

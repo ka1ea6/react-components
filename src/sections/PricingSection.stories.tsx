@@ -36,6 +36,8 @@ Default.args = {
   sectionHeading: {
     subtitle: 'Pricing Action',
     title: 'Innovating for a better tomorrow',
+    description:
+    'Lorem Ipsum is simply dummy text of the printing  Ipsum is simply dummy text of the Lorem Ipsum is simply',
   },
   cards: [
     {

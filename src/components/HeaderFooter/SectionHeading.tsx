@@ -47,7 +47,7 @@ export function SectionHeading({
       {subtitle && (
         <span
           className={
-            'mb-[.625rem] block font-secondary text-base	 font-bold uppercase leading-[1.5] tracking-widest text-primary md:text-md'
+            'mb-[.625rem] block font-secondary text-base	 font-bold uppercase leading-[1.5] tracking-widest text-accent md:text-md'
           }
         >
           {subtitle}
