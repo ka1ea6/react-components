@@ -6,7 +6,7 @@ import Image, { StaticImageData } from 'next/image'
 import { HeaderDesktop } from './HeaderDesktop'
 import { HeaderMobile } from './HeaderMobile'
 import { type HeaderMenuProps } from './HeaderMenu'
-
+import { cn } from '@/lib/utils/cn'
 export function VideoHeader({ logoVideo, logoLight, logoDark, menuItems } : { logoVideo: StaticImageData, logoLight: StaticImageData, logoDark: StaticImageData, menuItems?: HeaderMenuProps[] }) {
     
   const [isScrolled, setIsScrolled] = useState(false)
@@ -77,7 +77,7 @@ export function VideoHeader({ logoVideo, logoLight, logoDark, menuItems } : { lo
         </button>
       )}
       <div className="fixed top-0 left-0 right-0 z-50" >
-      <HeaderDesktop isMenuOpen={isScrolled} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
+      <HeaderDesktop isMenuOpen={isScrolled || isMenuOpen} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
       <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
 
       </div>
@@ -100,11 +100,11 @@ export function VideoHeader({ logoVideo, logoLight, logoDark, menuItems } : { lo
           alt="Cortex Reply Logo"
           width={720}
           height={320}
-          className="h-auto w-auto mt-8 hidden lg:block"
+          className={cn('h-auto w-auto mt-8 hidden lg:block', isMenuOpen && 'lg:hidden')}
         />
       <div className='h-full flex flex-col items-center justify-center'>
-  <h1 className="text-4xl font-bold pt-auto mb-4">We are Cortex Reply.</h1>
-  <p className="text-2xl mb-8 max-w-2xl">Efficiency through technology.</p>
+  <h1 className="text-6xl font-bold pt-auto mb-12">We are Cortex Reply.</h1>
+  <p className="text-3xl mb-8 max-w-2xl">Efficiency through technology.</p>
 </div>
         <div className="flex justify-center items-center w-full mb-8">
           <div

@@ -10,58 +10,96 @@ export async function contactUsFormSubmit(
   const { name, email, subject, message } = values
 
   
-  // const webhookUrl = process.env.TEAMS_WEBHOOK_URL
-
-  const webhookUrl = "https://reply.webhook.office.com/webhookb2/bd96f013-d306-4244-8611-743f6bf96fb9@b00367e2-193a-4f48-94de-7245d45c0947/IncomingWebhook/03eafcb222a24d38aa7af5b5c09af0f0/a03e7d9d-7fba-4893-8c70-fcfcf540483d/V2TvPmNJLZgvGfNKyLJP51BEpKG04B-XU3o8hEp0vLFcU1"
+  const webhookUrl = process.env.TEAMS_WEBHOOK_URL
 
   if (!webhookUrl) {
     throw new Error('TEAMS_WEBHOOK_URL is not defined')
   }
 
+
   const adaptiveCard = {
-    type: 'message',
+    type: "message",
     attachments: [
       {
-        contentType: 'application/vnd.microsoft.card.adaptive',
+        contentType: "application/vnd.microsoft.card.adaptive",
         content: {
-          type: 'AdaptiveCard',
-          version: '1.2',
+          $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+          type: "AdaptiveCard",
+          version: "1.2",
           body: [
             {
-              type: 'TextBlock',
-              text: 'New Contact Us Form Submission',
-              weight: 'Bolder',
-              size: 'Medium',
+              type: "TextBlock",
+              text: "Contact Us Form",
+              wrap: true,
+              style: "heading",
+              weight: "Bolder"
             },
             {
-              type: 'TextBlock',
-              text: `**Name:** ${name}`,
-              wrap: true,
+              type: "ColumnSet",
+              columns: [
+                {
+                  type: "Column",
+                  width: "stretch",
+                  items: [
+                    {
+                      type: "TextBlock",
+                      text: "Name",
+                      wrap: true,
+                      weight: "Bolder"
+                    },
+                    {
+                      type: "TextBlock",
+                      text: "Email",
+                      wrap: true,
+                      weight: "Bolder"
+                    },
+                    {
+                      type: "TextBlock",
+                      text: "Subject",
+                      wrap: true,
+                      weight: "Bolder"
+                    }
+                  ]
+                },
+                {
+                  type: "Column",
+                  width: "stretch",
+                  items: [
+                    {
+                      type: "TextBlock",
+                      text: `${name}`,
+                      wrap: true
+                    },
+                    {
+                      type: "TextBlock",
+                      text: `${email}`,
+                      wrap: true
+                    },
+                    {
+                      type: "TextBlock",
+                      text: `${subject}`,
+                      wrap: true
+                    }
+                  ]
+                }
+              ]
             },
             {
-              type: 'TextBlock',
-              text: `**Email:** ${email}`,
-              wrap: true,
-            },
-            {
-              type: 'TextBlock',
-              text: `**Subject:** ${subject}`,
-              wrap: true,
-            },
-            {
-              type: 'TextBlock',
-              text: `**Message:** ${message}`,
-              wrap: true,
-            },
-          ],
-        },
-      },
-    ],
+              type: "TextBlock",
+              text: `${message}`,
+              wrap: true
+            }
+          ]
+        }
+      }
+    ]
   }
-
+  
+  console.log(JSON.stringify(adaptiveCard))
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',
+      mode: "no-cors",
       headers: {
         'Content-Type': 'application/json',
       },
@@ -69,6 +107,7 @@ export async function contactUsFormSubmit(
     })
 
     if (!response.ok) {
+      console.error(response)
       throw new Error('Network response was not ok')
     }
 
