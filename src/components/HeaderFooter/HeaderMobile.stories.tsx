@@ -9,7 +9,6 @@ import { DynamicIcon } from '../Images'
 import logoLight from '@/images/cortex-reply-light.png'
 import logoDark from '@/images/cortex-reply-dark.png'
 
-
 export default {
   title: 'Header/HeaderMobile',
   component: HeaderMobile,
@@ -20,10 +19,9 @@ type Story = StoryObj<typeof HeaderMobile>
 const GithubIcon = (props: any) => <DynamicIcon iconName="github" type="brands" {...props} />
 export const Primary: Story = {
   args: {
-    title: 'Your Company',
-logoDark: logoDark,
-  logoLight: logoLight,
-      menuItems: [
+    logoDark: logoDark,
+    logoLight: logoLight,
+    menuItems: [
       {
         name: 'Product',
         items: [

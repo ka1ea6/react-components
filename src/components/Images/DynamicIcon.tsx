@@ -32,7 +32,7 @@ const DynamicIcon: React.FC<DynamicIconProps> = ({
   size = 'lg',
   className,
 }) => {
-  const typeWithPrefix = 'fa-' + type + ' '
+  const typeWithPrefix = type.includes('fa-') ? type + ' ' : 'fa-' + type + ' '
   const name = 'fa-' + iconName
   const classNameContent = className ?? ''
   let icon = typeWithPrefix + name + ' fa-' + size + ' ' + classNameContent

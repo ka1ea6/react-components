@@ -13,7 +13,7 @@ export interface AboutSectionProps {
     image4: ImageProps
   }
   sectionHeading: SectionHeadingWithoutStylingProps
-  keyPoints: {
+  keyPoints?: {
     icon: React.ReactNode
     title: string
   }[]

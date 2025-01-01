@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Image, { StaticImageData } from 'next/image'
 import { HeaderDesktop } from './HeaderDesktop'
+import { HeaderMobile } from './HeaderMobile'
+import { type HeaderMenuProps } from './HeaderMenu'
 
-export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: StaticImageData, logoLight: StaticImageData, logoDark: StaticImageData }) {
+export function VideoHeader({ logoVideo, logoLight, logoDark, menuItems } : { logoVideo: StaticImageData, logoLight: StaticImageData, logoDark: StaticImageData, menuItems?: HeaderMenuProps[] }) {
     
   const [isScrolled, setIsScrolled] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
@@ -64,7 +66,7 @@ export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: St
       </div>
       {!isScrolled && (
         <button
-          className="fixed top-4 right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+          className="fixed hidden lg:block top-4 right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           onClick={toggleMenu}
         >
           {isMenuOpen ? (
@@ -76,6 +78,8 @@ export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: St
       )}
       <div className="fixed top-0 left-0 right-0 z-50" >
       <HeaderDesktop isMenuOpen={isScrolled} logoLight={logoLight} logoDark={logoDark} />
+      <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
+
       </div>
       <div
         className={`fixed top-4 left-4 z-50 transition-all duration-300 ${
@@ -96,12 +100,12 @@ export function VideoHeader({ logoVideo, logoLight, logoDark } : { logoVideo: St
           alt="Cortex Reply Logo"
           width={720}
           height={320}
-          className="h-auto w-auto mt-8"
+          className="h-auto w-auto mt-8 hidden lg:block"
         />
-        <div>
-          <h1 className="text-4xl font-bold mb-4">We are Cortex Reply.</h1>
-          <p className="text-2xl mb-8 max-w-2xl">Efficiency through technology.</p>
-        </div>
+      <div className='h-full flex flex-col items-center justify-center'>
+  <h1 className="text-4xl font-bold pt-auto mb-4">We are Cortex Reply.</h1>
+  <p className="text-2xl mb-8 max-w-2xl">Efficiency through technology.</p>
+</div>
         <div className="flex justify-center items-center w-full mb-8">
           <div
             className="animate-bounce cursor-pointer hover:text-accent"

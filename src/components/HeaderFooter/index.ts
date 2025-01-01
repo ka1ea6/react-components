@@ -5,4 +5,5 @@ export * from "./HeaderMenuItem"
 export * from "./VideoHeader"
 export * from "./HeaderDesktop"
 export * from "./HeaderMobile"
-
+export * from "./Footer"
+export * from "./BrandLogo"

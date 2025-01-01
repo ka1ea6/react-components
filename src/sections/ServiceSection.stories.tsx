@@ -1,7 +1,7 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { ServiceSection, ServiceSectionProps } from './ServiceSection';
-import { FaCog } from 'react-icons/fa';
+import React from 'react'
+import { Meta, StoryFn } from '@storybook/react'
+import { ServiceSection, ServiceSectionProps } from './ServiceSection'
+import { FaCog } from 'react-icons/fa'
 
 export default {
   title: 'Sections/ServiceSection',
@@ -11,7 +11,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A card component that displays a service with an icon, title, description, and a link.',
+        component:
+          'A card component that displays a service with an icon, title, description, and a link.',
       },
     },
   },
@@ -24,32 +25,87 @@ export default {
   decorators: [
     (Story) => (
       // <div className="bg-white dark:bg-gray-900 p-4">
-        <Story />
+      <Story />
       // </div>
     ),
   ],
-} as Meta;
+} as Meta
 
-const Template: StoryFn<ServiceSectionProps> = (args) => <ServiceSection {...args} />;
+const Template: StoryFn<ServiceSectionProps> = (args) => <ServiceSection {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-    services: [{
-  icon: <FaCog />,
-  title: 'Service Title',
-  description: 'This is a description of the service.',
-  slug: '/service',
-},
-{
-  icon: { type: 'thin', iconName: 'image' },
-    title: 'Service Title',
-    description: 'This is a description of the service.',
-    slug: '/service',
-  },
-  {
-    icon: { type: 'kit', iconName: 'software' },
-    title: 'Service Title',
-    description: 'This is a description of the service.',
-    slug: '/service',
-  }],
-};
+  services: [
+    {
+      icon: <FaCog />,
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: { type: 'thin', iconName: 'image' },
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: { type: 'kit', iconName: 'software' },
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+  ],
+}
+
+export const Empty = Template.bind({})
+Empty.args = {
+  services: [],
+}
+
+export const Two = Template.bind({})
+Two.args = {
+  services: [
+    {
+      icon: <FaCog />,
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: { type: 'thin', iconName: 'image' },
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+  ],
+}
+
+export const Four = Template.bind({})
+Four.args = {
+  services: [
+    {
+      icon: <FaCog />,
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: { type: 'thin', iconName: 'image' },
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: <FaCog />,
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+    {
+      icon: { type: 'thin', iconName: 'image' },
+      title: 'Service Title',
+      description: 'This is a description of the service.',
+      slug: '/service',
+    },
+  ],
+}

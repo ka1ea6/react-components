@@ -11,24 +11,23 @@ import {
   PopoverGroup,
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
-import HeaderMenu, { type HeaderMenuProps } from './HeaderMenu'
+import { type HeaderMenuProps } from './HeaderMenu'
 // import Image from 'next/image'
 import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
 import { Moon, Sun } from 'lucide-react'
+import { cn } from '@/lib/utils/cn'
 import { type StaticImageData } from 'next/image'
 interface SimpleHeaderProps {
-  title: string
   logoLight: StaticImageData
   logoDark: StaticImageData
-  menuItems: HeaderMenuProps[]
+  menuItems?: HeaderMenuProps[]
   isMenuOpen?: boolean
 
 }
 const themes = ['light', 'dark']
 
-export function HeaderMobile({ title, logoLight, logoDark, menuItems, isMenuOpen = true }: SimpleHeaderProps) {
+export function HeaderMobile({ logoLight, logoDark, menuItems, isMenuOpen = true }: SimpleHeaderProps) {
   const [isScrolled , setIsScrolled] = useState(false)
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -91,7 +90,7 @@ export function HeaderMobile({ title, logoLight, logoDark, menuItems, isMenuOpen
         }`}
       >
         {/* <Container className='px-0'> */}
-          <nav className="backdrop-blur-sm text-white p-0">
+          <nav className={cn('backdrop-blur-sm text-white p-0', mobileMenuOpen && 'hidden')}>
             <div className="flex items-stretch justify-between bg-accent px-2 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] dark:border-b dark:border-accent">
               <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true}/>
               <div className='flex items-center space-x-4'>
@@ -120,13 +119,12 @@ export function HeaderMobile({ title, logoLight, logoDark, menuItems, isMenuOpen
           </nav>
           <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10 bg-black bg-opacity-50" aria-hidden="true" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white dark:bg-[#212124] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="/" className="-m-1.5 p-1.5 outline-none">
+        <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white dark:bg-[#212124] px-2 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="flex items-stretch justify-between">
+            {/* <a href="/" className="-m-1.5 p-1.5 outline-none"> */}
             <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true}/>
 
-              {/* <img alt={title} src={logo} className="h-8 w-auto" /> */}
-            </a>
+            {/* </a> */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
@@ -138,8 +136,8 @@ export function HeaderMobile({ title, logoLight, logoDark, menuItems, isMenuOpen
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {menuItems.map((menu) => (
+              <div className="space-y-2 px-2 py-6">
+                {menuItems && menuItems.map((menu) => (
                   <DisclosureItem key={menu.name} {...menu} />
                 ))}
               </div>
@@ -153,77 +151,6 @@ export function HeaderMobile({ title, logoLight, logoDark, menuItems, isMenuOpen
   )
 
 
-  return (
-    <header className="relative isolate z-10 bg-background h-14">
-      <nav
-        aria-label="Global"
-        className="relative mx-auto flex items-center justify-between p-3 lg:px-8"
-      >
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5 outline-none">
-            <span className="sr-only">{title}</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            {/* <img alt={title} src={themeLogo} className="h-9 w-auto" /> */}
-          </a>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 outline-none"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
-        </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          {menuItems.map((menu) => (
-            <HeaderMenu key={menu.name} {...menu} />
-          ))}
-        </PopoverGroup>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {/* Theme Toggle Button */}
-          <button onClick={toggleTheme} className="p-2 text-gray-700 outline-none">
-            {currentTheme === 'dark' ? (
-              <SunIcon className="h-6 w-6" />
-            ) : currentTheme === 'green' ? (
-              <MoonIcon className="h-6 w-6" />
-            ) : (
-              <SunIcon className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-      </nav>
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-        <div className="fixed inset-0 z-10 bg-black bg-opacity-50" aria-hidden="true" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5 outline-none">
-              <span className="sr-only">Your Company</span>
-              {/* <img alt={title} src={logo} className="h-8 w-auto" /> */}
-            </a>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700 outline-none"
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {menuItems.map((menu) => (
-                  <DisclosureItem key={menu.name} {...menu} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
-    </header>
-  )
 }
 
 function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
