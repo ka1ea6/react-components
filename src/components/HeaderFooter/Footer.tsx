@@ -59,10 +59,10 @@ const titleClasses = cn(
   'text-gray-900 dark:text-white  text-md font-bold  leading-[1.25] md:text-lg mb-5 md:mb-[1.875rem]',
 )
 const addressIconParentClasses = cn(
-  'w-10 h-10 rounded-5 inline-grid place-items-center dark:bg-accent-700 border border-accent-800 dark:border-transparent text-primary flex-none',
+  'w-10 h-10 rounded-5 inline-grid place-items-center dark:bg-accent-700 border border-accent-800 dark:border-transparent text-accent flex-none',
 )
 const addressItemClasses = cn('flex items-center gap-5')
-const textColor = cn('transition-colors duration-300 hover:text-primary dark:hover:text-white')
+const textColor = cn('transition-colors duration-300 hover:text-accent dark:hover:text-white')
 
 export function Footer({ className, footerData, logoLight, logoDark }: SectionProps) {
   const { about, columnOne, columnTwo, columnThree, footerBottom } = footerData
@@ -78,11 +78,11 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
           <div className="grid gap-10 md:grid-cols-2  xl:grid-cols-4">
             {/* About  */}
             <div data-aos="fade-up" data-aos-delay="200">
-              <BrandLogo logoLight={logoLight} logoDark={logoDark}/>
+              <BrandLogo logoLight={logoLight} logoDark={logoDark} />
               <p className="mb-7 mt-3">{about.description}</p>
               {about.socialLinks && about.socialLinks.length > 0 && (
                 <nav aria-label="social links">
-                  <ul className="inline-flex min-h-[50px] items-center divide-x rounded-5 bg-primary  text-white">
+                  <ul className="inline-flex min-h-[50px] items-center divide-x rounded-5 bg-accent  text-white">
                     {about.socialLinks.map((socialLink, index) => (
                       <li key={index}>
                         <CustomLink
@@ -149,11 +149,12 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
                     </div>
                   )}
                 </li>
-                <li className={addressItemClasses}>
-                  <span className={addressIconParentClasses}>
-                    <FaPhone />
-                  </span>
-                  {columnTwo.phoneNumbers && columnTwo.phoneNumbers.length > 0 && (
+                {columnTwo.phoneNumbers && columnTwo.phoneNumbers.length > 0 && (
+                  <li className={addressItemClasses}>
+                    <span className={addressIconParentClasses}>
+                      <FaPhone />
+                    </span>
+
                     <div className="grid gap-1">
                       {columnTwo.phoneNumbers.map((phoneNumber, index) => (
                         <a
@@ -165,57 +166,59 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
                         </a>
                       ))}
                     </div>
-                  )}
-                </li>
+                  </li>
+                )}
               </ul>
             </div>
 
             {/* Column three  */}
-            <div data-aos="fade-up" data-aos-delay="800">
-              <h3 className={titleClasses}>{columnThree.title}</h3>
-              {columnThree.blogs && columnThree.blogs.length > 0 && (
-                <div className="grid gap-6">
-                  {columnThree.blogs.map((blog, index) => (
-                    <article
-                      key={index}
-                      className="group flex items-center gap-4 text-accent-800  dark:text-white"
-                    >
-                      <div className="flex-none overflow-hidden rounded-5">
-                        <Image
-                          {...blog.image}
-                          alt={blog.image.alt}
-                          width={80}
-                          height={80}
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      </div>
-                      <div>
-                        <p className="flex items-center gap-2.5 dark:text-body">
-                          <span className="text-primary">
-                            <FaCalendarDays />
-                          </span>
-                          <span>{blog.date}</span>
-                        </p>
-                        <h4 className="text-md font-bold leading-normal">
-                          <CustomLink
-                            href={blog.slug}
-                            className="transition-colors duration-300 hover:text-primary"
-                          >
-                            {blog.title}
-                          </CustomLink>
-                        </h4>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </div>
+            {columnThree && (
+              <div data-aos="fade-up" data-aos-delay="800">
+                <h3 className={titleClasses}>{columnThree.title}</h3>
+                {columnThree.blogs && columnThree.blogs.length > 0 && (
+                  <div className="grid gap-6">
+                    {columnThree.blogs.map((blog, index) => (
+                      <article
+                        key={index}
+                        className="group flex items-center gap-4 text-accent-800  dark:text-white"
+                      >
+                        <div className="flex-none overflow-hidden rounded-5">
+                          <Image
+                            {...blog.image}
+                            alt={blog.image.alt}
+                            width={80}
+                            height={80}
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
+                        <div>
+                          <p className="flex items-center gap-2.5 dark:text-body">
+                            <span className="text-accent">
+                              <FaCalendarDays />
+                            </span>
+                            <span>{blog.date}</span>
+                          </p>
+                          <h4 className="text-md font-bold leading-normal">
+                            <CustomLink
+                              href={blog.slug}
+                              className="transition-colors duration-300 hover:text-accent"
+                            >
+                              {blog.title}
+                            </CustomLink>
+                          </h4>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className="flex min-h-[90px] items-center border-t border-accent-800 border-opacity-20 py-5 dark:border-body dark:border-opacity-20">
-      <div className="container">
-      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 md:gap-x-10">
+        <div className="container">
+          <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 md:gap-x-10">
             <p>{footerBottom.copyrightText}</p>
             {footerBottom.links && footerBottom.links.length > 0 && (
               <nav aria-label="footer bottom navigation">

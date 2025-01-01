@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { Footer, type SectionProps } from './Footer'
 import { FaInstagram, FaLinkedin } from 'react-icons/fa6'
 import logoLight from '../../../.storybook/public/cortex-reply-light.png'
-import logoDark from '../../../.storybook/public/cortex-reply-light.png'
+import logoDark from '../../../.storybook/public/cortex-reply-dark.png'
 
 export default {
   title: 'Footer/Footer',
@@ -78,6 +78,57 @@ Default.args = {
         },
       ],
     },
+    footerBottom: {
+      copyrightText: 'copyright',
+      links: [
+        {
+          label: 'Privacy Policy',
+          href: '/privacy-policy',
+          openNewTab: false,
+        },
+        {
+          label: 'Contact Us',
+          href: '/contact',
+          openNewTab: false,
+        },
+      ],
+    },
+  },
+}
+
+
+export const NoBlog = Template.bind({})
+NoBlog.args = {
+  className: '',
+  logoLight:logoLight,
+  logoDark:logoDark,
+  footerData: {
+    about: {
+      description: 'This is a sample description for the about section.',
+      socialLinks: [
+        {
+          icon: <FaLinkedin />,
+          href: 'https://www.linkedin.com/company/cortex-reply/',
+        },
+        {
+          icon: <FaInstagram />,
+          href: 'https://www.instagram.com/cortex.reply/',
+        },
+      ],
+    },
+    columnOne: {
+      title: 'Column One',
+      links: [
+        { href: '/link1', label: 'Link 1' },
+        { href: '/link2', label: 'Link 2' },
+      ],
+    },
+    columnTwo: {
+      title: 'Contact Us',
+      location: '1234 Street Name, City, Country',
+      mails: ['contact@example.com', 'support@example.com'],
+    },
+    
     footerBottom: {
       copyrightText: 'copyright',
       links: [
