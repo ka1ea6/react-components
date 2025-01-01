@@ -63,7 +63,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
       > */}
         <Container className="px-0">
           <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
-            <div className="flex items-center justify-between bg-accent px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl dark:border dark:border-accent">
+            <div className="flex items-center justify-between bg-background px-9 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] rounded-b-xl border border-t-0 border-accent">
               <BrandLogo logoDark={logoDark} logoLight={logoLight} />
               {/* <ul className="flex items-center justify-center flex-grow space-x-8 text-md">
                 <li>
@@ -96,7 +96,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
               </PopoverGroup>
               <div className="flex items-center space-x-4">
                 <button
-                  className="fixed right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-white dark:hover:text-accent"
+                  className="fixed right-4 z-[60] p-2 rounded-full bg-accent/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-primary hover:text-accent"
                   onClick={toggleTheme}
                 >
                   <div className="relative">

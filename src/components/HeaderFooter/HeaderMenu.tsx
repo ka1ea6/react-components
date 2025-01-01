@@ -44,7 +44,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
           {items &&
             items.map((item) => (
               <div key={item.name} className="group relative rounded-lg p-6 text-sm/6  box-border">
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-popover group-hover:text-accent transition-transform duration-300 ease-in-out group-hover:scale-90">
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-popover text-foreground group-hover:text-accent transition-transform duration-300 ease-in-out group-hover:scale-90">
                   <item.icon aria-hidden="true" size="6x" />
                 </div>
                 <a
