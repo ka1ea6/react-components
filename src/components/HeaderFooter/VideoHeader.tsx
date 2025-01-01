@@ -77,7 +77,7 @@ export function VideoHeader({ logoVideo, logoLight, logoDark, menuItems } : { lo
         </button>
       )}
       <div className="fixed top-0 left-0 right-0 z-50" >
-      <HeaderDesktop isMenuOpen={isScrolled} logoLight={logoLight} logoDark={logoDark} />
+      <HeaderDesktop isMenuOpen={isScrolled} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
       <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} menuItems={menuItems}/>
 
       </div>

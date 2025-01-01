@@ -95,8 +95,6 @@ export const Default: PageStory = {
       </div>
     ),
     header: {
-      title: 'Your Company',
-      logo: 'cortex-reply.png',
       menuItems: [
         {
           name: 'Documentation',
