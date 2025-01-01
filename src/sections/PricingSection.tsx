@@ -23,6 +23,7 @@ export function PricingSection({ sectionHeading, cards }: PricingSectionProps) {
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
+                className='py-2'
               >
                 <PricingCard {...card} />
               </div>
