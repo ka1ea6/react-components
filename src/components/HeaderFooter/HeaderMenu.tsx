@@ -19,9 +19,11 @@ export interface HeaderMenuProps {
 const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
   if (!items && href) {
     return (
-      <a href={href} className="relative inline-block text-sm font-semibold text-foreground group">
-        {name}
-        <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+      <a href={href} className="flex items-center gap-x-1 text-sm font-semibold text-foreground group">
+        <span className="relative">
+          {name}
+          <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+        </span>
       </a>
     )
   }
