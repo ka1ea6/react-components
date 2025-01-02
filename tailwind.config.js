@@ -160,7 +160,8 @@ const config = {
       },
       colors: {
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
+          // DEFAULT: '#A42368',
+          DEFAULT: 'rgb(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
         background: 'hsl(var(--background))',
