@@ -57,7 +57,7 @@ Default.args = {
         alt: 'Innovative Solutions for Modern Problems',
       },
       publishedAt: '2025-01-01T17:19:41.270Z',
-      categories: ['Technology', 'Other'],
+      categories: [],
       commentCount: '10',
       title: 'Innovative Solutions for Modern Problems',
       description:
