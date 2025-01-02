@@ -1,15 +1,13 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { BlogListSection, type BlogProps } from './BlogListSection'
+import { NewsList, type BlogProps } from './NewsList'
 
 export default {
-  title: 'Sections/BlogListSection',
-  component: BlogListSection,
+  title: 'Layouts/NewsList',
+  component: NewsList,
   tags: ['autodocs'],
+
   parameters: {
-    nextjs: {
-      appDirectory: true, // 👈 Set this
-    },
     docs: {
       description: {
         component:
@@ -32,57 +30,10 @@ export default {
   ],
 } as Meta
 
-const Template = (args: { blogs: BlogProps[] }) => <BlogListSection {...args} />
+const Template = (args: { blogs: BlogProps[] }) => <NewsList {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  pages: { totalPages :4, page: 1},
-  types: [
-    {
-      label: 'All',
-      href: '1',
-    },
-    {
-      label: 'Announcements',
-      href: '3',
-    },
-    {
-      label: 'Blogs',
-      href: '4',
-    },
-    {
-      label: 'Articles',
-      href: '5',
-    },
-    {
-      label: 'Case Studies',
-      href: '6',
-    },
-  ],
-  categories: {
-    title: 'Categories',
-  links: [
-    {
-      label: 'General',
-      href: '1',
-    },
-    {
-      label: 'Business Advice',
-      href: '2',
-    },
-    {
-      label: 'Stock market',
-      href: '3',
-    },
-    {
-      label: 'Regular start',
-      href: '4',
-    },
-    {
-      label: 'Regular start',
-      href: '5',
-    },
-  ],},
   blogs: [
     {
       slug: '/blog/pioneering-progress',
@@ -130,5 +81,4 @@ Default.args = {
 export const LoadsOfBlogs = Template.bind({})
 LoadsOfBlogs.args = {
   ...Default.args,
-  pages: { totalPages: 40, page: 20},
 }

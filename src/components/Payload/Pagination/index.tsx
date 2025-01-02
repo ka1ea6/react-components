@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils/cn'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-export const Pagination: React.FC<{
+export const PayloadPagination: React.FC<{
   className?: string
   page: number
   totalPages: number
