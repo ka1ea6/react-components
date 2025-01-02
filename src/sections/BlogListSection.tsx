@@ -35,7 +35,7 @@ interface CategoryListProps {
 export function BlogListSection({ blogs, pages, categories, types }: { blogs: BlogProps[]; pages: PagingProps, categories: CategoryListProps, types: LinkProps[] }) {
 
   return (
-    <section className="section-padding-primary">
+    <section>
       <Container>
         <div className="grid gap-30px lg:grid-cols-[1fr_410px]">
           <div>
