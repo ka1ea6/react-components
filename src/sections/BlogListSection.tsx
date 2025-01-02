@@ -16,7 +16,7 @@ import {
   // FaTwitter,
   // FaInstagram,
 } from 'react-icons/fa6'
-import { au } from 'vitest/dist/chunks/reporters.D7Jzd9GS.js'
+import { formatDateTimeStringShort } from '@/lib/utils/formatDateTime'
 
 export interface BlogProps {
   image: Omit<ImageProps, 'width' | 'height'>
@@ -26,7 +26,7 @@ export interface BlogProps {
   title: string
   description: string
   slug: string
-  publishedAt: Date
+  publishedAt: string
   meta: Post['meta']
 }
 
@@ -198,8 +198,8 @@ const BlogItem = ({ post, id }: { post: BlogProps; id: number }) => {
       </div>
       <div>
         <div className="flex items-center gap-x-4 text-xs">
-          <time dateTime={post.publishedAt.toISOString()} className="text-foreground">
-            {post.publishedAt.toDateString()}
+          <time dateTime={post.publishedAt} className="text-foreground">
+            {formatDateTimeStringShort(post.publishedAt)}
           </time>
           {post.categories.map((category: string, index: number) => (
             <a
@@ -229,7 +229,7 @@ const BlogItem = ({ post, id }: { post: BlogProps; id: number }) => {
         </div>
         <div className="mt-6 flex flex-wrap lg:border-t gap-y-2 border-gray-200 dark:border-gray-700 pt-6">
           {authors.map((author, index) => (
-            <div className="relative flex items-center gap-x-4">
+            <div className="relative flex items-center gap-x-4" key={index}>
               {author.image ? (
                 <img
                   alt={author.image.alt}
