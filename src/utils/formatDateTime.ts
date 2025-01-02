@@ -60,3 +60,25 @@ export const formatDateTimeStringShort = (timestamp: string): string => {
 
   return `${dayOfWeek} ${day}${getOrdinalSuffix(day)} ${month}`
 }
+
+
+export const formatDateTimeStringCompact = (timestamp: string): string => {
+  const date = timestamp ? new Date(timestamp) : new Date()
+
+  const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date)
+  const day = date.getDate()
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date)
+  // const year = date.getFullYear()
+
+  const getOrdinalSuffix = (day: number): string => {
+    if (day > 3 && day < 21) return 'th'
+    switch (day % 10) {
+      case 1: return 'st'
+      case 2: return 'nd'
+      case 3: return 'rd'
+      default: return 'th'
+    }
+  }
+
+  return `${dayOfWeek} ${day}${getOrdinalSuffix(day)} ${month}`
+}

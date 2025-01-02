@@ -7,7 +7,7 @@ import Image, { StaticImageData } from 'next/image'
 import { BrandLogo } from './BrandLogo'
 import { FaChevronRight, FaEnvelope, FaPaperPlane, FaPhone, FaCalendarDays } from 'react-icons/fa6'
 import { ClassValue } from 'clsx'
-
+import { formatDateTimeStringCompact } from '@/lib/utils/formatDateTime'
 interface RecentBlog {
   slug: string
   image: Omit<ImageProps, 'width' | 'height'>
@@ -196,7 +196,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
                             <span className="text-accent">
                               <FaCalendarDays />
                             </span>
-                            <span>{blog.date}</span>
+                            <span>{formatDateTimeStringCompact(blog.date)}</span>
                           </p>
                           <h4 className="text-md font-bold leading-normal">
                             <CustomLink

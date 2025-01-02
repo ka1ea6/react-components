@@ -64,7 +64,7 @@ Default.args = {
             alt: 'We provide a range of IT solutions',
           },
           title: 'We provide a range of IT solutions',
-          date: 'january 11, 2024',
+          date: '2025-01-02T00:00:00.000Z',
           slug: './blog-details',
         },
         {
@@ -73,7 +73,7 @@ Default.args = {
             alt: 'IT solutions enhance efficiency',
           },
           title: 'IT solutions enhance efficiency',
-          date: 'january 11, 2024',
+          date: '2025-01-02T00:00:00.000Z',
           slug: './blog-details',
         },
       ],
