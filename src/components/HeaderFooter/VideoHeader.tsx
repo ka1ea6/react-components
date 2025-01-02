@@ -125,7 +125,7 @@ export function VideoHeader({
         />
         <div className="h-full flex flex-col items-center justify-center">
           <h1 className="text-6xl font-bold pt-auto mb-12">{title && title}.</h1>
-          <p className="text-3xl mb-8 max-w-2xl">{subtitle && subtitle}</p>
+          <div className="text-3xl mb-8 max-w-2xl">{subtitle && subtitle}</div>
         </div>
         <div className="flex justify-center items-center w-full mb-8">
           <div
