@@ -1,23 +1,6 @@
-import { ImageProps, LinkProps } from '@/common-types'
-import { Button } from '@/components/ui/button'
-import { Container } from '@/components/Other/Container'
-import { CustomLink } from '@/components/Other/CustomLink'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ImageProps } from '@/common-types'
 import { Post } from '@/payload-types'
-import { cn } from '@/lib/utils/cn'
 import Image from 'next/image'
-import { useSearchParams } from 'next/navigation';
-
-import {
-  FaArrowRight,
-  // FaMagnifyingGlass,
-  // FaRegComments,
-  FaRegFolderOpen,
-  FaRegUser,
-  // FaFacebookF,
-  // FaTwitter,
-  // FaInstagram,
-} from 'react-icons/fa6'
 import { formatDateTimeStringShort } from '@/lib/utils/formatDateTime'
 
 export interface BlogProps {

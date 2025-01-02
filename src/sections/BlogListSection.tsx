@@ -39,13 +39,13 @@ export function BlogListSection({ blogs, pages, categories, types }: { blogs: Bl
       <Container>
         <div className="grid gap-30px lg:grid-cols-[1fr_410px]">
           <div>
-          <Filter types={types} />
+          { types && <Filter types={types} />}
           <NewsList blogs={blogs} />
           <Pagination pages={pages} />
           </div>
           <div className="grid gap-30px w-full self-baseline max-md:mx-auto max-md:max-w-[410px] lg:gap-10">
             <div className="lg:-mt-24 w-full">
-            <Categories links={categories.links} title={categories.title}/>
+            { categories && categories.links && <Categories links={categories.links} title={categories.title}/>}
             </div>
             {/* <Tagswidget {...tagwidgetData} /> */}
           </div>

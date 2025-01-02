@@ -132,3 +132,12 @@ LoadsOfBlogs.args = {
   ...Default.args,
   pages: { totalPages: 40, page: 20},
 }
+
+
+
+export const NoCategories = Template.bind({})
+NoCategories.args = {
+  ...Default.args,
+  categories: {
+    title: 'Categories',}
+  }
