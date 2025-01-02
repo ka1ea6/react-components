@@ -10,6 +10,7 @@ export interface SectionHeadingProps {
   description?: string
   alignment?: Alignment
   hasBottomSpacing?: boolean
+  invert?: boolean
   className?: ClassValue
 }
 
@@ -33,6 +34,7 @@ export function SectionHeading({
   alignment = 'start',
   hasBottomSpacing = false,
   className,
+  invert = false,
 }: SectionHeadingProps) {
   const wrapperClasses = cn(
     alignment === 'start' && 'text-left',
@@ -53,7 +55,7 @@ export function SectionHeading({
           {subtitle}
         </span>
       )}
-      <h2 className="font-secondary text-xl font-bold leading-[1.25] text-foreground md:text-2xl">
+      <h2 className={cn('font-secondary text-xl font-bold leading-[1.25] text-foreground md:text-2xl', invert && 'text-gray-900')}>
         {title}
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}

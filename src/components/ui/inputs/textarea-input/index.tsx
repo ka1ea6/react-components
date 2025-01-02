@@ -25,7 +25,7 @@ export function TextAreaInput({ icon, ...props }: TextareaInputProps) {
   return (
     <div className="relative w-full">
       <Input {...props} />
-      {icon && <span className="absolute right-5 top-[18px] w-[14px] text-primary">{icon}</span>}
+      {icon && <span className="absolute right-5 top-[18px] w-[14px] text-accent">{icon}</span>}
     </div>
   )
 }

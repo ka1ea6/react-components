@@ -158,7 +158,7 @@ export function Form() {
             )}
           </div>
           <div className="lg:col-span-2">
-            <Button type="submit" className="w-full outline outline-accent bg-background text-accent hover:bg-accent hover:text-accent-foreground" disabled={isSubmitting}>
+            <Button type="submit" className="w-full outline outline-accent bg-accent text-accent-foreground hover:bg-white hover:text-accent" disabled={isSubmitting}>
               <span>SEND</span>
             </Button>
           </div>
