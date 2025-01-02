@@ -96,7 +96,7 @@ const paginationItemClasses = cn(
 
 const linkClasses = cn('transition-colors duration-400 hover:text-primary ease-in-out')
 
-export function BlogListSection({ blogs }: { blogs: BlogProps[] }) {
+export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: number }) {
   return (
     <section className="section-padding-primary">
       <Container>
@@ -113,39 +113,36 @@ export function BlogListSection({ blogs }: { blogs: BlogProps[] }) {
                     className="flex flex-wrap items-center justify-center gap-3 md:gap-5"
                     aria-label="pagination"
                   >
+                    {Array.from({ length: pages }, (_, i) => {
+                      if (i < 4 || i === pages - 1) {
+                        return (
+                          <li key={i}>
+                            <a
+                              className={paginationItemClasses}
+                              href="#"
+                              aria-label={`pagination button ${i + 1}`}
+                              role="button"
+                            >
+                              {i + 1}
+                            </a>
+                          </li>
+                        )
+                      } else if (i === 4) {
+                        return (
+                          <li key={i}>
+                            <span className="pagination-ellipsis">...</span>
+                          </li>
+                        )
+                      }
+                      return null
+                    })}
+                    { pages > 4 && (
                     <li>
                       <a
-                        className={paginationItemClasses}
-                        href="#"
-                        aria-label="pagination button"
-                        role="button"
-                      >
-                        01
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className={paginationItemClasses}
-                        href="#"
-                        aria-label="pagination button"
-                        role="button"
-                      >
-                        02
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className={paginationItemClasses}
-                        href="#"
-                        aria-label="pagination button"
-                        role="button"
-                      >
-                        03
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className={cn(paginationItemClasses, 'border-accent bg-accent text-accent-foreground')}
+                        className={cn(
+                          paginationItemClasses,
+                          'border-accent bg-accent text-accent-foreground',
+                        )}
                         href="#"
                         aria-label="pagination button"
                         role="button"
@@ -153,6 +150,7 @@ export function BlogListSection({ blogs }: { blogs: BlogProps[] }) {
                         <FaArrowRight />
                       </a>
                     </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -220,23 +218,27 @@ const BlogItem = ({ post, id }: { post: BlogProps; id: number }) => {
           </h3>
           <p className="mt-5 text-sm/6 text-foreground">{post.description}</p>
         </div>
-        <div className="mt-6 flex border-t border-gray-200 dark:border-gray-700 pt-6">
-        { authors.map((author, index) => (
-          <div className="relative flex items-center gap-x-4">
-          {author.image ? (
-            <img alt={author.image.alt} src={author.image.src} className="size-10 rounded-full bg-gray-50" />
-          ) : (
-            <div className="size-10 rounded-full bg-gray-50" />
-          )}{' '}
-          <div className="text-sm/6">
-            <p className="text-foreground  pr-6">
-              <span className="absolute inset-0" />
-              {author.name}
-            </p>
-            {/* <p className="text-gray-600">{post.author.role}</p> */}
-          </div>
-        </div>
-        ))}       
+        <div className="mt-6 flex flex-wrap lg:border-t gap-y-2 border-gray-200 dark:border-gray-700 pt-6">
+          {authors.map((author, index) => (
+            <div className="relative flex items-center gap-x-4">
+              {author.image ? (
+                <img
+                  alt={author.image.alt}
+                  src={author.image.src}
+                  className="size-10 rounded-full bg-gray-50"
+                />
+              ) : (
+                <div className="size-10 rounded-full bg-gray-50" />
+              )}{' '}
+              <div className="text-sm/6">
+                <p className="text-foreground  pr-6">
+                  <span className="absolute inset-0" />
+                  {author.name}
+                </p>
+                {/* <p className="text-gray-600">{post.author.role}</p> */}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </article>

@@ -34,6 +34,7 @@ const Template = (args: { blogs: BlogProps[] }) => <BlogListSection {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
+  pages: 4,
   blogs: [
     {
       slug: '/blog/pioneering-progress',
@@ -78,4 +79,10 @@ Default.args = {
         'Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. By Jane Doe. Future. 22nd April 2022. Leave a comment.',
     },
   ],
+}
+
+export const LoadsOfBlogs = Template.bind({})
+LoadsOfBlogs.args = {
+  ...Default.args,
+  pages: 40,
 }
