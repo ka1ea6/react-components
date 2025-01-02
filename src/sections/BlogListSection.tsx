@@ -30,6 +30,15 @@ export interface BlogProps {
   meta: Post['meta']
 }
 
+type PagingProps = {
+  nextPage: number | null
+  page: number
+  pagingCounter: number
+  prevPage: number | null
+  totalDocs: number | null
+  totalPages: number
+}
+
 interface CategoryListProps {
   links: LinkProps[]
 }
@@ -96,7 +105,7 @@ const paginationItemClasses = cn(
 
 const linkClasses = cn('transition-colors duration-400 hover:text-primary ease-in-out')
 
-export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: number }) {
+export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: PagingProps }) {
   return (
     <section className="section-padding-primary">
       <Container>
@@ -105,7 +114,7 @@ export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: n
             {blogs && blogs.length > 0 && (
               <div className="grid gap-10 lg:gap-20">
                 {blogs.map((post, index) => (
-                  <BlogItem post={post} id={index} />
+                  <BlogItem post={post} id={index} key={index}/>
                 ))}
 
                 <div>
@@ -113,8 +122,8 @@ export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: n
                     className="flex flex-wrap items-center justify-center gap-3 md:gap-5"
                     aria-label="pagination"
                   >
-                    {Array.from({ length: pages }, (_, i) => {
-                      if (i < 4 || i === pages - 1) {
+                    {Array.from({ length: pages.totalPages }, (_, i) => {
+                      if (i < 4 || i === pages.totalPages - 1) {
                         return (
                           <li key={i}>
                             <a
@@ -136,7 +145,7 @@ export function BlogListSection({ blogs, pages }: { blogs: BlogProps[]; pages: n
                       }
                       return null
                     })}
-                    { pages > 4 && (
+                    { pages.totalPages > 4 && (
                     <li>
                       <a
                         className={cn(
