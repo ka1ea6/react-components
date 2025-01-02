@@ -5,7 +5,7 @@ import { SectionHeading, SectionHeadingWithoutStylingProps } from '@/components/
 import Image from 'next/image'
 
 export interface AboutSectionProps {
-  images: {
+  images?: {
     pattern: ImageProps
     image1: ImageProps
     image2: ImageProps
