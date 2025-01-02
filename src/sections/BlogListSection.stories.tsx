@@ -56,7 +56,6 @@ Default.args = {
         src: '/assets/images/blog/blog-lg-2.png',
         alt: 'Innovative Solutions for Modern Problems',
       },
-      authors: [ { name: 'admin'}, { name: 'demo'}],
       publishedAt: '2025-01-01T17:19:41.270Z',
       categories: ['Technology', 'Other'],
       commentCount: '10',
@@ -72,7 +71,6 @@ Default.args = {
       },
       authors: [ { name: 'admin'}, { name: 'demo'}],
       publishedAt: '2025-01-01T17:19:41.270Z',
-      categories: ['Technology', 'Other'],
       commentCount: '08',
       title: 'The Future of Technology',
       description:

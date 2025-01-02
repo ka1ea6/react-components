@@ -20,8 +20,8 @@ import { formatDateTimeStringShort } from '@/lib/utils/formatDateTime'
 
 export interface BlogProps {
   image: Omit<ImageProps, 'width' | 'height'>
-  authors: { name: string; image: ImageProps }[]
-  categories: string[]
+  authors?: { name: string; image: ImageProps }[]
+  categories?: string[]
   commentCount: string
   title: string
   description: string
@@ -201,7 +201,7 @@ const BlogItem = ({ post, id }: { post: BlogProps; id: number }) => {
           <time dateTime={post.publishedAt} className="text-foreground">
             {formatDateTimeStringShort(post.publishedAt)}
           </time>
-          {post.categories.map((category: string, index: number) => (
+          {post.categories && post.categories.map((category: string, index: number) => (
             <a
               key={index}
               href={`#${category}`}
@@ -228,7 +228,7 @@ const BlogItem = ({ post, id }: { post: BlogProps; id: number }) => {
           <p className="mt-5 text-sm/6 text-foreground">{post.description}</p>
         </div>
         <div className="mt-6 flex flex-wrap lg:border-t gap-y-2 border-gray-200 dark:border-gray-700 pt-6">
-          {authors.map((author, index) => (
+          {authors && authors.map((author, index) => (
             <div className="relative flex items-center gap-x-4" key={index}>
               {author.image ? (
                 <img
