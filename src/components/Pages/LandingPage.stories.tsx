@@ -33,6 +33,7 @@ import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
 import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react';
+import { title } from 'process'
 
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
@@ -83,6 +84,8 @@ export const Default: PageStory = {
       </div>
     ),
     header: {
+      title: 'Storage Service',
+      subtitle: 'A scalable object storage service that offers industry-leading performance, security, and availability.',
       menuItems: [
         {
           name: 'Documentation',
@@ -308,14 +311,13 @@ export const Default: PageStory = {
   },
 }
 
-export const LowImpactHero = {
+export const HtmlSubtitle = {
   args: {
     ...Default.args,
-    hero: {
-      type: 'lowImpact',
-      children: <h1 className="text-4xl font-bold">Low Impact Hero</h1>,
+    header: {
+      title: 'Page Title',
+      subtitle: <div><p className="text-xl font-bold">A load of text here</p><br/><p className="text-2xl font-bold">A load more text here</p></div>,
     },
-    heroBackgroundImage: 'stock1.jpg?height=400&width=800',
   },
 }
 

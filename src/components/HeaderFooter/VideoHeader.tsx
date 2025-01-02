@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, JSX } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Image, { StaticImageData } from 'next/image'
 import { HeaderDesktop } from './HeaderDesktop'
@@ -20,7 +20,7 @@ export function VideoHeader({
   logoDark: StaticImageData
   menuItems?: HeaderMenuProps[]
   title?: string
-  subtitle?: string
+  subtitle?: string | JSX.Element
 }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(false)
