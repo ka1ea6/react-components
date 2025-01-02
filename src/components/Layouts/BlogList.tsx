@@ -30,7 +30,7 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
   return (
     <section
       className={cn(
-        'section-padding-primary overflow-hidden bg-white dark:bg-accent-700 [.light_&]:pt-0',
+        'section-padding-primary overflow-hidden ',
         // className,
       )}
     >
