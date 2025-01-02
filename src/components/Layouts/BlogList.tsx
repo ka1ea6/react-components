@@ -8,7 +8,7 @@ import { CustomLink } from '@/components/Other/CustomLink'
 import Image, { ImageProps } from 'next/image'
 import { FaArrowRight,  FaUser } from 'react-icons/fa6'
 
-export interface BlogProps {
+interface BlogProps {
   image: Omit<ImageProps, 'width' | 'height'>
   authors?: { name: string; image: ImageProps }[]
   categories?: string[]

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
 import { BlogList, type BlogSectionProps } from './BlogList'
-import blogImage from '../../../.storybook/public/assets/images/blog/istockphoto1.jpg'
 export default {
   title: 'Layouts/BlogList',
   component: BlogList,
