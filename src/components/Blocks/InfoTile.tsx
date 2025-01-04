@@ -23,14 +23,14 @@ export function InfoTile(props: InfoTileProps) {
           layout="responsive"
           width={1170}
           height={780}
-          className="rounded-2xl object-cover"
+          className="rounded-2xl object-cover transform group-hover:scale-95 transition-transform duration-400"
         />
       )}
       <div className="flex flex-1 flex-col p-4">
         {/* <div className="text-sm/5 text-gray-700">
                   {dayjs(post.publishedAt).format('dddd, MMMM D, YYYY')}
                 </div> */}
-        <div className="mt-2 text-base/7 font-medium text-center group-hover:scale-105 transition-transform duration-200 ease-in-out group-hover:text-primary">
+        <div className="mt-2 font-medium text-center group-hover:scale-110 transition-transform duration-400 ease-in-out text-foreground dark:text-background group-hover:text-accent">
           <a href={url}>
             <span className="absolute inset-0" />
             {title}

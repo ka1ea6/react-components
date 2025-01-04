@@ -73,11 +73,11 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features })
             // const Icon = <div><i className=`${section.icon.type} ${section.icon.icon}`></i></div>
             const content = (
               <div key={index} className="flex flex-col gap-4">
-                <div className="text-accent h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-200">
+                <div className="text-accent h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-400">
                   <i className={`${section.icon.type} fa-${section.icon.icon} fa-4x`}></i>
                 </div>
 
-                <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-200">
+                <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-400">
                   {section.title}
                 </h3>
                 {typeof section.content != 'object' && (

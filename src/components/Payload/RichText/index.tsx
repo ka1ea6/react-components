@@ -3,14 +3,14 @@ import React from 'react'
 
 import { serializeLexical } from './serialize'
 
-type Props = {
+export type RichTextProps = {
   className?: string
   content: Record<string, any>
   enableGutter?: boolean
   enableProse?: boolean
 }
 
-const RichText: React.FC<Props> = ({
+const RichText: React.FC<RichTextProps> = ({
   className,
   content,
   enableGutter = true,

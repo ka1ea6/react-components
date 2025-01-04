@@ -24,6 +24,24 @@ import {
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | TableNode
+  | TableRowNode
+  | TableCellNode
+
+type TableNode = {
+  type: 'table'
+  children: TableRowNode[]
+}
+
+type TableRowNode = {
+  type: 'tableRow'
+  children: TableCellNode[]
+}
+
+type TableCellNode = {
+  type: 'tableCell'
+  children: NodeTypes[]
+}
 
 type Props = {
   nodes: NodeTypes[]
@@ -70,6 +88,23 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
 
           return text
+        }
+        if (node.type === 'table') {
+          return (
+            <table key={index}>
+              <tbody>
+                {node.children.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.children.map((cell, cellIndex) => (
+                      <td key={cellIndex}>
+                        {serializeLexical({ nodes: cell.children })}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
         }
 
         // NOTE: Hacky fix for

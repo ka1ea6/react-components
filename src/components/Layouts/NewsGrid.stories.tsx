@@ -2559,6 +2559,48 @@ type Story = StoryObj<typeof NewsGrid>
 
 export const Primary: Story = {
   args: {
+    blogs: [
+      {
+        slug: '/blog/pioneering-progress',
+        image: {
+          src: '/assets/images/blog/blog-lg-1.png',
+          alt: 'Pioneering Progress, One Algorithm at a Time',
+        },
+        authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
+        categories: ['Technology', 'Other'],
+        publishedAt: '2025-01-01T17:19:41.270Z',
+        commentCount: '05',
+        title: 'Pioneering Progress, One Algorithm at a Time',
+        description:
+          'Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis start fermentum ullamcorper viverra laoreet. By Admin. Technology. 28th February 2022. Leave a comment.',
+      },
+      {
+        slug: '/blog/innovative-solutions',
+        image: {
+          src: '/assets/images/blog/blog-lg-2.png',
+          alt: 'Innovative Solutions for Modern Problems',
+        },
+        publishedAt: '2025-01-01T17:19:41.270Z',
+        categories: [],
+        commentCount: '10',
+        title: 'Innovative Solutions for Modern Problems',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. By John Doe. Innovation. 15th March 2022. Leave a comment.',
+      },
+      {
+        slug: '/blog/future-of-tech',
+        image: {
+          src: '/assets/images/blog/blog-lg-3.png',
+          alt: 'The Future of Technology',
+        },
+        authors: [ { name: 'admin'}, { name: 'demo'}],
+        publishedAt: '2025-01-01T17:19:41.270Z',
+        commentCount: '08',
+        title: 'The Future of Technology',
+        description:
+          'Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. By Jane Doe. Future. 22nd April 2022. Leave a comment.',
+      },
+    ],
     //   icon: { type: 'thin', name: 'star' },
     //   title : 'Primary Insights',
     //   body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu ipsum enim.',
