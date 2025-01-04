@@ -23,7 +23,7 @@ export function VideoHeader({
   subtitle?: string | JSX.Element
 }) {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false)
+  // const [isHeaderVisible, setIsHeaderVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const scrollToNextSection = () => {
@@ -33,20 +33,20 @@ export function VideoHeader({
     }
   }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsHeaderVisible(true)
-        setIsMenuOpen(false)
-      } else {
-        setIsHeaderVisible(false)
-        setIsMenuOpen(true)
-      }
-    }
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 100) {
+  //       setIsHeaderVisible(true)
+  //       setIsMenuOpen(false)
+  //     } else {
+  //       setIsHeaderVisible(false)
+  //       setIsMenuOpen(true)
+  //     }
+  //   }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  //   window.addEventListener('scroll', handleScroll, { passive: true })
+  //   return () => window.removeEventListener('scroll', handleScroll)
+  // }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,16 +76,19 @@ export function VideoHeader({
         </video>
         <div className="absolute inset-0 bg-primary-900/50" />
       </div>
-      {!isScrolled && (
+      {!isScrolled && !isMenuOpen && (
         <button
           className="fixed hidden lg:block top-4 right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           onClick={toggleMenu}
         >
-          {isMenuOpen ? (
+          {/* {isMenuOpen ? (
             <X className="w-6 h-6 text-white" />
           ) : (
             <Menu className="w-6 h-6 text-white" />
-          )}
+          )} */}
+            <Menu className="w-6 h-6 text-white" />
+
+
         </button>
       )}
       <div className="fixed top-0 left-0 right-0 z-50">
@@ -102,32 +105,20 @@ export function VideoHeader({
           menuItems={menuItems}
         />
       </div>
-      <div
-        className={`fixed top-4 left-4 z-50 transition-all duration-300 ${
-          isHeaderVisible || isMenuOpen ? 'opacity-0' : 'opacity-100'
-        }`}
-      >
-        {/* <Image
-          src={logoBw}
-          alt="Cortex Reply Logo"
-          width={180}
-          height={80}
-          className="h-auto w-auto"
-        /> */}
-      </div>
+      
       <div className="absolute inset-0 h-full z-10 flex flex-col items-center justify-between text-white text-center px-4">
         <Image
           src={logoVideo}
           alt="Cortex Reply Logo"
           width={720}
           height={320}
-          className={cn('h-auto w-auto mt-8 hidden lg:block', isMenuOpen && 'lg:hidden')}
+          className={cn('absolute top-2.5 h-auto w-auto mt-8 hidden lg:block', isMenuOpen && 'lg:hidden')}
         />
-        <div className="h-full flex flex-col items-center justify-center">
+        <div className="absolute top-1/2vv h-full flex flex-col px-4 items-center justify-center">
           <h1 className="text-6xl font-bold pt-auto mb-12">{title && title}</h1>
           <div className="text-3xl mb-8 max-w-2xl">{subtitle && subtitle}</div>
         </div>
-        <div className="flex justify-center items-center w-full mb-8">
+        <div className="absolute bottom-10 flex justify-center items-center w-full mb-8">
           <div
             className="animate-bounce cursor-pointer hover:text-accent"
             onClick={scrollToNextSection}

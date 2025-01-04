@@ -96,7 +96,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
               </PopoverGroup>
               <div className="flex items-center space-x-4">
                 <button
-                  className="fixed right-4 z-[60] p-2 rounded-full bg-accent/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-primary dark:text-white hover:text-accent hover:scale-125"
+                  className="fixed right-4 z-[60] p-2 rounded-full hover:border hover:border-accent backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-primary dark:text-white hover:text-accent hover:scale-125"
                   onClick={toggleTheme}
                 >
                   <div className="relative">

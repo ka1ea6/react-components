@@ -70,15 +70,7 @@ import {
   SidebarSeparator,
 } from '@/components//ui/sidebar'
 
-import { SidebarRight } from '@/components//Menus/SidebarRight'
-import { SidebarLeft } from '@/components//Menus/SidebarLeft'
 import { VideoHeader } from '../HeaderFooter'
-// import GithubControl from '@/components//Editor/GithubControl'
-import { Toaster } from '@/components//ui/toaster'
-import { LowImpactHero } from '@/components/Heros/LowImpact'
-import { MediumImpactHero } from '@/components/Heros/MediumImpact'
-import { HighImpactHero } from '@/components/Heros/HighImpact'
-import { PostHero } from '@/components/Heros/PostHero'
 import logoVideo from '../../images/cortex-reply-bw.png'
 import logoLight from '../../images/cortex-reply-light.png'
 import logoDark from '../../images/cortex-reply-dark.png'
@@ -91,28 +83,6 @@ export default function LandingPage({ ...args }) {
       <VideoHeader {...args.header} logoVideo={logoVideo} logoLight={logoLight} logoDark={logoDark} />
       </div>
       <div id="next-section" className="mt-16 pt-16 min-h-screen"> {/* Add margin-top to create space below the VideoHeader */}
-        {/* Hero Section */}
-        {/* {args.hero && args.hero.type === 'lowImpact' && <LowImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'mediumImpact' && <MediumImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'highImpact' && <HighImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'postHero' && <PostHero {...args.hero} />} */}
-
-        {/* <div className="relative bg-brand-one pb-12 pt-10">
-          {args.heroBackgroundImage && (
-            <Image
-              src={args.heroBackgroundImage}
-              alt="Hero background"
-              layout="fill"
-              objectFit="cover"
-              className="mix-blend-overlay opacity-50"
-            />
-          )}
-          <div className="container relative z-10">
-            <div className="text-slate-400">{args.section}</div>
-            <h1 className="mt-2 text-4xl font-bold text-white">{args.title}</h1>
-            <p className="mt-4 max-w-3xl text-slate-400">{args.description}</p>
-          </div>
-        </div> */}
 
         {/* Main Content */}
         <div className="container py-8">
