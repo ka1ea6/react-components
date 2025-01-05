@@ -38,7 +38,8 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
               href={`/insights/${post.slug}`}
               className="group rounded-lg overflow-hidden border bg-card text-card-foreground shadow hover:shadow-lg transition-shadow"
             >
-              {post.image && (
+                <div className="relative">
+
                         <Image
                           src={post.image.src}
                           alt='post image'
@@ -48,7 +49,7 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
                           className="relative inset-0 size-full rounded-2xl bg-gray-50 object-cover"
               
                         />
-                      )}
+             
 
               {/* <Image
               src={post.meta?.image.}
@@ -61,8 +62,8 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
                 <Media resource={post.image} size="33vw" />
               )} */}
 
-              <div className="p-4 relative bottom-0 left-0 right-0 bg-gradient-to-t from-card-foreground to-transparent">
-                <div className="text-sm text-muted-foreground mb-2">
+<div className="absolute inset-0 p-4 bg-gradient-to-t from-card-foreground to-transparent">
+<div className="text-sm text-muted-foreground mb-2">
                   {post.authors &&
                     post.authors.map((author) => {
                       return `${author.name} · `
@@ -77,6 +78,7 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
                 <h2 className="text-xl font-bold mb-4 text-primary group-hover:text-accent group-hover:scale-105 transition-transform duration-200 ease-in-out">
                   {post.title}
                 </h2>
+              </div>
               </div>
             </Link>
           ))}

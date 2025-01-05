@@ -21,7 +21,7 @@ interface BlogProps {
 }
 
 export interface BlogSectionProps {
-  sectionHeading: Pick<SectionHeadingWithoutStylingProps, 'subtitle' | 'title'>
+  sectionHeading?: Pick<SectionHeadingWithoutStylingProps, 'subtitle' | 'title'>
   blogs: BlogProps[]
 }
 
@@ -36,9 +36,10 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
     >
       <Container>
         <div className="mx-auto max-w-[630px]">
-          <div data-aos="fade-up" data-aos-delay="100">
+          { sectionHeading && (<div data-aos="fade-up" data-aos-delay="100">
             <SectionHeading {...sectionHeading} alignment="center" hasBottomSpacing />
-          </div>
+          </div>)
+}
         </div>
         {blogs && blogs.length > 0 && (
           <div className="-mx-4 flex flex-wrap justify-center gap-y-30px">
