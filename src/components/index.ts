@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 /**
  * Server components and client components need to be exported from separate files as
