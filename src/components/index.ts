@@ -16,3 +16,4 @@ export * from "./Blocks";
 export * from "./Menus";
 export * from "./Heros";
 export * from "./HeaderFooter";
+export * from './Other';
