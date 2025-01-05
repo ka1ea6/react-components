@@ -71,7 +71,7 @@ import {
 
 import { SidebarRight } from '@/components//Menus/SidebarRight'
 import { SidebarLeft } from '@/components//Menus/SidebarLeft'
-import { HeaderDesktop, HeaderMobile } from '../HeaderFooter'
+import { Header } from '../HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
 import { LowImpactHero } from '@/components/Heros/LowImpact'
@@ -89,8 +89,8 @@ export default function WebsiteSection({ ...args }) {
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
                     <div className="fixed top-0 left-0 right-0 z-50">
 
-              <HeaderDesktop isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
-              <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header}/>
+              <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+              {/* <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header}/> */}
 
 </div>
 
