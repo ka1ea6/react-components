@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands'
+export type IconType = 'solid' | 'regular' | 'light' | 'duotone' | 'kit' | 'brands' | 'thin'
 
 export interface DynamicIconProps {
   type?: IconType

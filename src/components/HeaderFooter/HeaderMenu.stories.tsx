@@ -33,25 +33,29 @@ export const Primary: Story = {
         name: 'Analytics',
         description: 'Understand your traffic',
         href: '#',
-        icon: ChartPieIcon, // Pass the component, not <ChartPieIcon />
+        icon: { type: 'thin', iconName: 'cloud'}, 
       },
       {
         name: 'Engagement',
         description: 'Interact with customers',
         href: '#',
-        icon: CursorArrowRaysIcon,
+        icon: { src: '/stock1.jpg', alt: 'icon'}, 
       },
       {
         name: 'Security',
         description: 'Protect your data',
         href: '#',
-        icon: FingerPrintIcon,
+        icon: { src: '/assets/icons/geco_icon.svg', alt: 'icon'}, 
+
       },
     ],
     actions: [
-      { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-      { name: 'Contact sales', href: '#', icon: PhoneIcon },
-      { name: 'View all products', href: '#', icon: RectangleGroupIcon },
+      { name: 'Watch demo', href: '#', icon: { type: 'thin', iconName: 'cloud'} },
+      { name: 'Contact sales', href: '#', 
+        icon: { src: '/assets/icons/software.svg', alt: 'icon'}, 
+      },
+      { name: 'View all products', href: '#',         icon: { src: '/avatar.jpg', alt: 'icon'}, 
+    },
     ],
   },
 }
@@ -64,19 +68,72 @@ export const FontAwesomeIcons: Story = {
         name: 'Platforms & Services',
         description: 'Cloud services',
         href: '#',
-        icon: ServiceIcon, // Pass the component, not <ChartPieIcon />
+        icon: { type: 'thin', iconName: 'cloud'}, 
       },
       {
         name: 'Solutions & Propositions',
         description: 'Solutions that we have built',
         href: '#',
-        icon: SolutionIcon,
+        icon: { type: 'brands', iconName: 'github'}, 
       },
       {
         name: 'Products',
         description: 'Products that we sell',
         href: '#',
-        icon: ProductIcon,
+        icon: { type: 'kit', iconName: 'development'}, 
+      },
+    ],
+  },
+}
+
+
+export const Images: Story = {
+  args: {
+    name: 'Product',
+    items: [
+      {
+        name: 'Platforms & Services',
+        description: 'Small image',
+        href: '#',
+        icon: { src: '/avatar.jpg', alt: 'icon'}, 
+      },
+      {
+        name: 'Solutions & Propositions',
+        description: 'Large image',
+        href: '#',
+        icon: { src: '/stock1.jpg', alt: 'icon'}, 
+      },
+      {
+        name: 'Products',
+        description: 'Products that we sell',
+        href: '#',
+        icon: { src: '/assets/icons/software.svg', alt: 'icon'}, 
+      },
+    ],
+  },
+}
+
+export const NoIcons: Story = {
+  args: {
+    name: 'Product',
+    items: [
+      {
+        name: 'Platforms & Services',
+        description: 'Cloud services',
+        href: '#',
+        // icon: ServiceIcon, 
+      },
+      {
+        name: 'Solutions & Propositions',
+        description: 'Solutions that we have built',
+        href: '#',
+        // icon: SolutionIcon,
+      },
+      {
+        name: 'Products',
+        description: 'Products that we sell',
+        href: '#',
+        // icon: ProductIcon,
       },
     ],
   },
@@ -97,7 +154,7 @@ export const LotsOfItems: Story = {
         name: 'Analytics',
         description: 'Understand your traffic',
         href: '#',
-        icon: ChartPieIcon, // Pass the component, not <ChartPieIcon />
+        icon: ChartPieIcon, 
       },
       {
         name: 'Engagement',

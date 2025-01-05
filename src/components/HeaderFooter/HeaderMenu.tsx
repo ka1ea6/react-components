@@ -1,10 +1,12 @@
 import React from 'react'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { DynamicIcon, DynamicIconProps } from '../Images/DynamicIcon'
+import { ImageProps } from 'next/image'
 
 interface HeaderMenuItemProps {
   name: string
-  icon: React.ElementType // Pass the component itself, not an instance
+  icon?: DynamicIconProps | ImageProps // Pass the component itself, not an instance
   description?: string
   href: string
 }
@@ -19,7 +21,10 @@ export interface HeaderMenuProps {
 const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
   if (!items && href) {
     return (
-      <a href={href} className="flex items-center gap-x-1 text-sm font-semibold text-foreground group">
+      <a
+        href={href}
+        className="flex items-center gap-x-1 text-sm font-semibold text-foreground group"
+      >
         <span className="relative">
           {name}
           <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
@@ -46,8 +51,8 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
           {items &&
             items.map((item) => (
               <div key={item.name} className="group relative rounded-lg p-6 text-sm/6  box-border">
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-popover text-foreground group-hover:text-accent transition-transform duration-300 ease-in-out group-hover:scale-90">
-                  <item.icon aria-hidden="true" size="6x" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-popover text-muted-foreground group-hover:text-accent transition-transform duration-400 ease-in-out group-hover:scale-90">
+                  {item.icon && <Icon icon={item.icon} />}
                 </div>
                 <a
                   href={item.href}
@@ -72,7 +77,9 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
                     href={item.href}
                     className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
                   >
-                    <item.icon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
+                    {item.icon && (
+                      <Icon icon={item.icon} className="h-5 w-5 flex-none text-gray-400" />
+                    )}
                     {item.name}
                   </a>
                 ))}
@@ -83,6 +90,29 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
       </PopoverPanel>
     </Popover>
   )
+}
+
+const Icon = ({
+  icon,
+  className,
+  size = 'lg',
+}: {
+  icon: DynamicIconProps | ImageProps
+  className?: React.HTMLProps<HTMLElement>['className']
+  size?: DynamicIconProps['size']
+}) => {
+  if (!icon) return null
+  if ('type' in icon) {
+    return <DynamicIcon {...icon} size={size} />
+  } else if ('src' in icon) {
+    return (
+      <div className={className} style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {icon && typeof icon.src === 'string' && (
+          <img src={icon.src} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+        )}
+      </div>
+    )
+  }
 }
 
 export default HeaderMenu
