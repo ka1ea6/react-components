@@ -2563,7 +2563,7 @@ export const Primary: Story = {
       {
         slug: '/blog/pioneering-progress',
         image: {
-          src: '/assets/images/blog/blog-lg-1.png',
+          src: '/assets/images/blog/istockphoto1.jpg',
           alt: 'Pioneering Progress, One Algorithm at a Time',
         },
         authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
@@ -2590,7 +2590,7 @@ export const Primary: Story = {
       {
         slug: '/blog/future-of-tech',
         image: {
-          src: '/assets/images/blog/blog-lg-3.png',
+          src: '/assets/images/blog/istockphoto3.jpg',
           alt: 'The Future of Technology',
         },
         authors: [ { name: 'admin'}, { name: 'demo'}],

@@ -36,9 +36,9 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
             <Link
               key={id}
               href={`/insights/${post.slug}`}
-              className="group rounded-lg overflow-hidden border bg-card text-card-foreground shadow hover:shadow-lg transition-shadow"
+              className="group rounded-2xl overflow-hidden border bg-card text-card-foreground shadow hover:shadow-lg transition-shadow"
             >
-                <div className="relative">
+                <div className="relative size-full">
 
                         <Image
                           src={post.image.src}
@@ -61,24 +61,23 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
               {/* { post.image && typeof post.image !== 'string' && (
                 <Media resource={post.image} size="33vw" />
               )} */}
-
-<div className="absolute inset-0 p-4 bg-gradient-to-t from-card-foreground to-transparent">
-<div className="text-sm text-muted-foreground mb-2">
-                  {post.authors &&
-                    post.authors.map((author) => {
-                      return `${author.name} · `
-                    })}
-                  
-                  {post.publishedAt &&
-                    new Date(post.publishedAt).toLocaleDateString('en-GB', {
-                      day: 'numeric',
-                      month: 'long',
-                    })}
-                </div>
-                <h2 className="text-xl font-bold mb-4 text-primary group-hover:text-accent group-hover:scale-105 transition-transform duration-200 ease-in-out">
-                  {post.title}
-                </h2>
-              </div>
+<div className="absolute inset-0 px-4 pb-2 bg-gradient-to-t from-card to-transparrent flex flex-col justify-end">
+  <div className="text-sm text-card-foreground mb-2">
+    {post.authors &&
+      post.authors.map((author) => {
+        return `${author.name} · `
+      })}
+    
+    {post.publishedAt &&
+      new Date(post.publishedAt).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+      })}
+  </div>
+  <h2 className="text-xl font-bold text-foreground group-hover:text-accent group-hover:scale-105 transition-transform duration-200 ease-in-out">
+    {post.title}
+  </h2>
+</div>
               </div>
             </Link>
           ))}
