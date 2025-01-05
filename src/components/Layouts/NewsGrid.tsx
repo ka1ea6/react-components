@@ -20,7 +20,7 @@ export interface BlogProps {
   description: string
   slug: string
   publishedAt: string
-  meta: Post['meta']
+  meta?: Post['meta']
 }
 
 export function NewsGrid({ blogs }: { blogs: BlogProps[] }) { 
