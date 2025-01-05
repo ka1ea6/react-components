@@ -7,7 +7,6 @@ import { useState } from 'react'
 type PagingProps = {
   nextPage?: number | null
   page: number
-  pagingCounter?: number
   prevPage?: number | null
   totalDocs?: number | null
   totalPages: number
