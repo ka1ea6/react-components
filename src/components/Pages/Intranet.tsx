@@ -97,7 +97,7 @@ export default function Intranet({ ...args }) {
               <h1 className="text-balance text-3xl m-5 font-semibold tracking-tight text-primary sm:text-5xl">
                 News & Updates
               </h1>
-              <NewsGrid />
+              {/* <NewsGrid /> */}
             </div>
           </div>
 
