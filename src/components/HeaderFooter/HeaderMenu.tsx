@@ -3,6 +3,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { DynamicIcon, DynamicIconProps } from '../Images/DynamicIcon'
 import { ImageProps } from 'next/image'
+import { cn } from '@/lib/utils'
 
 interface HeaderMenuItemProps {
   name: string
@@ -51,8 +52,8 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
           {items &&
             items.map((item) => (
               <div key={item.name} className="group relative rounded-lg p-6 text-sm/6  box-border">
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-popover text-muted-foreground group-hover:text-accent transition-transform duration-400 ease-in-out group-hover:scale-90">
-                  {item.icon && <Icon icon={item.icon} />}
+                <div className="flex h-16 items-center justify-start rounded-lg bg-popover text-muted-foreground group-hover:text-accent transition-transform duration-400 ease-in-out group-hover:scale-90">
+                  {item.icon && <Icon icon={item.icon} size='4x'/>}
                 </div>
                 <a
                   href={item.href}
@@ -75,7 +76,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
+                    className="flex items-center max-h-12 justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
                   >
                     {item.icon && (
                       <Icon icon={item.icon} className="h-5 w-5 flex-none text-gray-400" />
@@ -106,9 +107,9 @@ const Icon = ({
     return <DynamicIcon {...icon} size={size} />
   } else if ('src' in icon) {
     return (
-      <div className={className} style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div className={cn(className, 'h-full max-w-32 items-start text-left')} >
         {icon && typeof icon.src === 'string' && (
-          <img src={icon.src} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+          <img src={icon.src} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
         )}
       </div>
     )
