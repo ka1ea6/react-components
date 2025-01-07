@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { BlogDetail } from './BlogDetail'
+import { BlogDetail, type CategoryListProps } from './BlogDetail'
 import { type BlogProps } from './BlogListSection'
 
 export default {
@@ -33,7 +33,7 @@ export default {
   ],
 } as Meta
 
-const Template = (args: { page: BlogProps[] }) => <BlogDetail {...args} />
+const Template = (args: { page: BlogProps[], categoryList: CategoryListProps }) => <BlogDetail {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

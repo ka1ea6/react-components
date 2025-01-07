@@ -57,7 +57,7 @@ function Author({ image, name, about, socialLinks }: AuthorProps) {
   )
 }
 
-interface CategoryListProps {
+export interface CategoryListProps {
   title: string
   links: LinkProps[]
 }
