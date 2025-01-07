@@ -179,7 +179,7 @@ export function BlogDetail({
                 />
               )}
               Meta  */}
-              <ul
+              {/* <ul
                 aria-label="blog meta list"
                 className="mb-4 mt-6 flex flex-wrap items-center gap-x-[1.125rem] gap-y-2 lg:mb-5 lg:mt-30px"
               >
@@ -204,7 +204,7 @@ export function BlogDetail({
                       </CustomLink>
                     ))}
                 </li>
-              </ul>
+              </ul> */}
 
               <div className="my-4 h-px bg-body/30 lg:my-5"></div>
 
