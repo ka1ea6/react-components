@@ -5,6 +5,7 @@ import logoLight from '@/images/cortex-reply-light.png'
 import logoDark from '@/images/cortex-reply-dark.png'
 import { Header } from './Header'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
+import { ThemeProvider } from '../Other/ThemeProvider'
 
 import { DynamicIcon } from '../Images/DynamicIcon'
 
@@ -22,6 +23,13 @@ const SolutionIcon = () => <DynamicIcon type="kit" iconName={'people-sharing'} s
 export default {
   title: 'Header/Header',
   component: Header,
+  decorators: [
+    (Story) => (
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
 } as Meta<typeof Header>
 
 type Story = StoryObj<typeof Header>

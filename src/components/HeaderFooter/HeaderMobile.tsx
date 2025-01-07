@@ -7,17 +7,16 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Popover,
-  PopoverGroup,
+
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { type HeaderMenuProps } from './HeaderMenu'
-// import Image from 'next/image'
-import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
 import { Moon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { type StaticImageData } from 'next/image'
+import { useTheme } from 'next-themes'
+
 interface SimpleHeaderProps {
   logoLight: StaticImageData
   logoDark: StaticImageData
@@ -29,25 +28,9 @@ const themes = ['light', 'dark']
 
 export function HeaderMobile({ logoLight, logoDark, menuItems, isMenuOpen = true }: SimpleHeaderProps) {
   const [isScrolled , setIsScrolled] = useState(false)
-
+  const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
   const [currentTheme, setCurrentTheme] = useState('light')
-  // const logoBase = logo?.split('.')[0]
-  // const logoExt = logo?.split('.')[1]
-  // const [themeLogo, setThemeLogo] = useState(`${logoBase}.${logoExt}`)
-
-  // const updateLogo = (theme: string) => {
-  //   if (themes.includes(theme)) {
-  //     if (theme === 'light') {
-  //       setThemeLogo(`${logoBase}.${logoExt}`)
-  //     } else {
-  //       setThemeLogo(`${logoBase}-${theme}.${logoExt}`)
-  //     }
-  //   } else {
-  //     setThemeLogo(`${logoBase}.${logoExt}`)
-  //   }
-  // }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,20 +48,14 @@ export function HeaderMobile({ logoLight, logoDark, menuItems, isMenuOpen = true
   }, [])
 
   useEffect(() => {
-    // Load theme from local storage or set to default 'light'
-    const storedTheme = localStorage.getItem('theme') || 'light'
-    // console.log('storedTheme', storedTheme)
-    setCurrentTheme(storedTheme)
-    document.documentElement.setAttribute('class', storedTheme)
-    // updateLogo(storedTheme)
-  }, [])
+    setCurrentTheme(theme || 'dark')
+  }, [theme])
 
   const toggleTheme = () => {
     const nextTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length]
     setCurrentTheme(nextTheme)
-    document.documentElement.setAttribute('class', nextTheme)
-    localStorage.setItem('theme', nextTheme) // Save theme to local storage
-    // updateLogo(nextTheme)
+    setTheme(nextTheme)
+
   }
 
 

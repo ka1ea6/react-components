@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Container } from '@/components/Other/Container'
 import { BrandLogo } from './BrandLogo'
+import { useTheme } from 'next-themes'
 
 import { Moon, Sun } from 'lucide-react'
 import { StaticImageData } from 'next/image'
@@ -16,22 +17,18 @@ interface HeaderProps {
 
 export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [currentTheme, setCurrentTheme] = useState('light')
+  const [currentTheme, setCurrentTheme] = useState('')
   const themes = ['light', 'dark']
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
-    // Load theme from local storage or set to default 'light'
-    const storedTheme = localStorage.getItem('theme') || 'light'
-    console.log('storedTheme', storedTheme)
-    setCurrentTheme(storedTheme)
-    document.documentElement.setAttribute('class', storedTheme)
-  }, [])
+    setCurrentTheme(theme || 'dark')
+  }, [theme])
 
   const toggleTheme = () => {
     const nextTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length]
     setCurrentTheme(nextTheme)
-    document.documentElement.setAttribute('class', nextTheme)
-    localStorage.setItem('theme', nextTheme) // Save theme to local storage
+    setTheme(nextTheme)
   }
 
   useEffect(() => {
