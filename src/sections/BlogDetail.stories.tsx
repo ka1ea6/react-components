@@ -37,6 +37,14 @@ const Template = (args: { page: BlogProps[] }) => <BlogDetail {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
+  categoryList: {
+    title: 'Categories',
+    links: [
+      { label: 'Category 1', href: 1 },
+      { label: 'Category 2', href: 2 },
+      { label: 'Category 3', href: 3 },
+    ],
+  },
   page:  {
     id: 2,
     title: 'Test Post 2',
@@ -162,7 +170,7 @@ Default.args = {
       }
     },
     relatedPosts: [],
-    categories: [],
+    categories: [{ id: 1, title: 'Test Category 1', slug: 'test-category-1', updatedAt: '2025-01-06T20:16:54.416Z', createdAt: '2025-01-06T20:16:54.416Z', _status: 'published' }],
     meta: { title: 'Test Post 1', image: null, description: null },
     publishedAt: '2025-01-06T20:17:25.595Z',
     authors: [

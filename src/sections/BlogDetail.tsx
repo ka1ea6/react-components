@@ -6,9 +6,10 @@ import { CustomLink } from '@/components/Other/CustomLink'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { FaRegFolderOpen, FaRegUser } from 'react-icons/fa6'
-import { Post as PayloadPost, Media, User } from '@/payload-types'
+import { Post as PayloadPost, Media, User, Category } from '@/payload-types'
 import { RichText } from '@/components/Payload/RichText'
 import { notFound } from 'next/navigation'
+import { Categories } from '@/components/Menus/Categories'
 
 interface AuthorProps {
   image: Omit<ImageProps, 'width' | 'height'>
@@ -20,15 +21,17 @@ interface AuthorProps {
 function Author({ image, name, about, socialLinks }: AuthorProps) {
   return (
     <div className="space-y-5 rounded-5 bg-accent-100 p-8 text-center dark:bg-accent-700 lg:p-10">
-      <Image
-        src={image.src}
-        alt={image.alt || name}
-        width={127}
-        height={127}
-        placeholder="blur"
-        blurDataURL={blurDataUrl}
-        className="mx-auto rounded-full object-cover"
-      />
+      {image && image.src && (
+        <Image
+          src={image.src}
+          alt={image.alt || name}
+          width={127}
+          height={127}
+          placeholder="blur"
+          blurDataURL={blurDataUrl}
+          className="mx-auto rounded-full object-cover"
+        />
+      )}
       <h3 className="font-secondary text-lg font-bold leading-[1.25] text-accent dark:text-white md:text-xl">
         {name}
       </h3>
@@ -55,6 +58,7 @@ function Author({ image, name, about, socialLinks }: AuthorProps) {
 }
 
 interface CategoryListProps {
+  title: string
   links: LinkProps[]
 }
 
@@ -120,10 +124,12 @@ const linkClasses = cn('transition-colors duration-400 hover:text-primary ease-i
 
 export function BlogDetail({
   page,
-//   author,
+  categoryList,
+  //   author,
 }: {
   page: PayloadPost
-//   author: AuthorProps
+  categoryList: CategoryListProps
+  //   author: AuthorProps
 }) {
   if (!page) {
     return notFound()
@@ -145,9 +151,12 @@ export function BlogDetail({
   const authorMap = authors?.map((author) => ({
     name: (author as User).name || '',
     about: '',
-    image: { src: 
-        ((author as User).profilePicture && ((author as User).profilePicture as Media).sizes?.small?.url) ||   '/assets/images/blog/author-1.png',
-            alt: (author as User).name || 'blog author',
+    image: {
+      src:
+        ((author as User).profilePicture &&
+          ((author as User).profilePicture as Media).sizes?.small?.url) ||
+        '/assets/images/blog/author-1.png',
+      alt: (author as User).name || 'blog author',
     },
     socialLinks: [],
   }))
@@ -158,16 +167,17 @@ export function BlogDetail({
         <div className="grid gap-30px lg:grid-cols-[1fr_410px]">
           <div>
             <div className="[&_p+P]:mt-4">
-              <Image
-                src="/assets/images/blog/blog-details-1.png"
-                alt="blog single 1"
-                width={850}
-                height={538}
-                placeholder="blur"
-                blurDataURL={blurDataUrl}
-                sizes="100vw"
-              />
-
+              {blog.image && blog.image.src && (
+                <Image
+                  src={blog.image.src}
+                  alt={blog.image.alt || title}
+                  width={850}
+                  height={538}
+                  placeholder="blur"
+                  blurDataURL={blurDataUrl}
+                  sizes="100vw"
+                />
+              )}
               {/* Meta  */}
               <ul
                 aria-label="blog meta list"
@@ -188,9 +198,9 @@ export function BlogDetail({
                     {blog.category && blog.category.length > 0 && <FaRegFolderOpen />}
                   </span>
                   {blog.category &&
-                    blog.category.map((cat, index) => (
+                    (blog.category as Category[]).map((cat, index) => (
                       <CustomLink key={index} href="#" className={linkClasses}>
-                        {String(cat)}
+                        {cat.title}
                       </CustomLink>
                     ))}
                 </li>
@@ -199,17 +209,19 @@ export function BlogDetail({
               <div className="my-4 h-px bg-body/30 lg:my-5"></div>
 
               <RichText content={content} enableGutter={false} />
-
             </div>
           </div>
           <div className="grid gap-30px self-baseline max-md:mx-auto max-md:max-w-[410px] lg:gap-10">
-            { authorMap && authorMap.map((author, index) => (
-                <Author key={index} {...author} />
-            ))}
-            
+            {authorMap && authorMap.map((author, index) => <Author key={index} {...author} />)}
+
             {/* <Author {...author} /> */}
             {/* <SearchBox /> */}
-            <CategoryList {...categoryListData} />
+            {categoryList && categoryList.links && (
+              <div className="rounded-5 px-8 pt-0 lg:px-10">
+                <Categories links={categoryList.links} title={categoryList.title} />
+              </div>
+            )}
+            {/* <CategoryList {...categoryListData} /> */}
             {/* <Tagswidget {...tagwidgetData} /> */}
           </div>
         </div>
