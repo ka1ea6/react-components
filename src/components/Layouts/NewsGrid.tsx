@@ -23,14 +23,14 @@ export interface BlogProps {
   meta?: Post['meta']
 }
 
-export function NewsGrid({ blogs }: { blogs: BlogProps[] }) { 
+export function NewsGrid({ blogs, width =3}: { blogs: BlogProps[], width?: number }) { 
 
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
       
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`grid md:grid-cols-2 lg:grid-cols-${width} gap-6`}>
         {blogs &&
           blogs.map((post, id) => (
             <Link
@@ -41,7 +41,7 @@ export function NewsGrid({ blogs }: { blogs: BlogProps[] }) {
                 <div className="relative size-full">
 
                         <Image
-                          src={post.image.src}
+                          src={post.image?.src || '/assets/images/blog/gradient.png'}
                           alt='post image'
                           width={850}
                           height={575}

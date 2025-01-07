@@ -2576,10 +2576,7 @@ export const Primary: Story = {
       },
       {
         slug: '/blog/innovative-solutions',
-        image: {
-          src: '/assets/images/blog/blog-lg-2.png',
-          alt: 'Innovative Solutions for Modern Problems',
-        },
+        image: null,
         publishedAt: '2025-01-01T17:19:41.270Z',
         categories: [],
         commentCount: '10',
