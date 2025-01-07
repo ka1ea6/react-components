@@ -62,59 +62,59 @@ interface CategoryListProps {
   links: LinkProps[]
 }
 
-const categoryListData: CategoryListProps = {
-  links: [
-    {
-      label: 'Genarel consturction',
-      href: '',
-    },
-    {
-      label: 'Business Advice',
-      href: '',
-    },
-    {
-      label: 'Stock market',
-      href: '',
-    },
-    {
-      label: 'Regular start',
-      href: '',
-    },
-    {
-      label: 'Regular start',
-      href: '',
-    },
-  ],
-}
+// const categoryListData: CategoryListProps = {
+//   links: [
+//     {
+//       label: 'Genarel consturction',
+//       href: '',
+//     },
+//     {
+//       label: 'Business Advice',
+//       href: '',
+//     },
+//     {
+//       label: 'Stock market',
+//       href: '',
+//     },
+//     {
+//       label: 'Regular start',
+//       href: '',
+//     },
+//     {
+//       label: 'Regular start',
+//       href: '',
+//     },
+//   ],
+// }
 
-function CategoryList({ links }: CategoryListProps) {
-  return (
-    <div className="space-y-5 rounded-5 p-8 lg:p-10">
-      <h3 className="font-secondary text-md font-bold leading-[1.25] text-accent md:text-lg">
-        Category
-      </h3>
-      {links && links.length > 0 && (
-        <nav aria-label="footer links navigation">
-          <ul className="grid gap-2.5 divide-y divide-accent/20 dark:divide-accent/20">
-            {links.map((link, index) => (
-              <li key={index} className="flex items-center gap-2.5 pt-2.5 first:pt-0">
-                <span className="grid h-3 w-3 place-items-center border border-accent">
-                  <span className="block h-0.5 w-0.5 bg-accent"></span>
-                </span>
-                <CustomLink
-                  href={link.href}
-                  className="transition-colors duration-300 hover:text-primary"
-                >
-                  {link.label}
-                </CustomLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-    </div>
-  )
-}
+// function CategoryList({ links }: CategoryListProps) {
+//   return (
+//     <div className="space-y-5 rounded-5 p-8 lg:p-10">
+//       <h3 className="font-secondary text-md font-bold leading-[1.25] text-accent md:text-lg">
+//         Category
+//       </h3>
+//       {links && links.length > 0 && (
+//         <nav aria-label="footer links navigation">
+//           <ul className="grid gap-2.5 divide-y divide-accent/20 dark:divide-accent/20">
+//             {links.map((link, index) => (
+//               <li key={index} className="flex items-center gap-2.5 pt-2.5 first:pt-0">
+//                 <span className="grid h-3 w-3 place-items-center border border-accent">
+//                   <span className="block h-0.5 w-0.5 bg-accent"></span>
+//                 </span>
+//                 <CustomLink
+//                   href={link.href}
+//                   className="transition-colors duration-300 hover:text-primary"
+//                 >
+//                   {link.label}
+//                 </CustomLink>
+//               </li>
+//             ))}
+//           </ul>
+//         </nav>
+//       )}
+//     </div>
+//   )
+// }
 
 const linkClasses = cn('transition-colors duration-400 hover:text-primary ease-in-out inline')
 
