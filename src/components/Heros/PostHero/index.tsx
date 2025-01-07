@@ -8,7 +8,7 @@ import Image from 'next/image'
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, meta: { image: metaImage } = {}, populatedAuthors, publishedAt, title } = post
+  const { categories, meta, populatedAuthors, publishedAt, title } = post
 
   return (
     <div className="relative -mt-[10.4rem] flex items-end">
@@ -83,7 +83,7 @@ export const PostHero: React.FC<{
         )} */}
         {/* {metaImage && typeof metaImage === 'string' && ( */}
                   <div>
-                    <Image className="-z-10 object-cover" alt="" fill priority src={(metaImage as MediaType)?.url || '/assets/images/blog/gradient.png' } />
+                    <Image className="-z-10 object-cover" alt="" fill priority src={(meta && meta.image as MediaType)?.url || '/assets/images/blog/gradient.png' } />
                   </div>
                 {/* )} */}
         <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-background dark:from-black to-transparent" />

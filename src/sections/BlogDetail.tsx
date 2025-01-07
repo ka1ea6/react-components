@@ -167,7 +167,7 @@ export function BlogDetail({
         <div className="grid gap-30px lg:grid-cols-[1fr_410px]">
           <div>
             <div className="[&_p+P]:mt-4">
-              {blog.image && blog.image.src && (
+              {/* {blog.image && blog.image.src && (
                 <Image
                   src={blog.image.src}
                   alt={blog.image.alt || title}
@@ -178,7 +178,7 @@ export function BlogDetail({
                   sizes="100vw"
                 />
               )}
-              {/* Meta  */}
+              Meta  */}
               <ul
                 aria-label="blog meta list"
                 className="mb-4 mt-6 flex flex-wrap items-center gap-x-[1.125rem] gap-y-2 lg:mb-5 lg:mt-30px"
