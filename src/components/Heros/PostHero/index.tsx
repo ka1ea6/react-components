@@ -1,7 +1,7 @@
 import { formatDateTime } from '@/lib/utils/formatDateTime'
 import React from 'react'
 
-import type { Post } from '@/payload-types'
+import type { Post, Media } from '@/payload-types'
 
 import { Media } from '@/components/Payload/Media'
 import Image from 'next/image'
@@ -78,14 +78,14 @@ export const PostHero: React.FC<{
         </div>
       </div>
       <div className="min-h-[80vh] select-none">
-        {metaImage && typeof metaImage !== 'string' && (
+        {/* {metaImage && typeof metaImage !== 'string' && (
           <Media fill imgClassName="-z-10 object-cover" resource={metaImage} />
-        )}
-        {metaImage && typeof metaImage === 'string' && (
+        )} */}
+        {/* {metaImage && typeof metaImage === 'string' && ( */}
                   <div>
-                    <Image className="-z-10 object-cover" alt="" fill priority src={metaImage} />
+                    <Image className="-z-10 object-cover" alt="" fill priority src={(metaImage as Media)?.url || '/assets/images/blog/gradient.png' } />
                   </div>
-                )}
+                {/* )} */}
         <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-background dark:from-black to-transparent" />
       </div>
     </div>

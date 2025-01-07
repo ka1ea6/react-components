@@ -387,7 +387,7 @@ export const PostHero = {
           { id: '2', title: 'Category 2' },
         ],
         meta: {
-          image: 'stock1.jpg',
+          image: { url: 'stock1.jpg'},
         },
         populatedAuthors: [
           {
@@ -413,7 +413,6 @@ export const PostHero = {
         content: 'Sample post content...',
       },
     },
-    media: 'stock1.jpg?height=400&width=800',
   },
 }
 
