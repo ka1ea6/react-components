@@ -67,7 +67,7 @@ import {
 
 import { SidebarRight } from '@/components//Menus/SidebarRight'
 import { SidebarLeft } from '@/components//Menus/SidebarLeft'
-import { SimpleHeader } from '../HeaderFooter'
+import { SimpleHeader } from '../components/HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
 import { InfoTile } from '@/components//Blocks'

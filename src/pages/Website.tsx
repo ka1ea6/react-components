@@ -71,7 +71,7 @@ import {
 
 import { SidebarRight } from '@/components//Menus/SidebarRight'
 import { SidebarLeft } from '@/components//Menus/SidebarLeft'
-import { Header } from '../HeaderFooter'
+import { Header } from '../components/HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
 import { LowImpactHero } from '@/components/Heros/LowImpact'
@@ -80,8 +80,8 @@ import { HighImpactHero } from '@/components/Heros/HighImpact'
 import { PostHero } from '@/components/Heros/PostHero'
 import { SectionHero } from '@/components/Heros/SectionHero'
 
-import logoLight from '../../images/cortex-reply-light.png'
-import logoDark from '../../images/cortex-reply-dark.png'
+import logoLight from '../images/cortex-reply-light.png'
+import logoDark from '../images/cortex-reply-dark.png'
 
 export default function WebsiteSection({ ...args }) {
   return (

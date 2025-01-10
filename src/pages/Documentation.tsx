@@ -43,7 +43,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components//ui/breadcrumb'
 
-import { Separator } from '@/components//ui/separator'
+import { Separator } from '@/components/ui/separator'
 import {
   Sidebar,
   SidebarContent,
@@ -65,9 +65,9 @@ import {
   SidebarSeparator,
 } from '@/components//ui/sidebar'
 
-import { SidebarRight } from '@/components//Menus/SidebarRight'
+import { SidebarRight } from '@/components/Menus/SidebarRight'
 import { SidebarLeft } from '@/components//Menus/SidebarLeft'
-import { SimpleHeader } from '../HeaderFooter'
+import { SimpleHeader } from '../components/HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
 

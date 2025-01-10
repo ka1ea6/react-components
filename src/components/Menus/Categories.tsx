@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils/cn'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {  LinkProps } from '@/common-types'
+import { ExternalLink } from 'lucide-react'
 
 
 interface CategoryListProps {
@@ -29,7 +30,6 @@ export function Categories({ title, links }: CategoryListProps) {
     replace(`${pathname}?${params.toString()}`)
   }
   return (
-    <div className="space-y-5 rounded-5 bg-accent-100 py-8 dark:bg-accent-700 lg:p-10">
       <Card>
         <CardHeader>
           <CardTitle>{title && title}</CardTitle>
@@ -39,16 +39,12 @@ export function Categories({ title, links }: CategoryListProps) {
             <nav aria-label="footer links navigation">
               <ul className="grid gap-2.5 ">
                 {links.map((link, index) => (
-                  <li key={index} className="flex items-center gap-2.5 pt-2.5 first:pt-0 hover:cursor-pointer" onClick={(e) => {
+                  <li key={index} className="flex items-center text-sm text-accent first:pt-0 hover:cursor-pointer" onClick={(e) => {
                     e.preventDefault()
                     handleCategory(link.href)
-                  }}>
-                    <span className="grid h-3 w-3 place-items-center border border-accent">
-                      <span className="block h-0.5 w-0.5 bg-accent"></span>
-                    </span>
-                    <a className={linkClasses} >
+                  }}>                   
                       {link.label}
-                    </a>
+                      <ExternalLink className="ml-1 h-3 w-3" />
                   </li>
                 ))}
               </ul>
@@ -56,6 +52,5 @@ export function Categories({ title, links }: CategoryListProps) {
           )}
         </CardContent>
       </Card>
-    </div>
   )
 }

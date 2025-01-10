@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { BellIcon } from '@heroicons/react/24/outline'
-import { SimpleHeader } from '../HeaderFooter'
-import { InfoTile } from '../Blocks/InfoTile'
-import { MOTD } from '../Blocks/MOTD'
-import { NewsGrid } from '../Layouts/NewsGrid'
-import { EventCard, type EventCardProps } from '../Cards/EventCard'
-import { CustomerCard, type CustomerCardProps } from '../Cards/CustomerCard'
+import { SimpleHeader } from '../components/HeaderFooter'
+import { InfoTile } from '../components/Blocks/InfoTile'
+import { MOTD } from '../components/Blocks/MOTD'
+import { NewsGrid } from '../components/Layouts/NewsGrid'
+import { EventCard, type EventCardProps } from '../components/Cards/EventCard'
+import { CustomerCard, type CustomerCardProps } from '../components/Cards/CustomerCard'
 export default function Intranet({ ...args }) {
   return (
     <>
