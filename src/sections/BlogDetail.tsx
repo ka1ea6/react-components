@@ -24,7 +24,7 @@ function Author({ image, name, about, socialLinks }: AuthorProps) {
           {image && image.src && (
             <Image
               src={image.src}
-              alt={image.alt || name}
+              alt={image.alt || ''}
               width={127}
               height={127}
               placeholder="blur"
