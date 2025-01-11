@@ -110,7 +110,7 @@ export const MainPageSection = ({
               <a
                 href={`#${heading.id}`}
                 onClick={(event) => handleLinkClick(event, heading.id)}
-                className={`text-sm ${
+                className={`text-xs ${
                   activeLink === heading.id ? "text-accent font-semibold" : "text-primary"
                 } hover:text-accent`}
               >

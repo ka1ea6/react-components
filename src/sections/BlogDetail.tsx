@@ -101,7 +101,7 @@ export function BlogDetail({
     image: {
       src:
         ((author as User).profilePicture &&
-          ((author as User).profilePicture as Media).sizes?.small?.url) ||
+          ((author as User).profilePicture as Media).sizes?.square?.url) ||
         '',
       alt: (author as User).name || 'blog author',
     },
