@@ -16,12 +16,13 @@ export interface Config {
     media: Media;
     'media-profiles': MediaProfile;
     'media-brand-images': MediaBrandImage;
+    images: Image;
     categories: Category;
+    users: User;
     customers: Customer;
     events: Event;
     propositions: Proposition;
     'case-studies': CaseStudy;
-    users: User;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -38,12 +39,13 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     'media-profiles': MediaProfilesSelect<false> | MediaProfilesSelect<true>;
     'media-brand-images': MediaBrandImagesSelect<false> | MediaBrandImagesSelect<true>;
+    images: ImagesSelect<false> | ImagesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     propositions: PropositionsSelect<false> | PropositionsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -73,7 +75,13 @@ export interface Config {
     collection: 'users';
   };
   jobs: {
-    tasks: unknown;
+    tasks: {
+      schedulePublish: TaskSchedulePublish;
+      inline: {
+        input: unknown;
+        output: unknown;
+      };
+    };
     workflows: {
       updateEvents: WorkflowUpdateEvents;
     };
@@ -124,7 +132,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'none') | null;
             newTab?: boolean | null;
             reference?: {
               relationTo: 'pages';
@@ -148,7 +156,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | MediaBrandImage;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -176,27 +184,15 @@ export interface Page {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Reusable media content. Use Page Images for one-off images.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
   alt?: string | null;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -282,7 +278,7 @@ export interface CallToActionBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
@@ -327,7 +323,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
@@ -352,16 +348,28 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: number | MediaBrandImage;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-brand-images".
+ * via the `definition` "ImageBlock".
  */
-export interface MediaBrandImage {
+export interface ImageBlock {
+  media: number | Image;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlock';
+}
+/**
+ * One-off images included in the body of Pages or Posts.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images".
+ */
+export interface Image {
   id: number;
   alt?: string | null;
   prefix?: string | null;
@@ -426,16 +434,6 @@ export interface MediaBrandImage {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ImageBlock".
- */
-export interface ImageBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'imageBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -547,6 +545,7 @@ export interface Post {
 export interface User {
   id: number;
   name?: string | null;
+  email: string;
   jobRole?: ('C1' | 'C2' | 'C3' | 'SC1' | 'SC2' | 'M' | 'SM' | 'P') | null;
   profilePicture?: (number | null) | MediaProfile;
   workHistory?:
@@ -578,28 +577,21 @@ export interface User {
   dateOfBirth?: string | null;
   joinDate?: string | null;
   role: 'admin' | 'user';
-  sub?: string | null;
   updatedAt: string;
   createdAt: string;
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
 }
 /**
+ * Profile images for users.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media-profiles".
  */
 export interface MediaProfile {
   id: number;
-  name: string;
+  name?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -870,21 +862,20 @@ export interface FeaturesBlock {
   features?:
     | {
         title: string;
-        link: {
-          type?: ('reference' | 'custom') | null;
+        link?: {
+          type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
             value: number | Page;
           } | null;
           url?: string | null;
-          label: string;
         };
         icon: {
           type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands';
           icon: string;
         };
-        content: {
+        content?: {
           root: {
             type: string;
             children: {
@@ -898,7 +889,7 @@ export interface FeaturesBlock {
             version: number;
           };
           [k: string]: unknown;
-        };
+        } | null;
         id?: string | null;
       }[]
     | null;
@@ -915,6 +906,10 @@ export interface Proposition {
   name: string;
   intro?: string | null;
   logo?: (number | null) | Media;
+  icon?: {
+    type?: ('fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands') | null;
+    icon?: string | null;
+  };
   leads?: (number | User)[] | null;
   members?: (number | User)[] | null;
   populatedLeads?:
@@ -949,7 +944,7 @@ export interface Proposition {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'none') | null;
             newTab?: boolean | null;
             reference?: {
               relationTo: 'pages';
@@ -967,8 +962,27 @@ export interface Proposition {
       | null;
     media?: (number | null) | Media;
   };
-  layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
+  layout?: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FeaturesBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   publishedAt?: string | null;
+  /**
+   * Publish this page to the public website
+   */
+  publishedToWebsite?: boolean | null;
+  /**
+   * Proposition public landing page
+   */
+  landingPage?: {
+    relationTo: 'pages';
+    value: number | Page;
+  } | null;
   slug?: string | null;
   slugLock?: boolean | null;
   parent?: (number | null) | Proposition;
@@ -983,6 +997,78 @@ export interface Proposition {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * NOT USED.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-brand-images".
+ */
+export interface MediaBrandImage {
+  id: number;
+  alt?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    square?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    xlarge?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1200,7 +1286,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline';
+        taskSlug: 'inline' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -1234,7 +1320,7 @@ export interface PayloadJob {
       }[]
     | null;
   workflowSlug?: 'updateEvents' | null;
-  taskSlug?: 'inline' | null;
+  taskSlug?: ('inline' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -1269,8 +1355,16 @@ export interface PayloadLockedDocument {
         value: number | MediaBrandImage;
       } | null)
     | ({
+        relationTo: 'images';
+        value: number | Image;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
         relationTo: 'customers';
@@ -1287,10 +1381,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'case-studies';
         value: number | CaseStudy;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: number | User;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1529,7 +1619,6 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
-              label?: T;
             };
         icon?:
           | T
@@ -1580,7 +1669,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  caption?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1805,6 +1894,89 @@ export interface MediaBrandImagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images_select".
+ */
+export interface ImagesSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        square?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        small?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        medium?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        large?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        xlarge?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -1820,6 +1992,50 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  jobRole?: T;
+  profilePicture?: T;
+  workHistory?:
+    | T
+    | {
+        company?: T;
+        position?: T;
+        startDate?: T;
+        endDate?: T;
+        description?: T;
+        id?: T;
+      };
+  certifications?:
+    | T
+    | {
+        name?: T;
+        issuer?: T;
+        dateObtained?: T;
+        expirationDate?: T;
+        id?: T;
+      };
+  areasOfExpertise?:
+    | T
+    | {
+        area?: T;
+        description?: T;
+        id?: T;
+      };
+  dateOfBirth?: T;
+  joinDate?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1863,6 +2079,12 @@ export interface PropositionsSelect<T extends boolean = true> {
   name?: T;
   intro?: T;
   logo?: T;
+  icon?:
+    | T
+    | {
+        type?: T;
+        icon?: T;
+      };
   leads?: T;
   members?: T;
   populatedLeads?:
@@ -1905,8 +2127,20 @@ export interface PropositionsSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        imageBlock?: T | ImageBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        features?: T | FeaturesBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
       };
   publishedAt?: T;
+  publishedToWebsite?: T;
+  landingPage?: T;
   slug?: T;
   slugLock?: T;
   parent?: T;
@@ -1962,57 +2196,6 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  jobRole?: T;
-  profilePicture?: T;
-  workHistory?:
-    | T
-    | {
-        company?: T;
-        position?: T;
-        startDate?: T;
-        endDate?: T;
-        description?: T;
-        id?: T;
-      };
-  certifications?:
-    | T
-    | {
-        name?: T;
-        issuer?: T;
-        dateObtained?: T;
-        expirationDate?: T;
-        id?: T;
-      };
-  areasOfExpertise?:
-    | T
-    | {
-        area?: T;
-        description?: T;
-        id?: T;
-      };
-  dateOfBirth?: T;
-  joinDate?: T;
-  role?: T;
-  sub?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  enableAPIKey?: T;
-  apiKey?: T;
-  apiKeyIndex?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2274,18 +2457,72 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
-  navItems?:
+  menuItems?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
+        name: string;
+        link?: {
+          type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
             value: number | Page;
           } | null;
           url?: string | null;
-          label: string;
         };
+        items?:
+          | {
+              name: string;
+              description?: string | null;
+              link?: {
+                type?: ('reference' | 'custom' | 'none') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+              };
+              icon: {
+                type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands' | 'image';
+                /**
+                 * Provide the FontAwesome icon name (e.g., "fa-home").
+                 */
+                icon?: string | null;
+                /**
+                 * Select an image from the images collection.
+                 */
+                image?: (number | null) | Image;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        actions?:
+          | {
+              name: string;
+              link: {
+                type?: ('reference' | 'custom' | 'none') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+              };
+              icon: {
+                type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands' | 'image';
+                /**
+                 * Provide the FontAwesome icon name (e.g., "fa-home").
+                 */
+                icon?: string | null;
+                /**
+                 * Select an image from the images collection.
+                 */
+                image?: (number | null) | Image;
+              };
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -2301,7 +2538,7 @@ export interface Footer {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
@@ -2335,6 +2572,75 @@ export interface MessageOfTheDay {
 export interface Website {
   id: number;
   intro: Intro;
+  menuItems?:
+    | {
+        name: string;
+        link?: {
+          type?: ('reference' | 'custom' | 'none') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+        };
+        items?:
+          | {
+              name: string;
+              description?: string | null;
+              link?: {
+                type?: ('reference' | 'custom' | 'none') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+              };
+              icon: {
+                type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands' | 'image';
+                /**
+                 * Provide the FontAwesome icon name (e.g., "fa-home").
+                 */
+                icon?: string | null;
+                /**
+                 * Select an image from the images collection.
+                 */
+                image?: (number | null) | Image;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        actions?:
+          | {
+              name: string;
+              link: {
+                type?: ('reference' | 'custom' | 'none') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+              };
+              icon: {
+                type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands' | 'image';
+                /**
+                 * Provide the FontAwesome icon name (e.g., "fa-home").
+                 */
+                icon?: string | null;
+                /**
+                 * Select an image from the images collection.
+                 */
+                image?: (number | null) | Image;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2366,9 +2672,10 @@ export interface Intro {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  navItems?:
+  menuItems?:
     | T
     | {
+        name?: T;
         link?:
           | T
           | {
@@ -2376,7 +2683,50 @@ export interface HeaderSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
-              label?: T;
+            };
+        items?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                  };
+              icon?:
+                | T
+                | {
+                    type?: T;
+                    icon?: T;
+                    image?: T;
+                  };
+              id?: T;
+            };
+        actions?:
+          | T
+          | {
+              name?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              icon?:
+                | T
+                | {
+                    type?: T;
+                    icon?: T;
+                    image?: T;
+                  };
+              id?: T;
             };
         id?: T;
       };
@@ -2425,6 +2775,64 @@ export interface MessageOfTheDaySelect<T extends boolean = true> {
  */
 export interface WebsiteSelect<T extends boolean = true> {
   intro?: T | IntroSelect<T>;
+  menuItems?:
+    | T
+    | {
+        name?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+            };
+        items?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                  };
+              icon?:
+                | T
+                | {
+                    type?: T;
+                    icon?: T;
+                    image?: T;
+                  };
+              id?: T;
+            };
+        actions?:
+          | T
+          | {
+              name?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              icon?:
+                | T
+                | {
+                    type?: T;
+                    icon?: T;
+                    image?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2437,6 +2845,23 @@ export interface IntroSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   description?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskSchedulePublish".
+ */
+export interface TaskSchedulePublish {
+  input: {
+    type?: ('publish' | 'unpublish') | null;
+    locale?: string | null;
+    doc?: {
+      relationTo: 'posts';
+      value: number | Post;
+    } | null;
+    global?: string | null;
+    user?: (number | null) | User;
+  };
+  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2489,7 +2914,3 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-// declare module 'payload' {
-//   export interface GeneratedTypes extends Config {}
-// }

@@ -2,6 +2,7 @@ import { BannerBlock } from '@/components/Blocks/Banner'
 import { CallToActionBlock } from '@/components/Blocks/CallToAction'
 import { CodeBlock, CodeBlockProps } from '@/components/Blocks/Code'
 import { MediaBlock } from '@/components/Blocks/MediaBlock'
+import { FeaturesBlock } from '@/components/Blocks/FeaturesBlock'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '../Link'
 import { DefaultNodeTypes, SerializedBlockNode, SerializedHeadingNode as BaseSerializedHeadingNode } from '@payloadcms/richtext-lexical'
@@ -9,6 +10,7 @@ import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
+  FeaturesBlock as FeaturesBlockProps,
 } from '@/payload-types'
 
 import {
@@ -25,7 +27,7 @@ type SerializedHeadingNode = BaseSerializedHeadingNode & { id?: string }
 
 export type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | FeaturesBlockProps>
   | TableNode
   | TableRowNode
   | TableCellNode
@@ -160,6 +162,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
             case 'code':
               return <CodeBlock className="col-start-2" key={index} {...block} />
+            case 'features':
+                return <FeaturesBlock key={index} {...block} />
             default:
               return null
           }

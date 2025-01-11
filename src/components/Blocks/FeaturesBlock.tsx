@@ -11,8 +11,8 @@ import type { Page } from '@/payload-types'
 
 type Props = {
   title?: string
-  description?: string
-  features: Section[]
+  description?: Record<string, any> | string | null
+  features?: Section[] | null
   id?: string
 }
 
@@ -35,17 +35,17 @@ type Props = {
 export interface Section {
   icon: { type: string; icon: string }
   link?: {
-    type?: ('reference' | 'custom') | null
+    type?: ('reference' | 'custom' | 'none') | null
     newTab?: boolean | null
     reference?: {
       relationTo: 'pages'
       value: number | Page
     } | null
     url?: string | null
-    label: string
+    // label: string
   }
   title: string
-  content: string | Record<string, unknown>
+  content?: string | Record<string, any> | null
 }
 
 // const iconMap: Record<Section['icon'], LucideIcon> = {
@@ -87,15 +87,15 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                 <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-400">
                   {section.title}
                 </h3>
-                {typeof section.content != 'object' && (
+                {section.content && typeof section.content != 'object' && (
                   <div
                     className="text-lg opacity-80"
                     dangerouslySetInnerHTML={{ __html: section.content }}
                   />
                 )}
-                {typeof section.content === 'object' && (
+                {section.content && typeof section.content === 'object' && (
                   <div className="text-lg opacity-80">
-                    <RichText content={section.content} enableGutter={false} />
+                   <RichText content={section.content} enableGutter={false} />
                   </div>
                 )}
               </div>
