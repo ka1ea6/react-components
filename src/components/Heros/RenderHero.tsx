@@ -31,7 +31,7 @@ interface BreadcrumbItem {
   label: string
 }
 
-export function Breadcrumb({ breadcrumbItems }: { breadcrumbItems: BreadcrumbItem[] }) {
+export function Breadcrumbs({ breadcrumbItems }: { breadcrumbItems: BreadcrumbItem[] }) {
   if (breadcrumbItems && breadcrumbItems.length > 0) {
     const filteredItems = breadcrumbItems.filter(item => item.label.toLowerCase() !== 'home');
 

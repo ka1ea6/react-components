@@ -1,6 +1,6 @@
 import { Container } from '@/components/Other/Container'
 import Image, { type StaticImageData } from 'next/image'
-import { Breadcrumb } from '../RenderHero'
+import { Breadcrumbs } from '../RenderHero'
 
 interface BreadcrumbItem {
   href?: string
@@ -42,7 +42,7 @@ export function SectionHero({ title, breadcrumbItems, image }: HeroSectionProps)
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-x-20 gap-y-8 text-accent-900 dark:text-white lg:pt-[40px] pb-5">
           <h1 className="underline underline-offset-8 decoration-1 decoration-accent font-secondary text-5xl font-bold lg:w-1/2">{title}</h1>
           {breadcrumbItems && breadcrumbItems.length > 0 && (
-            <Breadcrumb breadcrumbItems={breadcrumbItems} />
+            <Breadcrumbs breadcrumbItems={breadcrumbItems} />
           )}
         </div>
       </Container>
