@@ -10,14 +10,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 interface AuthorProps {
-  image: Omit<ImageProps, 'width' | 'height'>
+  image: Omit<ImageProps, 'width' | 'height'> | null
   name: string
   about: string
   socialLinks: SocialItemProps[]
 }
 
 function Author({ image, name, about, socialLinks }: AuthorProps) {
-  if (!image.src || !name) {
+  if (!image || !image.src || image.src.length < 3 || !name) {
     return null
   }
   return (
@@ -102,7 +102,7 @@ export function BlogDetail({
       src:
         ((author as User).profilePicture &&
           ((author as User).profilePicture as Media).sizes?.small?.url) ||
-        null,
+        '',
       alt: (author as User).name || 'blog author',
     },
     socialLinks: [],
