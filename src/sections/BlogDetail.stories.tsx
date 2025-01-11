@@ -215,6 +215,40 @@ LoadsOfBlogs.args = {
 export const NoCategories = Template.bind({})
 NoCategories.args = {
   ...Default.args,
-  categories: {
+  page: {
+    ...Default.args.page,
+  categoryList: {
     title: 'Categories',}
+  },
+  categoryList: null
+}
+
+
+export const NoAuthorImage = Template.bind({})
+NoAuthorImage.args = {
+  ...Default.args,
+  page: {
+    ...Default.args.page,
+    authors: [
+      {
+        id: 1,
+        name: 'Dave Brown',
+        jobRole: null,
+        profilePicture: null,
+        workHistory: [],
+        certifications: [],
+        areasOfExpertise: [],
+        dateOfBirth: null,
+        joinDate: null,
+        role: 'admin',
+        sub: null,
+        updatedAt: '2025-01-06T20:16:54.416Z',
+        createdAt: '2025-01-06T20:16:54.416Z',
+        enableAPIKey: null,
+        apiKey: null,
+        email: ''
+      }
+    ],
+    populatedAuthors: [ { id: 1, name: 'Dave Brown' } ],
   }
+}

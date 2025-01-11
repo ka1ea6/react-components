@@ -5,6 +5,7 @@ const config = {
     './src/server/**/*.{html,js,jsx,ts,tsx}',
     './src/styles/**/*.{html,js,jsx,ts,tsx}',
     './src/sections/**/*.{html,js,jsx,ts,tsx}',
+    './src/pages/**/*.{html,js,jsx,ts,tsx}',
   ],
   darkMode: ['selector'],
   corePlugins: {

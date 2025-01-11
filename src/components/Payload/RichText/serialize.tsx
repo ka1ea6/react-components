@@ -4,7 +4,7 @@ import { CodeBlock, CodeBlockProps } from '@/components/Blocks/Code'
 import { MediaBlock } from '@/components/Blocks/MediaBlock'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '../Link'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
+import { DefaultNodeTypes, SerializedBlockNode, SerializedHeadingNode as BaseSerializedHeadingNode } from '@payloadcms/richtext-lexical'
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
@@ -21,12 +21,15 @@ import {
   IS_UNDERLINE,
 } from './nodeFormat'
 
+type SerializedHeadingNode = BaseSerializedHeadingNode & { id?: string }
+
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
   | TableNode
   | TableRowNode
   | TableCellNode
+  | SerializedHeadingNode
 
 type TableNode = {
   type: 'table'
@@ -175,7 +178,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'heading': {
               const Tag = node?.tag
               return (
-                <Tag className="col-start-2" key={index}>
+                <Tag className="col-start-2" key={index} id={(node as SerializedHeadingNode)?.id || ''}>
                   {serializedChildren}
                 </Tag>
               )

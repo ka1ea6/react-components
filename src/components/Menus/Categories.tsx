@@ -32,14 +32,14 @@ export function Categories({ title, links }: CategoryListProps) {
   return (
       <Card>
         <CardHeader>
-          <CardTitle>{title && title}</CardTitle>
+          <CardTitle className='text-accent'>{title && title}</CardTitle>
         </CardHeader>
         <CardContent>
           {links && links.length > 0 && (
             <nav aria-label="footer links navigation">
               <ul className="grid gap-2.5 ">
                 {links.map((link, index) => (
-                  <li key={index} className="flex items-center text-sm text-accent first:pt-0 hover:cursor-pointer" onClick={(e) => {
+                  <li key={index} className="flex items-center text-sm text-primary first:pt-0 hover:cursor-pointer" onClick={(e) => {
                     e.preventDefault()
                     handleCategory(link.href)
                   }}>                   

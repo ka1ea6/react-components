@@ -138,185 +138,1012 @@ export const Default: PageStory = {
         },
       ],
     },
-    sidebarRight: {
-      tableOfContents: [
-        {
-          title: 'Getting Started',
-          url: '#',
-          links: [
-            {
-              title: 'Installation',
-              url: '#',
-              isActive: true,
+    page: {
+      id: 7,
+      title: 'Ways of Working',
+
+      hero: {
+        type: 'highImpact',
+
+        richText: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                tag: 'h1',
+                type: 'heading',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'How we work',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+        links: [],
+
+        media: {
+          id: 34,
+          alt: 'Global digital mesh network',
+          prefix: 'media',
+          updatedAt: '2025-01-08T23:05:26.243Z',
+          createdAt: '2025-01-08T23:05:26.243Z',
+          url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF.jpg',
+          thumbnailURL: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
+          filename: 'a-Ht-M8SAwtqOdjTkdVwF.jpg',
+          mimeType: 'image/jpeg',
+          filesize: 190660,
+          width: 2121,
+          height: 1414,
+          focalX: 50,
+          focalY: 50,
+
+          sizes: {
+            thumbnail: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
+              width: 300,
+              height: 200,
+              mimeType: 'image/jpeg',
+              filesize: 11319,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
             },
+            square: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
+              width: 500,
+              height: 500,
+              mimeType: 'image/jpeg',
+              filesize: 38667,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
+            },
+            small: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
+              width: 600,
+              height: 400,
+              mimeType: 'image/jpeg',
+              filesize: 32551,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
+            },
+            medium: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
+              width: 900,
+              height: 600,
+              mimeType: 'image/jpeg',
+              filesize: 58719,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
+            },
+            large: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
+              width: 1400,
+              height: 933,
+              mimeType: 'image/jpeg',
+              filesize: 107469,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
+            },
+
+            xlarge: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
+              width: 1920,
+              height: 1280,
+              mimeType: 'image/jpeg',
+              filesize: 165278,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
+            },
+          },
+        },
+      },
+      layout: [
+        {
+          id: '6772cd28c14b6a26539135b6',
+          blockName: null,
+
+          columns: [
             {
-              title: 'Project Structure',
-              url: '#',
+              id: '6772cd2bc14b6a26539135b7',
+              size: 'full',
+
+              richText: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Ways of Working',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'We want to build a company culture where effort is recognised and rewarded, therefore we would like to set out some guidelines.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Effort Matters:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Every team member’s contributions, big or small, are valued and noticed.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Commitment to Excellence:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Deliver work with attention to quality and impact.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Proactive Collaboration:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Support teammates and contribute to shared goals.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Working Hours',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Core Hours:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: ' All employees should be available from ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: '08:30 to 17:30',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' to maintain collaboration and responsiveness during key business hours. Total working week 40 hours',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Flexible Working:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' We support flexibility outside core hours, allowing you to adjust your start and finish times as long as work priorities are met and team coordination remains unaffected.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'In-Office Day:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: ' To promote team culture, all employees are required to work ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'one day a week in their local office',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: '. This day will be agreed upon within teams to ensure maximum participation and collaboration.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Holiday Process',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' - TBC (confirmed once we have an App)',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Team Collaboration',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Bi-Weekly - ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: 'All employees must attend the Bi-Weekly team meeting at their local office or remotely via teams (optionally can travel to the remote office for the meeting if they wish)',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Bench Call',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' - Any employees on the bench must attend the daily bench call and provide updates on their progress.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: "POD's",
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' - Everyone should be actively involved with at least POD',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Cameras',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' - Camera should always be on during Teams calls',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              enableLink: null,
+
+              link: {
+                type: 'reference',
+                newTab: null,
+                url: null,
+                label: null,
+                appearance: 'default',
+              },
             },
           ],
+          blockType: 'content',
         },
         {
-          title: 'Building Your Application',
-          url: '#',
-          links: [
+          id: '6772d7f357671c5f5b6b4e0c',
+          title: 'Document Management',
+          description: null,
+          blockName: null,
+
+          features: [
             {
-              title: 'Routing',
-              url: '#',
-              isDraft: true,
+              id: '6772d80757671c5f5b6b4e0d',
+              title: 'Cortex Intranet',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Will be used for as much documentation as possible. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'It has two main features:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'ol',
+                      type: 'list',
+                      start: 1,
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          type: 'listitem',
+                          value: 1,
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'The Content Management System. This is used to create content for both internal and external consumption. External content for our website is authored here and published.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'listitem',
+                          value: 2,
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Github. Used for design documents and other content, code and artefacts that we should keep tight control over. This content can also be published internally without going through the full GitFlow process.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                      ],
+                      listType: 'number',
+                      direction: 'ltr',
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '/',
+                label: 'Home',
+              },
+
+              icon: {
+                type: 'fa-thin',
+                icon: 'home',
+              },
             },
             {
-              title: 'Data Fetching',
-              url: '#',
+              id: '6772d8b857671c5f5b6b4e0e',
+              title: 'SharePoint',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'SharePoint is used to store Microsoft Office documents like PowerPoint and Word documents.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          type: 'linebreak',
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'The ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Document Library',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' library should not be used as this is where Teams dumps files.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Avoid using OneDrive to store files. Use SharePoint wherever possible.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'custom',
+                newTab: true,
+                url: 'https://reply.sharepoint.com/sites/Cortex790',
+                label: 'Sharepoint',
+              },
+
+              icon: {
+                type: 'fa-kit',
+                icon: 'microsoft-office',
+              },
             },
             {
-              title: 'Rendering',
-              url: '#',
-            },
-            {
-              title: 'Caching',
-              url: '#',
-            },
-            {
-              title: 'Styling',
-              url: '#',
-            },
-            {
-              title: 'Optimizing',
-              url: '#',
-            },
-            {
-              title: 'Configuring',
-              url: '#',
-            },
-            {
-              title: 'Testing',
-              url: '#',
-            },
-            {
-              title: 'Authentication',
-              url: '#',
-            },
-            {
-              title: 'Deploying',
-              url: '#',
-            },
-            {
-              title: 'Upgrading',
-              url: '#',
-            },
-            {
-              title: 'Examples',
-              url: '#',
+              id: '6772d95357671c5f5b6b4e0f',
+              title: 'Teams',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Should be used for conversations. Files should be shared as links to SharePoint documents.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '#',
+                label: '#',
+              },
+
+              icon: {
+                type: 'fa-thin',
+                icon: 'screen-users',
+              },
             },
           ],
-        },
-        {
-          title: 'API Reference',
-          url: '#',
-          links: [
-            {
-              title: 'Components',
-              url: '#',
-            },
-            {
-              title: 'File Conventions',
-              url: '#',
-            },
-            {
-              title: 'Functions',
-              url: '#',
-            },
-            {
-              title: 'next.config.js Options',
-              url: '#',
-            },
-            {
-              title: 'CLI',
-              url: '#',
-            },
-            {
-              title: 'Edge Runtime',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Architecture',
-          url: '#',
-          links: [
-            {
-              title: 'Accessibility',
-              url: '#',
-            },
-            {
-              title: 'Fast Refresh',
-              url: '#',
-            },
-            {
-              title: 'Next.js Compiler',
-              url: '#',
-            },
-            {
-              title: 'Supported Browsers',
-              url: '#',
-            },
-            {
-              title: 'Turbopack',
-              url: '#',
-            },
-          ],
-        },
-        {
-          title: 'Community',
-          url: '#',
-          links: [
-            {
-              title: 'Contribution Guide',
-              url: '#',
-            },
-          ],
+          blockType: 'features',
         },
       ],
-      relatedContent: {
-        knowledge: [
-          {
-            label: 'AWS Risk Assessment Terraform Module',
-            url: '/knowledge/terraform_risk_assessment_AWS/_index.md',
-            type: 'published',
-          },
-          {
-            label: 'AWS Airview CCF Terraform Module',
-            url: '/knowledge/terraform_aws_airview_ccf/_index.md',
-            type: 'note',
-          },
-        ],
-        services: [
-          {
-            label: 'AWS Account Vending Machine',
-            url: '/services/aws_account_vending_machine/_index.md',
-            type: 'published',
-          },
-          {
-            label: 'AWS Beanstalk',
-            url: '/services/aws_beanstalk/_index.md',
-            type: 'draft',
-          },
-          {
-            label: 'AWS Airwalk Network Firewall Terraform Module',
-            url: '/services/aws_vpc/terraform-aws-airwalk-module-networkfirewall.md',
-            type: 'published',
-          },
-          {
-            label: 'AWS WAF and Shield',
-            url: '/services/aws_waf_and_shield/_index.md',
-            type: 'published',
-          },
-        ],
+      meta: {
+        title: null,
+        image: null,
+        description: null,
       },
-      onAddDocument: fn(),
-      onEditDocument: fn(),
-      onPrintDocument: fn(),
+      publishedAt: '2024-12-30T14:47:13.971Z',
+      publishedToWebsite: false,
+      slug: 'ways-of-working',
+      slugLock: true,
+      parent: null,
+      breadcrumbs: [
+        {
+          id: '67805ee8bfbb3500011b4be8',
+          doc: 7,
+          url: null,
+          label: 'Ways of Working',
+        },
+      ],
+      updatedAt: '2025-01-09T23:42:32.648Z',
+      createdAt: '2024-12-30T14:47:05.921Z',
+      _status: 'published',
     },
+    edit: true,
   },
 }
 
@@ -349,18 +1176,18 @@ export const HighImpactHero = {
     hero: {
       type: 'highImpact',
       children: (
-        <div class="max-w-none mx-auto prose dark:prose-invert mb-6">
-          <h1 class="col-start-2">High Impact Hero</h1>
-          <p class="col-start-2"></p>
-          <p class="col-start-2">
+        <div className="max-w-none mx-auto prose dark:prose-invert mb-6">
+          <h1 className="col-start-2">High Impact Hero</h1>
+          <p className="col-start-2"></p>
+          <p className="col-start-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
             vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor
             lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus
             et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim
             in a lorem.
           </p>
-          <p class="col-start-2"></p>
-          <p class="col-start-2">
+          <p className="col-start-2"></p>
+          <p className="col-start-2">
             Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit
             amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros
             fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu
@@ -387,7 +1214,7 @@ export const PostHero = {
           { id: '2', title: 'Category 2' },
         ],
         meta: {
-          image: { url: 'stock1.jpg'},
+          image: { url: 'stock1.jpg' },
         },
         populatedAuthors: [
           {
@@ -433,5 +1260,996 @@ export const SectionHero = {
         },
       ],
     },
+  },
+}
+
+export const RandomText = {
+  args: {
+    ...Default.args,
+    hero: {
+      type: 'mediumImpact',
+      media: 'stock1.jpg?height=400&width=800',
+      children: <h1 className="text-4xl font-bold">Medium Impact Hero</h1>,
+    },
+    relatedContent: {
+      title: 'Related Links',
+  links: [
+    { title: 'Employee Handbook', url: '/handbook' },
+    { title: 'IT Support', url: '/it-support' },
+    { title: 'HR Portal', url: '/hr' },
+    { title: 'Company Directory', url: '/directory' },
+  ],
+    },
+    page: {
+      id: 19,
+      title: 'Test Page',
+
+      hero: {
+        type: 'highImpact',
+
+        richText: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                tag: 'h1',
+                type: 'heading',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+              },
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Sed non velit nec arcu volutpat dignissim in a lorem.',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+        links: [],
+
+        media: {
+          id: 34,
+          alt: 'Global digital mesh network',
+          prefix: 'media',
+          updatedAt: '2025-01-08T23:05:26.243Z',
+          createdAt: '2025-01-08T23:05:26.243Z',
+          url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF.jpg',
+          thumbnailURL: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
+          filename: 'a-Ht-M8SAwtqOdjTkdVwF.jpg',
+          mimeType: 'image/jpeg',
+          filesize: 190660,
+          width: 2121,
+          height: 1414,
+          focalX: 50,
+          focalY: 50,
+
+          sizes: {
+            thumbnail: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
+              width: 300,
+              height: 200,
+              mimeType: 'image/jpeg',
+              filesize: 11319,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
+            },
+            square: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
+              width: 500,
+              height: 500,
+              mimeType: 'image/jpeg',
+              filesize: 38667,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
+            },
+            small: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
+              width: 600,
+              height: 400,
+              mimeType: 'image/jpeg',
+              filesize: 32551,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
+            },
+            medium: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
+              width: 900,
+              height: 600,
+              mimeType: 'image/jpeg',
+              filesize: 58719,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
+            },
+            large: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
+              width: 1400,
+              height: 933,
+              mimeType: 'image/jpeg',
+              filesize: 107469,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
+            },
+
+            xlarge: {
+              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
+              width: 1920,
+              height: 1280,
+              mimeType: 'image/jpeg',
+              filesize: 165278,
+              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
+            },
+          },
+        },
+      },
+      layout: [
+        {
+          id: '67828accbfbb3500011b4cd7',
+          blockName: null,
+
+          columns: [
+            {
+              id: '67828accbfbb3500011b4cd6',
+              size: 'full',
+
+              richText: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aenean ut ligula ac libero vehicula luctus.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aenean ut ligula ac libero vehicula luctus.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: ' Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Pellentesque habitant morbi tristique sen',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 8,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: 'ectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu pellentesque. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: 'Phasellus imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 2,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aenean ut ligula ac libero vehicula luctus.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Suspendisse potenti. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: ' ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: null,
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              enableLink: null,
+
+              link: {
+                type: 'reference',
+                newTab: null,
+                url: null,
+                label: null,
+                appearance: 'default',
+              },
+            },
+          ],
+          blockType: 'content',
+        },
+        {
+          id: '67828accbfbb3500011b4cdb',
+          title: 'Aenean ut ligula ac libero vehicula luctus. I',
+
+          description: {
+            root: {
+              type: 'root',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'Suspendisse potenti. ',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'ltr',
+                  textStyle: '',
+                  textFormat: 0,
+                },
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'ltr',
+                  textStyle: '',
+                  textFormat: 0,
+                },
+              ],
+              direction: 'ltr',
+            },
+          },
+          blockName: null,
+          features: [
+            {
+              id: '67828accbfbb3500011b4cd8',
+              title: 'Aenean ut ligula ac libero vehicula luctus. ',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Suspendisse potenti. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'none',
+                newTab: null,
+                url: '/',
+                label: 'Home',
+              },
+
+              icon: {
+                type: 'fa-thin',
+                icon: 'home',
+              },
+            },
+            {
+              id: '67828accbfbb3500011b4cd9',
+              title: 'Lorem ipsum dolor sit amet',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu pellentesque. Phasellus imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'none',
+                newTab: true,
+                url: '',
+                label: 'test',
+              },
+
+              icon: {
+                type: 'fa-kit',
+                icon: 'microsoft-office',
+              },
+            },
+            {
+              id: '67828accbfbb3500011b4cda',
+              title: 'Sed non velit nec arcu volutpat dignissim in a lorem.',
+
+              content: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '#',
+                label: '#',
+              },
+
+              icon: {
+                type: 'fa-thin',
+                icon: 'screen-users',
+              },
+            },
+          ],
+          blockType: 'features',
+        },
+        {
+          id: '67828be29b9e476536d9588d',
+          blockName: null,
+
+          columns: [
+            {
+              id: '67828be59b9e476536d9588e',
+              size: 'half',
+
+              richText: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Suspendisse potenti. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aliquam erat volutpat. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h4',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aliquam erat volutpat. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              enableLink: null,
+
+              link: {
+                type: 'reference',
+                newTab: null,
+                url: null,
+                label: null,
+                appearance: 'default',
+              },
+            },
+            {
+              id: '67828c239b9e476536d9588f',
+              size: 'half',
+
+              richText: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      tag: 'h2',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Aliquam erat volutpat. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Suspendisse potenti. ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              enableLink: null,
+
+              link: {
+                type: 'reference',
+                newTab: null,
+                url: null,
+                label: null,
+                appearance: 'default',
+              },
+            },
+          ],
+          blockType: 'content',
+        },
+      ],
+      meta: {
+        title: null,
+        image: null,
+        description: null,
+      },
+      publishedAt: '2025-01-11T15:14:20.488Z',
+      publishedToWebsite: false,
+      slug: 'test-page',
+      slugLock: true,
+      parent: null,
+      breadcrumbs: [
+        {
+          id: '67828dcbbfbb3500011b4d28',
+          doc: 19,
+          url: null,
+          label: 'Test Page',
+        },
+      ],
+      updatedAt: '2025-01-11T15:27:07.957Z',
+      createdAt: '2025-01-11T15:14:20.282Z',
+      _status: 'published',
+    },
+    edit: true,
   },
 }

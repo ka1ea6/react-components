@@ -13,23 +13,24 @@ type Props = {
   title?: string
   description?: string
   features: Section[]
+  id?: string
 }
 
-type RichText = {
-  root: {
-    type: string
-    children: {
-      type: string
-      version: number
-      [k: string]: unknown
-    }[]
-    direction: ('ltr' | 'rtl') | null
-    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-    indent: number
-    version: number
-  }
-  [k: string]: unknown
-} | null
+// type RichText = {
+//   root: {
+//     type: string
+//     children: {
+//       type: string
+//       version: number
+//       [k: string]: unknown
+//     }[]
+//     direction: ('ltr' | 'rtl') | null
+//     format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+//     indent: number
+//     version: number
+//   }
+//   [k: string]: unknown
+// } | null
 
 export interface Section {
   icon: { type: string; icon: string }
@@ -53,21 +54,27 @@ export interface Section {
 //   handshake: HandshakeIcon,
 // }
 
-export const FeaturesBlock: React.FC<Props> = ({ title, description, features }) => {
+export const FeaturesBlock: React.FC<Props> = ({ title, description, features, id }) => {
   // export function FeatureBlock({ title, features, theme = 'dark' }: FeatureBlockProps) {
+// return null
+
   return (
     <section
       className={cn(
         'container w-full rounded-lg',
-        'dark:bg-black dark:text-gray-300 bg-white text-gray-800',
+        'dark:text-gray-300 text-gray-800',
       )}
     >
-      {title && <h2 className="mb-12 text-4xl font-bold tracking-tight md:text-5xl">{title}</h2>}
-      {description && (
-        <p className="mb-5 text-xl font-bold tracking-tight md:text-xl">{description}</p>
+      {title && <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl" id={id || ''}>{title}</h2>}
+      {description && typeof description === 'string' && (
+        <p className="mb-5 text-xl tracking-tight md:text-xl">{description}</p>
       )}
+      {description && typeof description === 'object' && (
+        <p className="mb-5 text-xl tracking-tight md:text-xl"><RichText content={description} enableGutter={false} /></p>                    
+                  
+                )}
 
-      <div className={`grid gap-8 md:grid-cols-${features ? features.length : 1}`}>
+      <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length : 1}`}>
         {features &&
           features.map((section, index) => {
             // const Icon = <div><i className=`${section.icon.type} ${section.icon.icon}`></i></div>
@@ -98,8 +105,8 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features })
               <a
                 href={
                   section.link.url
-                    ? section.link.url
-                    : `/${section.link.reference?.relationTo}/${(section.link.reference?.value as Page).slug}`
+                    ? section.link.url : '#'
+                    // : `/${section.link.reference?.relationTo}/${(section.link.reference?.value as Page)?.slug || '#'}`
                 }
                 key={index}
                 className="no-underline group"

@@ -17,6 +17,9 @@ interface AuthorProps {
 }
 
 function Author({ image, name, about, socialLinks }: AuthorProps) {
+  if (!image.src || !name) {
+    return null
+  }
   return (
     <div className="mt-1 z-10 px-0 pt-0 lg:px-10">
       <Card>
@@ -33,7 +36,7 @@ function Author({ image, name, about, socialLinks }: AuthorProps) {
             />
           )}
 
-          <h3 className="font-secondary text-center py-2 text-lg font-bold leading-[1.25] text-accent dark:text-white md:text-xl">
+          <h3 className="font-secondary text-center py-2 text-lg leading-[1.25] text-accent md:text-xl">
             {name}
           </h3>
           <p>{about}</p>
@@ -99,7 +102,7 @@ export function BlogDetail({
       src:
         ((author as User).profilePicture &&
           ((author as User).profilePicture as Media).sizes?.small?.url) ||
-        '/assets/images/blog/author-1.png',
+        null,
       alt: (author as User).name || 'blog author',
     },
     socialLinks: [],
@@ -120,12 +123,12 @@ export function BlogDetail({
             <div className="mt-4 lg:-mt-10 z-10 px-0 pt-0 lg:px-10">
               <Card>
                 <CardHeader>
-                  <CardTitle>CMS Actions</CardTitle>
+                  <CardTitle className='text-accent'>CMS Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4 text-sm text-muted-foreground">Edit this page in the CMS</p>
                   <Link href={`${path}${page.id}`}>
-                    <Button className="w-full">Edit</Button>
+                     <Button variant="outline" className="w-full text-accent">Edit</Button>
                   </Link>
                 </CardContent>
               </Card>

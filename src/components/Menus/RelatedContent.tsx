@@ -7,13 +7,14 @@ import { ExternalLink } from 'lucide-react'
 
 export interface RelatedContentProps {
   links: Array<{ title: string; url: string }>
+  title?: string
 }
 
-export const RelatedContent: React.FC<RelatedContentProps> = ({ links }) => {
+export const RelatedContent: React.FC<RelatedContentProps> = ({ links, title = 'Related Content' }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Related</CardTitle>
+        <CardTitle className='text-accent'>{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <nav className="flex flex-col space-y-2">

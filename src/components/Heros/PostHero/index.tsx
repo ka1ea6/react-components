@@ -1,6 +1,6 @@
 import { formatDateTime } from '@/lib/utils/formatDateTime'
 import React from 'react'
-
+import { Badge } from '@/components/ui'
 import type { Post, Media as MediaType } from '@/payload-types'
 
 import { Media } from '@/components/Payload/Media'
@@ -20,14 +20,8 @@ export const PostHero: React.FC<{
                 const { title: categoryTitle } = category
 
                 const titleToUse = categoryTitle || 'Untitled category'
-
-                const isLast = index === categories.length - 1
-
                 return (
-                  <React.Fragment key={index}>
-                    {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
+                  <Badge className='mx-2'>{titleToUse}</Badge>
                 )
               }
               return null

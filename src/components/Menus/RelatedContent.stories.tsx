@@ -11,6 +11,7 @@ const Template: StoryFn<RelatedContentProps> = (args) => <RelatedContent {...arg
 
 export const Default = Template.bind({})
 Default.args = {
+  title: 'Related Links',
   links: [
     { title: 'Employee Handbook', url: '/handbook' },
     { title: 'IT Support', url: '/it-support' },

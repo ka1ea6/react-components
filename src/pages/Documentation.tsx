@@ -70,13 +70,18 @@ import { SidebarLeft } from '@/components//Menus/SidebarLeft'
 import { SimpleHeader } from '../components/HeaderFooter'
 // import GithubControl from '@/components//Editor/GithubControl'
 import { Toaster } from '@/components//ui/toaster'
+import { Header } from '../components/HeaderFooter'
+
+import logoLight from '../images/cortex-reply-light.png'
+import logoDark from '../images/cortex-reply-dark.png'
 
 export default function Documentation({ ...args }) {
   return (
-    <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
-      <SimpleHeader {...args.header} />
-      <SidebarProvider className="top-14 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip">
-        <SidebarLeft {...args.sidebarLeft} className="flex-none" />
+    // <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
+    <div className='bg-sidebar'>
+      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header} className='bg-sidebar'/>
+      <SidebarProvider className="top-24 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip">
+        <SidebarLeft {...args.sidebarLeft} className="flex-none top-24" />
         <SidebarInset className="grow overflow-hidden">
           <header className="flex h-16 shrink-0 items-center gap-2">
             <div className="flex items-center gap-2 px-4">
@@ -107,7 +112,7 @@ export default function Documentation({ ...args }) {
         <SidebarRight
           {...args.sidebarRight}
           // editorComponent={<GithubControl {...args.github} />}
-          className="flex-none"
+          className="flex-none top-24"
         />
       </SidebarProvider>
       <Toaster />

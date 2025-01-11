@@ -1,161 +1,149 @@
-import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 
-import {
-  BadgeCheck,
-  Bell,
-  BookOpen,
-  Bot,
-  Check,
-  ChevronRight,
-  ChevronsUpDown,
-  Command,
-  CreditCard,
-  FilePlus,
-  Edit,
-  Printer,
-  Folder,
-  Frame,
-  LifeBuoy,
-  LogOut,
-  Map,
-  MoreHorizontal,
-  PieChart,
-  Send,
-  Settings2,
-  Share,
-  Plus,
-  Sparkles,
-  SquareTerminal,
-  Trash2,
-  ExternalLink,
-} from 'lucide-react'
-
-// import {
-//   Avatar,
-//   AvatarFallback,
-//   AvatarImage,
-// } from "cortex-design-system/components/ui/avatar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components//ui/breadcrumb'
-
-import { Separator } from '@/components//ui/separator'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarProvider,
-  SidebarTrigger,
-  SidebarSeparator,
-} from '@/components//ui/sidebar'
-
-import { SidebarRight } from '@/components//Menus/SidebarRight'
-import { SidebarLeft } from '@/components//Menus/SidebarLeft'
 import { Header } from '../components/HeaderFooter'
-// import GithubControl from '@/components//Editor/GithubControl'
-import { Toaster } from '@/components//ui/toaster'
-import { LowImpactHero } from '@/components/Heros/LowImpact'
-import { MediumImpactHero } from '@/components/Heros/MediumImpact'
-import { HighImpactHero } from '@/components/Heros/HighImpact'
-import { PostHero } from '@/components/Heros/PostHero'
-import { SectionHero } from '@/components/Heros/SectionHero'
-
+import { RenderHero } from '@/components/Heros/RenderHero'
+import { RenderBlocks } from '@/components/Blocks/RenderBlocks'
 import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
+import { MainPageSection } from '../sections/MainPageSection'
+import { Page } from '@/payload-types'
+interface WebsiteSectionProps {
+  hero: any;
+  page: Page;
+  [key: string]: any;
+}
+interface TableOfContentsItem {
+  text: string;
+  id: string; // Unique identifier for scrolling
+  tag: string; // Tag type like "h1", "h2", etc.
+}
 
-export default function WebsiteSection({ ...args }) {
+export default function WebsiteSection({ ...args  }: WebsiteSectionProps) {
+
+  const page = args.page;
+  
+  // Extract `RichText` content
+// Extract all headings for TOC, including titles and nested RichText
+let globalIndex = 0; // Global index for unique IDs
+
+
+// Generate a unique ID
+const generateId = (text: string, index: number): string => {
+  return `${text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")}-${index}`;
+};
+
+const tableOfContents: TableOfContentsItem[] = page.layout.flatMap((block: any) => {
+  const tocItems: TableOfContentsItem[] = [];
+
+  // Include block title as h2
+  if ('title' in block && block.title) {
+    tocItems.push({
+      text: block.title,
+      id: generateId(block.title, globalIndex++), // Use globalIndex for unique ID
+      tag: "h2",
+    });
+  }
+
+  // Include column titles as h2
+  if ('columns' in block && Array.isArray(block.columns)) {
+    block.columns.forEach(
+      (column: {
+        title?: string;
+        richText?: { root: { children: { type: string; tag?: string; children: { text: string }[] }[] } };
+      }) => {
+        if (column.title) {
+          tocItems.push({
+            text: column.title,
+            id: generateId(column.title, globalIndex++), // Use globalIndex for unique ID
+            tag: "h2",
+          });
+        }
+
+        // Include headings from nested RichText
+        if (column.richText) {
+          column.richText.root.children
+            .filter((child: { type: string }) => child.type === "heading")
+            .forEach((heading: { tag?: string; children: { text: string }[] }) => {
+              tocItems.push({
+                text: heading.children[0].text,
+                id: generateId(heading.children[0].text, globalIndex++), // Use globalIndex for unique ID
+                tag: heading.tag || "h2", // Default to h2
+              });
+            });
+        }
+      }
+    );
+  }
+
+  return tocItems;
+});
+
+function processContentWithIds(layout: any[]): any[] {
+  const generateId = (text: string, index: number): string => {
+    return `${text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")}-${index}`;
+  };
+
+  let globalIndex = 0; // To ensure unique IDs across all headings
+
+  return layout.map((block) => {
+    // Process block titles
+    if (block.title) {
+      block.id = generateId(block.title, globalIndex++); // Inject ID
+    }
+
+    // Process columns
+    if (block.columns) {
+      block.columns = block.columns.map((column: {
+        title?: string;
+        id?: string;
+        richText?: {
+          root: {
+            children: {
+              type: string;
+              id?: string;
+              tag?: string;
+              children: { text: string }[];
+            }[];
+          };
+        };
+      }) => {
+        if (column.title) {
+          column.id = generateId(column.title, globalIndex++); // Inject ID
+        }
+
+        // Process nested RichText headings
+        if (column.richText) {
+          column.richText.root.children = column.richText.root.children.map((child: {
+            type: string;
+            id?: string;
+            tag?: string;
+            children: { text: string }[];
+          }) => {
+            if (child.type === "heading") {
+              child.id = generateId(child.children[0].text, globalIndex++); // Inject ID
+            }
+            return child;
+          });
+        }
+
+        return column;
+      });
+    }
+
+    return block;
+  });
+}
+
   return (
-
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
-                    <div className="fixed top-0 left-0 right-0 z-50">
+    <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+        <RenderHero {...args.hero} />
+      
+<MainPageSection edit={args.edit} pageId={args.page.id} tableOfContents={tableOfContents} relatedContent={args.relatedContent}>
+<RenderBlocks blocks={processContentWithIds(args.page.layout)} />
 
-              <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
-              {/* <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header}/> */}
+</MainPageSection>
 
-</div>
 
-        {/* Hero Section */}
-        {args.hero && args.hero.type === 'lowImpact' && <LowImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'mediumImpact' && <MediumImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'highImpact' && <HighImpactHero {...args.hero} />}
-        {args.hero && args.hero.type === 'postHero' && <PostHero {...args.hero} />}
-        {args.hero && args.hero.type === 'sectionHero' && <SectionHero {...args.hero} />}
-
-        {/* Main Content */}
-               <div className="container py-8">
-                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-                   {/* Main Content Area */}
-                   <div className="lg:col-span-2">{args.children}</div>
-       
-                   {/* Sidebar */}
-                   <div className="space-y-6">
-                     <Card>
-                       <CardHeader>
-                         <CardTitle>Quick Actions</CardTitle>
-                       </CardHeader>
-                       <CardContent>
-                         <p className="mb-4 text-sm text-muted-foreground">
-                           Get started with your first action in just a few clicks.
-                         </p>
-                         <Button className="w-full bg-accent text-accent-foreground">Create New</Button>
-                       </CardContent>
-                     </Card>
-       
-                     <Card>
-                       <CardHeader>
-                         <CardTitle>Resources</CardTitle>
-                       </CardHeader>
-                       <CardContent>
-                         <nav className="flex flex-col space-y-2">
-                           <a
-                             href="#"
-                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
-                           >
-                             User Guide
-                             <ExternalLink className="ml-1 h-3 w-3" />
-                           </a>
-                           <a
-                             href="#"
-                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
-                           >
-                             API Documentation
-                             <ExternalLink className="ml-1 h-3 w-3" />
-                           </a>
-                           <a
-                             href="#"
-                             className="inline-flex items-center text-sm text-blue-600 hover:underline"
-                           >
-                             View Pricing Details
-                             <ExternalLink className="ml-1 h-3 w-3" />
-                           </a>
-                         </nav>
-                       </CardContent>
-                     </Card>
-                   </div>
-                 </div>
-               </div>
-             </div>
-    
-
+        </div>
   )
 }

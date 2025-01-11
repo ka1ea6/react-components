@@ -56,6 +56,17 @@ export default {
       </div>
     ),
   ],
+  parameters: {
+    nextjs: {
+      appDirectory: true, // 👈 Set this
+    },
+    docs: {
+      description: {
+        component:
+          'Example Blog page.',
+      },
+    },
+  },
 }
 
 const Template = (args: any) => <Page {...args} />
