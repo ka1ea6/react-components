@@ -1,12 +1,7 @@
-"use strict";
+'use strict'
 
 import * as React from 'react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { CalendarDays, Cake, Award, PartyPopper } from 'lucide-react'
@@ -71,16 +66,13 @@ export function EventCard({
           <CardTitle className="text-xl">{title || 'Untitled Event'}</CardTitle>
           <p className="text-sm text-white/80">
             <CalendarDays className="mr-1 inline-block h-4 w-4" />
-            {date ? new Date(date).toLocaleDateString() : 'Date not specified'}
+            {date ? new Date(date).toLocaleDateString('en-GB') : 'Date not specified'}
           </p>
         </div>
       </CardHeader>
       <CardContent className="bg-white bg-opacity-80 p-4">
         {description && <p className="mb-2 text-sm text-gray-700">{description}</p>}
-        <Badge
-          variant="secondary"
-          className={`${getEventColor(eventType)} text-white/80`}
-        >
+        <Badge variant="secondary" className={`${getEventColor(eventType)} text-white/80`}>
           {/* <Badge variant="secondary" className="bg-white text-gray-800 hover:bg-gray-100"> */}
           {getEventIcon(eventType)}
           <span className="ml-1">
