@@ -39,7 +39,7 @@ export function Categories({ title, links }: CategoryListProps) {
             <nav aria-label="footer links navigation">
               <ul className="grid gap-2.5 ">
                 {links.map((link, index) => (
-                  <li key={index} className="flex items-center text-sm text-primary first:pt-0 hover:cursor-pointer" onClick={(e) => {
+                  <li key={index} className="flex items-center text-sm text-primary hover:text-accent dark:text-foreground first:pt-0 hover:cursor-pointer" onClick={(e) => {
                     e.preventDefault()
                     handleCategory(link.href)
                   }}>                   

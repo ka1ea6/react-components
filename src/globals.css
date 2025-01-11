@@ -3,15 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: auto;
-    font-weight: auto;
-  }
+   
 
   :root {
     --background: 0 0% 100%;
@@ -23,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 222, 53%, 21%;
+    --primary: 0 65 73;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 35, 100%, 55%;
@@ -67,7 +59,7 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 178, 60%, 32%;
+    --primary: 0 65 73;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 35, 100%, 55%;
@@ -153,6 +145,21 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  h1, h2 {
+    position: relative;
+    display: inline-block;
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px; /* Adjust as needed */
+    width: 20%; /* Half underline */
+    height: 2px; /* Adjust thickness as needed */
+    /* background-color: currentColor ;  */
+    background-color: rgb(var(--accent)); 
   }
 }
 /* 

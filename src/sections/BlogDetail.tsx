@@ -123,12 +123,12 @@ export function BlogDetail({
             <div className="mt-4 lg:-mt-10 z-10 px-0 pt-0 lg:px-10">
               <Card>
                 <CardHeader>
-                  <CardTitle className='text-accent'>CMS Actions</CardTitle>
+                  <CardTitle className='text-accent'>Content Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4 text-sm text-muted-foreground">Edit this page in the CMS</p>
                   <Link href={`${path}${page.id}`}>
-                     <Button variant="outline" className="w-full text-accent">Edit</Button>
+                     <Button variant="outline" className="w-full text-accent hover:text-foreground">Edit</Button>
                   </Link>
                 </CardContent>
               </Card>

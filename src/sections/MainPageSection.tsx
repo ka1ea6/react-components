@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { RelatedContent, type RelatedContentProps} from '@/components/Menus/RelatedContent'
@@ -111,7 +110,7 @@ export const MainPageSection = ({
                 href={`#${heading.id}`}
                 onClick={(event) => handleLinkClick(event, heading.id)}
                 className={`text-xs ${
-                  activeLink === heading.id ? "text-accent font-semibold" : "text-primary"
+                  activeLink === heading.id ? "text-accent font-semibold" : "text-primary dark:text-foreground"
                 } hover:text-accent`}
               >
                 {heading.text}
@@ -126,19 +125,19 @@ export const MainPageSection = ({
           {edit && (
             <Card>
               <CardHeader>
-                <CardTitle>CMS Actions</CardTitle>
+                <CardTitle>Content Actions</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="mb-4 text-sm text-muted-foreground">
                   Contribute or create new content.
                 </p>
                 <Link href={`${path}${pageId}`}>
-                  <Button variant="outline" className="w-full text-accent">
+                  <Button variant="outline" className="w-full text-accent hover:text-foreground">
                     Edit Page
                   </Button>
                 </Link>
                 <Link href="/admin/collections/pages/create">
-                  <Button variant="outline" className="w-full mt-2 text-accent">
+                  <Button variant="outline" className="w-full mt-2 text-accent hover:text-foreground">
                     Create New
                   </Button>
                 </Link>

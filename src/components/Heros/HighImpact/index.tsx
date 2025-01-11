@@ -41,7 +41,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
       data-theme="dark"
     >
       <div className="container mb-8 z-10 relative flex items-end justify-center">
-        <div className="max-w-[36.5rem] text-center">
+        <div className="text-center">
           {children ||
             (richText && (
               <RichText

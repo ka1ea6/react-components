@@ -186,7 +186,7 @@ const config = {
           foreground: 'hsl(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: 'rgb(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
           ON_HOVER: 'hsla(var(--primary), 0.75)',
         },

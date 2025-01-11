@@ -1,9 +1,6 @@
 import { Container } from '@/components/Other/Container'
-import { CustomLink } from '@/components/Other/CustomLink'
-import { cn } from '@/lib/utils'
 import Image, { type StaticImageData } from 'next/image'
-import React from 'react'
-
+import { Breadcrumb } from '../RenderHero'
 
 interface BreadcrumbItem {
   href?: string
@@ -18,7 +15,7 @@ export interface HeroSectionProps {
 
 export function SectionHero({ title, breadcrumbItems, image }: HeroSectionProps) {
   return (
-    <section className="section-padding-primary -z-10 relative flex min-h-[250px] items-end">
+    <section className="-z-10 relative flex min-h-[250px] pt-auto items-end">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
        { image && <Image
@@ -43,7 +40,7 @@ export function SectionHero({ title, breadcrumbItems, image }: HeroSectionProps)
 
       <Container>
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-x-20 gap-y-8 text-accent-900 dark:text-white lg:pt-[40px] pb-5">
-          <h1 className="font-secondary text-xl font-bold lg:w-1/2">{title}</h1>
+          <h1 className="underline underline-offset-8 decoration-1 decoration-accent font-secondary text-5xl font-bold lg:w-1/2">{title}</h1>
           {breadcrumbItems && breadcrumbItems.length > 0 && (
             <Breadcrumb breadcrumbItems={breadcrumbItems} />
           )}
@@ -51,34 +48,4 @@ export function SectionHero({ title, breadcrumbItems, image }: HeroSectionProps)
       </Container>
     </section>
   )
-}
-
-const breadcrumbItemClasses = cn('h3 font-secondary')
-
-function Breadcrumb({ breadcrumbItems }: Pick<HeroSectionProps, 'breadcrumbItems'>) {
-  if (breadcrumbItems && breadcrumbItems.length > 0) {
-    return (
-      <nav aria-label="breadcrumb">
-        <ol className="inline-flex items-center gap-5">
-          {breadcrumbItems.map((menuItem, index) => (
-            <React.Fragment key={index}>
-              {menuItem.href ? (
-                <li className={breadcrumbItemClasses}>
-                  <CustomLink href={menuItem.href} className="transition-colors hover:text-primary">
-                    {menuItem.label}
-                  </CustomLink>
-                  <span className="ml-5">/</span>
-                </li>
-              ) : (
-                <li className={breadcrumbItemClasses} aria-current="page">
-                  {menuItem.label}
-                </li>
-              )}
-            </React.Fragment>
-          ))}
-        </ol>
-      </nav>
-    )
-  }
-  return <></>
 }
