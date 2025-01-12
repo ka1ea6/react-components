@@ -69,7 +69,7 @@ export const SlideShow: React.FC<{
   const handlePrintView = () => {
     // go swap the path for 'print'. i.e. /slides/example -> /print-slides/example
     const currentPath = router.asPath
-    const newPath = currentPath.replace('/slides/', '/print-slides/')
+    const newPath = currentPath.replace('/present/', '/print/')
     // A4 Landscape is 3508 x 2480 at 300dpi 
     const printWindow = window.open(
       newPath,

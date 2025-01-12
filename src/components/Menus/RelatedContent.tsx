@@ -22,7 +22,7 @@ export const RelatedContent: React.FC<RelatedContentProps> = ({ links, title = '
             <Link
               key={index}
               href={link.url}
-              className="inline-flex items-center text-sm text-primary hover:underline"
+              className="inline-flex items-center text-sm text-primary dark:text-foreground hover:text-accent"
             >
               {link.title}
               {/* only show the external link for external sites (http/https) */}

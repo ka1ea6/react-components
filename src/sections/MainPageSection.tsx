@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { RelatedContent, type RelatedContentProps} from '@/components/Menus/RelatedContent'
+import {  Printer, Presentation } from 'lucide-react';
+import { useRouter } from 'next/router';
 
 interface TableOfContentsItem {
   text: string;
@@ -31,6 +33,7 @@ export const MainPageSection = ({
 }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   const [activeLink, setActiveLink] = useState<string>("");
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible)
@@ -68,6 +71,16 @@ export const MainPageSection = ({
     }
   };
 
+  const handlePrintView = () => {
+    const newPath = router.asPath.replace(`/slug`, `/print/slug`);
+    router.push(newPath);
+  };
+
+  const handlePresentView = () => {
+    const newPath = router.asPath.replace(`/slug`, `/present/slug`);
+    router.push(newPath);
+  };
+
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
@@ -97,35 +110,11 @@ export const MainPageSection = ({
             isSidebarVisible ? 'translate-x-0' : 'md:translate-x-full',
             'xl:block xl:col-span-1 xl:translate-x-0',
           )}
-        >{ tableOfContents.length > 3 && (
-          <Card className="w-full max-w-sm mt-4">
-      <CardHeader>
-        <CardTitle className='text-accent'>On this page</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ul className="space-y-2">
-          {tableOfContents.map((heading, index) => (
-            <li key={index} className={getIndentation(heading.tag)}>
-              <a
-                href={`#${heading.id}`}
-                onClick={(event) => handleLinkClick(event, heading.id)}
-                className={`text-xs ${
-                  activeLink === heading.id ? "text-accent font-semibold" : "text-primary dark:text-foreground"
-                } hover:text-accent`}
-              >
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-          )
-        }
+        >
           {edit && (
             <Card>
               <CardHeader>
-                <CardTitle>Content Actions</CardTitle>
+                <CardTitle className='text-accent'>Content Actions</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="mb-4 text-sm text-muted-foreground">
@@ -141,9 +130,44 @@ export const MainPageSection = ({
                     Create New
                   </Button>
                 </Link>
+                <div className="flex space-x-2 mt-4">
+                  <Button variant="outline" className="text-accent hover:text-foreground" onClick={handlePrintView}>
+                    <Printer className="mr-2" /> Print
+                  </Button>
+                  <Button variant="outline" className="text-accent hover:text-foreground" onClick={handlePresentView}>
+                    <Presentation className="mr-2" /> Present
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           )}
+
+          { tableOfContents.length > 3 && (
+          <Card className="w-full max-w-sm mt-4">
+      <CardHeader>
+        <CardTitle className='text-accent'>On this page</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2">
+          {tableOfContents.map((heading, index) => (
+            <li key={index} className={getIndentation(heading.tag)}>
+              <a
+                href={`#${heading.id}`}
+                // onClick={(event) => handleLinkClick(event, heading.id)}
+                className={`text-xs ${
+                  activeLink === heading.id ? "text-accent font-semibold" : "text-primary dark:text-foreground"
+                } hover:text-accent`}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+          )
+        }
+          
           { relatedContent && relatedContent.links.length > 0 && (
             <RelatedContent {...relatedContent} />
           )}
