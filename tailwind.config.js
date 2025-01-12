@@ -364,6 +364,7 @@ const config = {
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
+            '--tw-prose-bold': 'rgb(var(--accent))',
             // '--tw-prose-body': 'var(--text)',
             // '--tw-prose-headings': 'var(--text)',
             h1: {

@@ -27,7 +27,7 @@ export const RenderBlocks: React.FC<{
 
   if (hasBlocks) {
     return (
-      <Fragment>
+      <section id='render-blocks'>
         {blocks.map((block, index) => {
           const { blockType } = block as { blockType: keyof typeof blockComponents }
 
@@ -45,7 +45,7 @@ export const RenderBlocks: React.FC<{
           }
           return null
         })}
-      </Fragment>
+      </section>
     )
   }
 
