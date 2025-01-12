@@ -3,16 +3,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Page } from '@/payload-types'
 import { RenderBlocks } from '../Blocks'
-import { Printer, CircleX } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/router'
 
 export const SlideShow: React.FC<{
   blocks: Page['layout'][0][]
 }> = (props) => {
   const [activeSection, setActiveSection] = useState(0)
-  const router = useRouter()
 
   const { blocks } = props
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
@@ -66,25 +63,6 @@ export const SlideShow: React.FC<{
     }
   }
 
-  const handlePrintView = () => {
-    // go swap the path for 'print'. i.e. /slides/example -> /print-slides/example
-    const currentPath = router.asPath
-    const newPath = currentPath.replace('/present/', '/print/')
-    // A4 Landscape is 3508 x 2480 at 300dpi 
-    const printWindow = window.open(
-      newPath,
-      'Print',
-      'width=1754,height=1240,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes'
-    );
-    printWindow && printWindow.focus();
-    // router.push(newPath)
-  }
-
-  const handleBack = () => {
-    // go back to the previous page
-    router.back()
-  }
-
   useEffect(() => {
     window.addEventListener('wheel', handleWheel)
     window.addEventListener('keydown', handleKeyDown)
@@ -136,21 +114,6 @@ export const SlideShow: React.FC<{
         onClick={goToNextSlide}
       >
         <ScrollDownIcon />
-      </button>
-      {/* Print View Button */}
-      <button
-        className="absolute top-14 left-1 z-20 text-3xl text-primary transition-all duration-300 hover:scale-110"
-        onClick={handlePrintView}
-      >
-        <Printer />
-      </button>
-
-      {/* Close View */}
-      <button
-        className="absolute top-4 left-1 z-20 text-3xl text-primary transition-all duration-300 hover:scale-110"
-        onClick={handleBack}
-      >
-        <CircleX />
       </button>
     </div>
   )

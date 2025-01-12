@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { RelatedContent, type RelatedContentProps } from '@/components/Menus/RelatedContent'
 import { Printer, Presentation } from 'lucide-react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 interface TableOfContentsItem {
   text: string
@@ -31,8 +31,7 @@ export const MainPageSection = ({
 }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   const [activeLink, setActiveLink] = useState<string>('')
-  const router = useRouter()
-
+  const currentPath = usePathname()
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible)
   }
@@ -70,7 +69,6 @@ export const MainPageSection = ({
   }
 
   const handlePrintView = () => {
-    const currentPath = router.asPath
     // relace /[slug] with /print/[slug] where slug is the page
     const newPathz = currentPath.split('/')
     const newPath = '/print/' + newPathz[1]
@@ -84,7 +82,6 @@ export const MainPageSection = ({
   }
 
   const handlePresentView = () => {
-    const currentPath = router.asPath
     // relace /[slug] with /print/[slug] where slug is the page
     const newPathz = currentPath.split('/')
     const newPath = '/present/' + newPathz[1]
