@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import ScrollDownIcon from './ScrollDownIcon';
+import { ScrollDownIcon } from './ScrollDownIcon';
 
 export default {
   title: 'Icons/ScrollDownIcon',

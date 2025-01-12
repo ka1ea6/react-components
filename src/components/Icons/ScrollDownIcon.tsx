@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const ScrollDownIcon = () => {
+export const ScrollDownIcon = () => {
   const [show, setShow] = useState(true);
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -41,5 +41,3 @@ const ScrollDownIcon = () => {
     </AnimatePresence>
   );
 };
-
-export default ScrollDownIcon;

@@ -100,7 +100,6 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                 )}
               </div>
             )
-            console.log('link', section.link)
             return section.link ? (
               <a
                 href={
