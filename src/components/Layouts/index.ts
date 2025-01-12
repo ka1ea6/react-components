@@ -1,5 +1,5 @@
 export { FeatureGrid } from './FeatureGrid'
-export { VerticalSlider } from './VerticalSlider'
+export { SlideShow } from './SlideShow'
 export { NewsGrid } from './NewsGrid'
 export { TextAndImages } from './TextAndImages'
 export * from './BlogList'

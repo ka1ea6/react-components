@@ -7,7 +7,7 @@ import logoDark from '../images/cortex-reply-dark.png'
 import { MainPageSection } from '../sections/MainPageSection'
 import { Page } from '@/payload-types'
 import { getTableOfContents } from '../utils'
-import { VerticalSlider } from '../components'
+import { SlideShow } from '../components'
 
 
 interface WebsiteSectionProps {
@@ -36,7 +36,7 @@ export default function WebsiteSection({ ...args  }: WebsiteSectionProps) {
       
 {/* <MainPageSection edit={args.edit} pageId={args.page.id} tableOfContents={tableOfContents} relatedContent={args.relatedContent}> */}
 
-<VerticalSlider blocks={contentWithIds} />
+<SlideShow blocks={contentWithIds} />
 {/* <RenderBlocks blocks={contentWithIds} />
 </VerticalSlider> */}
 {/* </MainPageSection> */}

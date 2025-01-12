@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
-import { VerticalSlider } from './VerticalSlider'
+import { SlideShow } from './SlideShow'
 import type { StoryObj, Meta } from '@storybook/react'
 
-const meta: Meta<typeof VerticalSlider> = {
-  title: 'Layouts/VerticalSlider',
-  component: VerticalSlider,
+const meta: Meta<typeof SlideShow> = {
+  title: 'Layouts/SlideShow',
+  component: SlideShow,
   tags: ['autodocs'],
   argTypes: {
     // color: {
@@ -16,7 +16,7 @@ const meta: Meta<typeof VerticalSlider> = {
 }
 export default meta
 
-type Story = StoryObj<typeof VerticalSlider>
+type Story = StoryObj<typeof SlideShow>
 
 export const Primary: Story = {
   args: {
