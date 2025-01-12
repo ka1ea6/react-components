@@ -65,7 +65,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
         'dark:text-gray-300 text-gray-800',
       )}
     >
-      {title && <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl" id={id || ''}>{title}</h2>}
+      {title && <h2 className="mb-6 mt-2 text-2xl font-bold md:text-3xl" id={id || ''}>{title}</h2>}
       {description && typeof description === 'string' && (
         <p className="mb-5 text-xl tracking-tight md:text-xl">{description}</p>
       )}
