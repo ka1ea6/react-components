@@ -64,6 +64,12 @@ employees: [
   { id: '4', name: 'Alice Brown', email: 'alice.brown@example.com'  },
 ],
   submitLeaveRequest: fn(),
+  approveLeave(ids) {
+    return Promise.resolve({ success: true, message: `Approved ${ids.length} request(s)` });
+  },
+  rejectLeave(ids) {
+    return Promise.resolve({ success: true, message: `Rejected ${ids.length} request(s)` });
+  },
   currentUser: { grade: 'Consultant 1', remainingLeaveDays: 20 },
   }
 };
