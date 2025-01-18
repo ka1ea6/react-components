@@ -20,14 +20,14 @@ export const MainPageSection = ({
   tableOfContents = [],
   edit = true,
   path = '/admin/collections/pages/',
-  relatedContent = { title: 'Related Content', links: [] },
+  relatedContent = [{ title: 'Related Content', links: [] }],
 }: {
   children: React.ReactNode
   pageId: number
   tableOfContents?: TableOfContentsItem[]
   edit?: boolean
   path?: string
-  relatedContent?: RelatedContentProps
+  relatedContent?: RelatedContentProps[]
 }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   const [activeLink, setActiveLink] = useState<string>('')
@@ -165,7 +165,13 @@ export const MainPageSection = ({
               </CardContent>
             </Card>
           )}
-
+          {relatedContent && relatedContent.length > 0 && 
+            relatedContent.map((content, index) => (
+              content.links && content.links.length > 0 && (
+                <RelatedContent key={index} {...content} />
+              )
+            ))
+          }
           {tableOfContents.length > 3 && (
             <Card className="w-full max-w-sm mt-4">
               <CardHeader>
@@ -193,9 +199,7 @@ export const MainPageSection = ({
             </Card>
           )}
 
-          {relatedContent && relatedContent.links.length > 0 && (
-            <RelatedContent {...relatedContent} />
-          )}
+          
         </div>
 
         {/* Toggle Sidebar Button (only for md screens) */}

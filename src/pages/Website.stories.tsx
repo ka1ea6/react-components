@@ -1271,7 +1271,7 @@ export const RandomText = {
       media: 'stock1.jpg?height=400&width=800',
       children: <h1 className="text-4xl font-bold">Medium Impact Hero</h1>,
     },
-    relatedContent: {
+    relatedContent: [{
       title: 'Related Links',
       links: [
         { title: 'Employee Handbook', url: '/handbook' },
@@ -1279,7 +1279,7 @@ export const RandomText = {
         { title: 'HR Portal', url: '/hr' },
         { title: 'Company Directory', url: '/directory' },
       ],
-    },
+    }],
     page: {
       id: 19,
       title: 'Test Page',
