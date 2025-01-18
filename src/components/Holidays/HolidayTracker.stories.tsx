@@ -44,7 +44,7 @@ type Story = StoryObj<typeof HolidayTracker>;
 export const Default: Story = {
   args: {
     // Mock holidays data
-    currentDate: new Date(2025, 0, 1), // January 2025
+    currentDate: new Date(2025, 0, 2), // January 2025
 holidays: [
   { id: '1', userId: '1', userName: 'John Doe', startDate: '2025-01-05', endDate: '2025-01-10', status: 'approved', totalDays: 6, leaveType: 'Full Day' },
   { id: '2', userId: '2', userName: 'Jane Smith', startDate: '2025-01-15', endDate: '2025-01-15', status: 'requested', totalDays: 0.5, leaveType: 'Morning' },

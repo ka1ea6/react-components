@@ -2,6 +2,7 @@ import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { consolidateHTMLConverters } from '@payloadcms/richtext-lexical'
 
 interface HolidayGridProps {
   currentDate: Date
@@ -47,6 +48,9 @@ const nextMonth = () => {
 const setToday = () => {
   setCurrentDate(new Date())
 }
+
+  console.log('currentDate', currentDate)
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
