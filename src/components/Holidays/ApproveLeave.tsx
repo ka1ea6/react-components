@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Toaster, toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 interface LeaveRequest {
   id: string
@@ -21,12 +23,13 @@ interface LeaveRequest {
 
 interface ApproveLeaveProps {
   leaveRequests: LeaveRequest[]
-  onApprove: (ids: string[]) => void
-  onReject: (ids: string[]) => void
+  onApprove: (ids: string[]) => Promise<{ success: boolean; message: string }>
+  onReject: (ids: string[]) => Promise<{ success: boolean; message: string }>
 }
 
 export function ApproveLeave({ leaveRequests, onApprove, onReject }: ApproveLeaveProps) {
   const [selectedRequests, setSelectedRequests] = useState<string[]>([])
+  const router = useRouter()
 
   const handleSelectAll = () => {
     if (selectedRequests.length === leaveRequests.length) {
@@ -42,13 +45,27 @@ export function ApproveLeave({ leaveRequests, onApprove, onReject }: ApproveLeav
     )
   }
 
-  const handleApprove = () => {
-    onApprove(selectedRequests)
+  const handleApprove =  async () => {
+    const result = await onApprove(selectedRequests)
+    if (result.success) {
+      toast.success(result.message)
+    
+      router.refresh() // Refresh the page to show updated data
+    } else {
+      toast.error(`Error: ${result.message}`)
+    }
     setSelectedRequests([])
   }
 
-  const handleReject = () => {
-    onReject(selectedRequests)
+  const handleReject = async () => {
+
+    const result = await onReject(selectedRequests)
+    if (result.success) {
+      toast.success(result.message)
+      router.refresh() // Refresh the page to show updated data
+    } else {
+      toast.error(`Error: ${result.message}`)
+    }
     setSelectedRequests([])
   }
 
@@ -130,6 +147,7 @@ export function ApproveLeave({ leaveRequests, onApprove, onReject }: ApproveLeav
           ))}
         </ul>
       </div>
+      <Toaster richColors position="top-right" closeButton visibleToasts={9} />
     </div>
   )
 }

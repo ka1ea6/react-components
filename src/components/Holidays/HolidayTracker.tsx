@@ -48,6 +48,8 @@ interface HolidayTrackerProps {
     currentDate: Date
     currentUser: { grade: string; remainingLeaveDays: number }
     submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
+    approveLeave: (ids: string[]) => Promise<{ success: boolean; message: string }>
+    rejectLeave: (ids: string[]) => Promise<{ success: boolean; message: string }>
 }
 
 
@@ -55,7 +57,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function HolidayTracker({holidays, currentUser, currentDate, leaveApprovals,employees, submitLeaveRequest}: HolidayTrackerProps) {
+export function HolidayTracker({holidays, currentUser, currentDate, leaveApprovals,employees, submitLeaveRequest, approveLeave, rejectLeave}: HolidayTrackerProps) {
   const [currentTab, setCurrentTab] = useState('Calendar View')
 //   const { user, isLoading } = useUser()
 const router = useRouter();
@@ -166,7 +168,7 @@ const router = useRouter();
         }}/>
       )}
       {currentTab === 'Approve Leave' && (
-        <ApproveLeave leaveRequests={leaveApprovals} onApprove={() => {}} onReject={() => {}} />
+        <ApproveLeave leaveRequests={leaveApprovals} onApprove={approveLeave} onReject={rejectLeave} />
       )}
     </div>
   )
