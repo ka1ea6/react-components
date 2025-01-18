@@ -81,15 +81,15 @@ export function HolidayTracker({
   // }
   const parsedCurrentDate = parseISO(currentDate);
 
-  console.log('parsedCurrentDate:holidayTracker:', parsedCurrentDate)
+  // console.log('parsedCurrentDate:holidayTracker:', parsedCurrentDate)
 
   const setCurrentDate = async (date: Date) => {
     // Add the date queryParam to the URL
-    // console.log('Setting current date:', date);
+    // // console.log('Setting current date:', date);
     const formattedDate = format(date, 'dd-MM-yyyy')
     const url = new URL(window.location.href)
     url.searchParams.set('date', formattedDate)
-    console.log('URL:', url.toString())
+    // console.log('URL:', url.toString())
     router.push(url.toString())
 
     return { success: true }

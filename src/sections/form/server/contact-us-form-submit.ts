@@ -95,7 +95,7 @@ export async function contactUsFormSubmit(
     ]
   }
   
-  console.log(JSON.stringify(adaptiveCard))
+  // console.log(JSON.stringify(adaptiveCard))
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',

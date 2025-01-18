@@ -20,7 +20,7 @@ export function Categories({ title, links }: CategoryListProps) {
   const { replace } = useRouter()
 
   function handleCategory(value: string) {
-    console.log(value)
+    // console.log(value)
     const params = new URLSearchParams(searchParams)
     if (value) {
       params.set('category', value)

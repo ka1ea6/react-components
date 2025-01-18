@@ -183,7 +183,7 @@ const defaultSubmitLeaveRequest = async (formData: FormData) => {
   formData.forEach((value, key) => {
     formDataEntries[key] = value;
   });
-  console.log('Leave request submitted:', formDataEntries);
+  // console.log('Leave request submitted:', formDataEntries);
   return { success: true, message: `Leave request submitted successfully for ${formData.get('duration')}` }
 }
 

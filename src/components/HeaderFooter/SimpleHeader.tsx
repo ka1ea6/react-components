@@ -44,7 +44,7 @@ export function SimpleHeader({ title, logo, menuItems }: SimpleHeaderProps) {
   useEffect(() => {
     // Load theme from local storage or set to default 'light'
     const storedTheme = localStorage.getItem('theme') || 'light'
-    console.log('storedTheme', storedTheme)
+    // console.log('storedTheme', storedTheme)
     setCurrentTheme(storedTheme)
     document.documentElement.setAttribute('class', storedTheme)
     updateLogo(storedTheme)

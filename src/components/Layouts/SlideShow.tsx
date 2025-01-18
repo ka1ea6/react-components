@@ -15,8 +15,8 @@ export const SlideShow: React.FC<{
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   const handleSliderClick = (sectionId: number) => {
-    console.log('sectionId', sectionId)
-    console.log('block', blocks[sectionId])
+    // console.log('sectionId', sectionId)
+    // console.log('block', blocks[sectionId])
     setActiveSection(sectionId)
   }
 

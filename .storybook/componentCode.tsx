@@ -10,7 +10,7 @@ import { Source } from '@storybook/blocks'
  */
 const extractComponentNames = (element: React.ReactNode): string[] => {
   const componentNames: string[] = []
-  console.log(element)
+  // console.log(element)
   const traverse = (node: React.ReactNode) => {
     if (React.isValidElement(node)) {
       const type = node.type as React.ElementType
@@ -32,7 +32,7 @@ const extractComponentNames = (element: React.ReactNode): string[] => {
 
 export const ComponentCode = ({ of }) => {
   const resolvedOf = useOf(of || 'story', ['story', 'meta'])
-  console.log(resolvedOf)
+  // console.log(resolvedOf)
   let componentNames: string[] = []
   let clientOrServer = ''
   if (resolvedOf.type === 'story' && resolvedOf.story) {
