@@ -168,7 +168,17 @@ const router = useRouter();
         }}/>
       )}
       {currentTab === 'Approve Leave' && (
-        <ApproveLeave leaveRequests={leaveApprovals} onApprove={approveLeave} onReject={rejectLeave} />
+        <ApproveLeave leaveRequests={leaveApprovals} onApprove={(ids) => {
+          if (approveLeave) {
+            return approveLeave(ids);
+          }
+          return Promise.resolve({ success: false, message: 'Approve leave request function not provided' });
+        }} onReject={(ids) => {
+          if (rejectLeave) {
+            return rejectLeave(ids);
+          }
+          return Promise.resolve({ success: false, message: 'Reject leave request function not provided' });
+        }} />
       )}
     </div>
   )

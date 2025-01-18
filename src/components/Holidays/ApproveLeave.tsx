@@ -46,6 +46,7 @@ export function ApproveLeave({ leaveRequests, onApprove, onReject }: ApproveLeav
   }
 
   const handleApprove =  async () => {
+    
     const result = await onApprove(selectedRequests)
     if (result.success) {
       toast.success(result.message)
