@@ -9,6 +9,8 @@ import { RequestLeave } from './RequestLeave'
 import { ApproveLeave } from './ApproveLeave'
 import { H } from 'vitest/dist/chunks/environment.LoooBwUu.js'
 // import { useUser } from './hooks/useUser'
+import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
 
 interface Holiday {
     id: string;
@@ -46,7 +48,6 @@ interface HolidayTrackerProps {
     currentDate: Date
     userGrade: string
     submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
-    setCurrentDate?: (date: Date) => Promise<{ success: boolean }>
 }
 
 
@@ -54,9 +55,11 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function HolidayTracker({holidays, currentDate, leaveApprovals,employees, userGrade,setCurrentDate = async () => ({ success: true }), submitLeaveRequest}: HolidayTrackerProps) {
+export function HolidayTracker({holidays, currentDate, leaveApprovals,employees, userGrade, submitLeaveRequest}: HolidayTrackerProps) {
   const [currentTab, setCurrentTab] = useState('Calendar View')
 //   const { user, isLoading } = useUser()
+const router = useRouter();
+
         const isLoading = false
   // For preview purposes, we'll assume the user is a manager
   const previewUser = {
@@ -66,6 +69,16 @@ export function HolidayTracker({holidays, currentDate, leaveApprovals,employees,
     grade: 'manager',
     remainingLeaveDays: 20,
   }
+
+  const setCurrentDate = async (date: Date) => {
+    // Add the date queryParam to the URL
+    console.log('Setting current date:', date);
+    const formattedDate = format(date, 'dd-MM-yyyy');
+    const url = new URL(window.location.href);
+    url.searchParams.set('date', formattedDate);
+    router.push(url.toString());
+    return { success: true };
+  };
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">

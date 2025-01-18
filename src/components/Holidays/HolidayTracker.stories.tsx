@@ -64,7 +64,6 @@ employees: [
   { id: '4', name: 'Alice Brown', email: 'alice.brown@example.com'  },
 ],
   submitLeaveRequest: fn(),
-  setCurrentDate: fn(),
   userGrade: 'Consultant 1',
   }
 };
