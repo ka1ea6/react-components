@@ -46,7 +46,7 @@ interface HolidayTrackerProps {
     leaveApprovals: LeaveRequest[]
     employees: Employee[]
     currentDate: Date
-    userGrade: string
+    currentUser: { grade: string; remainingLeaveDays: number }
     submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
 }
 
@@ -55,20 +55,20 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function HolidayTracker({holidays, currentDate, leaveApprovals,employees, userGrade, submitLeaveRequest}: HolidayTrackerProps) {
+export function HolidayTracker({holidays, currentUser, currentDate, leaveApprovals,employees, submitLeaveRequest}: HolidayTrackerProps) {
   const [currentTab, setCurrentTab] = useState('Calendar View')
 //   const { user, isLoading } = useUser()
 const router = useRouter();
 
         const isLoading = false
   // For preview purposes, we'll assume the user is a manager
-  const previewUser = {
-    id: 'manager1',
-    firstName: 'Manager',
-    lastName: 'User',
-    grade: 'manager',
-    remainingLeaveDays: 20,
-  }
+  // const previewUser = {
+  //   id: 'manager1',
+  //   firstName: 'Manager',
+  //   lastName: 'User',
+  //   grade: 'manager',
+  //   remainingLeaveDays: 20,
+  // }
 
   const setCurrentDate = async (date: Date) => {
     // Add the date queryParam to the URL
@@ -87,7 +87,7 @@ const router = useRouter();
   }
 
   // Use the preview user for demonstration
-  const currentUser = previewUser
+  // const currentUser = previewUser
 
   const tabs = [
     { name: 'Grid View', icon: Grid, current: currentTab === 'Grid View' },
@@ -123,7 +123,7 @@ const router = useRouter();
                 <a
                   key={tab.name}
                   onClick={() => {
-                    if (tab.name !== 'Approve Leave' || userGrade === 'Manager' || userGrade === 'Senior Manager' || userGrade === 'Partner') {
+                    if (tab.name !== 'Approve Leave' || currentUser.grade === 'Manager' || currentUser.grade === 'Senior Manager' || currentUser.grade === 'Partner') {
                       setCurrentTab(tab.name)
                     }
                   }}
@@ -131,7 +131,7 @@ const router = useRouter();
                     tab.current
                       ? 'border-accent text-accent'
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                    (tab.name === 'Approve Leave' && userGrade !== 'Manager' && userGrade !== 'Senior Manager' && userGrade !== 'Partner') ? 'cursor-not-allowed opacity-50' : '',
+                    (tab.name === 'Approve Leave' && currentUser.grade !== 'Manager' && currentUser.grade !== 'Senior Manager' && currentUser.grade !== 'Partner') ? 'cursor-not-allowed opacity-50' : '',
                     'group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium'
                   )}
                   aria-current={tab.current ? 'page' : undefined}
@@ -158,7 +158,7 @@ const router = useRouter();
         <CalendarView currentDate={currentDate} setCurrentDate={setCurrentDate} holidays={holidays} />
       )}
       {currentTab === 'Request Leave' && (
-        <RequestLeave userId={currentUser.id} userName={`${currentUser.firstName} ${currentUser.lastName}`} remainingDays={currentUser.remainingLeaveDays} submitLeaveRequest={(formData) => {
+        <RequestLeave remainingDays={currentUser.remainingLeaveDays} submitLeaveRequest={(formData) => {
           if (submitLeaveRequest) {
             return submitLeaveRequest(formData);
           }

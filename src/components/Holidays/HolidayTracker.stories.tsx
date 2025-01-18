@@ -64,7 +64,7 @@ employees: [
   { id: '4', name: 'Alice Brown', email: 'alice.brown@example.com'  },
 ],
   submitLeaveRequest: fn(),
-  userGrade: 'Consultant 1',
+  currentUser: { grade: 'Consultant 1', remainingLeaveDays: 20 },
   }
 };
 
@@ -72,10 +72,15 @@ employees: [
 export const Manger: Story = {
   args: {
     ...Default.args,
-    userGrade: 'Manager',
+    currentUser: { grade: 'Manager', remainingLeaveDays: 20 },
   }}
     
-
+  export const NoLeave: Story = {
+    args: {
+      ...Default.args,
+      currentUser: { grade: 'Manager', remainingLeaveDays: 0 },
+    }}
+  
 
 // export const WithTabControl: Story = {
 //   render: (args) => {

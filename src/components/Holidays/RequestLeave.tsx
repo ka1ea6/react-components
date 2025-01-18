@@ -12,8 +12,6 @@ import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
 
 interface RequestLeaveProps {
-  userId: string
-  userName: string
   remainingDays: number
   submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
 }
@@ -44,7 +42,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({ options, value, onChange, dis
   )
 }
 
-export function RequestLeave({ userId, userName, remainingDays, submitLeaveRequest }: RequestLeaveProps) {
+export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeaveProps) {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
   const [endDate, setEndDate] = useState<Date | undefined>(undefined)
   const [leaveType, setLeaveType] = useState('Full Day')
@@ -81,8 +79,6 @@ export function RequestLeave({ userId, userName, remainingDays, submitLeaveReque
     }
 
     const formData = new FormData()
-    formData.append('userId', userId)
-    formData.append('userName', userName)
     formData.append('startDate', startDate.toISOString())
     formData.append('endDate', endDate.toISOString())
     formData.append('leaveType', leaveType)
