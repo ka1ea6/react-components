@@ -32,9 +32,21 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 export function HolidayGrid({ currentDate, setCurrentDate, holidays, employees }: HolidayGridProps) {
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
 
+const prevMonth = () => {
+  setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
+}
+
+const nextMonth = () => {
+  setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
+}
+const setToday = () => {
+  setCurrentDate(new Date())
+}
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -46,22 +58,22 @@ export function HolidayGrid({ currentDate, setCurrentDate, holidays, employees }
             All staff with holidays for the current month.
           </p>
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <Button
-            onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))}
-            variant="outline"
-            size="icon"
-            className="mr-2"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))}
-            variant="outline"
-            size="icon"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+        <div className="relative flex items-center rounded-md gap-1 md:items-stretch">
+        <Button onClick={prevMonth} variant="outline" size="icon" className="rounded-l-md border-accent hover:text-accent">
+              <span className="sr-only">Previous month</span>
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </Button>
+            <Button
+              variant="outline"
+              onClick={setToday}
+              className="hidden border-l border-r border-accent px-3.5 text-sm font-semibold text-accent hover:bg-gray-50 focus:relative md:block"
+            >
+              Today
+            </Button>
+            <Button onClick={nextMonth} variant="outline" size="icon" className="rounded-r-md border-accent hover:text-accent">
+              <span className="sr-only">Next month</span>
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </Button>
         </div>
       </div>
       <div className="mt-8 flow-root">

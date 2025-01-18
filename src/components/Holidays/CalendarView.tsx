@@ -44,9 +44,11 @@ export function CalendarView({ currentDate, setCurrentDate, holidays }: Calendar
   const prevMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
   }
-
   const nextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
+  }
+  const setToday = () => {
+    setCurrentDate(new Date())
   }
 
   return (
@@ -65,6 +67,7 @@ export function CalendarView({ currentDate, setCurrentDate, holidays }: Calendar
             </Button>
             <Button
               variant="outline"
+              onClick={setToday}
               className="hidden border-l border-r border-accent px-3.5 text-sm font-semibold text-accent hover:bg-gray-50 focus:relative md:block"
             >
               Today
