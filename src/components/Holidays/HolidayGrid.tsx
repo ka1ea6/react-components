@@ -49,7 +49,7 @@ const setToday = () => {
   setCurrentDate(new Date())
 }
 
-  console.log('currentDate', currentDate)
+  console.log('currentDate:holidayGrid', currentDate)
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">

@@ -10,7 +10,7 @@ import { ApproveLeave } from './ApproveLeave'
 import { H } from 'vitest/dist/chunks/environment.LoooBwUu.js'
 // import { useUser } from './hooks/useUser'
 import { useRouter } from 'next/navigation'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns';
 
 interface Holiday {
   id: string
@@ -45,7 +45,7 @@ interface HolidayTrackerProps {
   holidays: Holiday[]
   leaveApprovals: LeaveRequest[]
   employees: Employee[]
-  currentDate: Date
+  currentDate: string; // ISO 8601 string
   currentUser: { grade: string; remainingLeaveDays: number }
   submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
   approveLeave: (ids: string[]) => Promise<{ success: boolean; message: string }>
@@ -79,7 +79,9 @@ export function HolidayTracker({
   //   grade: 'manager',
   //   remainingLeaveDays: 20,
   // }
-  console.log('currentDate:', currentDate)
+  const parsedCurrentDate = parseISO(currentDate);
+
+  console.log('parsedCurrentDate:holidayTracker:', parsedCurrentDate)
 
   const setCurrentDate = async (date: Date) => {
     // Add the date queryParam to the URL
@@ -178,7 +180,7 @@ export function HolidayTracker({
 
       {currentTab === 'Grid View' && (
         <HolidayGrid
-          currentDate={currentDate}
+          currentDate={parsedCurrentDate}
           setCurrentDate={setCurrentDate}
           holidays={holidays}
           employees={employees}
@@ -186,7 +188,7 @@ export function HolidayTracker({
       )}
       {currentTab === 'Calendar View' && (
         <CalendarView
-          currentDate={currentDate}
+          currentDate={parsedCurrentDate}
           setCurrentDate={setCurrentDate}
           holidays={holidays}
         />
