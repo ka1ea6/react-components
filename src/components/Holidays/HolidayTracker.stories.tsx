@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { HolidayTracker } from './HolidayTracker';
 // import { useUser } from '../app/hooks/useUser';
 import { fn } from '@storybook/test';
+import { format } from 'date-fns'
 
 // // Mock the useUser hook
 // jest.mock('../app/hooks/useUser', () => ({
@@ -44,7 +45,7 @@ type Story = StoryObj<typeof HolidayTracker>;
 export const Default: Story = {
   args: {
     // Mock holidays data
-    currentDate: new Date(2025, 0, 2), // January 2025
+    currentDate: format(new Date(2025, 0, 2), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"), // January 2025
 holidays: [
   { id: '1', userId: '1', userName: 'John Doe', startDate: '2025-01-05', endDate: '2025-01-10', status: 'approved', totalDays: 6, leaveType: 'Full Day' },
   { id: '2', userId: '2', userName: 'Jane Smith', startDate: '2025-01-15', endDate: '2025-01-15', status: 'requested', totalDays: 0.5, leaveType: 'Morning' },

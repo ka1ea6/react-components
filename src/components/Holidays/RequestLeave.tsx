@@ -43,8 +43,8 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({ options, value, onChange, dis
 }
 
 export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeaveProps) {
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  const [startDate, setStartDate] = useState<Date | undefined>(new Date())
+  const [endDate, setEndDate] = useState<Date | undefined>(new Date())
   const [leaveType, setLeaveType] = useState('Full Day')
   const [isMultipleDays, setIsMultipleDays] = useState(false)
   const router = useRouter()
