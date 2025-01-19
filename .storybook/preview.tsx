@@ -22,6 +22,9 @@ initialize({
 const preview = {
   parameters: {
     tags: ['autodocs'],
+    nextjs: {
+      appDirectory: true,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
