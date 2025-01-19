@@ -2,6 +2,7 @@ import { BannerBlock } from '@/components/Blocks/Banner'
 import { CallToActionBlock } from '@/components/Blocks/CallToAction'
 import { CodeBlock, CodeBlockProps } from '@/components/Blocks/Code'
 import { MediaBlock } from '@/components/Blocks/MediaBlock'
+import { ImageBlock } from '@/components/Blocks/ImageBlock'
 import { FeaturesBlock } from '@/components/Blocks/FeaturesBlock'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '../Link'
@@ -10,6 +11,7 @@ import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
+  ImageBlock as ImageBlockProps,
   FeaturesBlock as FeaturesBlockProps,
 } from '@/payload-types'
 
@@ -27,7 +29,7 @@ type SerializedHeadingNode = BaseSerializedHeadingNode & { id?: string }
 
 export type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | FeaturesBlockProps>
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | ImageBlockProps | BannerBlockProps | CodeBlockProps | FeaturesBlockProps>
   | TableNode
   | TableRowNode
   | TableCellNode
@@ -158,6 +160,18 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   disableInnerContainer={true}
                 />
               )
+              case 'imageBlock':
+                return (
+                  <ImageBlock
+                    className="col-start-1 col-span-3"
+                    imgClassName="m-0"
+                    key={index}
+                    {...block}
+                    captionClassName="mx-auto max-w-[48rem]"
+                    enableGutter={false}
+                    disableInnerContainer={true}
+                  />
+                )
             case 'banner':
               return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
             case 'code':
