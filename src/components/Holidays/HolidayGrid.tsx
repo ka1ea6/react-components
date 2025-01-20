@@ -82,9 +82,9 @@ const setToday = () => {
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
+        <div className="max-h-[60vh] overflow-y-auto">
             <table className="min-w-full border-separate border-spacing-0">
-              <thead>
+            <thead className="sticky top-0 z-10 bg-white">
                 <tr>
                   <th
                     scope="col"

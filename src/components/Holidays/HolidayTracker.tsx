@@ -114,7 +114,7 @@ export function HolidayTracker({
   ]
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container fixed mx-auto p-4">
       <div className="mb-8">
         <div className="sm:hidden">
           <select
