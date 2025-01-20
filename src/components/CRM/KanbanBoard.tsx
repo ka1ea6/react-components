@@ -134,7 +134,6 @@ export default function KanbanBoard({
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="p-4">
-        <h1 className="text-3xl font-bold mb-8">CRM Kanban Board</h1>
         <div className="flex space-x-4 overflow-x-auto pb-4">
           {statuses.map((status) => {
             const deals = getColumnDeals(status)

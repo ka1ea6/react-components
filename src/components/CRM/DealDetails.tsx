@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import type { Deal, Customer, Category, Comment } from './types'
-import { CalendarIcon, DollarSignIcon, UserIcon, MessageSquareIcon } from "lucide-react"
+import { CalendarIcon, PoundSterling, UserIcon, MessageSquareIcon } from "lucide-react"
 
 type DealDetailsProps = {
   deal: Deal
@@ -61,7 +61,6 @@ export default function DealDetails({
     onUpdateDescription(description)
     setIsEditingDescription(false)
   }
-
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
@@ -72,8 +71,7 @@ export default function DealDetails({
           <div className="grid gap-6">
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2">
-                <DollarSignIcon className="w-6 h-6 text-green-600" />
-                <span className="text-3xl font-bold text-green-600">${deal.value.toLocaleString()}</span>
+                <span className="text-3xl font-bold text-green-600">£{deal.value.toLocaleString()}</span>
               </div>
               <Button onClick={onEdit}>Edit Deal</Button>
             </div>
