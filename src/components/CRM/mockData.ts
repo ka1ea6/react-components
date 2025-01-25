@@ -35,7 +35,7 @@ export const mockDeals: Deal[] = [
     customerId: "2",
     value: 75000,
     assignee: "Jane Smith",
-    status: "Proposal Made",
+    status: "Proposal",
     categories: ["2", "4", "6"],
     dateLogged: "2023-02-01",
     closureDate: "2023-07-31",
@@ -61,5 +61,5 @@ export const mockBoardData: BoardData = {
   categories: mockCategories,
 }
 
-export const mockStatuses: Status[] = ["Cold", "Qualified", "Proposal Made", "Won", "Lost"]
+export const mockStatuses: Status[] = ["Cold", "Qualified", "Proposal", "Won", "Lost"]
 
