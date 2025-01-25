@@ -86,7 +86,7 @@ export function CRMKanbanBoard({
       <div className="p-4">
         {/* <h1 className="text-3xl font-bold mb-8">Cortex Sales Pipeline</h1> */}
         <div className="flex space-x-4 overflow-x-auto pb-4">
-          {statuses.map((status) => {
+        {statuses.filter(status => status !== "Won" && status !== "Lost").map((status) => {
             const deals = getColumnDeals(status)
             return (
               <KanbanColumn
