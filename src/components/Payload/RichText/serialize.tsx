@@ -62,7 +62,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           return null
         }
 
-        if (node.type === 'text') {
+        if (node.type === 'text' && node.text) {
           let text = <React.Fragment key={index}>{node.text}</React.Fragment>
           if (node.format & IS_BOLD) {
             text = <strong key={index}>{text}</strong>

@@ -2,34 +2,34 @@ import React from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { PlusCircle } from "lucide-react"
-import type { Deal, Status, Category, Customer } from './types'
+import type { Deal, Status, Category, Customer, User } from "./types"
 import { DealCard } from "./DealCard"
-import { Droppable, Draggable, type DroppableProvided, type DraggableProvided } from "react-beautiful-dnd"
+import { Droppable, Draggable } from "react-beautiful-dnd"
 import NewDealForm from "./NewDealForm"
 
 type KanbanColumnProps = {
   status: Status
   deals: Deal[]
+  users?: User[]
   customers: Customer[]
   categories: Category[]
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
   calculateWeightedValue: (deals: Deal[], status: Status) => number
-  addNewDeal?: (deal: Omit<Deal, "id">) => Promise<void>
-  updateDeal: (deal: Deal) => Promise<void>
-  onAddCustomer: (customer: Omit<Customer, "id">) => Promise<void>
+  addNewDeal?: (deal: Deal) => void
+  onAddCustomer: (customer: Customer) => void
 }
 
 export function KanbanColumn({
   status,
   deals,
+  users,
   customers,
   categories,
   onDealClick,
   calculateColumnValue,
   calculateWeightedValue,
   addNewDeal,
-  updateDeal,
   onAddCustomer,
 }: KanbanColumnProps) {
   return (
@@ -47,18 +47,12 @@ export function KanbanColumn({
             <DialogHeader>
               <DialogTitle>Add New Deal</DialogTitle>
             </DialogHeader>
-            <NewDealForm
-              customers={customers}
-              categories={categories}
-              onSubmit={addNewDeal}
-              onUpdate={updateDeal}
-              onAddCustomer={onAddCustomer}
-            />
+            <NewDealForm customers={customers} users={users} categories={categories} onSubmit={addNewDeal} onAddCustomer={onAddCustomer}/>
           </DialogContent>
         </Dialog>
       )}
       <Droppable droppableId={status}>
-        {(provided: DroppableProvided) => (
+        {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -66,16 +60,16 @@ export function KanbanColumn({
           >
             {deals.map((deal, index) => (
               <Draggable key={deal.id} draggableId={deal.id} index={index}>
-          {(provided: DraggableProvided) => (
-            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-              <DealCard
-                deal={deal}
-                customer={customers.find((c) => c.id === deal.customerId)}
-                categories={categories}
-                onClick={() => onDealClick(deal)}
-              />
-            </div>
-          )}
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <DealCard
+                      deal={deal}
+                      customer={customers.find((c) => c.id === deal.customerId)}
+                      categories={categories}
+                      onClick={() => onDealClick(deal)}
+                    />
+                  </div>
+                )}
               </Draggable>
             ))}
             {provided.placeholder}

@@ -1,4 +1,5 @@
 import type { BoardData, Deal, Customer, Category, Status } from './types'
+import type { User } from '@/payload-types';
 
 export const mockCustomers: Customer[] = [
   { id: "1", name: "Acme Corp", intro: "A leading technology company", active: true },
@@ -44,8 +45,18 @@ export const mockDeals: Deal[] = [
   },
 ]
 
+
+export const mockUsers: User[] = [
+  { id: 1, name: "John Doe", email: "john.doe@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 4, name: "Alice Brown", email: "alice.brown@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 5, name: "Charlie Davis", email: "charlie.davis@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+];
+
 export const mockBoardData: BoardData = {
   deals: mockDeals,
+  users: mockUsers,
   customers: mockCustomers,
   categories: mockCategories,
 }

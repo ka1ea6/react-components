@@ -6,6 +6,7 @@ import type { BoardData, Deal, Customer, Comment } from "./types"
 const mockDb: BoardData = {
   deals: [],
   customers: [],
+  users: [],
   categories: [
     { id: "1", name: "Software", type: "proposition" },
     { id: "2", name: "Hardware", type: "proposition" },

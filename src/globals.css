@@ -151,14 +151,13 @@
     display: inline-block;
   }
 
-  h2::after {
+  prose-h2::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px; /* Adjust as needed */
-    width: 20%; /* Half underline */
-    height: 2px; /* Adjust thickness as needed */
-    /* background-color: currentColor ;  */
+    bottom: -4px; 
+    width: 20%; 
+    height: 2px; 
     background-color: rgb(var(--accent)); 
   }
 }

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import KanbanBoard from "./KanbanBoard"
-import { mockBoardData } from "./mockData"
-
+import { mockUsers } from "./mockData"
 const meta: Meta<typeof KanbanBoard> = {
   title: "CRM/KanbanBoard",
   component: KanbanBoard,
@@ -15,26 +14,51 @@ type Story = StoryObj<typeof KanbanBoard>
 
 export const Default: Story = {
   args: {
-    initialData: mockBoardData,
-    addDeal: async (deal) => {
+    
+    initialData: {
+      deals: Array.from({ length: 20 }, (_, i) => ({
+        id: `${i + 1}`,
+        customerId: `${(i % 3) + 1}`,
+        value: Math.floor(Math.random() * 100000) + 5000,
+        assignee: ["John Doe", "Jane Smith", "Bob Johnson"][Math.floor(Math.random() * 3)],
+        status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as Status,
+        categories: [`${(i % 6) + 1}`],
+        dateLogged: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
+        closureDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000).toISOString(),
+        comments: [],
+        lastModified: new Date().toISOString(),
+        description: `This is a mock description for deal ${i + 1}. It's a ${["small", "medium", "large"][i % 3]} deal with high potential.`,
+      })),
+      customers: [
+        { id: "1", name: "Acme Corp", active: true },
+        { id: "2", name: "GlobalTech", active: true },
+        { id: "3", name: "InnoSystems", active: true },
+      ],
+      users: mockUsers,
+      categories: [
+        { id: "1", name: "Software", type: "proposition" },
+        { id: "2", name: "Hardware", type: "proposition" },
+        { id: "3", name: "Referral", type: "source" },
+        { id: "4", name: "Outbound", type: "source" },
+        { id: "5", name: "Tech", type: "sector" },
+        { id: "6", name: "Finance", type: "sector" },
+      ],
+    },
+    addNewDeal: async (deal) => {
       console.log("Adding deal:", deal)
-      return { id: "new-deal-id", ...deal }
+      return { ...deal, id: "new-deal-id", }
     },
     updateDeal: async (deal) => {
       console.log("Updating deal:", deal)
       return deal
     },
-    addCustomer: async (customer) => {
+    addNewCustomer: async (customer) => {
       console.log("Adding customer:", customer)
-      return { id: "new-customer-id", ...customer }
+      return { ...customer, id: "new-customer-id" }
     },
     addComment: async (dealId, comment) => {
       console.log("Adding comment to deal:", dealId, comment)
-      return { id: "new-comment-id", ...comment }
-    },
-    updateDealDescription: async (dealId, description) => {
-      console.log("Updating deal description:", dealId, description)
-      return { ...mockBoardData.deals.find((d) => d.id === dealId)!, description }
+      return { ...comment, id: "new-comment-id", }
     },
   },
 }

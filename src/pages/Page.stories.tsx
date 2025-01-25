@@ -369,3 +369,4 @@ export const PostHero = {
     media: 'stock1.jpg?height=400&width=800',
   },
 }
+

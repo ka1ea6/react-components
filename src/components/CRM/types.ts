@@ -1,7 +1,7 @@
 import {type User} from "@/payload-types"
 
 
-export {User}
+export type {User}
 
 export type Customer = {
   id: string
@@ -16,7 +16,7 @@ export type Category = {
   type: "proposition" | "source" | "sector"
 }
 
-export type Status = "Cold" | "Qualified" | "Proposal Made" | "Won" | "Lost"
+export type Status = "Cold" | "Qualified" | "Proposal" | "SoW" | "Won" | "Lost"
 
 export type Deal = {
   id: string
@@ -35,12 +35,13 @@ export type Deal = {
 export type Comment = {
   id: string
   text: string
-  author: string
+  author?: string
   timestamp: string
 }
 
 export type BoardData = {
   deals: Deal[]
+  users: User[]
   customers: Customer[]
   categories: Category[]
 }
