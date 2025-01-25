@@ -9,3 +9,4 @@ export * from "./Heros";
 export * from "./HeaderFooter";
 export * from "./Other";
 export * from "./Holidays";
+export * from "./CRM";

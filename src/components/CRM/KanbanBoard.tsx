@@ -4,14 +4,14 @@ import React, { useState , useCallback} from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { PlusCircle } from "lucide-react"
-import { type BoardData, type Deal, type Status, Category, type Customer, type Comment } from "./types"
-import DealDetails from "./DealDetails"
-import NewDealForm from "./NewDealForm"
-import NewCustomerForm from "./NewCustomerForm"
+import { type BoardData, type Deal, type CRMStatus, CRMCategory, type CRMCustomer, type Comment } from "./types"
+import { DealDetails } from "./DealDetails"
+import { NewDealForm } from "./NewDealForm"
+import { NewCustomerForm } from "./NewCustomerForm"
 import { KanbanColumn } from "./KanbanColumn"
 import { DragDropContext, type DropResult } from "react-beautiful-dnd"
 
-const statuses: Status[] = ["Cold", "Qualified", "Proposal", "SoW", "Won", "Lost"]
+const statuses: CRMStatus[] = ["Cold", "Qualified", "Proposal", "SoW", "Won", "Lost"]
 
 type KanbanBoardProps = {
   initialData: BoardData
@@ -19,10 +19,10 @@ type KanbanBoardProps = {
   addNewDeal: (newDeal: Deal) => void
   updateDeal: (updatedDeal: Deal) => void
   addComment: (dealId: string, comment: Comment) => void
-  addNewCustomer: (newCustomer: Customer) => void
+  addNewCustomer: (newCustomer: CRMCustomer) => void
 }
 
-export default function KanbanBoard({
+export function CRMKanbanBoard({
   initialData,
   addNewDeal,
   updateDeal,
@@ -33,7 +33,7 @@ export default function KanbanBoard({
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   const [boardData, setBoardData] = useState<BoardData>(initialData)
 
-  const getColumnDeals = (status: Status) => {
+  const getColumnDeals = (status: CRMStatus) => {
     return boardData.deals.filter((deal) => deal.status === status)
   }
 
@@ -41,8 +41,8 @@ export default function KanbanBoard({
     return deals.reduce((sum, deal) => sum + (deal.value || 0), 0)
   }
 
-  const calculateWeightedValue = (deals: Deal[], status: Status) => {
-    const weightMap: { [key in Status]: number } = {
+  const calculateWeightedValue = (deals: Deal[], status: CRMStatus) => {
+    const weightMap: { [key in CRMStatus]: number } = {
       Cold: 0.2,
       Qualified: 0.4,
       "Proposal": 0.6,
@@ -65,8 +65,8 @@ export default function KanbanBoard({
         return
       }
 
-      const sourceStatus = source.droppableId as Status
-      const destinationStatus = destination.droppableId as Status
+      const sourceStatus = source.droppableId as CRMStatus
+      const destinationStatus = destination.droppableId as CRMStatus
       console.log("Moving from ", sourceStatus, "to", destinationStatus)
       const updatedDeals = [...boardData.deals]
       const [movedDeal] = updatedDeals.splice(source.index, 1)

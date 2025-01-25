@@ -15,19 +15,19 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { UserIcon, CalendarIcon, SaveIcon, Edit2Icon, PlusIcon } from 'lucide-react'
-import type { Deal, Customer, Comment, Category, User } from './types'
+import type { Deal, CRMCustomer, Comment, CRMCategory, User } from './types'
 
 type DealDetailsProps = {
   deal: Deal
   users?: User[]
-  customer: Customer | undefined
-  categories: Category[]
+  customer: CRMCustomer | undefined
+  categories: CRMCategory[]
   onClose: () => void
   onSave: (deal: Deal) => void
   onAddComment: (comment: Comment) => void
 }
 
-export default function DealDetails({
+export function DealDetails({
   deal,
   users,
   customer,
@@ -74,7 +74,7 @@ export default function DealDetails({
     }
   }
 
-  const getCategoryColor = (type: Category['type']) => {
+  const getCategoryColor = (type: CRMCategory['type']) => {
     switch (type) {
       case 'proposition':
         return 'bg-blue-100 text-blue-800'

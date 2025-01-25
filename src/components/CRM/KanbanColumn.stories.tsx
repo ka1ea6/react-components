@@ -25,7 +25,8 @@ export const Default: Story = {
       const weightMap: { [key in (typeof mockStatuses)[number]]: number } = {
         Cold: 0.2,
         Qualified: 0.4,
-        "Proposal Made": 0.6,
+        "Proposal": 0.6,
+        "SoW": 0.7,
         Won: 1,
         Lost: 0,
       }

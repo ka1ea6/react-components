@@ -1,6 +1,6 @@
 "use server"
 
-import type { BoardData, Deal, Customer, Comment } from "./types"
+import type { BoardData, Deal, CRMCustomer, Comment } from "./types"
 
 // This is a mock database. In a real application, you would use a proper database.
 const mockDb: BoardData = {
@@ -45,8 +45,8 @@ export async function updateDeal(updatedDeal: Deal): Promise<Deal> {
   throw new Error("Deal not found")
 }
 
-export async function addCustomer(newCustomer: Omit<Customer, "id">): Promise<Customer> {
-  const customer: Customer = {
+export async function addCustomer(newCustomer: Omit<CRMCustomer, "id">): Promise<CRMCustomer> {
+  const customer: CRMCustomer = {
     id: Date.now().toString(),
     ...newCustomer,
   }

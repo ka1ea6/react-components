@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import NewCustomerForm from "./NewCustomerForm"
+import { NewCustomerForm } from "./NewCustomerForm"
 
 const meta: Meta<typeof NewCustomerForm> = {
   title: "CRM/NewCustomerForm",

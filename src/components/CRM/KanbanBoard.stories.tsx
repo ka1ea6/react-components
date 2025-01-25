@@ -1,16 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import KanbanBoard from "./KanbanBoard"
+import { CRMKanbanBoard } from "./KanbanBoard"
 import { mockUsers } from "./mockData"
-const meta: Meta<typeof KanbanBoard> = {
+import type { CRMStatus } from "./types"
+const meta: Meta<typeof CRMKanbanBoard> = {
   title: "CRM/KanbanBoard",
-  component: KanbanBoard,
+  component: CRMKanbanBoard,
   parameters: {
     layout: "fullscreen",
   },
 }
 
 export default meta
-type Story = StoryObj<typeof KanbanBoard>
+type Story = StoryObj<typeof CRMKanbanBoard>
 
 export const Default: Story = {
   args: {
@@ -21,7 +22,7 @@ export const Default: Story = {
         customerId: `${(i % 3) + 1}`,
         value: Math.floor(Math.random() * 100000) + 5000,
         assignee: ["John Doe", "Jane Smith", "Bob Johnson"][Math.floor(Math.random() * 3)],
-        status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as Status,
+        status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as CRMStatus,
         categories: [`${(i % 6) + 1}`],
         dateLogged: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
         closureDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000).toISOString(),

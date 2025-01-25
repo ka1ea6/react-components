@@ -1,13 +1,13 @@
 import React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import type { Deal, Customer, Category } from './types'
+import type { Deal, CRMCustomer, CRMCategory } from './types'
 import { CalendarIcon, PoundSterling, UserIcon } from "lucide-react"
 
 type DealCardProps = {
   deal: Deal
-  customer: Customer | undefined
-  categories: Category[]
+  customer: CRMCustomer | undefined
+  categories: CRMCategory[]
   onClick: () => void
 }
 

@@ -1,13 +1,13 @@
-import type { BoardData, Deal, Customer, Category, Status } from './types'
+import type { BoardData, Deal, CRMCustomer, CRMCategory, CRMStatus } from './types'
 import type { User } from '@/payload-types';
 
-export const mockCustomers: Customer[] = [
+export const mockCustomers: CRMCustomer[] = [
   { id: "1", name: "Acme Corp", intro: "A leading technology company", active: true },
   { id: "2", name: "GlobalTech", intro: "Innovative solutions provider", active: true },
   { id: "3", name: "InnoSystems", intro: "Cutting-edge software development", active: false },
 ]
 
-export const mockCategories: Category[] = [
+export const mockCategories: CRMCategory[] = [
   { id: "1", name: "Software", type: "proposition" },
   { id: "2", name: "Hardware", type: "proposition" },
   { id: "3", name: "Referral", type: "source" },
@@ -61,5 +61,5 @@ export const mockBoardData: BoardData = {
   categories: mockCategories,
 }
 
-export const mockStatuses: Status[] = ["Cold", "Qualified", "Proposal", "Won", "Lost"]
+export const mockStatuses: CRMStatus[] = ["Cold", "Qualified", "Proposal", "Won", "Lost"]
 

@@ -3,27 +3,27 @@ import {type User} from "@/payload-types"
 
 export type {User}
 
-export type Customer = {
+export type CRMCustomer = {
   id: string
   name: string
   intro?: string
   active: boolean
 }
 
-export type Category = {
+export type CRMCategory = {
   id: string
   name: string
   type: "proposition" | "source" | "sector"
 }
 
-export type Status = "Cold" | "Qualified" | "Proposal" | "SoW" | "Won" | "Lost"
+export type CRMStatus = "Cold" | "Qualified" | "Proposal" | "SoW" | "Won" | "Lost"
 
 export type Deal = {
   id: string
   customerId: string
   value: number
   assignee: string
-  status: Status
+  status: CRMStatus
   categories: string[]
   dateLogged: string
   closureDate: string
@@ -42,7 +42,7 @@ export type Comment = {
 export type BoardData = {
   deals: Deal[]
   users: User[]
-  customers: Customer[]
-  categories: Category[]
+  customers: CRMCustomer[]
+  categories: CRMCategory[]
 }
 

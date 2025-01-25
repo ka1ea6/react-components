@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import type { Customer } from './types'
+import type { CRMCustomer } from './types'
 
 type NewCustomerFormProps = {
-  onSubmit: (customer: Customer) => void
+  onSubmit: (customer: CRMCustomer) => void
 }
 
-export default function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
-  const [customer, setCustomer] = useState<Omit<Customer, "id">>({
+export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
+  const [customer, setCustomer] = useState<Omit<CRMCustomer, "id">>({
     name: "",
     intro: "",
     active: true,

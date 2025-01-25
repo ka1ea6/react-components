@@ -2,22 +2,22 @@ import React from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { PlusCircle } from "lucide-react"
-import type { Deal, Status, Category, Customer, User } from "./types"
+import type { Deal, CRMStatus, CRMCategory, CRMCustomer, User } from "./types"
 import { DealCard } from "./DealCard"
 import { Droppable, Draggable } from "react-beautiful-dnd"
-import NewDealForm from "./NewDealForm"
+import { NewDealForm } from "./NewDealForm"
 
 type KanbanColumnProps = {
-  status: Status
+  status: CRMStatus
   deals: Deal[]
   users?: User[]
-  customers: Customer[]
-  categories: Category[]
+  customers: CRMCustomer[]
+  categories: CRMCategory[]
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
-  calculateWeightedValue: (deals: Deal[], status: Status) => number
+  calculateWeightedValue: (deals: Deal[], status: CRMStatus) => number
   addNewDeal?: (deal: Deal) => void
-  onAddCustomer: (customer: Customer) => void
+  onAddCustomer: (customer: CRMCustomer) => void
 }
 
 export function KanbanColumn({

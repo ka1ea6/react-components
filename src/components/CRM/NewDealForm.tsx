@@ -8,20 +8,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { PlusIcon } from "lucide-react"
-import NewCustomerForm from "./NewCustomerForm"
-import type { Customer, Category, Deal, Status } from "./types"
+import { NewCustomerForm } from "./NewCustomerForm"
+import type { CRMCustomer, CRMCategory, Deal, CRMStatus } from "./types"
 import type { User } from "@/payload-types"
 
 type NewDealFormProps = {
-  customers: Customer[]
+  customers: CRMCustomer[]
   users?: User[]
-  categories: Category[]
+  categories: CRMCategory[]
   onSubmit: (deal: Deal) => void
-  onAddCustomer: (newCustomer: Customer) => void
+  onAddCustomer: (newCustomer: CRMCustomer) => void
   initialDeal?: Deal
 }
 
-export default function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer }: NewDealFormProps) {
+export function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer }: NewDealFormProps) {
   const [deal, setDeal] = useState<Partial<Deal>>(
     initialDeal || {
       customerId: "",
@@ -84,7 +84,7 @@ export default function NewDealForm({ customers, users, categories, onSubmit, in
     }))
   }
 
-  const getCategoryColor = (type: Category["type"]) => {
+  const getCategoryColor = (type: CRMCategory["type"]) => {
     switch (type) {
       case "proposition":
         return "bg-blue-100 text-blue-800"
@@ -97,7 +97,7 @@ export default function NewDealForm({ customers, users, categories, onSubmit, in
     }
   }
 
-  const handleAddCustomer = (newCustomer: Customer) => {
+  const handleAddCustomer = (newCustomer: CRMCustomer) => {
     customers.push(newCustomer)
     setDeal({ ...deal, customerId: newCustomer.id })
     setIsCustomerModalOpen(false)
