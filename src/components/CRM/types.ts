@@ -29,7 +29,7 @@ export type Deal = {
 export type Comment = {
   id: string
   text: string
-  author?: string
+  author?: Partial<User>
   timestamp: string
 }
 

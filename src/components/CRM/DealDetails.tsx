@@ -70,6 +70,10 @@ export function DealDetails({
         // author: "Current User", // Replace with actual user name or ID
         timestamp: new Date().toISOString(),
       })
+      setEditedDeal((prev) => ({
+        ...prev,
+        comments: [...prev.comments, { id: '0', text: newComment, timestamp: new Date().toISOString() }],
+      }));
       setNewComment('')
     }
   }
@@ -322,7 +326,7 @@ export function DealDetails({
                     <div key={comment.id} className="bg-gray-50 p-3 rounded-lg">
                       <p className="text-sm text-gray-700">{comment.text}</p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {comment.author} - {new Date(comment.timestamp).toLocaleString()}
+                        {comment.author?.name} - {new Date(comment.timestamp).toLocaleString()}
                       </p>
                     </div>
                   ))}

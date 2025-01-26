@@ -27,7 +27,7 @@ export const mockDeals: Deal[] = [
     dateLogged: "2023-01-15",
     closureDate: "2023-06-30",
     updatedAt: "2023-05-01T10:00:00Z",
-    comments: [{ id: "1", text: "Initial contact made", author: "John Doe", timestamp: "2023-01-15T09:00:00Z" }],
+    comments: [{ id: "1", text: "Initial contact made", author: { id: 2, name: "Jane Smith"}, timestamp: "2023-01-15T09:00:00Z" }],
     description: "Potential software solution for Acme Corp",
   },
   {
@@ -40,7 +40,7 @@ export const mockDeals: Deal[] = [
     dateLogged: "2023-02-01",
     closureDate: "2023-07-31",
     updatedAt: "2023-05-10T14:30:00Z",
-    comments: [{ id: "2", text: "Proposal sent", author: "Jane Smith", timestamp: "2023-05-10T14:30:00Z" }],
+    comments: [{ id: "2", text: "Proposal sent", author: { id: 2, name: "Jane Smith"}, timestamp: "2023-05-10T14:30:00Z" }],
     description: "Custom hardware solution for GlobalTech",
   },
 ]
