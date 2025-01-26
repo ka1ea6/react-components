@@ -125,7 +125,7 @@ args: {
 }
 }
 
-// export const TestContent: RichTextStory = {
+// export const TestContent: RichTextDemo = {
 //     render: Template,
 //     args: {
 //       enableGutter: true,
