@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { CRMKanbanBoard } from "./KanbanBoard"
-import { mockUsers } from "./mockData"
+import { mockUsers, mockCustomers, mockCategories } from './mockData';
 import type { CRMStatus } from "./types"
 const meta: Meta<typeof CRMKanbanBoard> = {
   title: "CRM/KanbanBoard",
@@ -18,12 +18,12 @@ export const Default: Story = {
     
     initialData: {
       deals: Array.from({ length: 20 }, (_, i) => ({
-        id: `${i + 1}`,
-        customerId: `${(i % 3) + 1}`,
+        id: i + 1,
+        customer: mockCustomers[(i % mockCustomers.length)],
         value: Math.floor(Math.random() * 100000) + 5000,
-        assignee: ["John Doe", "Jane Smith", "Bob Johnson"][Math.floor(Math.random() * 3)],
+        assignee: mockUsers[Math.floor(Math.random() * mockUsers.length)].name,
         status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as CRMStatus,
-        categories: [`${(i % 6) + 1}`],
+        categories: [mockCategories[(i % mockCategories.length)].id],
         dateLogged: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
         closureDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000).toISOString(),
         comments: [],
@@ -66,10 +66,13 @@ export const Default: Story = {
 
 export const NoDeals: Story = {
   args: {
-    ...Default.args,
+    ...Default.args ?? {},
     initialData: {
-      ...Default.args.initialData,
+      ...Default.args?.initialData ?? {},
       deals: [],
+      users: Default.args?.initialData?.users ?? [],
+      customers: Default.args?.initialData?.customers ?? [],
+      categories: Default.args?.initialData?.categories ?? [],
     },
   },
 }

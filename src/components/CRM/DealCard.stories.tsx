@@ -16,7 +16,7 @@ type Story = StoryObj<typeof DealCard>
 export const Default: Story = {
   args: {
     deal: mockDeals[0],
-    customer: mockCustomers.find((c) => c.id === mockDeals[0].customerId),
+    customer: mockCustomers.find((c) => c.id === mockDeals[0].customer.id),
     categories: mockCategories,
     onClick: () => console.log("Deal card clicked"),
   },

@@ -15,12 +15,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { UserIcon, CalendarIcon, SaveIcon, Edit2Icon, PlusIcon } from 'lucide-react'
-import type { Deal, CRMCustomer, Comment, CRMCategory, User } from './types'
+import type { Deal, Customer, Comment, CRMCategory, User } from './types'
 
 type DealDetailsProps = {
   deal: Deal
-  users?: User[]
-  customer: CRMCustomer | undefined
+  users?: Partial<User>[]
+  customer: Partial<Customer> | undefined
   categories: CRMCategory[]
   onClose: () => void
   onSave: (deal: Deal) => void
@@ -160,13 +160,13 @@ export function DealDetails({
               <Label className="text-sm font-medium text-gray-500">Assignee</Label>
               {editingField === 'assignee' ? (
 
-                <Select value={editedDeal.assignee} onValueChange={(value) => handleChange('assignee', value)}>
+                <Select value={editedDeal?.assignee?.id?.toString() || ''} onValueChange={(value) => handleChange('assignee', value)}>
                                   <SelectTrigger>
                                     <SelectValue placeholder="Select assignee" />
                                   </SelectTrigger>
                                   <SelectContent>
                                     {users && users.map((user) => (
-                      <SelectItem key={user.id} value={user.id.toString()}>
+                      <SelectItem key={user.id} value={user?.id?.toString() || ''}>
                                         {user.name}
                                       </SelectItem>
                                     ))}
@@ -184,7 +184,7 @@ export function DealDetails({
                   onClick={() => setEditingField('assignee')}
                 >
                   <UserIcon className="w-4 h-4 text-gray-400" />
-                  <span>{editedDeal.assignee}</span>
+                  <span>{editedDeal.assignee.name}</span>
                 </div>
               )}
             </div>

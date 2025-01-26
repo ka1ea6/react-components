@@ -1,23 +1,29 @@
-import React from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { PlusCircle } from "lucide-react"
-import type { Deal, CRMStatus, CRMCategory, CRMCustomer, User } from "./types"
-import { DealCard } from "./DealCard"
-import { Droppable, Draggable } from "react-beautiful-dnd"
-import { NewDealForm } from "./NewDealForm"
+import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { PlusCircle } from 'lucide-react'
+import type { Deal, CRMStatus, CRMCategory, Customer, User } from './types'
+import { DealCard } from './DealCard'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { NewDealForm } from './NewDealForm'
 
 type KanbanColumnProps = {
   status: CRMStatus
   deals: Deal[]
-  users?: User[]
-  customers: CRMCustomer[]
+  users?: Partial<User>[]
+  customers: Partial<Customer>[]
   categories: CRMCategory[]
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
   calculateWeightedValue: (deals: Deal[], status: CRMStatus) => number
   addNewDeal?: (deal: Deal) => void
-  onAddCustomer: (customer: CRMCustomer) => void
+  onAddCustomer: (customer: Partial<Customer>) => void
 }
 
 export function KanbanColumn({
@@ -32,11 +38,13 @@ export function KanbanColumn({
   addNewDeal,
   onAddCustomer,
 }: KanbanColumnProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
   return (
     <div className="flex flex-col w-80">
       <h2 className="text-xl font-semibold mb-4">{status}</h2>
       {addNewDeal && (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="mb-4 w-full bg-green-500 hover:bg-green-600 text-white">
               <PlusCircle className="mr-2 h-4 w-4" />
@@ -47,7 +55,14 @@ export function KanbanColumn({
             <DialogHeader>
               <DialogTitle>Add New Deal</DialogTitle>
             </DialogHeader>
-            <NewDealForm customers={customers} users={users} categories={categories} onSubmit={addNewDeal} onAddCustomer={onAddCustomer}/>
+            <NewDealForm
+              customers={customers}
+              users={users}
+              categories={categories}
+              onSubmit={addNewDeal}
+              onAddCustomer={onAddCustomer}
+              onClose={() => setIsDialogOpen(false)} // Pass the onClose prop to NewDealForm
+            />
           </DialogContent>
         </Dialog>
       )}
@@ -59,12 +74,16 @@ export function KanbanColumn({
             className="bg-gray-100 p-4 rounded-lg flex-grow min-h-[200px] shadow-inner"
           >
             {deals.map((deal, index) => (
-              <Draggable key={deal.id} draggableId={deal.id} index={index}>
+              <Draggable key={deal.id} draggableId={deal.id.toString()} index={index}>
                 {(provided) => (
-                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
                     <DealCard
                       deal={deal}
-                      customer={customers.find((c) => c.id === deal.customerId)}
+                      customer={customers.find((c) => c.id === deal.customer.id)}
                       categories={categories}
                       onClick={() => onDealClick(deal)}
                     />
@@ -78,13 +97,16 @@ export function KanbanColumn({
       </Droppable>
       <div className="mt-4 text-sm bg-white p-3 rounded-lg shadow">
         <p className="font-semibold">
-          Total: <span className="text-green-600">${calculateColumnValue(deals).toLocaleString()}</span>
+          Total:{' '}
+          <span className="text-green-600">£{calculateColumnValue(deals).toLocaleString()}</span>
         </p>
         <p className="font-semibold">
-          Weighted: <span className="text-blue-600">${calculateWeightedValue(deals, status).toLocaleString()}</span>
+          Weighted:{' '}
+          <span className="text-blue-600">
+            £{calculateWeightedValue(deals, status).toLocaleString()}
+          </span>
         </p>
       </div>
     </div>
   )
 }
-

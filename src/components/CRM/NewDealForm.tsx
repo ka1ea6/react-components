@@ -9,24 +9,25 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { PlusIcon } from "lucide-react"
 import { NewCustomerForm } from "./NewCustomerForm"
-import type { CRMCustomer, CRMCategory, Deal, CRMStatus } from "./types"
+import type { Customer, CRMCategory, Deal, CRMStatus } from "./types"
 import type { User } from "@/payload-types"
 
 type NewDealFormProps = {
-  customers: CRMCustomer[]
-  users?: User[]
+  customers: Partial<Customer>[]
+  users?: Partial<User>[]
   categories: CRMCategory[]
   onSubmit: (deal: Deal) => void
-  onAddCustomer: (newCustomer: CRMCustomer) => void
+  onClose?: () => void
+  onAddCustomer: (newCustomer: Partial<Customer>) => void
   initialDeal?: Deal
 }
 
-export function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer }: NewDealFormProps) {
+export function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer, onClose }: NewDealFormProps) {
   const [deal, setDeal] = useState<Partial<Deal>>(
     initialDeal || {
-      customerId: "",
+      customer: undefined,
       value: 0,
-      assignee: "",
+      assignee: undefined,
       status: "Cold",
       categories: [],
       dateLogged: new Date().toISOString().split("T")[0],
@@ -47,7 +48,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {}
-    if (!deal.customerId) newErrors.customerId = "Customer is required"
+    if (!deal.customer) newErrors.customer = "Customer is required"
     if (!deal.value) newErrors.value = "Value is required"
     if (!deal.assignee) newErrors.assignee = "Assignee is required"
     if (!deal.closureDate) newErrors.closureDate = "Closure Date is required"
@@ -60,18 +61,19 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
     if (validate()) {
       onSubmit({
         ...(deal as Deal),
-        id: deal.id || Date.now().toString(),
+        // id: deal.id || Date.now().toString(),
         lastModified: new Date().toISOString(),
       })
       setDeal({
-        customerId: "",
+        customer: undefined,
         value: 0,
-        assignee: "",
+        assignee: undefined,
         description: "",
         status: "Cold",
         closureDate: "",
       })
       setErrors({})
+      onClose?.()
     }
   }
 
@@ -84,22 +86,11 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
     }))
   }
 
-  const getCategoryColor = (type: CRMCategory["type"]) => {
-    switch (type) {
-      case "proposition":
-        return "bg-blue-100 text-blue-800"
-      case "source":
-        return "bg-green-100 text-green-800"
-      case "sector":
-        return "bg-purple-100 text-purple-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
-  }
+  
 
-  const handleAddCustomer = (newCustomer: CRMCustomer) => {
+  const handleAddCustomer = (newCustomer: Partial<Customer>) => {
     customers.push(newCustomer)
-    setDeal({ ...deal, customerId: newCustomer.id })
+    setDeal({ ...deal, customer: newCustomer })
     setIsCustomerModalOpen(false)
     onAddCustomer(newCustomer)
   }
@@ -108,17 +99,17 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
     <>
       <form onSubmit={handleSubmit} className="space-y-6">
         <ScrollArea className="h-[60vh] pr-4">
-          <div className="space-y-6">
+          <div className="space-y-6 px-4">
             <div className="space-y-2 space-x-2">
               <Label htmlFor="customer">Customer</Label>
               <div className="flex items-center space-x-2">
-                <Select value={deal.customerId} onValueChange={(value) => setDeal({ ...deal, customerId: value })}>
+                <Select value={deal.customer?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, customer: { id: Number(value) }})}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select customer" />
                   </SelectTrigger>
                   <SelectContent>
                     {customers.map((customer) => (
-                      <SelectItem key={customer.id} value={customer.id}>
+                      <SelectItem key={customer.id} value={customer.id?.toString() || ""}>
                         {customer.name}
                       </SelectItem>
                     ))}
@@ -144,13 +135,13 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label htmlFor="assignee">Assignee</Label>
 
-              <Select value={deal.assignee} onValueChange={(value) => setDeal({ ...deal, assignee: value })}>
+              <Select value={deal.assignee?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, assignee: {id: Number(value)} })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select assignee" />
                   </SelectTrigger>
                   <SelectContent>
                     {users && users.map((user) => (
-                      <SelectItem key={user.id} value={user.id.toString()}>
+                      <SelectItem key={user.id} value={user.id?.toString() || ""}>
                         {user.name}
                       </SelectItem>
                     ))}
@@ -208,7 +199,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
                             />
                             <label
                               htmlFor={category.id}
-                              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${getCategoryColor(category.type)}`}
+                              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
                             >
                               {category.name}
                             </label>

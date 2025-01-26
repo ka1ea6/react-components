@@ -1,12 +1,12 @@
 import React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import type { Deal, CRMCustomer, CRMCategory } from './types'
+import type { Deal, Customer, CRMCategory } from './types'
 import { CalendarIcon, PoundSterling, UserIcon } from "lucide-react"
 
 type DealCardProps = {
   deal: Deal
-  customer: CRMCustomer | undefined
+  customer: Partial<Customer> | undefined
   categories: CRMCategory[]
   onClick: () => void
 }
@@ -29,7 +29,7 @@ export function DealCard({ deal, customer, categories, onClick }: DealCardProps)
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center text-sm text-gray-600">
             <UserIcon className="w-4 h-4 mr-1 text-xs" />
-            <span>{deal.assignee}</span>
+            <span>{deal.assignee.name}</span>
           </div>
           <div className="flex items-center text-sm font-bold text-green-600">
             <span>£{deal.value.toLocaleString()}</span>

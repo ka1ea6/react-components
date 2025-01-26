@@ -1,10 +1,10 @@
-import type { BoardData, Deal, CRMCustomer, CRMCategory, CRMStatus } from './types'
+import type { BoardData, Deal, Customer, CRMCategory, CRMStatus } from './types'
 import type { User } from '@/payload-types';
 
-export const mockCustomers: CRMCustomer[] = [
-  { id: "1", name: "Acme Corp", intro: "A leading technology company", active: true },
-  { id: "2", name: "GlobalTech", intro: "Innovative solutions provider", active: true },
-  { id: "3", name: "InnoSystems", intro: "Cutting-edge software development", active: false },
+export const mockCustomers: Partial<Customer>[] = [
+  { id: 1, name: "Acme Corp", intro: "A leading technology company", active: true },
+  { id: 2, name: "GlobalTech", intro: "Innovative solutions provider", active: true },
+  { id: 3, name: "InnoSystems", intro: "Cutting-edge software development", active: false },
 ]
 
 export const mockCategories: CRMCategory[] = [
@@ -18,10 +18,10 @@ export const mockCategories: CRMCategory[] = [
 
 export const mockDeals: Deal[] = [
   {
-    id: "1",
-    customerId: "1",
+    id: 1,
+    customer: {id: 1, name: "Acme Corp", active: true},
     value: 50000,
-    assignee: "John Doe",
+    assignee: { id: 1, name: "John Doe" },
     status: "Qualified",
     categories: ["1", "3", "5"],
     dateLogged: "2023-01-15",
@@ -31,10 +31,10 @@ export const mockDeals: Deal[] = [
     description: "Potential software solution for Acme Corp",
   },
   {
-    id: "2",
-    customerId: "2",
+    id: 2,
+    customer: { id: 2, name: "GlobalTech", active: true },
     value: 75000,
-    assignee: "Jane Smith",
+    assignee: { id: 2, name: "Jane Smith"},
     status: "Proposal",
     categories: ["2", "4", "6"],
     dateLogged: "2023-02-01",

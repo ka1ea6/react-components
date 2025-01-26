@@ -4,7 +4,7 @@ import React, { useState , useCallback} from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { PlusCircle } from "lucide-react"
-import { type BoardData, type Deal, type CRMStatus, CRMCategory, type CRMCustomer, type Comment } from "./types"
+import { type BoardData, type Deal, type CRMStatus, CRMCategory, type Customer, type Comment } from "./types"
 import { DealDetails } from "./DealDetails"
 import { NewDealForm } from "./NewDealForm"
 import { NewCustomerForm } from "./NewCustomerForm"
@@ -19,7 +19,7 @@ type KanbanBoardProps = {
   addNewDeal: (newDeal: Deal) => void
   updateDeal: (updatedDeal: Deal) => void
   addComment: (dealId: string, comment: Comment) => void
-  addNewCustomer: (newCustomer: CRMCustomer) => void
+  addNewCustomer: (newCustomer: Partial<Customer>) => void
 }
 
 export function CRMKanbanBoard({
@@ -110,11 +110,11 @@ export function CRMKanbanBoard({
           <DealDetails
             deal={selectedDeal}
             users={initialData.users}
-            customer={boardData.customers.find((c) => c.id === selectedDeal.customerId)}
+            customer={boardData.customers.find((c) => c.id === selectedDeal.customer.id)}
             categories={boardData.categories}
             onClose={() => setSelectedDeal(null)}
             onSave={updateDeal}
-            onAddComment={(comment) => addComment(selectedDeal.id, comment)}
+            onAddComment={(comment) => addComment(selectedDeal.id.toString(), comment)}
           />
         )}
       </div>

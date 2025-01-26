@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DealDetails } from './DealDetails';
-import { Deal, CRMCustomer, CRMCategory, Comment } from './types';
+import { Deal, Customer, CRMCategory, Comment } from './types';
 
 const meta: Meta<typeof DealDetails> = {
   title: 'CRM/DealDetails',
@@ -14,7 +14,7 @@ const meta: Meta<typeof DealDetails> = {
 export default meta;
 type Story = StoryObj<typeof DealDetails>;
 
-const mockCustomer: CRMCustomer = {
+const mockCustomer: Customer = {
   id: '1',
   name: 'Acme Corp',
   active: true,
@@ -39,10 +39,10 @@ const generateMockComments = (count: number): Comment[] => {
 };
 
 const mockDeal: Deal = {
-  id: '1',
-  customerId: '1',
+  id: 1,
+  customer: { id: 1, name: 'Acme Corp', active: true },
   value: 100000,
-  assignee: 'John Doe',
+  assignee: { id: 1, name: 'John Doe'},
   status: 'Qualified',
   categories: ['1', '3', '5'],
   dateLogged: '2023-01-01T00:00:00.000Z',

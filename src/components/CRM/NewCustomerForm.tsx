@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import type { CRMCustomer } from './types'
+import type { Customer } from './types'
 
 type NewCustomerFormProps = {
-  onSubmit: (customer: CRMCustomer) => void
+  onSubmit: (customer: Omit<Customer, "id">) => void
 }
 
 export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
-  const [customer, setCustomer] = useState<Omit<CRMCustomer, "id">>({
+  const [customer, setCustomer] = useState<Omit<Partial<Customer>, "id">>({
     name: "",
     intro: "",
     active: true,
@@ -22,8 +22,10 @@ export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
     e.preventDefault()
     if (customer.name) {
       onSubmit({
-        id: Date.now().toString(),
         ...customer,
+        name: customer.name as string,
+        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       })
       setCustomer({ name: "", intro: "", active: true })
     }
@@ -45,7 +47,7 @@ export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
         <Label htmlFor="customerIntro">Intro</Label>
         <Textarea
           id="customerIntro"
-          value={customer.intro}
+          value={customer.intro ?? ""}
           onChange={(e) => setCustomer({ ...customer, intro: e.target.value })}
           placeholder="Enter customer intro"
         />
@@ -53,7 +55,7 @@ export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
       <div className="flex items-center space-x-2">
         <Checkbox
           id="activeCustomer"
-          checked={customer.active}
+          checked={!!customer.active}
           onCheckedChange={(checked) => setCustomer({ ...customer, active: checked as boolean })}
         />
         <Label htmlFor="activeCustomer">Active Customer</Label>
