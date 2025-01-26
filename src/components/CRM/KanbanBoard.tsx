@@ -1,13 +1,8 @@
 "use client"
 
 import React, { useState , useCallback} from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { PlusCircle } from "lucide-react"
 import { type BoardData, type Deal, type CRMStatus, CRMCategory, type Customer, type Comment } from "./types"
 import { DealDetails } from "./DealDetails"
-import { NewDealForm } from "./NewDealForm"
-import { NewCustomerForm } from "./NewCustomerForm"
 import { KanbanColumn } from "./KanbanColumn"
 import { DragDropContext, type DropResult } from "react-beautiful-dnd"
 

@@ -342,7 +342,7 @@ export function DealDetails({
               </div>
             </div>
             <div className="text-xs text-gray-500 mt-4">
-              Last modified: {new Date(editedDeal.lastModified).toLocaleString()}
+              Last modified: {new Date(editedDeal.updatedAt).toLocaleString()}
             </div>
           </div>
         </ScrollArea>

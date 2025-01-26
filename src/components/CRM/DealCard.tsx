@@ -38,7 +38,7 @@ export function DealCard({ deal, customer, categories, onClick }: DealCardProps)
         <div className="flex justify-between items-left mb-3">
           <div className="flex items-center text-xs text-gray-500">
             <CalendarIcon className="w-3 h-3 mr-1" />
-            <span>{new Date(deal.lastModified).toLocaleDateString()}</span>
+            <span>{new Date(deal.updatedAt).toLocaleDateString()}</span>
           </div>
           
         </div>

@@ -32,7 +32,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
       categories: [],
       dateLogged: new Date().toISOString().split("T")[0],
       closureDate: "",
-      lastModified: new Date().toISOString(),
+      // lastModified: new Date().toISOString(),
       comments: [],
       description: "",
     },
@@ -62,7 +62,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
       onSubmit({
         ...(deal as Deal),
         // id: deal.id || Date.now().toString(),
-        lastModified: new Date().toISOString(),
+        // lastModified: new Date().toISOString(),
       })
       setDeal({
         customer: undefined,

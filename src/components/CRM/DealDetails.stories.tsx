@@ -47,7 +47,7 @@ const mockDeal: Deal = {
   categories: ['1', '3', '5'],
   dateLogged: '2023-01-01T00:00:00.000Z',
   closureDate: '2023-12-31T00:00:00.000Z',
-  lastModified: '2023-06-15T12:00:00.000Z',
+  updatedAt: '2023-06-15T12:00:00.000Z',
   comments: generateMockComments(50), // Generate 50 mock comments
   description: 'This is a mock deal for Acme Corp. It involves a large software project with potential for hardware integration.',
 };

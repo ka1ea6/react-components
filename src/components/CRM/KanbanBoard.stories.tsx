@@ -27,7 +27,7 @@ export const Default: Story = {
         dateLogged: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
         closureDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000).toISOString(),
         comments: [],
-        lastModified: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         description: `This is a mock description for deal ${i + 1}. It's a ${["small", "medium", "large"][i % 3]} deal with high potential.`,
       })),
       customers: [

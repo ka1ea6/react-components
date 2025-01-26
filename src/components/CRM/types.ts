@@ -21,7 +21,7 @@ export type Deal = {
   categories: string[]
   dateLogged: string
   closureDate: string
-  lastModified: string
+  updatedAt: string
   comments: Comment[]
   description: string
 }
