@@ -26,10 +26,10 @@ export function CRMKanbanBoard({
 }: KanbanBoardProps) {
 
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
-  const [boardData, setBoardData] = useState<BoardData>(initialData)
+  // const [boardData, setBoardData] = useState<BoardData>(initialData)
 
   const getColumnDeals = (status: CRMStatus) => {
-    return boardData.deals.filter((deal) => deal.status === status)
+    return initialData.deals.filter((deal) => deal.status === status)
   }
 
   const calculateColumnValue = (deals: Deal[]) => {
@@ -63,17 +63,17 @@ export function CRMKanbanBoard({
       const sourceStatus = source.droppableId as CRMStatus
       const destinationStatus = destination.droppableId as CRMStatus
       console.log("Moving from ", sourceStatus, "to", destinationStatus)
-      const updatedDeals = [...boardData.deals]
+      const updatedDeals = [...initialData.deals]
       const [movedDeal] = updatedDeals.splice(source.index, 1)
       movedDeal.status = destinationStatus
       updatedDeals.splice(destination.index, 0, movedDeal)
 
-      setBoardData({ ...boardData, deals: updatedDeals })
+      // setBoardData({ ...initialData, deals: updatedDeals })
 
       // Update the deal using the updateDeal function
       updateDeal(movedDeal);
     },
-    [boardData, updateDeal],
+    [updateDeal],
   )
 
   return (
@@ -105,8 +105,8 @@ export function CRMKanbanBoard({
           <DealDetails
             deal={selectedDeal}
             users={initialData.users}
-            customer={boardData.customers.find((c) => c.id === selectedDeal.customer.id)}
-            categories={boardData.categories}
+            customer={initialData.customers.find((c) => c.id === selectedDeal.customer.id)}
+            categories={initialData.categories}
             onClose={() => setSelectedDeal(null)}
             onSave={updateDeal}
             onAddComment={(comment) => addComment(selectedDeal.id.toString(), comment)}
