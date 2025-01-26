@@ -10,7 +10,7 @@ import {
 import { PlusCircle } from 'lucide-react'
 import type { Deal, CRMStatus, CRMCategory, Customer, User } from './types'
 import { DealCard } from './DealCard'
-import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration'
 import { NewDealForm } from './NewDealForm'
 
 type KanbanColumnProps = {

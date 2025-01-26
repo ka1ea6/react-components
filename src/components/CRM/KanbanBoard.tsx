@@ -4,7 +4,7 @@ import React, { useState , useCallback} from "react"
 import { type BoardData, type Deal, type CRMStatus, CRMCategory, type Customer, type Comment } from "./types"
 import { DealDetails } from "./DealDetails"
 import { KanbanColumn } from "./KanbanColumn"
-import { DragDropContext, type DropResult } from "react-beautiful-dnd"
+import { DragDropContext, type DropResult } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration"
 
 const statuses: CRMStatus[] = ["Cold", "Qualified", "Proposal", "SoW", "Won", "Lost"]
 

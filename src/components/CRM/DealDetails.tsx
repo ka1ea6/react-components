@@ -322,11 +322,14 @@ export function DealDetails({
               <Label className="text-sm font-medium text-gray-500">Comments</Label>
               <ScrollArea className="h-[200px] overflow-y-auto">
                 <div className="space-y-2">
-                  {editedDeal.comments.map((comment) => (
+                {editedDeal.comments
+                  .slice()
+                  .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                  .map((comment) => (
                     <div key={comment.id} className="bg-gray-50 p-3 rounded-lg">
                       <p className="text-sm text-gray-700">{comment.text}</p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {comment.author?.name} - {new Date(comment.timestamp).toLocaleString()}
+                        {comment?.author?.name} - {new Date(comment.timestamp).toLocaleString()}
                       </p>
                     </div>
                   ))}
