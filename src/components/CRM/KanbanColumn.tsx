@@ -66,7 +66,7 @@ export function KanbanColumn({
           </DialogContent>
         </Dialog>
       )}
-      <Droppable droppableId={status} isDropDisabled>
+      <Droppable droppableId={status} isDropDisabled={false}>
         {(provided) => (
           <div
             ref={provided.innerRef}
@@ -74,7 +74,7 @@ export function KanbanColumn({
             className="bg-gray-100 p-4 rounded-lg flex-grow min-h-[200px] shadow-inner"
           >
             {deals.map((deal, index) => (
-              <Draggable key={deal.id.toString()} draggableId={deal.id.toString()} index={index}>
+              <Draggable key={deal.id.toString()} draggableId={deal.id.toString()} index={deal.id}>
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
