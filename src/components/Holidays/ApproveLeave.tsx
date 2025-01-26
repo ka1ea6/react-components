@@ -148,7 +148,7 @@ export function ApproveLeave({ leaveRequests, onApprove, onReject }: ApproveLeav
           ))}
         </ul>
       </div>
-      <Toaster richColors position="top-right" closeButton visibleToasts={9} />
+      <Toaster richColors position="top-right" closeButton visibleToasts={9} className='z-50'/>
     </div>
   )
 }

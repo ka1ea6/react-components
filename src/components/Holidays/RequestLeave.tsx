@@ -172,7 +172,7 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
 
         <Button type="submit" className="w-full hover:bg-accent hover:text-accent-foreground">Submit Request</Button>
       </form>
-      <Toaster richColors position="top-right" closeButton visibleToasts={9} />
+      <Toaster richColors position="top-right" closeButton visibleToasts={9} className='z-50'/>
     </div>
   )
 }
