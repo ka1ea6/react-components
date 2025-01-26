@@ -93,9 +93,9 @@ export function CRMKanbanBoard({
                 key={status}
                 status={status}
                 deals={deals}
-                customers={boardData.customers}
+                customers={initialData.customers}
                 users={initialData.users}
-                categories={boardData.categories}
+                categories={initialData.categories}
                 onDealClick={setSelectedDeal}
                 calculateColumnValue={calculateColumnValue}
                 calculateWeightedValue={calculateWeightedValue}
@@ -104,23 +104,6 @@ export function CRMKanbanBoard({
               />
             )
           })}
-        </div>
-
-        <div className="mt-8 flex space-x-4">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add New Customer
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Add New Customer</DialogTitle>
-              </DialogHeader>
-              <NewCustomerForm  onSubmit={addNewCustomer} />
-            </DialogContent>
-          </Dialog>
         </div>
 
         {selectedDeal && (

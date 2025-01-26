@@ -64,3 +64,13 @@ export const Default: Story = {
   },
 }
 
+export const NoDeals: Story = {
+  args: {
+    ...Default.args,
+    initialData: {
+      ...Default.args.initialData,
+      deals: [],
+    },
+  },
+}
+
