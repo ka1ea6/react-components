@@ -17,6 +17,7 @@ export const Default: Story = {
   args: {
     customers: mockCustomers,
     categories: mockCategories,
+    users: mockUsers,
     onSubmit: async (deal) => console.log("Submitting deal:", deal),
     onAddCustomer: async (customer) => console.log("Adding new customer:", customer),
   },

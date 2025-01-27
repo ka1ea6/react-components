@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { KanbanColumn } from "./KanbanColumn"
-import { mockDeals, mockCustomers, mockCategories, type mockStatuses } from "./mockData"
+import { mockDeals, mockCustomers, mockCategories } from "./mockData"
+import { CRMStatus } from "./types"
 
 const meta: Meta<typeof KanbanColumn> = {
   title: "CRM/KanbanColumn",
@@ -22,7 +23,7 @@ export const Default: Story = {
     onDealClick: (deal) => console.log("Deal clicked:", deal),
     calculateColumnValue: (deals) => deals.reduce((sum, deal) => sum + deal.value, 0),
     calculateWeightedValue: (deals, status) => {
-      const weightMap: { [key in (typeof mockStatuses)[number]]: number } = {
+      const weightMap: { [key in (CRMStatus)[number]]: number } = {
         Cold: 0.2,
         Qualified: 0.4,
         "Proposal Made": 0.6,

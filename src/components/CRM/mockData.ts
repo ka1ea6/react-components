@@ -1,48 +1,19 @@
-import type { BoardData, Deal, Customer, CRMCategory, CRMStatus } from './types'
+import type { BoardData, Deal, Customer, DealCategory, CRMStatus } from './types'
 import type { User } from '@/payload-types';
 
-export const mockCustomers: Partial<Customer>[] = [
-  { id: 1, name: "Acme Corp", intro: "A leading technology company", active: true },
-  { id: 2, name: "GlobalTech", intro: "Innovative solutions provider", active: true },
-  { id: 3, name: "InnoSystems", intro: "Cutting-edge software development", active: false },
+export const mockCustomers: Customer[] = [
+  { id: 1, name: "Acme Corp", intro: "A leading technology company", active: true, createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 2, name: "GlobalTech", intro: "Innovative solutions provider", active: true, createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 3, name: "InnoSystems", intro: "Cutting-edge software development", active: false, createdAt: "2023-01-01", updatedAt: "2023-01-01" },
 ]
 
-export const mockCategories: CRMCategory[] = [
-  { id: "1", name: "Software", type: "proposition" },
-  { id: "2", name: "Hardware", type: "proposition" },
-  { id: "3", name: "Referral", type: "source" },
-  { id: "4", name: "Outbound", type: "source" },
-  { id: "5", name: "Tech", type: "sector" },
-  { id: "6", name: "Finance", type: "sector" },
-]
-
-export const mockDeals: Deal[] = [
-  {
-    id: 1,
-    customer: {id: 1, name: "Acme Corp", active: true},
-    value: 50000,
-    assignee: { id: 1, name: "John Doe" },
-    status: "Qualified",
-    categories: ["1", "3", "5"],
-    dateLogged: "2023-01-15",
-    closureDate: "2023-06-30",
-    updatedAt: "2023-05-01T10:00:00Z",
-    comments: [{ id: "1", text: "Initial contact made", author: { id: 2, name: "Jane Smith"}, timestamp: "2023-01-15T09:00:00Z" }],
-    description: "Potential software solution for Acme Corp",
-  },
-  {
-    id: 2,
-    customer: { id: 2, name: "GlobalTech", active: true },
-    value: 75000,
-    assignee: { id: 2, name: "Jane Smith"},
-    status: "Proposal",
-    categories: ["2", "4", "6"],
-    dateLogged: "2023-02-01",
-    closureDate: "2023-07-31",
-    updatedAt: "2023-05-10T14:30:00Z",
-    comments: [{ id: "2", text: "Proposal sent", author: { id: 2, name: "Jane Smith"}, timestamp: "2023-05-10T14:30:00Z" }],
-    description: "Custom hardware solution for GlobalTech",
-  },
+export const mockCategories: DealCategory[] = [
+  { id: 1, name: "Software", type: "proposition", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 2, name: "Hardware", type: "proposition", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 3, name: "Referral", type: "source", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 4, name: "Outbound", type: "source", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 5, name: "Tech", type: "sector", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+  { id: 6, name: "Finance", type: "sector", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
 ]
 
 
@@ -54,6 +25,39 @@ export const mockUsers: User[] = [
   { id: 5, name: "Charlie Davis", email: "charlie.davis@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
 ];
 
+export const mockDeals: Deal[] = [
+  {
+    id: 1,
+    customer: mockCustomers[0],
+    value: 50000,
+    assignee: mockUsers[2],
+    status: "Qualified",
+    categories: mockCategories.slice(0, 3), // Pass in 3 of the mockCategories
+    dateLogged: "2023-01-15",
+    closureDate: "2023-06-30",
+    updatedAt: "2023-05-01T10:00:00Z",
+    createdAt: "2023-01-01",
+    comments: [{ id: "1", text: "Initial contact made", author: mockUsers[5], timestamp: "2023-01-15T09:00:00Z" }],
+    description: "Potential software solution for Acme Corp",
+  },
+  {
+    id: 2,
+    customer: { id: 2, name: "GlobalTech", active: true, createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+    value: 75000,
+    assignee: { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "user", createdAt: "2023-01-01", updatedAt: "2023-01-01" },
+    status: "Proposal Made",
+    categories: mockCategories.slice(0, 3), // Pass in 3 of the mockCategories
+    dateLogged: "2023-02-01",
+    closureDate: "2023-07-31",
+    updatedAt: "2023-05-10T14:30:00Z",
+    createdAt: "2023-01-01",
+    comments: [{ id: "2", text: "Proposal sent", author: mockUsers[1], timestamp: "2023-02-15T09:00:00Z" }],
+    description: "Custom hardware solution for GlobalTech",
+  },
+]
+
+
+
 export const mockBoardData: BoardData = {
   deals: mockDeals,
   users: mockUsers,
@@ -61,5 +65,5 @@ export const mockBoardData: BoardData = {
   categories: mockCategories,
 }
 
-export const mockStatuses: CRMStatus[] = ["Cold", "Qualified", "Proposal", "Won", "Lost"]
+// export const mockStatuses: CRMStatus[] = ["Cold", "Qualified", "Proposal Made", "Won", "Lost"]
 
