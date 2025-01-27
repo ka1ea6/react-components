@@ -23,6 +23,9 @@ export interface Config {
     events: Event;
     propositions: Proposition;
     'case-studies': CaseStudy;
+    holidays: Holiday;
+    deals: Deal;
+    'deal-categories': DealCategory;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -46,6 +49,9 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     propositions: PropositionsSelect<false> | PropositionsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    holidays: HolidaysSelect<false> | HolidaysSelect<true>;
+    deals: DealsSelect<false> | DealsSelect<true>;
+    'deal-categories': DealCategoriesSelect<false> | DealCategoriesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -167,7 +173,25 @@ export interface Page {
   /**
    * Publish this page to the public website
    */
-  publishedToWebsite?: boolean | null;
+  publishedInternal?: boolean | null;
+  /**
+   * Links to other pages or external content
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'none') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   parent?: (number | null) | Page;
@@ -531,7 +555,7 @@ export interface Post {
   /**
    * Publish this page to the public website
    */
-  publishedToWebsite?: boolean | null;
+  publishedInternal?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -547,6 +571,8 @@ export interface User {
   name?: string | null;
   email: string;
   jobRole?: ('C1' | 'C2' | 'C3' | 'SC1' | 'SC2' | 'M' | 'SM' | 'P') | null;
+  manager?: (number | null) | User;
+  about?: string | null;
   profilePicture?: (number | null) | MediaProfile;
   workHistory?:
     | {
@@ -576,6 +602,7 @@ export interface User {
     | null;
   dateOfBirth?: string | null;
   joinDate?: string | null;
+  linkedIn?: string | null;
   role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -975,7 +1002,7 @@ export interface Proposition {
   /**
    * Publish this page to the public website
    */
-  publishedToWebsite?: boolean | null;
+  publishedInternal?: boolean | null;
   /**
    * Proposition public landing page
    */
@@ -1160,6 +1187,58 @@ export interface CaseStudy {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "holidays".
+ */
+export interface Holiday {
+  id: number;
+  userName?: (number | null) | User;
+  startDate: string;
+  endDate: string;
+  status: 'requested' | 'approved' | 'rejected';
+  leaveType: 'Full Day' | 'Morning' | 'Afternoon';
+  totalDays: number;
+  approver?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deals".
+ */
+export interface Deal {
+  id: number;
+  customer?: (number | null) | Customer;
+  value: number;
+  assignee?: (number | null) | User;
+  status: 'Cold' | 'Qualified' | 'Proposal Made' | 'SoW Submitted' | 'Won' | 'Lost';
+  categories?: (number | DealCategory)[] | null;
+  dateLogged: string;
+  closureDate?: string | null;
+  description?: string | null;
+  comments?:
+    | {
+        text: string;
+        author: number | User;
+        timestamp: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deal-categories".
+ */
+export interface DealCategory {
+  id: number;
+  name: string;
+  type: 'proposition' | 'source' | 'sector';
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1383,6 +1462,18 @@ export interface PayloadLockedDocument {
         value: number | CaseStudy;
       } | null)
     | ({
+        relationTo: 'holidays';
+        value: number | Holiday;
+      } | null)
+    | ({
+        relationTo: 'deals';
+        value: number | Deal;
+      } | null)
+    | ({
+        relationTo: 'deal-categories';
+        value: number | DealCategory;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1492,7 +1583,21 @@ export interface PagesSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   relatedDocument?: T;
-  publishedToWebsite?: T;
+  publishedInternal?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
   slug?: T;
   slugLock?: T;
   parent?: T;
@@ -1656,7 +1761,7 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  publishedToWebsite?: T;
+  publishedInternal?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2001,6 +2106,8 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   jobRole?: T;
+  manager?: T;
+  about?: T;
   profilePicture?: T;
   workHistory?:
     | T
@@ -2030,6 +2137,7 @@ export interface UsersSelect<T extends boolean = true> {
       };
   dateOfBirth?: T;
   joinDate?: T;
+  linkedIn?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2139,7 +2247,7 @@ export interface PropositionsSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
-  publishedToWebsite?: T;
+  publishedInternal?: T;
   landingPage?: T;
   slug?: T;
   slugLock?: T;
@@ -2196,6 +2304,55 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "holidays_select".
+ */
+export interface HolidaysSelect<T extends boolean = true> {
+  userName?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  leaveType?: T;
+  totalDays?: T;
+  approver?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deals_select".
+ */
+export interface DealsSelect<T extends boolean = true> {
+  customer?: T;
+  value?: T;
+  assignee?: T;
+  status?: T;
+  categories?: T;
+  dateLogged?: T;
+  closureDate?: T;
+  description?: T;
+  comments?:
+    | T
+    | {
+        text?: T;
+        author?: T;
+        timestamp?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deal-categories_select".
+ */
+export interface DealCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2913,4 +3070,3 @@ export interface CodeBlock {
 export interface Auth {
   [k: string]: unknown;
 }
-

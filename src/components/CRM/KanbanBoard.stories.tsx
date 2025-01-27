@@ -19,7 +19,7 @@ const Template: Story = (args) => {
     console.log('Updating deal:', updatedDeal);
     setBoardData((prevData) => ({
       ...prevData,
-      deals: prevData.deals.map((deal) =>
+      deals: (prevData.deals ?? []).map((deal) =>
         deal.id === updatedDeal.id ? updatedDeal : deal
       ),
     }));
@@ -39,16 +39,16 @@ export const Default: Story = Template.bind({});
 Default.args = {
   initialData: {
     deals: Array.from({ length: 20 }, (_, i) => ({
-      id: (i + 1).toString(),
+      id: i + 1,
       customer: mockCustomers[(i % mockCustomers.length)],
       value: Math.floor(Math.random() * 100000) + 5000,
       assignee: mockUsers[Math.floor(Math.random() * mockUsers.length)].name,
-      status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as Status,
+      status: ["Cold", "Qualified", "Proposal Made", "Won", "Lost"][Math.floor(Math.random() * 5)] as CRMStatus,
       categories: [mockCategories[(i % mockCategories.length)].id],
       dateLogged: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
       closureDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000).toISOString(),
       comments: [],
-      lastModified: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       description: `This is a mock description for deal ${i + 1}. It's a ${["small", "medium", "large"][i % 3]} deal with high potential.`,
     })),
     customers: mockCustomers,

@@ -60,7 +60,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
                 {/* Image 1  */}
                 <div className="relative flex justify-end overflow-hidden">
                   <div className="relative z-[2] mt-auto" data-aos="fade-up" data-aos-delay="200">
-                    <span className="absolute -left-2.5 -top-2.5 -z-1 h-full w-full rounded-tl-[60px] bg-accent"></span>
+                    {/* <span className="absolute -left-2.5 -top-2.5 -z-1 h-full w-full rounded-tl-[60px] bg-accent"></span> */}
                     <div className="relative z-[4] overflow-hidden">
                       <Image
                         src={images.image1.src}
@@ -73,7 +73,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
                   </div>
 
                   {/* Pattern  */}
-                  <Image
+                  {/* <Image
                     src={images.pattern.src}
                     width={383}
                     height={246}
@@ -81,7 +81,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
                     className="absolute bottom-[-55%] left-[42px] z-1  block object-cover"
                     data-aos="zoom-in"
                     data-aos-delay="250"
-                  />
+                  /> */}
                 </div>
 
                 {/* Image 2  */}

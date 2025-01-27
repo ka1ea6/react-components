@@ -29,7 +29,7 @@ export function CRMKanbanBoard({
   // const [boardData, setBoardData] = useState<BoardData>(initialData)
 
   const getColumnDeals = (status: CRMStatus) => {
-    return initialData.deals.filter((deal) => deal.status === status)
+    return (initialData.deals ?? []).filter((deal) => deal.status === status)
   }
 
   const calculateColumnValue = (deals: Deal[]) => {
@@ -63,7 +63,7 @@ export function CRMKanbanBoard({
       const sourceStatus = source.droppableId as CRMStatus
       const destinationStatus = destination.droppableId as CRMStatus
       console.log("Moving from ", sourceStatus, "to", destinationStatus)
-      const updatedDeals = [...initialData.deals]
+      const updatedDeals = [...(initialData.deals ?? [])]
       const [movedDeal] = updatedDeals.splice(source.index, 1)
       movedDeal.status = destinationStatus
       updatedDeals.splice(destination.index, 0, movedDeal)
@@ -88,9 +88,9 @@ export function CRMKanbanBoard({
                 key={status}
                 status={status}
                 deals={deals}
-                customers={initialData.customers}
+                customers={initialData.customers ?? []}
                 users={initialData.users}
-                categories={initialData.categories}
+                categories={initialData.categories ?? []}
                 onDealClick={setSelectedDeal}
                 calculateColumnValue={calculateColumnValue}
                 calculateWeightedValue={calculateWeightedValue}
@@ -105,8 +105,8 @@ export function CRMKanbanBoard({
           <DealDetails
             deal={selectedDeal}
             users={initialData.users}
-            customer={initialData.customers.find((c) => c.id === selectedDeal.customer.id)}
-            categories={initialData.categories}
+            customer={initialData.customers?.find((c) => c.id === selectedDeal.customer.id) ?? undefined}
+            categories={initialData.categories ?? []}
             onClose={() => setSelectedDeal(null)}
             onSave={updateDeal}
             onAddComment={(comment) => addComment(selectedDeal.id.toString(), comment)}

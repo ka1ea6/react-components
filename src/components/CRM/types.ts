@@ -34,9 +34,9 @@ export type Comment = {
 }
 
 export type BoardData = {
-  deals: Deal[]
-  users: Partial<User>[]
-  customers: Partial<Customer>[]
-  categories: CRMCategory[]
+  deals?: Deal[]
+  users?: Partial<User>[]
+  customers?: Partial<Customer>[]
+  categories?: CRMCategory[]
 }
 
