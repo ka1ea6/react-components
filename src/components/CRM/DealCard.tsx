@@ -1,18 +1,18 @@
 import React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import type { Deal, Customer, CRMCategory } from './types'
+import type { Deal, Customer, DealCategory, User } from './types'
 import { CalendarIcon, PoundSterling, UserIcon } from "lucide-react"
 
 type DealCardProps = {
   deal: Deal
   customer: Partial<Customer> | undefined
-  categories: CRMCategory[]
+  categories: DealCategory[]
   onClick: () => void
 }
 
 export function DealCard({ deal, customer, categories, onClick }: DealCardProps) {
-  const propositionCategory = categories.find((c) => c.type === "proposition" && deal.categories.includes(c.id))
+  const propositionCategory = categories.find((c) => c.type === "proposition" && (deal.categories ?? []).includes(c.id))
 
   return (
     <Card
@@ -29,7 +29,7 @@ export function DealCard({ deal, customer, categories, onClick }: DealCardProps)
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center text-sm text-gray-600">
             <UserIcon className="w-4 h-4 mr-1 text-xs" />
-            <span>{deal.assignee.name}</span>
+            <span>{(deal.assignee as User).name}</span>
           </div>
           <div className="flex items-center text-sm font-bold text-green-600">
             <span>£{deal.value.toLocaleString()}</span>

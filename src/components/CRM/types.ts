@@ -1,42 +1,48 @@
-import type {User, Customer} from "@/payload-types"
+import type {User, Customer, Deal, DealCategory} from "@/payload-types"
 
 
-export type {User, Customer}
+export type {User, Customer, Deal, DealCategory}
 
 
-export type CRMCategory = {
-  id: string
-  name: string
-  type: "proposition" | "source" | "sector"
-}
+export type PartialComment = Partial<NonNullable<Deal['comments']>[number]>;
+export type EditableDeal = Omit<Partial<Deal>, 'comments' | 'customer'> & {
+  comments?: PartialComment[] | null;
+  customer: Partial<Customer> ;
+};
 
-export type CRMStatus = "Cold" | "Qualified" | "Proposal" | "SoW" | "Won" | "Lost"
+// export type CRMCategory = {
+//   id: string
+//   name: string
+//   type: "proposition" | "source" | "sector"
+// }
 
-export type Deal = {
-  id: number
-  customer: Partial<Customer> 
-  value: number
-  assignee: Partial<User>
-  status: CRMStatus
-  categories: string[]
-  dateLogged: string
-  closureDate: string
-  updatedAt: string
-  comments: Comment[]
-  description: string
-}
+export type CRMStatus = "Cold" | "Qualified" | "Proposal Made" | "SoW Submitted" | "Won" | "Lost"
 
-export type Comment = {
-  id: string
-  text: string
-  author?: Partial<User>
-  timestamp: string
-}
+// export type Deal = {
+//   id: number
+//   customer: Partial<Customer> 
+//   value: number
+//   assignee: Partial<User>
+//   status: CRMStatus
+//   categories: string[]
+//   dateLogged: string
+//   closureDate: string
+//   updatedAt: string
+//   comments: Comment[]
+//   description: string
+// }
+
+// export type Comment = {
+//   id: string
+//   text: string
+//   author?: Partial<User>
+//   timestamp: string
+// }
 
 export type BoardData = {
   deals?: Deal[]
-  users?: Partial<User>[]
-  customers?: Partial<Customer>[]
-  categories?: CRMCategory[]
+  users?: User[]
+  customers?: Customer[]
+  categories?: DealCategory[]
 }
 

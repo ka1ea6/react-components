@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { CRMKanbanBoard } from './KanbanBoard';
-import { BoardData, Deal, Customer, CRMCategory, CRMStatus } from './types';
+import { BoardData, Deal, Customer, CRMStatus } from './types';
 import { mockUsers, mockCustomers, mockCategories } from './mockData';
 
 const meta: Meta<typeof CRMKanbanBoard> = {

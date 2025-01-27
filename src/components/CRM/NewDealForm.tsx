@@ -9,13 +9,13 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { PlusIcon } from "lucide-react"
 import { NewCustomerForm } from "./NewCustomerForm"
-import type { Customer, CRMCategory, Deal, CRMStatus } from "./types"
+import type { Customer, DealCategory, Deal, EditableDeal } from "./types"
 import type { User } from "@/payload-types"
 
 type NewDealFormProps = {
-  customers: Partial<Customer>[]
-  users?: Partial<User>[]
-  categories: CRMCategory[]
+  customers: Customer[]
+  users?: User[]
+  categories: DealCategory[]
   onSubmit: (deal: Deal) => void
   onClose?: () => void
   onAddCustomer: (newCustomer: Partial<Customer>) => void
@@ -23,8 +23,8 @@ type NewDealFormProps = {
 }
 
 export function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer, onClose }: NewDealFormProps) {
-  const [deal, setDeal] = useState<Partial<Deal>>(
-    initialDeal || {
+  const [deal, setDeal] = useState<Partial<EditableDeal>>(
+    initialDeal as Partial<EditableDeal> || {
       customer: undefined,
       value: 0,
       assignee: undefined,
@@ -42,7 +42,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
 
   useEffect(() => {
     if (initialDeal) {
-      setDeal(initialDeal)
+      setDeal(initialDeal as Partial<EditableDeal>)
     }
   }, [initialDeal])
 
@@ -77,23 +77,37 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
     }
   }
 
-  const handleCategoryChange = (categoryId: string) => {
+  const handleCategoryChange = (category: DealCategory) => {
     setDeal((prevDeal) => ({
       ...prevDeal,
-      categories: prevDeal.categories?.includes(categoryId)
-        ? prevDeal.categories.filter((id) => id !== categoryId)
-        : [...(prevDeal.categories || []), categoryId],
+      categories: (prevDeal.categories || []).includes(category)
+      ? (prevDeal.categories || []).filter((id) => id !== category)
+      : [...(prevDeal.categories || []), category],
     }))
   }
 
+  // const handleCategoryChange = (category: DealCategory) => {
+  //   const updatedCategories = (editedDeal.categories || []).includes(category)
+  //     ? (editedDeal.categories || []).filter((id) => id !== category)
+  //     : [...(editedDeal.categories || []), category];
+  //   handleChange('categories', updatedCategories);
+  // };
   
 
   const handleAddCustomer = (newCustomer: Partial<Customer>) => {
-    customers.push(newCustomer)
+    // customers.push(newCustomer)
     setDeal({ ...deal, customer: newCustomer })
     setIsCustomerModalOpen(false)
     onAddCustomer(newCustomer)
   }
+
+    const getUserById = (userId: string) => {
+      return users?.find((user) => (user as User).id === Number(userId));
+    };
+
+    const getCustomerById = (customerID: string) => {
+      return customers?.find((customer) => (customer as Customer).id === Number(customerID));
+    };
 
   return (
     <>
@@ -103,7 +117,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label htmlFor="customer">Customer</Label>
               <div className="flex items-center space-x-2">
-                <Select value={deal.customer?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, customer: { id: Number(value) }})}>
+                <Select value={(deal.customer as Customer)?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, customer: getCustomerById(value) })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select customer" />
                   </SelectTrigger>
@@ -135,7 +149,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label htmlFor="assignee">Assignee</Label>
 
-              <Select value={deal.assignee?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, assignee: {id: Number(value)} })}>
+              <Select value={(deal.assignee as User)?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, assignee: getUserById(value) })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select assignee" />
                   </SelectTrigger>
@@ -193,12 +207,12 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
                         .map((category) => (
                           <div key={category.id} className="flex items-center space-x-2">
                             <Checkbox
-                              id={category.id}
+                              id={category.id.toString()}
                               checked={deal.categories?.includes(category.id)}
-                              onCheckedChange={() => handleCategoryChange(category.id)}
+                              onCheckedChange={() => handleCategoryChange(category)}
                             />
                             <label
-                              htmlFor={category.id}
+                              htmlFor={category.id.toString()}
                               className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
                             >
                               {category.name}
@@ -224,7 +238,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
               <Input
                 id="closureDate"
                 type="date"
-                value={deal.closureDate}
+                value={deal.closureDate || ""}
                 onChange={(e) => setDeal({ ...deal, closureDate: e.target.value })}
               />
               {errors.closureDate && <p className="text-red-500 text-sm">{errors.closureDate}</p>}

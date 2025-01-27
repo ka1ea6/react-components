@@ -15,17 +15,19 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { UserIcon, CalendarIcon, SaveIcon, Edit2Icon, PlusIcon } from 'lucide-react'
-import type { Deal, Customer, Comment, CRMCategory, User } from './types'
+import type { Deal, Customer, User, DealCategory, PartialComment, EditableDeal } from './types'
 
 type DealDetailsProps = {
-  deal: Deal
+  deal: Partial<Deal>
   users?: Partial<User>[]
   customer: Partial<Customer> | undefined
-  categories: CRMCategory[]
+  categories: Partial<DealCategory>[]
   onClose: () => void
-  onSave: (deal: Deal) => void
-  onAddComment: (comment: Comment) => void
+  onSave: (deal: Partial<EditableDeal>) => void
+  onAddComment: (comment: Partial<NonNullable<EditableDeal['comments']>[number]>) => void;
 }
+
+
 
 export function DealDetails({
   deal,
@@ -36,13 +38,21 @@ export function DealDetails({
   onSave,
   onAddComment,
 }: DealDetailsProps) {
-  const [editedDeal, setEditedDeal] = useState<Deal>({ ...deal, value: deal.value || 0 })
+  const [editedDeal, setEditedDeal] = useState<EditableDeal>({
+    ...deal,
+    value: deal.value || 0,
+    comments: deal.comments || [],
+    customer: deal.customer as Partial<Customer> || {} as Partial<Customer>,
+  })
   const [newComment, setNewComment] = useState('')
   const [hasChanges, setHasChanges] = useState(false)
   const [editingField, setEditingField] = useState<string | null>(null)
 
   useEffect(() => {
     setHasChanges(JSON.stringify(deal) !== JSON.stringify(editedDeal))
+
+
+    
   }, [deal, editedDeal])
 
   const handleSave = () => {
@@ -55,30 +65,45 @@ export function DealDetails({
     setEditedDeal((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleCategoryChange = (categoryId: string) => {
-    const updatedCategories = editedDeal.categories.includes(categoryId)
-      ? editedDeal.categories.filter((id) => id !== categoryId)
-      : [...editedDeal.categories, categoryId]
-    handleChange('categories', updatedCategories)
-  }
+  const handleCategoryChange = (category: DealCategory) => {
+    const updatedCategories = (editedDeal.categories || []).includes(category)
+      ? (editedDeal.categories || []).filter((id) => id !== category)
+      : [...(editedDeal.categories || []), category];
+    handleChange('categories', updatedCategories);
+  };
+
+  // const handleCategoryChange = (categoryId: string) => {
+  //   const categoryIdNumber = Number(categoryId);
+  //   const updatedCategories = (editedDeal.categories || []).includes(categoryIdNumber)
+  //     ? (editedDeal.categories || []).filter((deal) => (deal as DealCategory).id !== categoryIdNumber)
+  //     : [...(editedDeal.categories || []), categoryIdNumber]
+  //   handleChange('categories', updatedCategories)
+  // }
 
   const handleAddComment = () => {
     if (newComment.trim()) {
-      onAddComment({
-        id: Date.now().toString(),
+      const newPartialComment: PartialComment = {
         text: newComment,
-        // author: "Current User", // Replace with actual user name or ID
         timestamp: new Date().toISOString(),
-      })
+      };
+  
+      // Call the onAddComment handler with the new partial comment
+      onAddComment(newPartialComment);
+  
+      // Update the editedDeal state with the new comment
       setEditedDeal((prev) => ({
         ...prev,
-        comments: [...prev.comments, { id: '0', text: newComment, timestamp: new Date().toISOString() }],
+        comments: [
+          ...(prev.comments || []), // Ensure previous comments are included
+          newPartialComment,
+        ] as Partial<NonNullable<Deal['comments']>[number]>[], // Explicitly cast as PartialComment array
       }));
+  
       setNewComment('')
     }
   }
 
-  const getCategoryColor = (type: CRMCategory['type']) => {
+  const getCategoryColor = (type: DealCategory['type']) => {
     switch (type) {
       case 'proposition':
         return 'bg-blue-100 text-blue-800'
@@ -91,37 +116,9 @@ export function DealDetails({
     }
   }
 
-  const renderEditableField = (field: keyof Deal, label: string, icon: React.ReactNode) => {
-    const isEditing = editingField === field
-    return (
-      <div className="grid gap-2">
-        <Label className="text-sm font-medium text-gray-500">{label}</Label>
-        <div className="flex items-center space-x-2">
-          {icon}
-          {isEditing ? (
-            <Input
-              value={editedDeal[field] as string}
-              onChange={(e) => handleChange(field, e.target.value)}
-              onBlur={() => setEditingField(null)}
-              autoFocus
-            />
-          ) : (
-            <div
-              className="flex-grow cursor-pointer hover:bg-gray-100 p-2 rounded"
-              onClick={() => setEditingField(field)}
-            >
-              {editedDeal[field] as string}
-            </div>
-          )}
-          {!isEditing && (
-            <Button variant="ghost" size="sm" onClick={() => setEditingField(field)}>
-              <Edit2Icon className="w-4 h-4" />
-            </Button>
-          )}
-        </div>
-      </div>
-    )
-  }
+  const getUserById = (userId: string) => {
+    return users?.find((user) => (user as User).id === Number(userId));
+  };
 
   return (
     <Dialog open={true}>
@@ -164,7 +161,7 @@ export function DealDetails({
               <Label className="text-sm font-medium text-gray-500">Assignee</Label>
               {editingField === 'assignee' ? (
 
-                <Select value={editedDeal?.assignee?.id?.toString() || ''} onValueChange={(value) => handleChange('assignee', value)}>
+                <Select value={(editedDeal?.assignee as User)?.id?.toString() || ''} onValueChange={(value) => handleChange('assignee', getUserById(value))}>
                                   <SelectTrigger>
                                     <SelectValue placeholder="Select assignee" />
                                   </SelectTrigger>
@@ -188,7 +185,7 @@ export function DealDetails({
                   onClick={() => setEditingField('assignee')}
                 >
                   <UserIcon className="w-4 h-4 text-gray-400" />
-                  <span>{editedDeal.assignee.name}</span>
+                  <span>{(editedDeal.assignee as User).name}</span>
                 </div>
               )}
             </div>
@@ -197,7 +194,7 @@ export function DealDetails({
               {editingField === 'closureDate' ? (
                 <Input
                   type="date"
-                  value={editedDeal.closureDate.split('T')[0]}
+                  value={editedDeal.closureDate?.split('T')[0] ?? ''}
                   onChange={(e) => handleChange('closureDate', e.target.value)}
                   onBlur={() => setEditingField(null)}
                   autoFocus
@@ -208,7 +205,7 @@ export function DealDetails({
                   onClick={() => setEditingField('closureDate')}
                 >
                   <CalendarIcon className="w-4 h-4 text-gray-400" />
-                  <span>{new Date(editedDeal.closureDate).toLocaleDateString('en-GB')}</span>
+                  <span>{editedDeal.closureDate ? new Date(editedDeal.closureDate).toLocaleDateString('en-GB') : 'N/A'}</span>
                 </div>
               )}
             </div>
@@ -219,7 +216,7 @@ export function DealDetails({
               <Label className="text-sm font-medium text-gray-500">Description</Label>
               {editingField === 'description' ? (
                 <Textarea
-                  value={editedDeal.description}
+                  value={editedDeal.description || ''}
                   onChange={(e) => handleChange('description', e.target.value)}
                   onBlur={() => setEditingField(null)}
                   className="min-h-[100px]"
@@ -275,13 +272,13 @@ export function DealDetails({
                   {categories.map((category) => (
                     <div key={category.id} className="flex items-center space-x-2">
                       <Checkbox
-                        id={category.id}
-                        checked={editedDeal.categories.includes(category.id)}
-                        onCheckedChange={() => handleCategoryChange(category.id)}
+                        id={category.id?.toString() || ''}
+                        checked={(editedDeal.categories || []).some((cat) => (cat as DealCategory).id === category.id)}
+                        onCheckedChange={() => category.id !== undefined && handleCategoryChange(category as DealCategory)}
                       />
                       <label
-                        htmlFor={category.id}
-                        className={`text-sm font-medium ${getCategoryColor(category.type)} px-2 py-1 rounded`}
+                        htmlFor={(category.id ?? '').toString()}
+                        className={`text-sm font-medium ${getCategoryColor(category.type || 'sector')} px-2 py-1 rounded`}
                       >
                         {category.name}
                       </label>
@@ -293,13 +290,15 @@ export function DealDetails({
                   className="flex flex-wrap gap-2 cursor-pointer hover:bg-gray-100 p-0 rounded"
                   onClick={() => setEditingField('categories')}
                 >
-                  {editedDeal.categories.map((catId) => {
-                    const category = categories.find((c) => c.id === catId)
+                  {editedDeal.categories && editedDeal.categories.map((cat) => {
+                    console.log('cat', cat)
+                    // const category = categories.find((c) => Number(c.id) === (cat as DealCategory).id)
+                    const category = (cat as DealCategory)
                     return category ? (
                       <Badge
                         key={category.id}
                         variant="secondary"
-                        className={getCategoryColor(category.type)}
+                        className={getCategoryColor(category.type || 'sector')}
                       >
                         {category.name}
                       </Badge>
@@ -322,14 +321,14 @@ export function DealDetails({
               <Label className="text-sm font-medium text-gray-500">Comments</Label>
               <ScrollArea className="h-[200px] overflow-y-auto">
                 <div className="space-y-2">
-                {editedDeal.comments
+                {editedDeal.comments && editedDeal.comments
                   .slice()
-                  .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                  .sort((a, b) => new Date(b.timestamp || '').getTime() - new Date(a.timestamp || '').getTime())
                   .map((comment) => (
                     <div key={comment.id} className="bg-gray-50 p-3 rounded-lg">
                       <p className="text-sm text-gray-700">{comment.text}</p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {comment?.author?.name} - {new Date(comment.timestamp).toLocaleString()}
+                        {(comment?.author as User)?.name} - {new Date(comment.timestamp || '').toLocaleString()}
                       </p>
                     </div>
                   ))}
@@ -349,7 +348,7 @@ export function DealDetails({
               </div>
             </div>
             <div className="text-xs text-gray-500 mt-4">
-              Last modified: {new Date(editedDeal.updatedAt).toLocaleString()}
+              Last modified: {new Date(editedDeal.updatedAt || '').toLocaleString()}
             </div>
           </div>
         </ScrollArea>

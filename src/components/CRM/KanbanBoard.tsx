@@ -1,21 +1,22 @@
 "use client"
 
 import React, { useState , useCallback} from "react"
-import { type BoardData, type Deal, type CRMStatus, CRMCategory, type Customer, type Comment } from "./types"
+import type { BoardData, Deal, CRMStatus, Customer, EditableDeal, PartialComment } from "./types"
 import { DealDetails } from "./DealDetails"
 import { KanbanColumn } from "./KanbanColumn"
 import { DragDropContext, type DropResult } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration"
 
-const statuses: CRMStatus[] = ["Cold", "Qualified", "Proposal", "SoW", "Won", "Lost"]
+const statuses: CRMStatus[] = ["Cold", "Qualified", "Proposal Made", "SoW Submitted", "Won", "Lost"]
 
 type KanbanBoardProps = {
   initialData: BoardData
   onDragEnd: (result: DropResult) => void
   addNewDeal: (newDeal: Deal) => void
-  updateDeal: (updatedDeal: Deal) => void
-  addComment: (dealId: string, comment: Comment) => void
+  updateDeal: (updatedDeal: Partial<EditableDeal>) => void
+  addComment: (dealId: string, comment: PartialComment) => void
   addNewCustomer: (newCustomer: Partial<Customer>) => void
 }
+
 
 export function CRMKanbanBoard({
   initialData,
@@ -40,8 +41,8 @@ export function CRMKanbanBoard({
     const weightMap: { [key in CRMStatus]: number } = {
       Cold: 0.2,
       Qualified: 0.4,
-      "Proposal": 0.6,
-      "SoW": 0.7,
+      "Proposal Made": 0.6,
+      "SoW Submitted": 0.7,
       Won: 1,
       Lost: 0,
     }
@@ -71,7 +72,7 @@ export function CRMKanbanBoard({
       // setBoardData({ ...initialData, deals: updatedDeals })
 
       // Update the deal using the updateDeal function
-      updateDeal(movedDeal);
+      updateDeal(movedDeal as EditableDeal);
     },
     [updateDeal],
   )
@@ -105,7 +106,7 @@ export function CRMKanbanBoard({
           <DealDetails
             deal={selectedDeal}
             users={initialData.users}
-            customer={initialData.customers?.find((c) => c.id === selectedDeal.customer.id) ?? undefined}
+            customer={selectedDeal.customer as Customer}
             categories={initialData.categories ?? []}
             onClose={() => setSelectedDeal(null)}
             onSave={updateDeal}

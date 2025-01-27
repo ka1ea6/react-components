@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { PlusCircle } from 'lucide-react'
-import type { Deal, CRMStatus, CRMCategory, Customer, User } from './types'
+import type { Deal, CRMStatus, DealCategory, Customer, User } from './types'
 import { DealCard } from './DealCard'
 import { Droppable, Draggable } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration'
 import { NewDealForm } from './NewDealForm'
@@ -16,9 +16,9 @@ import { NewDealForm } from './NewDealForm'
 type KanbanColumnProps = {
   status: CRMStatus
   deals: Deal[]
-  users?: Partial<User>[]
-  customers: Partial<Customer>[]
-  categories: CRMCategory[]
+  users?: User[]
+  customers: Customer[]
+  categories: DealCategory[]
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
   calculateWeightedValue: (deals: Deal[], status: CRMStatus) => number
@@ -83,7 +83,7 @@ export function KanbanColumn({
                   >
                     <DealCard
                       deal={deal}
-                      customer={customers.find((c) => c.id === deal.customer.id)}
+                      customer={deal.customer as Customer}
                       categories={categories}
                       onClick={() => onDealClick(deal)}
                     />

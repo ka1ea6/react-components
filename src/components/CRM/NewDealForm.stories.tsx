@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { NewDealForm } from "./NewDealForm"
-import { mockCustomers, mockCategories, mockDeals } from "./mockData"
+import { mockCustomers, mockCategories, mockDeals, mockUsers } from "./mockData"
 
 const meta: Meta<typeof NewDealForm> = {
   title: "CRM/NewDealForm",

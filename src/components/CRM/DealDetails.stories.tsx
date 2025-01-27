@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DealDetails } from './DealDetails';
-import { Deal, Customer, CRMCategory, Comment } from './types';
+import { Deal, Customer, DealCategory } from './types';
+import { mockUsers } from './mockData';
+
 
 const meta: Meta<typeof DealDetails> = {
   title: 'CRM/DealDetails',
@@ -20,7 +22,7 @@ const mockCustomer: Customer = {
   active: true,
 };
 
-const mockCategories: CRMCategory[] = [
+const mockCategories: DealCategory[] = [
   { id: '1', name: 'Software', type: 'proposition' },
   { id: '2', name: 'Hardware', type: 'proposition' },
   { id: '3', name: 'Referral', type: 'source' },
@@ -29,7 +31,7 @@ const mockCategories: CRMCategory[] = [
   { id: '6', name: 'Finance', type: 'sector' },
 ];
 
-const generateMockComments = (count: number): Comment[] => {
+const generateMockComments = (count: number): Partial<NonNullable<Deal['comments']>[number]> => {
   return Array.from({ length: count }, (_, index) => ({
     id: `comment-${index + 1}`,
     text: `This is comment number ${index + 1}. It's a mock comment to test the scrolling behavior of the comments section in the DealDetails component.`,
@@ -44,7 +46,7 @@ const mockDeal: Deal = {
   value: 100000,
   assignee: { id: 1, name: 'John Doe'},
   status: 'Qualified',
-  categories: ['1', '3', '5'],
+  categories: mockCategories.slice(0, 3), // Pass in 3 of the mockCategories
   dateLogged: '2023-01-01T00:00:00.000Z',
   closureDate: '2023-12-31T00:00:00.000Z',
   updatedAt: '2023-06-15T12:00:00.000Z',
@@ -57,6 +59,7 @@ export const Default: Story = {
     deal: mockDeal,
     customer: mockCustomer,
     categories: mockCategories,
+    users: mockUsers,
     onClose: () => console.log('Close clicked'),
     onSave: (deal) => console.log('Save clicked', deal),
     onAddComment: (comment) => console.log('Comment added', comment),
