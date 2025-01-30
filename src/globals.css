@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-   
-
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -146,7 +144,8 @@
   body {
     @apply bg-background text-foreground;
   }
-  h1, h2 {
+  h1,
+  h2 {
     position: relative;
     display: inline-block;
   }
@@ -155,32 +154,19 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px; 
-    width: 20%; 
-    height: 2px; 
-    background-color: rgb(var(--accent)); 
+    bottom: -4px;
+    width: 20%;
+    height: 2px;
+    background-color: rgb(var(--accent));
   }
 }
-/* 
-html {
-  opacity: 0;
-}
-
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
-} */
 
 /* adds padding around every section */
 .section-padding-primary {
   @apply py-[3.75rem] md:py-[6.25rem] xl:py-[7.5rem];
 }
 
-
-
 /* padding for Storybook in DEV only */
 .sb-main-padded {
   padding: 0 !important; /* Override the default Storybook padding */
 }
-
-

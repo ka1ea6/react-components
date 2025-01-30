@@ -1177,7 +1177,7 @@ export const HighImpactHero = {
       type: 'highImpact',
       children: (
         <div className="max-w-none mx-auto prose dark:prose-invert mb-6">
-          <h1 className="col-start-2">High Impact Hero</h1>
+          <h1 className="col-start-2">High Impact Hero </h1>
           <p className="col-start-2"></p>
           <p className="col-start-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
@@ -6395,7 +6395,6 @@ export const Bug2 = {
   },
 }
 
-
 export const Bug3 = {
   args: {
     ...Default.args,
@@ -6468,7 +6467,6 @@ export const Bug3 = {
                       format: '',
                       indent: 0,
                       version: 1,
-
                       children: [
                         {
                           mode: 'normal',
@@ -6515,8 +6513,6 @@ export const Bug3 = {
                       textStyle: '',
                       textFormat: 0,
                     },
-
-                    
                   ],
                   direction: 'ltr',
                 },

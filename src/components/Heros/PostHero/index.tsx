@@ -3,7 +3,6 @@ import React from 'react'
 import { Badge } from '@/components/ui'
 import type { Post, Media as MediaType } from '@/payload-types'
 
-import { Media } from '@/components/Payload/Media'
 import Image from 'next/image'
 export const PostHero: React.FC<{
   post: Post
@@ -11,26 +10,10 @@ export const PostHero: React.FC<{
   const { categories, meta, populatedAuthors, publishedAt, title } = post
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
+    <div className="relative flex items-end">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-foreground dark:text-foreground pb-8">
         <div className="col-start-1 col-span-3">
-          <div className="uppercase text-sm mb-6">
-            {categories?.map((category, index) => {
-              if (typeof category === 'object' && category !== null) {
-                const { title: categoryTitle } = category
-
-                const titleToUse = categoryTitle || 'Untitled category'
-                return (
-                  <Badge className='mx-2'>{titleToUse}</Badge>
-                )
-              }
-              return null
-            })}
-          </div>
-
-          <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
-          </div>
+          <h1 className="mb-6 text-[calc(1.5rem+1.5vw)] font-bold">{title}</h1>
 
           <div className="flex flex-col md:flex-row gap-4 md:gap-16">
             <div className="flex flex-col gap-4">
@@ -68,18 +51,34 @@ export const PostHero: React.FC<{
                 <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
               </div>
             )}
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              {categories?.map((category, index) => {
+                if (typeof category === 'object' && category !== null) {
+                  const { title: categoryTitle } = category
+                  const titleToUse = categoryTitle || 'Untitled category'
+                  return (
+                    <Badge key={index} className="px-3 py-1 mx-1">
+                      {titleToUse}
+                    </Badge>
+                  )
+                }
+                return null
+              })}
+            </div>
           </div>
         </div>
       </div>
-      <div className="min-h-[50vh] max-h-[50vh]  select-none">
-        {/* {metaImage && typeof metaImage !== 'string' && (
-          <Media fill imgClassName="-z-10 object-cover" resource={metaImage} />
-        )} */}
-        {/* {metaImage && typeof metaImage === 'string' && ( */}
-                  <div>
-                    <Image className="-z-10 object-cover" alt="" fill priority src={(meta && meta.image as MediaType)?.url || '/assets/images/blog/gradient.png' } />
-                  </div>
-                {/* )} */}
+      <div className="xs:h-[60vh] sm:h-[50vh] md:h-[35vh] lg:h-[30vh] xl:h-[30vh] select-none">
+        <div className="absolute inset-0">
+          <Image
+            className="object-cover"
+            alt="Background Image"
+            src={(meta && (meta.image as MediaType))?.url || '/assets/images/blog/gradient.png'}
+            fill
+            priority
+          />
+        </div>
         <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-background dark:from-black to-transparent" />
       </div>
     </div>

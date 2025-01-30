@@ -48,17 +48,23 @@ export function getTableOfContents(page: Page) {
             })
           }
 
-          // Include headings from nested RichText
-          if (column.richText) {
-            column.richText.root.children
-              .filter((child: { type: string }) => child.type === 'heading')
-              .forEach((heading: { tag?: string; children: { text: string }[] }) => {
-                tocItems.push({
-                  text: heading.children[0].text,
-                  id: generateId(heading.children[0].text, globalIndex++), // Use globalIndex for unique ID
-                  tag: heading.tag || 'h2', // Default to h2
-                })
+          if (column.richText?.root?.children) {
+            const headings = column.richText.root.children.filter(
+              (child: { type: string }) => child !== undefined && child.type === 'heading',
+            )
+
+            for (const heading of headings) {
+              const child = heading.children[0]
+              if (!child) {
+                continue
+              }
+
+              tocItems.push({
+                text: heading.children[0].text ?? '',
+                id: generateId(heading.children[0].text, globalIndex++), // Use globalIndex for unique ID
+                tag: heading.tag || 'h2', // Default to h2
               })
+            }
           }
         },
       )
@@ -111,19 +117,22 @@ function processContentWithIds(layout: any[]): any[] {
 
           // Process nested RichText headings
           if (column.richText) {
-            column.richText.root.children = column.richText.root.children.map(
-              (child: {
-                type: string
-                id?: string
-                tag?: string
-                children: { text: string }[]
-              }) => {
-                if (child.type === 'heading') {
-                  child.id = generateId(child.children[0].text, globalIndex++) // Inject ID
-                }
-                return child
-              },
-            )
+            column.richText.root.children = column.richText.root.children
+              .filter((child) => child !== undefined)
+              .filter((child) => child.children !== undefined && child.children.length > 0)
+              .map(
+                (child: {
+                  type: string
+                  id?: string
+                  tag?: string
+                  children: { text: string }[]
+                }) => {
+                  if (child.type === 'heading') {
+                    child.id = generateId(child.children[0].text, globalIndex++) // Inject ID
+                  }
+                  return child
+                },
+              )
           }
 
           return column
