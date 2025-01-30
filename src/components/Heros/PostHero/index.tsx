@@ -1,84 +1,76 @@
-import { formatDateTime } from '@/lib/utils/formatDateTime'
 import React from 'react'
+import Image from 'next/image'
+import { formatDateTime } from '@/lib/utils/formatDateTime'
 import { Badge } from '@/components/ui'
 import type { Post, Media as MediaType } from '@/payload-types'
 
-import Image from 'next/image'
-export const PostHero: React.FC<{
+interface PostHeroProps {
   post: Post
-}> = ({ post }) => {
+}
+
+export const PostHero: React.FC<PostHeroProps> = ({ post }) => {
   const { categories, meta, populatedAuthors, publishedAt, title } = post
 
   return (
-    <div className="relative flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-foreground dark:text-foreground pb-8">
-        <div className="col-start-1 col-span-3">
-          <h1 className="mb-6 text-[calc(1.5rem+1.5vw)] font-bold">{title}</h1>
+    <div className="relative grid">
+      <div className="relative z-10 flex flex-col justify-end min-h-[50vh] text-foreground dark:text-foreground p-6 lg:p-12">
+        <div className="container mx-auto">
+          <h1 className="mb-6 text-[clamp(2rem,1.5rem+1.5vw,3.5rem)] font-bold leading-tight ">
+            {title}
+          </h1>
 
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-            <div className="flex flex-col gap-4">
-              {populatedAuthors && (
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
-                  {populatedAuthors.map((author, index) => {
-                    const { name } = author
+          <div className="flex flex-col gap-4 md:flex-row md:gap-16 ">
+            {populatedAuthors && populatedAuthors.length > 0 && (
+              <div className="flex flex-col gap-1">
+                <p className="text-sm">Author{populatedAuthors.length > 1 ? 's' : ''}</p>
+                <p>
+                  {populatedAuthors.map((author, index) => (
+                    <React.Fragment key={author.id}>
+                      {author.name}
+                      {index < populatedAuthors.length - 2 && ', '}
+                      {index === populatedAuthors.length - 2 &&
+                        (populatedAuthors.length > 2 ? ', and ' : ' and ')}
+                    </React.Fragment>
+                  ))}
+                </p>
+              </div>
+            )}
 
-                    const isLast = index === populatedAuthors.length - 1
-                    const secondToLast = index === populatedAuthors.length - 2
-
-                    return (
-                      <React.Fragment key={index}>
-                        {name}
-                        {secondToLast && populatedAuthors.length > 2 && (
-                          <React.Fragment>, </React.Fragment>
-                        )}
-                        {secondToLast && populatedAuthors.length === 2 && (
-                          <React.Fragment> </React.Fragment>
-                        )}
-                        {!isLast && populatedAuthors.length > 1 && (
-                          <React.Fragment>and </React.Fragment>
-                        )}
-                      </React.Fragment>
-                    )
-                  })}
-                </div>
-              )}
-            </div>
             {publishedAt && (
               <div className="flex flex-col gap-1">
                 <p className="text-sm">Date Published</p>
-
                 <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
               </div>
             )}
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {categories?.map((category, index) => {
-                if (typeof category === 'object' && category !== null) {
-                  const { title: categoryTitle } = category
-                  const titleToUse = categoryTitle || 'Untitled category'
-                  return (
-                    <Badge key={index} className="px-3 py-1 mx-1">
-                      {titleToUse}
-                    </Badge>
-                  )
-                }
-                return null
-              })}
-            </div>
+            {categories && categories.length > 0 && (
+              <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">Categories</p>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map(
+                    (category, index) =>
+                      typeof category === 'object' &&
+                      category !== null && (
+                        <Badge key={category.id || index} className="px-3 py-1 mx-1">
+                          {category.title || 'Untitled category'}
+                        </Badge>
+                      ),
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <div className="xs:h-[60vh] sm:h-[50vh] md:h-[35vh] lg:h-[30vh] xl:h-[30vh] select-none">
-        <div className="absolute inset-0">
-          <Image
-            className="object-cover"
-            alt="Background Image"
-            src={(meta && (meta.image as MediaType))?.url || '/assets/images/blog/gradient.png'}
-            fill
-            priority
-          />
-        </div>
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          className="object-cover"
+          alt={`Cover image for ${title}`}
+          src={(meta?.image as MediaType)?.url || '/assets/images/blog/gradient.png'}
+          fill
+          priority
+          sizes="100vw"
+        />
         <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-background dark:from-black to-transparent" />
       </div>
     </div>
