@@ -109,6 +109,7 @@ export const MainPageSection = ({
 
   return (
     <div className="container py-8">
+    
       <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
         {/* Main Content Area */}
         <div className={cn(isSidebarVisible ? 'col-span-2' : 'col-span-3', 'xl:col-span-3')}>

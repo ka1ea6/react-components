@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { BlogListSection, type BlogProps } from './BlogListSection'
 
 export default {
-  title: 'Sections/BlogListSection',
+  title: 'Website Components/BlogListSection',
   component: BlogListSection,
   tags: ['autodocs'],
   parameters: {

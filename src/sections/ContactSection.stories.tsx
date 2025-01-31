@@ -4,7 +4,7 @@ import { ContactSection, type ContactSectionProps } from './ContactSection';
 import { Toaster } from 'sonner'
 
 export default {
-  title: 'Sections/ContactSection',
+  title: 'Website Components/ContactSection',
   component: ContactSection,
   tags: ['autodocs'],
 

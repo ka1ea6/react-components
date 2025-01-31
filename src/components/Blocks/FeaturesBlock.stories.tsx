@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { FeaturesBlock } from './FeaturesBlock'
 
 const meta: Meta<typeof FeaturesBlock> = {
-  title: 'Blocks/FeaturesBlock',
+  title: 'Reusable Blocks/FeaturesBlock',
   component: FeaturesBlock,
   tags: ['autodocs'],
   parameters: {
