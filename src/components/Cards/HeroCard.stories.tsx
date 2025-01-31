@@ -6,7 +6,7 @@ import { Hero } from "./HeroCard"
  * It features a gradient background and decorative elements.
  */
 const meta: Meta<typeof Hero> = {
-  title: "Cards/HeroCard",
+  title: "Reusable Blocks/HeroCard",
   component: Hero,
   parameters: {
     layout: "fullscreen",

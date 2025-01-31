@@ -3,7 +3,7 @@ import { StoryObj, Meta } from '@storybook/react'
 import CaseStudy from './CaseStudy'
 
 export default {
-  title: 'Blocks/CaseStudy',
+  title: 'Reusable Blocks/CaseStudy',
   component: CaseStudy,
   tags: ['autodocs'],
 } as Meta

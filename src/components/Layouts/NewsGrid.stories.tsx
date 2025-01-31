@@ -2526,7 +2526,7 @@ const testData = {
 }
 
 const meta: Meta<typeof NewsGrid> = {
-  title: 'Layouts/NewsGrid',
+  title: 'Website Components/NewsGrid',
   component: NewsGrid,
   tags: ['autodocs'],
   argTypes: {
