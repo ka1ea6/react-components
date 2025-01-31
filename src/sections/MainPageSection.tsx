@@ -120,59 +120,59 @@ export const MainPageSection = ({
         <div
           className={cn(
             'space-y-6 transform min-w-full transition-transform duration-300',
-            'col-span-4 md:col-span-1 translate-x-0 xl:-mt-20',
+            'col-span-4 sm:col-span-3 md:col-span-2 lg:col-span-1 xl:col-span-1 xl:-mt-20',
             isSidebarVisible ? 'translate-x-0' : 'md:translate-x-full',
-            'xl:block xl:col-span-1 xl:translate-x-0',
+            'xl:block xl:translate-x-0',
           )}
         >
           {edit && (
-            <Card>
+            <Card className="p-4">
               <CardHeader>
                 <CardTitle className="text-accent">Content Actions</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mb-4 text-sm text-muted-foreground">
-                  Contribute or create new content.
-                </p>
-                <Link href={`${path}${pageId}`}>
-                  <Button variant="outline" className="w-full text-accent hover:text-foreground">
-                    Edit Page
-                  </Button>
-                </Link>
-                <Link href="/admin/collections/pages/create">
-                  <Button
-                    variant="outline"
-                    className="w-full mt-2 text-accent hover:text-foreground"
-                  >
-                    Create New
-                  </Button>
-                </Link>
-                <div className="flex space-x-2 mt-4">
-                  <Button
-                    variant="outline"
-                    className="text-accent hover:text-foreground"
-                    onClick={handlePrintView}
-                  >
-                    <Printer className="mr-2" /> Print
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="text-accent hover:text-foreground"
-                    onClick={handlePresentView}
-                  >
-                    <Presentation className="mr-2" /> Present
-                  </Button>
+                <div className="grid grid-cols-1 gap-2 mt-4 w-full">
+                  <Link href={`${path}${pageId}`} className="w-full">
+                    <Button variant="outline" className="w-full text-accent hover:text-foreground">
+                      Edit Page
+                    </Button>
+                  </Link>
+
+                  <Link href="/admin/collections/pages/create" className="w-full">
+                    <Button variant="outline" className="w-full text-accent hover:text-foreground">
+                      Create New
+                    </Button>
+                  </Link>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full text-accent hover:text-foreground"
+                      onClick={handlePrintView}
+                    >
+                      <Printer className="mr-2 w-4 h-4" /> Print
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full text-accent hover:text-foreground"
+                      onClick={handlePresentView}
+                    >
+                      <Presentation className="mr-2 w-4 h-4" /> Present
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           )}
-          {relatedContent && relatedContent.length > 0 && 
-            relatedContent.map((content, index) => (
-              content.links && content.links.length > 0 && (
-                <RelatedContent key={index} {...content} />
-              )
-            ))
-          }
+
+          {relatedContent &&
+            relatedContent.length > 0 &&
+            relatedContent.map(
+              (content, index) =>
+                content.links &&
+                content.links.length > 0 && <RelatedContent key={index} {...content} />,
+            )}
+
           {tableOfContents.length > 3 && (
             <Card className="w-full max-w-sm mt-4">
               <CardHeader>
@@ -184,7 +184,6 @@ export const MainPageSection = ({
                     <li key={index} className={getIndentation(heading.tag)}>
                       <a
                         href={`#${heading.id}`}
-                        // onClick={(event) => handleLinkClick(event, heading.id)}
                         className={`text-xs ${
                           activeLink === heading.id
                             ? 'text-accent font-semibold'
@@ -199,8 +198,6 @@ export const MainPageSection = ({
               </CardContent>
             </Card>
           )}
-
-          
         </div>
 
         {/* Toggle Sidebar Button (only for md screens) */}

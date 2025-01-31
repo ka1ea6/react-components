@@ -7,7 +7,7 @@ import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Payload/Link'
 import { Media } from '@/components/Payload/Media'
-import  { RichText } from '@/components/Payload/RichText'
+import { RichText } from '@/components/Payload/RichText'
 
 type HighImpactHeroType =
   | {
