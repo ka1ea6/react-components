@@ -1,12 +1,15 @@
-"use client"
+'use client'
 
-import React, { useState , useCallback} from "react"
-import type { BoardData, Deal, CRMStatus, Customer, EditableDeal, PartialComment } from "./types"
-import { DealDetails } from "./DealDetails"
-import { KanbanColumn } from "./KanbanColumn"
-import { DragDropContext, type DropResult } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration"
+import React, { useState, useCallback } from 'react'
+import type { BoardData, Deal, CRMStatus, Customer, EditableDeal, PartialComment } from './types'
+import { DealDetails } from './DealDetails'
+import { KanbanColumn } from './KanbanColumn'
+import {
+  DragDropContext,
+  type DropResult,
+} from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration'
 
-const statuses: CRMStatus[] = ["Cold", "Qualified", "Proposal Made", "SoW Submitted", "Won", "Lost"]
+const statuses: CRMStatus[] = ['Cold', 'Qualified', 'Proposal Made', 'SoW Submitted', 'Won', 'Lost']
 
 type KanbanBoardProps = {
   initialData: BoardData
@@ -17,7 +20,6 @@ type KanbanBoardProps = {
   addNewCustomer: (newCustomer: Partial<Customer>) => void
 }
 
-
 export function CRMKanbanBoard({
   initialData,
   addNewDeal,
@@ -25,7 +27,6 @@ export function CRMKanbanBoard({
   addComment,
   addNewCustomer,
 }: KanbanBoardProps) {
-
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   // const [boardData, setBoardData] = useState<BoardData>(initialData)
 
@@ -41,8 +42,8 @@ export function CRMKanbanBoard({
     const weightMap: { [key in CRMStatus]: number } = {
       Cold: 0.2,
       Qualified: 0.4,
-      "Proposal Made": 0.6,
-      "SoW Submitted": 0.7,
+      'Proposal Made': 0.6,
+      'SoW Submitted': 0.7,
       Won: 1,
       Lost: 0,
     }
@@ -63,43 +64,43 @@ export function CRMKanbanBoard({
 
       const sourceStatus = source.droppableId as CRMStatus
       const destinationStatus = destination.droppableId as CRMStatus
-      console.log("Moving from ", sourceStatus, "to", destinationStatus)
+      console.log('Moving from ', sourceStatus, 'to', destinationStatus)
       const updatedDeals = [...(initialData.deals ?? [])]
       const [movedDeal] = updatedDeals.splice(source.index, 1)
       movedDeal.status = destinationStatus
       updatedDeals.splice(destination.index, 0, movedDeal)
 
-      // setBoardData({ ...initialData, deals: updatedDeals })
-
       // Update the deal using the updateDeal function
-      updateDeal(movedDeal as EditableDeal);
+      updateDeal(movedDeal as EditableDeal)
     },
     [updateDeal],
   )
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="p-4">
+      <div className="p-4 max-h-[90vh] overflow-auto">
         {/* <h1 className="text-3xl font-bold mb-8">Cortex Sales Pipeline</h1> */}
-        <div className="flex space-x-4 overflow-x-auto pb-4">
-        {statuses.filter(status => status !== "Won" && status !== "Lost").map((status) => {
-            const deals = getColumnDeals(status)
-            return (
-              <KanbanColumn
-                key={status}
-                status={status}
-                deals={deals}
-                customers={initialData.customers ?? []}
-                users={initialData.users}
-                categories={initialData.categories ?? []}
-                onDealClick={setSelectedDeal}
-                calculateColumnValue={calculateColumnValue}
-                calculateWeightedValue={calculateWeightedValue}
-                addNewDeal={status === "Cold" ? addNewDeal : undefined}
-                onAddCustomer={addNewCustomer}
-              />
-            )
-          })}
+        <div className="flex space-x-4 pb-4">
+          {statuses
+            .filter((status) => status !== 'Won' && status !== 'Lost')
+            .map((status) => {
+              const deals = getColumnDeals(status)
+              return (
+                <KanbanColumn
+                  key={status}
+                  status={status}
+                  deals={deals}
+                  customers={initialData.customers ?? []}
+                  users={initialData.users}
+                  categories={initialData.categories ?? []}
+                  onDealClick={setSelectedDeal}
+                  calculateColumnValue={calculateColumnValue}
+                  calculateWeightedValue={calculateWeightedValue}
+                  addNewDeal={status === 'Cold' ? addNewDeal : undefined}
+                  onAddCustomer={addNewCustomer}
+                />
+              )
+            })}
         </div>
 
         {selectedDeal && (
@@ -117,4 +118,3 @@ export function CRMKanbanBoard({
     </DragDropContext>
   )
 }
-
