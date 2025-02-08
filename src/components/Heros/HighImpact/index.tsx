@@ -40,14 +40,14 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
       className="relative -mt-[10.4rem] flex items-end justify-center text-white"
       data-theme="dark"
     >
-      <div className="container mb-8 z-10 relative flex items-end justify-center">
-        <div className="text-center">
+      <div className="container mt-[20rem] mb-8 z-10 relative flex items-end justify-center">
+        <div className="text-center container">
           {children ||
             (richText && (
               <RichText
                 className="mb-6 prose prose-h1:text-2xl dark:prose-headings:text-white prose-headings:text-gray-900  dark:prose-p:text-white prose-p:text-gray-900"
                 content={richText}
-                enableGutter={false}
+                enableGutter={true}
               />
             ))}
 
@@ -64,7 +64,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
           )}
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
+      <div className="min-h-96 select-none">
         {media && typeof media === 'object' && (
           <Media
             fill
