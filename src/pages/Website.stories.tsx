@@ -7,7 +7,7 @@ import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/r
 import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react'
 import pattern1 from '@/images/hero/image-hero1.webp'
-
+import { AOSInit } from '@/lib/utils/AOSInit'
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
   <DynamicIcon iconName="github" size="4x" type="brands" />
@@ -32,7 +32,7 @@ export default {
   // ],
 }
 
-const Template = (args: any) => <Website {...args} />
+const Template = (args: any) => (<><AOSInit /><Website {...args} /></>)
 
 type PageStory = StoryObj<typeof Website>
 
