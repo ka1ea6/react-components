@@ -10,7 +10,7 @@ import { ContentBlock } from './Content'
 import { MediaBlock } from './MediaBlock'
 
 import { FeaturesBlock } from './FeaturesBlock'
-const blockComponents = {
+const blockComponents: { [key: string]: React.FC<any> } = {
   content: ContentBlock,
   cta: CallToActionBlock,
   // formBlock: FormBlock,
@@ -40,7 +40,6 @@ export const RenderBlocks: React.FC<{
               return (
                 <div className="py-6 relative" key={index}>
                   <Theme block={block} index={index} />
-                  {/* @ts-expect-error */}
                   <div className={cn("container", theme?.settings?.theme === 'dark' ? 'dark' : '')}>
                   <Block {...block} />
                   </div>
