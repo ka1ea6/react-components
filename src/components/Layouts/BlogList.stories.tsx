@@ -2,7 +2,7 @@ import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
 import { BlogList, type BlogSectionProps } from './BlogList'
 export default {
-  title: 'Layouts/BlogList',
+  title: 'Website Components/BlogList',
   component: BlogList,
   tags: ['autodocs'],
 

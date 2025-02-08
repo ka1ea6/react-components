@@ -9,7 +9,7 @@ import image4 from '../../.storybook/public/assets/images/about/about-4.png';
 import pattern from '../../.storybook/public/assets/images/about/pattern-1.png';
 
 export default {
-  title: 'Sections/AboutSection',
+  title: 'Website Components/AboutSection',
   component: AboutSection,
   tags: ['autodocs'],
 

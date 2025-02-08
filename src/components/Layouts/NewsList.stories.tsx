@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { NewsList, type BlogProps } from './NewsList'
 
 export default {
-  title: 'Layouts/NewsList',
+  title: 'Website Components/NewsList',
   component: NewsList,
   tags: ['autodocs'],
 

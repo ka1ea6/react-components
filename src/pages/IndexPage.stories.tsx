@@ -44,7 +44,7 @@ const ServiceIcon = () => <DynamicIcon iconName="cloud-network-sharing" type="ki
 const ProductIcon = () => <DynamicIcon iconName="development" type="kit" />
 
 export default {
-  title: 'Pages/IndexPage',
+  title: 'Example Pages/Documentation Index',
   component: IndexPage,
   decorators: [
     (Story: React.FC) => (

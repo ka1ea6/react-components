@@ -125,28 +125,30 @@ const config = {
   ],
   theme: {
     screens: {
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1400px',
+      xs: '320px', // Extra small screens (custom)
+      sm: '480px', // Small screens
+      md: '768px', // Medium screens
+      lg: '1024px', // Large screens
+      xl: '1280px', // Extra Large screens
+      '2xl': '1440px', // 2XL screens
     },
     container: {
       center: true,
       padding: {
-        '2xl': '2rem',
-        DEFAULT: '1rem',
-        lg: '2rem',
-        md: '2rem',
-        sm: '1rem',
-        xl: '2rem',
+        DEFAULT: '1rem', // Base padding for all screens
+        sm: '1rem', // Small screens
+        md: '1.5rem', // Medium screens
+        lg: '2rem', // Large screens
+        xl: '3rem', // Extra Large screens
+        '2xl': '4rem', // 2XL screens
       },
       screens: {
-        '2xl': '86rem',
-        lg: '64rem',
-        md: '48rem',
-        sm: '40rem',
-        xl: '80rem',
+        xs: '320px', // Extra small screens (custom)
+        sm: '480px', // Small screens
+        md: '768px', // Medium screens
+        lg: '1024px', // Large screens
+        xl: '1280px', // Extra Large screens
+        '2xl': '1440px', // 2XL screens
       },
     },
     extend: {

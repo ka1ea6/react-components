@@ -4,7 +4,7 @@ import { ImageSection } from "./ImageSection"
 import { ContentCard } from "../components/Cards/ContentCard"
 
 const meta: Meta<typeof ImageSection> = {
-  title: "Sections/ImageSection",
+  title: "Reusable Blocks/ImageSection",
   component: ImageSection,
   parameters: {
     layout: "fullscreen",

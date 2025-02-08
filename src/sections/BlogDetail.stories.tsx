@@ -4,7 +4,7 @@ import { BlogDetail, type CategoryListProps } from './BlogDetail'
 import { type BlogProps } from './BlogListSection'
 
 export default {
-  title: 'Sections/BlogDetail',
+  title: 'Website Components/BlogDetail',
   component: BlogDetail,
   tags: ['autodocs'],
   parameters: {

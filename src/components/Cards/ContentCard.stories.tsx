@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { ContentCard } from './ContentCard'
 
 const meta: Meta<typeof ContentCard> = {
-  title: 'Cards/ContentCard',
+  title: 'Reusable Blocks/ContentCard',
   component: ContentCard,
   parameters: {
     layout: 'centered',

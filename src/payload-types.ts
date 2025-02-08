@@ -12,7 +12,9 @@ export interface Config {
   };
   collections: {
     pages: Page;
+    'published-pages': PublishedPage;
     posts: Post;
+    'published-posts': PublishedPost;
     media: Media;
     'media-profiles': MediaProfile;
     'media-brand-images': MediaBrandImage;
@@ -38,7 +40,9 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    'published-pages': PublishedPagesSelect<false> | PublishedPagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'published-posts': PublishedPostsSelect<false> | PublishedPostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-profiles': MediaProfilesSelect<false> | MediaProfilesSelect<true>;
     'media-brand-images': MediaBrandImagesSelect<false> | MediaBrandImagesSelect<true>;
@@ -170,10 +174,6 @@ export interface Page {
     relationTo: 'propositions';
     value: number | Proposition;
   } | null;
-  /**
-   * Publish this page to the public website
-   */
-  publishedInternal?: boolean | null;
   /**
    * Links to other pages or external content
    */
@@ -327,6 +327,16 @@ export interface CallToActionBlock {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
+  theme?: {
+    settings?: {
+      /**
+       * Set the background style
+       */
+      theme?: ('default' | 'light' | 'dark' | 'green') | null;
+      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
+      image?: (number | null) | Media;
+    };
+  };
   columns?:
     | {
         size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
@@ -1026,6 +1036,138 @@ export interface Proposition {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "published-pages".
+ */
+export interface PublishedPage {
+  id: number;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'none') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FormBlock | FeaturesBlock)[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  relatedDocument?: {
+    relationTo: 'propositions';
+    value: number | Proposition;
+  } | null;
+  /**
+   * Links to other pages or external content
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'none') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  pageId: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "published-posts".
+ */
+export interface PublishedPost {
+  id: number;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  relatedPosts?: (number | Post)[] | null;
+  categories?: (number | Category)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * Publish this page to the public website
+   */
+  publishedInternal?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * NOT USED.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1418,8 +1560,16 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'published-pages';
+        value: number | PublishedPage;
+      } | null)
+    | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'published-posts';
+        value: number | PublishedPost;
       } | null)
     | ({
         relationTo: 'media';
@@ -1583,7 +1733,6 @@ export interface PagesSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   relatedDocument?: T;
-  publishedInternal?: T;
   links?:
     | T
     | {
@@ -1642,6 +1791,17 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  * via the `definition` "ContentBlock_select".
  */
 export interface ContentBlockSelect<T extends boolean = true> {
+  theme?:
+    | T
+    | {
+        settings?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              image?: T;
+            };
+      };
   columns?:
     | T
     | {
@@ -1739,6 +1899,74 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "published-pages_select".
+ */
+export interface PublishedPagesSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        imageBlock?: T | ImageBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        features?: T | FeaturesBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  relatedDocument?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  pageId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1767,6 +1995,36 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "published-posts_select".
+ */
+export interface PublishedPostsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  relatedPosts?: T;
+  categories?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  publishedInternal?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3070,3 +3328,5 @@ export interface CodeBlock {
 export interface Auth {
   [k: string]: unknown;
 }
+
+

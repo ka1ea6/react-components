@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { consolidateHTMLConverters } from '@payloadcms/richtext-lexical'
 
 interface HolidayGridProps {
@@ -17,7 +17,7 @@ interface Holiday {
   userName: string
   startDate: string
   endDate: string
-  status: 'approved' | 'requested' | 'rejected',
+  status: 'approved' | 'requested' | 'rejected'
   totalDays: number
   leaveType: 'Full Day' | 'Morning' | 'Afternoon'
 }
@@ -33,21 +33,24 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
-export function HolidayGrid({ currentDate, setCurrentDate, holidays, employees }: HolidayGridProps) {
+export function HolidayGrid({
+  currentDate,
+  setCurrentDate,
+  holidays,
+  employees,
+}: HolidayGridProps) {
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
 
-const prevMonth = () => {
-  setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
-}
+  const prevMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
+  }
 
-const nextMonth = () => {
-  setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
-}
-const setToday = () => {
-  setCurrentDate(new Date())
-}
+  const nextMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
+  }
+  const setToday = () => {
+    setCurrentDate(new Date())
+  }
 
   // console.log('currentDate:holidayGrid', currentDate)
 
@@ -63,35 +66,48 @@ const setToday = () => {
           </p>
         </div>
         <div className="relative flex items-center rounded-md gap-1 md:items-stretch">
-        <Button onClick={prevMonth} variant="outline" size="icon" className="rounded-l-md border-accent hover:text-accent">
-              <span className="sr-only">Previous month</span>
-              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-            </Button>
-            <Button
-              variant="outline"
-              onClick={setToday}
-              className="hidden border-l border-r border-accent px-3.5 text-sm font-semibold text-accent hover:bg-gray-50 focus:relative md:block"
-            >
-              Today
-            </Button>
-            <Button onClick={nextMonth} variant="outline" size="icon" className="rounded-r-md border-accent hover:text-accent">
-              <span className="sr-only">Next month</span>
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </Button>
+          <Button
+            onClick={prevMonth}
+            variant="outline"
+            size="icon"
+            className="rounded-l-md border-accent hover:text-accent"
+          >
+            <span className="sr-only">Previous month</span>
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          </Button>
+          <Button
+            variant="outline"
+            onClick={setToday}
+            className="hidden border-l border-r border-accent px-3.5 text-sm font-semibold text-accent hover:bg-gray-50 focus:relative md:block"
+          >
+            Today
+          </Button>
+          <Button
+            onClick={nextMonth}
+            variant="outline"
+            size="icon"
+            className="rounded-r-md border-accent hover:text-accent"
+          >
+            <span className="sr-only">Next month</span>
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          </Button>
         </div>
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="max-h-[60vh] overflow-y-auto">
+          <div className="max-h-[60vh] overflow-y-auto">
             <table className="min-w-full border-separate border-spacing-0">
-            <thead className="sticky top-0 z-10 bg-white">
+              {/* Sticky Header */}
+              <thead className="sticky top-0 z-20 bg-white">
                 <tr>
+                  {/* Sticky First Column (Header) */}
                   <th
                     scope="col"
-                    className="sticky top-0 z-10 border-b border-r border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
+                    className="sticky left-0 top-0 z-30 border-b border-r border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
                   >
                     Employee
                   </th>
+                  {/* Scrollable Header Cells */}
                   {[...Array(daysInMonth)].map((_, index) => (
                     <th
                       key={index}
@@ -103,40 +119,52 @@ const setToday = () => {
                   ))}
                 </tr>
               </thead>
+
               <tbody>
                 {employees.map((employee, employeeIdx) => (
                   <tr key={employee.id}>
+                    {/* Sticky First Column (Employee Names) */}
                     <td
                       className={classNames(
-                        employeeIdx !== employees.length - 1 ? ' border-gray-200' : '',
-                        'whitespace-nowrap py-4 border-r pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8'
+                        employeeIdx !== employees.length - 1 ? 'border-gray-200' : '',
+                        'sticky left-0 z-10 bg-white border-r pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8',
                       )}
                     >
                       <div className="flex items-center">
                         <Avatar className="h-11 w-11">
                           <AvatarImage src={employee.image} alt={employee.name} />
-                          <AvatarFallback>{employee.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                          <AvatarFallback>
+                            {employee.name
+                              .split(' ')
+                              .map((n) => n[0])
+                              .join('')}
+                          </AvatarFallback>
                         </Avatar>
                         <div className="ml-4">
                           <div className="font-medium text-accent">{employee.name}</div>
-                          {/* <div className="mt-1 text-gray-500">{employee.email}</div> */}
                         </div>
                       </div>
                     </td>
+
+                    {/* Scrollable Days */}
                     {[...Array(daysInMonth)].map((_, day) => {
-                      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day + 1)
+                      const date = new Date(
+                        currentDate.getFullYear(),
+                        currentDate.getMonth(),
+                        day + 1,
+                      )
                       const holiday = holidays.find(
                         (h) =>
                           h.userId === employee.id &&
                           new Date(h.startDate) <= date &&
-                          new Date(h.endDate) >= date
+                          new Date(h.endDate) >= date,
                       )
                       return (
                         <td
                           key={`${employee.id}-${day}`}
                           className={classNames(
                             employeeIdx !== employees.length - 1 ? 'border-r border-gray-200' : '',
-                            'whitespace-nowrap border-r border-gray-200'
+                            'whitespace-nowrap border-r border-gray-200',
                           )}
                         >
                           <div
@@ -145,11 +173,15 @@ const setToday = () => {
                                 ? holiday.status === 'approved'
                                   ? 'bg-green-500'
                                   : holiday.status === 'rejected'
-                                  ? 'bg-red-500'
-                                  : 'bg-gray-600'
+                                    ? 'bg-red-500'
+                                    : 'bg-gray-600'
                                 : 'bg-gray-100'
                             }`}
-                            title={holiday ? `${employee.name}: ${holiday.status} (${holiday.startDate} - ${holiday.endDate}) - ${holiday.leaveType}` : ''}
+                            title={
+                              holiday
+                                ? `${employee.name}: ${holiday.status} (${holiday.startDate} - ${holiday.endDate}) - ${holiday.leaveType}`
+                                : ''
+                            }
                           >
                             {holiday && holiday.leaveType !== 'Full Day' && (
                               <div
@@ -174,4 +206,3 @@ const setToday = () => {
     </div>
   )
 }
-

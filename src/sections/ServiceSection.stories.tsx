@@ -4,7 +4,7 @@ import { ServiceSection, ServiceSectionProps } from './ServiceSection'
 import { FaCog } from 'react-icons/fa'
 
 export default {
-  title: 'Sections/ServiceSection',
+  title: 'Website Components/ServiceSection',
   component: ServiceSection,
   tags: ['autodocs'],
 

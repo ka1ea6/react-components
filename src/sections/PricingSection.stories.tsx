@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { PricingSection, PricingSectionProps } from './PricingSection';
 
 export default {
-  title: 'Sections/PricingSection',
+  title: 'Website Components/PricingSection',
   component: PricingSection,
   tags: ['autodocs'],
 
