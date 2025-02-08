@@ -38,7 +38,7 @@ const Template: Story = (args) => {
 export const Default: Story = Template.bind({});
 Default.args = {
   initialData: {
-    deals: Array.from({ length: 20 }, (_, i) => ({
+    deals: Array.from({ length: 3 }, (_, i) => ({
       id: i + 1,
       customer: mockCustomers[(i % mockCustomers.length)],
       value: Math.floor(Math.random() * 100000) + 5000,

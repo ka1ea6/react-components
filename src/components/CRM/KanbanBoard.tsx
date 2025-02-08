@@ -53,7 +53,7 @@ export function CRMKanbanBoard({
   const onDragEnd = useCallback(
     (result: DropResult) => {
       const { source, destination } = result
-
+      // console.log('onDragEnd', result, destination)
       if (!destination) {
         return
       }
@@ -64,14 +64,21 @@ export function CRMKanbanBoard({
 
       const sourceStatus = source.droppableId as CRMStatus
       const destinationStatus = destination.droppableId as CRMStatus
-      console.log('Moving from ', sourceStatus, 'to', destinationStatus)
-      const updatedDeals = [...(initialData.deals ?? [])]
-      const [movedDeal] = updatedDeals.splice(source.index, 1)
-      movedDeal.status = destinationStatus
-      updatedDeals.splice(destination.index, 0, movedDeal)
+      // console.log('Moving from ', sourceStatus, 'to', destinationStatus)
+      // find the deal with id source.index
+      //
+      let movedDeal = initialData.deals?.filter((deal) => deal.id === source.index)[0]
+      // console.log('deal', movedDeal)
 
-      // Update the deal using the updateDeal function
-      updateDeal(movedDeal as EditableDeal)
+      const updatedDeals = [...(initialData.deals ?? [])]
+      // const [movedDeal] = updatedDeals.splice(source.index, 1)
+      if (movedDeal) {
+        movedDeal.status = destinationStatus
+        // updatedDeals.splice(destination.index, 0, movedDeal)
+
+        // Update the deal using the updateDeal function
+        updateDeal(movedDeal as EditableDeal)
+      }
     },
     [updateDeal],
   )
