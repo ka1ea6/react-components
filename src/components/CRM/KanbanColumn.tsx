@@ -22,8 +22,8 @@ type KanbanColumnProps = {
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
   calculateWeightedValue: (deals: Deal[], status: CRMStatus) => number
-  addNewDeal?: (deal: Deal) => void
-  onAddCustomer: (customer: Partial<Customer>) => void
+  addNewDeal?: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  onAddCustomer: (customer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
 }
 
 export function KanbanColumn({
