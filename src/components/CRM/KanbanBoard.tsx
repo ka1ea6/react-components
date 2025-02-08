@@ -14,10 +14,10 @@ const statuses: CRMStatus[] = ['Cold', 'Qualified', 'Proposal Made', 'SoW Submit
 type KanbanBoardProps = {
   initialData: BoardData
   // onDragEnd: (result: DropResult) => void
-  addNewDeal: (newDeal: Deal) => void
-  updateDeal: (updatedDeal: Partial<EditableDeal>) => void
-  addComment: (dealId: string, comment: PartialComment) => void
-  addNewCustomer: (newCustomer: Partial<Customer>) => void
+  addNewDeal: (newDeal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  updateDeal: (updatedDeal: Partial<EditableDeal>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  addComment: (dealId: string, comment: PartialComment) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  addNewCustomer: (newCustomer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
 }
 
 export function CRMKanbanBoard({

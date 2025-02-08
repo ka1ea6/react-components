@@ -23,8 +23,8 @@ type DealDetailsProps = {
   customer: Partial<Customer> | undefined
   categories: Partial<DealCategory>[]
   onClose: () => void
-  onSave: (deal: Partial<EditableDeal>) => void
-  onAddComment: (comment: Partial<NonNullable<EditableDeal['comments']>[number]>) => void;
+  onSave: (deal: Partial<EditableDeal>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  onAddComment: (comment: Partial<NonNullable<EditableDeal['comments']>[number]>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
 }
 
 
@@ -55,11 +55,20 @@ export function DealDetails({
     
   }, [deal, editedDeal])
 
-  const handleSave = () => {
-    onSave(editedDeal)
-    setHasChanges(false)
+  const handleSave = async () => {
+try {
+    const result = await onSave(editedDeal)
+    if (result.success) {
+      setHasChanges(false)
     setEditingField(null)
+    } else {
+      console.error('Failed to save deal:', result.errors)
+    }
+    
+  } catch (error) {
+    console.error('Failed to save deal:', error)
   }
+}
 
   const handleChange = (field: keyof Deal, value: any) => {
     setEditedDeal((prev) => ({ ...prev, [field]: value }))
@@ -80,7 +89,7 @@ export function DealDetails({
   //   handleChange('categories', updatedCategories)
   // }
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     if (newComment.trim()) {
       const newPartialComment: PartialComment = {
         text: newComment,
@@ -88,7 +97,15 @@ export function DealDetails({
       };
   
       // Call the onAddComment handler with the new partial comment
-      onAddComment(newPartialComment);
+      try {
+        const result = await onAddComment(newPartialComment);
+        if (!result.success) {
+          console.error('Failed to add comment:', result.errors);
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to add comment:', error);
+      }
   
       // Update the editedDeal state with the new comment
       setEditedDeal((prev) => ({
