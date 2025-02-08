@@ -1,40 +1,54 @@
-import React, { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Textarea } from "@/components/ui/textarea"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { PlusIcon } from "lucide-react"
-import { NewCustomerForm } from "./NewCustomerForm"
-import type { Customer, DealCategory, Deal, EditableDeal } from "./types"
-import type { User } from "@/payload-types"
+import React, { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Textarea } from '@/components/ui/textarea'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { PlusIcon } from 'lucide-react'
+import { NewCustomerForm } from './NewCustomerForm'
+import type { Customer, DealCategory, Deal, EditableDeal } from './types'
+import type { User } from '@/payload-types'
 
 type NewDealFormProps = {
   customers: Customer[]
   users?: User[]
   categories: DealCategory[]
-  onSubmit: (deal: Deal) => void
+  onSubmit: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
   onClose?: () => void
-  onAddCustomer: (newCustomer: Partial<Customer>) => void
+  onAddCustomer: (newCustomer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
   initialDeal?: Deal
 }
 
-export function NewDealForm({ customers, users, categories, onSubmit, initialDeal, onAddCustomer, onClose }: NewDealFormProps) {
+export function NewDealForm({
+  customers,
+  users,
+  categories,
+  onSubmit,
+  initialDeal,
+  onAddCustomer,
+  onClose,
+}: NewDealFormProps) {
   const [deal, setDeal] = useState<Partial<EditableDeal>>(
-    initialDeal as Partial<EditableDeal> || {
+    (initialDeal as Partial<EditableDeal>) || {
       customer: undefined,
       value: 0,
       assignee: undefined,
-      status: "Cold",
+      status: 'Cold',
       categories: [],
-      dateLogged: new Date().toISOString().split("T")[0],
-      closureDate: "",
+      dateLogged: new Date().toISOString().split('T')[0],
+      closureDate: '',
       // lastModified: new Date().toISOString(),
       comments: [],
-      description: "",
+      description: '',
     },
   )
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
@@ -48,41 +62,72 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {}
-    if (!deal.customer) newErrors.customer = "Customer is required"
-    if (!deal.value) newErrors.value = "Value is required"
-    if (!deal.assignee) newErrors.assignee = "Assignee is required"
-    if (!deal.closureDate) newErrors.closureDate = "Closure Date is required"
+    if (!deal.customer) newErrors.customer = 'Customer is required'
+    if (!deal.value) newErrors.value = 'Value is required'
+    if (!deal.assignee) newErrors.assignee = 'Assignee is required'
+    if (!deal.closureDate) newErrors.closureDate = 'Closure Date is required'
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (validate()) {
-      onSubmit({
-        ...(deal as Deal),
-        // id: deal.id || Date.now().toString(),
-        // lastModified: new Date().toISOString(),
-      })
-      setDeal({
-        customer: undefined,
-        value: 0,
-        assignee: undefined,
-        description: "",
-        status: "Cold",
-        closureDate: "",
-      })
-      setErrors({})
-      onClose?.()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+  
+    try {
+      if (validate()) {
+      const response = await onSubmit({...(deal as Deal)});
+      if (response.success) {
+        // Handle successful response
+        setDeal({
+          customer: undefined,
+          value: 0,
+          assignee: undefined,
+          description: '',
+          status: 'Cold',
+          closureDate: '',
+        })
+        onClose?.();
+      } else {
+        // Handle unsuccessful response
+        setErrors(response.errors || {});
+      }
+    }
+    } catch (error) {
+      // Handle error
+      setErrors({ submit: 'An error occurred while submitting the form.' });
     }
   }
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   if (validate()) {
+  //     onSubmit({
+  //       ...(deal as Deal),
+  //       // id: deal.id || Date.now().toString(),
+  //       // lastModified: new Date().toISOString(),
+  //     })
+  //     setDeal({
+  //       customer: undefined,
+  //       value: 0,
+  //       assignee: undefined,
+  //       description: '',
+  //       status: 'Cold',
+  //       closureDate: '',
+  //     })
+  //     setErrors({})
+  //     onClose?.()
+  //   }
+  // }
 
   const handleCategoryChange = (category: DealCategory) => {
+    console.log(category)
+
     setDeal((prevDeal) => ({
       ...prevDeal,
-      categories: (prevDeal.categories || []).includes(category)
-      ? (prevDeal.categories || []).filter((id) => id !== category)
-      : [...(prevDeal.categories || []), category],
+      categories: (prevDeal.categories || []).includes(category.id)
+        ? (prevDeal.categories || []).filter((id) => id !== category.id)
+        : [...(prevDeal.categories || []), category.id],
     }))
   }
 
@@ -92,22 +137,32 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
   //     : [...(editedDeal.categories || []), category];
   //   handleChange('categories', updatedCategories);
   // };
-  
 
-  const handleAddCustomer = (newCustomer: Partial<Customer>) => {
+  const handleAddCustomer =  async (newCustomer: Partial<Customer>) => {
     // customers.push(newCustomer)
     setDeal({ ...deal, customer: newCustomer })
-    setIsCustomerModalOpen(false)
-    onAddCustomer(newCustomer)
+    try {
+    const result = await onAddCustomer(newCustomer)
+    if (result.success) {
+      // Handle successful response
+      setIsCustomerModalOpen(false)
+    } else {
+      // Handle unsuccessful response
+      setErrors(result.errors || {})
+    }
+  } catch (error) {
+    // Handle error
+    setErrors({ submit: 'An error occurred while submitting the form.' })
+  }
+}
+
+  const getUserById = (userId: string) => {
+    return users?.find((user) => (user as User).id === Number(userId))
   }
 
-    const getUserById = (userId: string) => {
-      return users?.find((user) => (user as User).id === Number(userId));
-    };
-
-    const getCustomerById = (customerID: string) => {
-      return customers?.find((customer) => (customer as Customer).id === Number(customerID));
-    };
+  const getCustomerById = (customerID: string) => {
+    return customers?.find((customer) => (customer as Customer).id === Number(customerID))
+  }
 
   return (
     <>
@@ -117,13 +172,16 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label htmlFor="customer">Customer</Label>
               <div className="flex items-center space-x-2">
-                <Select value={(deal.customer as Customer)?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, customer: getCustomerById(value) })}>
+                <Select
+                  value={(deal.customer as Customer)?.id?.toString()}
+                  onValueChange={(value) => setDeal({ ...deal, customer: getCustomerById(value) })}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select customer" />
                   </SelectTrigger>
                   <SelectContent>
                     {customers.map((customer) => (
-                      <SelectItem key={customer.id} value={customer.id?.toString() || ""}>
+                      <SelectItem key={customer.id} value={customer.id?.toString() || ''}>
                         {customer.name}
                       </SelectItem>
                     ))}
@@ -140,7 +198,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
               <Input
                 id="value"
                 type="number"
-                value={deal.value || ""}
+                value={deal.value || ''}
                 onChange={(e) => setDeal({ ...deal, value: Number.parseFloat(e.target.value) })}
                 placeholder="Enter deal value"
               />
@@ -149,19 +207,22 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label htmlFor="assignee">Assignee</Label>
 
-              <Select value={(deal.assignee as User)?.id?.toString()} onValueChange={(value) => setDeal({ ...deal, assignee: getUserById(value) })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select assignee" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {users && users.map((user) => (
-                      <SelectItem key={user.id} value={user.id?.toString() || ""}>
+              <Select
+                value={(deal.assignee as User)?.id?.toString()}
+                onValueChange={(value) => setDeal({ ...deal, assignee: getUserById(value) })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select assignee" />
+                </SelectTrigger>
+                <SelectContent>
+                  {users &&
+                    users.map((user) => (
+                      <SelectItem key={user.id} value={user.id?.toString() || ''}>
                         {user.name}
                       </SelectItem>
                     ))}
-                  </SelectContent>
-                </Select>
-
+                </SelectContent>
+              </Select>
 
               {/* <Input
                 id="assignee"
@@ -175,7 +236,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                value={deal.description || ""}
+                value={deal.description || ''}
                 onChange={(e) => setDeal({ ...deal, description: e.target.value })}
                 placeholder="Enter deal description"
               />
@@ -198,9 +259,11 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
             <div className="space-y-2 space-x-2">
               <Label>Categories</Label>
               <div className="space-y-4">
-                {["proposition", "source", "sector"].map((type) => (
+                {['proposition', 'source', 'sector'].map((type) => (
                   <div key={type} className="space-y-2">
-                    <h4 className="text-sm font-medium">{type.charAt(0).toUpperCase() + type.slice(1)}</h4>
+                    <h4 className="text-sm font-medium">
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </h4>
                     <div className="grid grid-cols-2 gap-2">
                       {categories
                         .filter((category) => category.type === type)
@@ -238,7 +301,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
               <Input
                 id="closureDate"
                 type="date"
-                value={deal.closureDate || ""}
+                value={deal.closureDate || ''}
                 onChange={(e) => setDeal({ ...deal, closureDate: e.target.value })}
               />
               {errors.closureDate && <p className="text-red-500 text-sm">{errors.closureDate}</p>}
@@ -246,7 +309,7 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
           </div>
         </ScrollArea>
         <Button type="submit" className="w-full">
-          {initialDeal ? "Update Deal" : "Add Deal"}
+          {initialDeal ? 'Update Deal' : 'Add Deal'}
         </Button>
       </form>
 
@@ -261,4 +324,3 @@ export function NewDealForm({ customers, users, categories, onSubmit, initialDea
     </>
   )
 }
-

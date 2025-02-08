@@ -18,8 +18,14 @@ export const Default: Story = {
     customers: mockCustomers,
     categories: mockCategories,
     users: mockUsers,
-    onSubmit: async (deal) => console.log("Submitting deal:", deal),
-    onAddCustomer: async (customer) => console.log("Adding new customer:", customer),
+    onSubmit: async (deal) => {
+      console.log("Submitting deal:", deal);
+      return { success: true };
+    },
+    onAddCustomer: async (customer) => {
+      console.log("Adding new customer:", customer);
+      return { success: true };
+    },
   },
 }
 
@@ -30,3 +36,16 @@ export const EditExistingDeal: Story = {
   },
 }
 
+export const FailedAPI: Story = {
+  args: {
+    ...Default.args,
+    onSubmit: async (deal) => {
+      console.log("Submitting deal:", deal);
+      return { success: false, error: "Failed to submit deal" };
+    },
+    onAddCustomer: async (customer) => {
+      console.log("Adding new customer:", customer);
+      return { success: false, error: "Failed to add customer" };
+    },
+  },
+}
