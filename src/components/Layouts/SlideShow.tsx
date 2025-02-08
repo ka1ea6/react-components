@@ -100,7 +100,7 @@ export const SlideShow: React.FC<{
       {blocks.map((block, index) => (
         <div
           key={index}
-          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+          className={`absolute flex items-center justify-center transition-opacity duration-300 ${
             index === activeSection ? 'opacity-100' : 'opacity-0'
           }`}
         >

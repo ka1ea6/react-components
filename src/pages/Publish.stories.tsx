@@ -1401,6 +1401,12 @@ export const SlideShow = {
             },
           ],
           blockType: 'content',
+          theme: {
+            settings: {
+              theme: 'dark',
+              background: 'solid',
+            },
+          },
         },
         {
           id: '67828accbfbb3500011b4cdb',
