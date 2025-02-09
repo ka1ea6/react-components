@@ -35,7 +35,6 @@ export function ContentCard({
     gradient: 'bg-gradient-to-br from-[#A42368] to-[#4A1030]',
     radial: 'bg-gradient-to-br from-[#4A1030] to-[#2D0A1D] relative overflow-hidden',
   }
-console.log('content', typeof content)
   return (
     <div
       className={cn(

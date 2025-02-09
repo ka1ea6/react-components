@@ -4,7 +4,7 @@ import { CodeBlock, CodeBlockProps } from '@/components/Blocks/Code'
 import { MediaBlock } from '@/components/Blocks/MediaBlock'
 import { ImageBlock } from '@/components/Blocks/ImageBlock'
 import { FeaturesBlock } from '@/components/Blocks/FeaturesBlock'
-import { ReusableContentBlock } from '@/components/Blocks/ReusableContent'
+// import { ReusableContentBlock } from '@/components/Blocks/ReusableContent'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '../Link'
 import { DefaultNodeTypes, SerializedBlockNode, SerializedHeadingNode as BaseSerializedHeadingNode } from '@payloadcms/richtext-lexical'
@@ -26,6 +26,8 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from './nodeFormat'
+
+
 
 type SerializedHeadingNode = BaseSerializedHeadingNode & { id?: string }
 
@@ -193,7 +195,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'features':
                 return <FeaturesBlock key={index} {...block as FeaturesBlockProps} />
             case 'reusableContentBlock':
-              return <ReusableContentBlock key={index} {...block} reusableContent={block.reusableContent as ReusableContent} />
+              serializeLexical({ nodes: (block.reusableContent as unknown as { layout: unknown }).layout as NodeTypes[] })
+              // return <ReusableContentBlock key={index} {...block} reusableContent={block.reusableContent as ReusableContent} />
             default:
               return null
           }

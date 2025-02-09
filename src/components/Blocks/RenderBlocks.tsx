@@ -63,28 +63,17 @@ const Theme: React.FC<{
   block: any
   index: number
 }> = (props) => {
-console.log('props', props)
 if (!('theme' in props.block)) {
   return null
 }
 
-
   const theme = (props.block as any)?.theme;
-  console.log('theme', theme)
-
-  // if (props.index === 0) {
-  //   return null
-  // }
-  // return null
-  
-
 
   if (theme.settings.background === 'image') {
     const themeSettings = {
       imagePosition: theme.settings.imagePosition || "left",
       overlay: theme.settings.overlay !== undefined ? theme.settings.overlay : true
     }
-    console.log('themeSettings', themeSettings)
     return (
 
       <div className={cn("absolute inset-0 w-full h-full -z-10", theme.settings.theme === 'dark' ? 'dark bg-background' : '')}>
