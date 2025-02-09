@@ -4,6 +4,7 @@ import { CodeBlock, CodeBlockProps } from '@/components/Blocks/Code'
 import { MediaBlock } from '@/components/Blocks/MediaBlock'
 import { ImageBlock } from '@/components/Blocks/ImageBlock'
 import { FeaturesBlock } from '@/components/Blocks/FeaturesBlock'
+import { ReusableContentBlock } from '@/components/Blocks/ReusableContent'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '../Link'
 import { DefaultNodeTypes, SerializedBlockNode, SerializedHeadingNode as BaseSerializedHeadingNode } from '@payloadcms/richtext-lexical'
@@ -13,6 +14,7 @@ import type {
   MediaBlock as MediaBlockProps,
   ImageBlock as ImageBlockProps,
   FeaturesBlock as FeaturesBlockProps,
+ ReusableContent,
 } from '@/payload-types'
 
 import {
@@ -27,9 +29,21 @@ import {
 
 type SerializedHeadingNode = BaseSerializedHeadingNode & { id?: string }
 
+type ReusableContentProps = {
+        reusableContent: number | ReusableContent;
+        /**
+         * This is a custom ID that can be used to target this block with CSS or JavaScript.
+         */
+        customId: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'reusableContentBlock';
+      }
+
+
 export type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | ImageBlockProps | BannerBlockProps | CodeBlockProps | FeaturesBlockProps>
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | ImageBlockProps | BannerBlockProps | CodeBlockProps | FeaturesBlockProps | ReusableContentProps>
   | TableNode
   | TableRowNode
   | TableCellNode
@@ -147,14 +161,14 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
 
           switch (blockType) {
             case 'cta':
-              return <CallToActionBlock key={index} {...block} />
+              return <CallToActionBlock key={index} {...(block as CTABlockProps)} />
             case 'mediaBlock':
               return (
                 <MediaBlock
                   className="col-start-1 col-span-3"
                   imgClassName="m-0"
                   key={index}
-                  {...block}
+                  {...block as MediaBlockProps}
                   captionClassName="mx-auto max-w-[48rem]"
                   enableGutter={false}
                   disableInnerContainer={true}
@@ -166,18 +180,20 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                     className="col-start-1 col-span-3"
                     imgClassName="m-0"
                     key={index}
-                    {...block}
+                    {...block as ImageBlockProps}
                     captionClassName="mx-auto max-w-[48rem]"
                     enableGutter={false}
                     disableInnerContainer={true}
                   />
                 )
             case 'banner':
-              return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
+              return <BannerBlock className="col-start-2 mb-4" key={index} {...block as BannerBlockProps} />
             case 'code':
-              return <CodeBlock className="col-start-2" key={index} {...block} />
+              return <CodeBlock className="col-start-2" key={index} {...block as CodeBlockProps} />
             case 'features':
-                return <FeaturesBlock key={index} {...block} />
+                return <FeaturesBlock key={index} {...block as FeaturesBlockProps} />
+            case 'reusableContentBlock':
+              return <ReusableContentBlock key={index} {...block} reusableContent={block.reusableContent as ReusableContent} />
             default:
               return null
           }

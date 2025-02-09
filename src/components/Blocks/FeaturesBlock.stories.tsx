@@ -76,6 +76,19 @@ export const OneFeature: Story = {
   },
 }
 
+export const NoIcon: Story = {
+  args: {
+    title: 'What Are Digital Colleagues?',
+    features: [
+      {
+        title: 'AI-Powered Assistants',
+        content:
+          'Digital colleagues are generative AI tools that augment your existing workforce, enhancing productivity and customer experience.',
+      },
+    ],
+  },
+}
+
 export const NoTitle: Story = {
   args: {
     features: [
@@ -98,5 +111,262 @@ export const NoTitle: Story = {
           'Digital colleagues work alongside human employees, assisting with tasks and enhancing overall performance.',
       },
     ],
+  },
+}
+
+export const Cards: Story = {
+  args: {
+    title: 'Test Content',
+    features: [
+      {
+        id: '67a8f0ffa2a234ac414429cb',
+        title: 'Test Feature',
+        statistic: '80%',
+
+        content: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Some text here!',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+
+        settings: {
+          card: 'default',
+          contents: 'statistic',
+        },
+
+        link: {
+          type: 'none',
+          newTab: null,
+          url: null,
+        },
+
+        icon: {
+          type: 'fa-thin',
+          icon: 'cloud',
+        },
+      },
+    ],
+    blockType: 'features',
+
+    theme: {
+      settings: {
+        theme: 'default',
+        background: 'transparent',
+        image: null,
+        overlay: null,
+      },
+    },
+  },
+}
+
+
+export const ThreeCards: Story = {
+  args: {
+    title: 'Test Content',
+    features: [
+      {
+        id: '67a8f0ffa2a234ac414429cb',
+        title: 'Test Feature',
+        statistic: '80%',
+
+        content: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Some text here!',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+
+        settings: {
+          card: 'default',
+          contents: 'statistic',
+        },
+
+        link: {
+          type: 'none',
+          newTab: null,
+          url: null,
+        },
+
+        icon: {
+          type: 'fa-thin',
+          icon: 'cloud',
+        },
+      },
+      {
+        id: '67a8f0ffa2a234ac414429cb',
+        title: 'Test Feature',
+        statistic: '80%',
+
+        content: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Some text here!',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+
+        settings: {
+          card: 'default',
+          contents: 'statistic',
+        },
+
+        link: {
+          type: 'none',
+          newTab: null,
+          url: null,
+        },
+
+        icon: {
+          type: 'fa-thin',
+          icon: 'cloud',
+        },
+      },
+      {
+        id: '67a8f0ffa2a234ac414429cb',
+        title: 'Test Feature',
+        statistic: '80%',
+
+        content: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Some text here!',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+
+        settings: {
+          card: 'default',
+          contents: 'statistic',
+        },
+
+        link: {
+          type: 'none',
+          newTab: null,
+          url: null,
+        },
+
+        icon: {
+          type: 'fa-thin',
+          icon: 'cloud',
+        },
+      },
+    ],
+    blockType: 'features',
+
+    theme: {
+      settings: {
+        theme: 'default',
+        background: 'transparent',
+        image: null,
+        overlay: null,
+      },
+    },
   },
 }

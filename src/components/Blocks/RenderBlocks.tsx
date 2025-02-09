@@ -8,8 +8,9 @@ import { CallToActionBlock } from './CallToAction'
 import { ContentBlock } from './Content'
 // import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from './MediaBlock'
-
 import { FeaturesBlock } from './FeaturesBlock'
+import { ReusableContentBlock } from './ReusableContent'
+
 const blockComponents: { [key: string]: React.FC<any> } = {
   content: ContentBlock,
   cta: CallToActionBlock,
@@ -17,6 +18,7 @@ const blockComponents: { [key: string]: React.FC<any> } = {
   mediaBlock: MediaBlock,
   imageBlock: MediaBlock,
   features: FeaturesBlock,
+  reusableContentBlock: ReusableContentBlock,
 }
 
 export const RenderBlocks: React.FC<{

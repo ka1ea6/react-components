@@ -13,6 +13,7 @@ export interface Config {
   collections: {
     pages: Page;
     'published-pages': PublishedPage;
+    'reusable-content': ReusableContent;
     posts: Post;
     'published-posts': PublishedPost;
     media: Media;
@@ -28,6 +29,7 @@ export interface Config {
     holidays: Holiday;
     deals: Deal;
     'deal-categories': DealCategory;
+    proposals: Proposal;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -41,6 +43,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     'published-pages': PublishedPagesSelect<false> | PublishedPagesSelect<true>;
+    'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'published-posts': PublishedPostsSelect<false> | PublishedPostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -56,6 +59,7 @@ export interface Config {
     holidays: HolidaysSelect<false> | HolidaysSelect<true>;
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-categories': DealCategoriesSelect<false> | DealCategoriesSelect<true>;
+    proposals: ProposalsSelect<false> | ProposalsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -335,6 +339,10 @@ export interface ContentBlock {
       theme?: ('default' | 'light' | 'dark' | 'green') | null;
       background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
       image?: (number | null) | Media;
+      /**
+       * Overlay the theme colour on top of the image
+       */
+      overlay?: boolean | null;
     };
   };
   columns?:
@@ -880,7 +888,21 @@ export interface Form {
  * via the `definition` "FeaturesBlock".
  */
 export interface FeaturesBlock {
-  title: string;
+  theme?: {
+    settings?: {
+      /**
+       * Set the background style
+       */
+      theme?: ('default' | 'light' | 'dark' | 'green') | null;
+      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
+      image?: (number | null) | Media;
+      /**
+       * Overlay the theme colour on top of the image
+       */
+      overlay?: boolean | null;
+    };
+  };
+  title?: string | null;
   description?: {
     root: {
       type: string;
@@ -899,6 +921,16 @@ export interface FeaturesBlock {
   features?:
     | {
         title: string;
+        settings?: {
+          /**
+           * Card style
+           */
+          card?: ('default' | 'solid' | 'gradient' | 'radial') | null;
+          /**
+           * Card contents style
+           */
+          contents?: ('icon' | 'statistic' | 'text') | null;
+        };
         link?: {
           type?: ('reference' | 'custom' | 'none') | null;
           newTab?: boolean | null;
@@ -909,9 +941,10 @@ export interface FeaturesBlock {
           url?: string | null;
         };
         icon: {
-          type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands';
-          icon: string;
+          type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands' | 'none';
+          icon?: string | null;
         };
+        statistic?: string | null;
         content?: {
           root: {
             type: string;
@@ -1115,6 +1148,88 @@ export interface PublishedPage {
   slug?: string | null;
   slugLock?: boolean | null;
   pageId: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content".
+ */
+export interface ReusableContent {
+  id: number;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'none') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FormBlock | FeaturesBlock)[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  relatedDocument?: {
+    relationTo: 'propositions';
+    value: number | Proposition;
+  } | null;
+  /**
+   * Links to other pages or external content
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'none') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1384,6 +1499,83 @@ export interface DealCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "proposals".
+ */
+export interface Proposal {
+  id: number;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'none') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ImageBlock
+    | FormBlock
+    | FeaturesBlock
+    | {
+        reusableContent: number | ReusableContent;
+        /**
+         * This is a custom ID that can be used to target this block with CSS or JavaScript.
+         */
+        customId?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'reusableContentBlock';
+      }
+  )[];
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1564,6 +1756,10 @@ export interface PayloadLockedDocument {
         value: number | PublishedPage;
       } | null)
     | ({
+        relationTo: 'reusable-content';
+        value: number | ReusableContent;
+      } | null)
+    | ({
         relationTo: 'posts';
         value: number | Post;
       } | null)
@@ -1622,6 +1818,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'deal-categories';
         value: number | DealCategory;
+      } | null)
+    | ({
+        relationTo: 'proposals';
+        value: number | Proposal;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1800,6 +2000,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               theme?: T;
               background?: T;
               image?: T;
+              overlay?: T;
             };
       };
   columns?:
@@ -1871,12 +2072,30 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "FeaturesBlock_select".
  */
 export interface FeaturesBlockSelect<T extends boolean = true> {
+  theme?:
+    | T
+    | {
+        settings?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              image?: T;
+              overlay?: T;
+            };
+      };
   title?: T;
   description?: T;
   features?:
     | T
     | {
         title?: T;
+        settings?:
+          | T
+          | {
+              card?: T;
+              contents?: T;
+            };
         link?:
           | T
           | {
@@ -1891,6 +2110,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
               type?: T;
               icon?: T;
             };
+        statistic?: T;
         content?: T;
         id?: T;
       };
@@ -1962,6 +2182,73 @@ export interface PublishedPagesSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   pageId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content_select".
+ */
+export interface ReusableContentSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        imageBlock?: T | ImageBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        features?: T | FeaturesBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  relatedDocument?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2611,6 +2898,66 @@ export interface DealCategoriesSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "proposals_select".
+ */
+export interface ProposalsSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        imageBlock?: T | ImageBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        features?: T | FeaturesBlockSelect<T>;
+        reusableContentBlock?:
+          | T
+          | {
+              reusableContent?: T;
+              customId?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3328,5 +3675,3 @@ export interface CodeBlock {
 export interface Auth {
   [k: string]: unknown;
 }
-
-
