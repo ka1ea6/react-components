@@ -2426,187 +2426,473 @@ export const ProposalWithReusableContent = {
   },
 }
 
-export const Bug3 = {
+export const EmbeddedFeatures = {
   args: {
     ...Default.args,
     page: {
-      id: 33,
-      title: 'Agile Ways of Working',
+      id: 1,
+      title: 'Test Proposal',
 
       hero: {
         type: 'lowImpact',
-
-        richText: {
-          root: {
-            type: 'root',
-            format: '',
-            indent: 0,
-            version: 1,
-
-            children: [
-              {
-                type: 'paragraph',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    mode: 'normal',
-                    text: 'Agile Ways of Working',
-                    type: 'text',
-                    style: '',
-                    detail: 0,
-                    format: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                textStyle: '',
-                textFormat: 0,
-              },
-            ],
-            direction: 'ltr',
-          },
-        },
-
+        richText: null,
         links: [],
         media: null,
       },
-
       layout: [
         {
-          id: '678fbb9bef18b752fa6ba8f9',
-          blockName: 'Agile Ways of Working',
+          id: '67a9d50949ed6d71a5065365',
 
-          columns: [
-            {
-              id: '678fbba0ef18b752fa6ba8fa',
-              size: 'full',
+          reusableContent: {
+            id: 1,
+            title: 'About Reply',
 
-              richText: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
+            hero: {
+              type: 'lowImpact',
+              richText: null,
+              links: [],
+              media: null,
+            },
+            layout: [
+              {
+                id: '67a9d3a814dc05a61f79f97d',
+                blockName: null,
 
-                  children: [
-                    {
-                      tag: 'h2',
-                      type: 'heading',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Agile Ways of working',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
+                columns: [
+                  {
+                    id: '67a9d3ab14dc05a61f79f97e',
+                    size: 'full',
+
+                    richText: {
+                      root: {
+                        type: 'root',
+                        format: '',
+                        indent: 0,
+                        version: 1,
+
+                        children: [
+                          {
+                            type: 'block',
+
+                            fields: {
+                              id: '67a9d3b5a12bfd151775ff09',
+
+                              theme: {
+                                settings: {
+                                  theme: 'default',
+                                  background: 'transparent',
+                                },
+                              },
+                              features: [
+                                {
+                                  id: '67a9d48149ed6d71a5065363',
+
+                                  icon: {
+                                    icon: 'people',
+                                    type: 'fa-thin',
+                                  },
+                                  link: {
+                                    type: 'none',
+                                  },
+                                  title: 'Members of staff',
+                                  content: {
+                                    root: {
+                                      type: 'root',
+                                      format: '',
+                                      indent: 0,
+                                      version: 1,
+
+                                      children: [
+                                        {
+                                          type: 'paragraph',
+                                          format: '',
+                                          indent: 0,
+                                          version: 1,
+                                          children: [],
+                                          direction: null,
+                                          textStyle: '',
+                                          textFormat: 0,
+                                        },
+                                      ],
+                                      direction: null,
+                                    },
+                                  },
+
+                                  settings: {
+                                    card: 'default',
+                                    contents: 'icon',
+                                  },
+                                  statistic: '15,000',
+                                },
+                                {
+                                  id: '67aa42c295a3c6324d117378',
+
+                                  icon: {
+                                    icon: 'building',
+                                    type: 'fa-thin',
+                                  },
+                                  link: {
+                                    type: 'none',
+                                  },
+                                  title: 'Offices',
+
+                                  settings: {
+                                    card: 'default',
+                                    contents: 'statistic',
+                                  },
+                                  statistic: '44 offfices across 20 countries ',
+                                },
+                              ],
+                              blockName: '',
+                              blockType: 'features',
+                            },
+                            format: '',
+                            version: 2,
+                          },
+                        ],
+                        direction: null,
+                      },
                     },
+                    enableLink: null,
 
-                    {
-                      tag: 'h2',
-                      type: 'heading',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [],
-                      direction: null,
+                    link: {
+                      type: 'reference',
+                      newTab: null,
+                      url: null,
+                      label: null,
+                      appearance: 'default',
                     },
+                  },
+                  {
+                    id: '67a9d4d249ed6d71a5065364',
+                    size: 'full',
 
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
+                    richText: {
+                      root: {
+                        type: 'root',
+                        format: '',
+                        indent: 0,
+                        version: 1,
 
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Agile is a methodology that promotes continuous iteration of development and testing throughout the software development lifecycle. It emphasises flexibility, collaboration, and customer satisfaction.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
+                        children: [
+                          {
+                            type: 'block',
+
+                            fields: {
+                              id: '67a9d4dba5ed1838d20c7698',
+                              media: {
+                                id: 2,
+                                alt: null,
+                                prefix: 'media',
+                                updatedAt: '2025-02-08T12:32:42.621Z',
+                                createdAt: '2025-02-08T12:32:42.621Z',
+                                url: '/slide_3_transparent_trimmed.png',
+                                thumbnailURL: '/api/media/file/Fayy0Ql49FqefU1Rv1Vg1-300x169.jpg',
+                                filename: 'Fayy0Ql49FqefU1Rv1Vg1.jpg',
+                                mimeType: 'image/jpeg',
+                                filesize: 174350,
+                                width: 2309,
+                                height: 1299,
+                                focalX: 50,
+                                focalY: 50,
+                              },
+                              blockName: '',
+                              blockType: 'mediaBlock',
+                            },
+                            format: '',
+                            version: 2,
+                          },
+                        ],
+                        direction: null,
+                      },
                     },
-                  ],
-                  direction: 'ltr',
+                    enableLink: null,
+
+                    link: {
+                      type: 'none',
+                      newTab: null,
+                      url: null,
+                      label: null,
+                      appearance: 'default',
+                    },
+                  },
+                ],
+                blockType: 'content',
+                theme: {
+                  settings: {
+                    theme: 'green',
+                    background: 'solid',
+                    image: null,
+                    overlay: null,
+                  },
                 },
               },
-              enableLink: null,
+            ],
 
-              link: {
-                type: 'reference',
-                newTab: null,
-                url: null,
-                label: null,
-                appearance: 'default',
-              },
+            meta: {
+              title: null,
+              image: null,
+              description: null,
             },
-          ],
-          blockType: 'content',
-        },
-      ],
-
-      meta: {
-        title: null,
-        image: null,
-        description: null,
-      },
-      publishedAt: '2025-01-21T15:28:09.099Z',
-      publishedToWebsite: false,
-
-      links: [
-        {
-          id: '678fbb87ef18b752fa6ba8f8',
-
-          link: {
-            type: 'reference',
-            newTab: null,
-
-            reference: {
-              relationTo: 'pages',
-
-              value: {
-                id: 25,
-                title: 'Delivery Methodologies',
-                slug: 'delivery-methodologies',
-              },
+            publishedAt: '2025-02-10T10:25:51.839Z',
+            links: [],
+            slug: 'about-reply',
+            slugLock: true,
+            updatedAt: '2025-02-10T18:45:48.581Z',
+            createdAt: '2025-02-10T10:25:51.836Z',
+          },
+          customId: null,
+          blockName: 'About Reply',
+          blockType: 'reusableContentBlock',
+          theme: {
+            settings: {
+              theme: 'green',
+              background: 'solid',
+              image: null,
+              overlay: null,
             },
-            url: null,
-            label: 'test',
           },
         },
       ],
-      slug: 'agile-ways-of-working',
+      publishedAt: '2025-02-10T17:49:57.369Z',
+      authors: [],
+      populatedAuthors: [],
+      slug: 'test-proposal',
       slugLock: true,
-      parent: null,
+      updatedAt: '2025-02-10T17:49:57.370Z',
+      createdAt: '2025-02-10T10:29:21.057Z',
+      _status: 'published',
+    },
+  },
+}
 
-      breadcrumbs: [
+export const SideBySide = {
+  args: {
+    ...Default.args,
+    page: {
+      id: 1,
+      title: 'Test Proposal',
+
+      hero: {
+        type: 'lowImpact',
+        richText: null,
+        links: [],
+        media: null,
+      },
+      layout: [
         {
-          id: '6790c52f0ab3d900013f4967',
-          doc: 33,
-          url: null,
-          label: 'Agile Ways of Working',
+          id: '67a9d50949ed6d71a5065365',
+
+          reusableContent: {
+            id: 1,
+            title: 'About Reply',
+
+            hero: {
+              type: 'lowImpact',
+              richText: null,
+              links: [],
+              media: null,
+            },
+            layout: [
+              {
+                id: '67a9d3a814dc05a61f79f97d',
+                blockName: null,
+
+                columns: [
+                  {
+                    id: '67a9d3ab14dc05a61f79f97e',
+                    size: 'oneThird',
+
+                    richText: {
+                      root: {
+                        type: 'root',
+                        format: '',
+                        indent: 0,
+                        version: 1,
+
+                        children: [
+                          {
+                            type: 'block',
+
+                            fields: {
+                              id: '67a9d3b5a12bfd151775ff09',
+
+                              theme: {
+                                settings: {
+                                  theme: 'default',
+                                  background: 'transparent',
+                                },
+                              },
+                              features: [
+                                {
+                                  id: '67a9d48149ed6d71a5065363',
+
+                                  icon: {
+                                    icon: 'people',
+                                    type: 'fa-thin',
+                                  },
+                                  link: {
+                                    type: 'none',
+                                  },
+                                  title: 'Members of staff',
+                                  content: {
+                                    root: {
+                                      type: 'root',
+                                      format: '',
+                                      indent: 0,
+                                      version: 1,
+
+                                      children: [
+                                        {
+                                          type: 'paragraph',
+                                          format: '',
+                                          indent: 0,
+                                          version: 1,
+                                          children: [],
+                                          direction: null,
+                                          textStyle: '',
+                                          textFormat: 0,
+                                        },
+                                      ],
+                                      direction: null,
+                                    },
+                                  },
+
+                                  settings: {
+                                    card: 'default',
+                                    contents: 'icon',
+                                  },
+                                  statistic: '15,000',
+                                },
+                                {
+                                  id: '67aa42c295a3c6324d117378',
+
+                                  icon: {
+                                    icon: 'building',
+                                    type: 'fa-thin',
+                                  },
+                                  link: {
+                                    type: 'none',
+                                  },
+                                  title: 'Offices',
+
+                                  settings: {
+                                    card: 'default',
+                                    contents: 'statistic',
+                                  },
+                                  statistic: '44 offfices across 20 countries ',
+                                },
+                              ],
+                              blockName: '',
+                              blockType: 'features',
+                            },
+                            format: '',
+                            version: 2,
+                          },
+                        ],
+                        direction: null,
+                      },
+                    },
+                    enableLink: null,
+
+                    link: {
+                      type: 'reference',
+                      newTab: null,
+                      url: null,
+                      label: null,
+                      appearance: 'default',
+                    },
+                  },
+                  {
+                    id: '67a9d4d249ed6d71a5065364',
+                    size: 'twoThirds',
+
+                    richText: {
+                      root: {
+                        type: 'root',
+                        format: '',
+                        indent: 0,
+                        version: 1,
+
+                        children: [
+                          {
+                            type: 'block',
+
+                            fields: {
+                              id: '67a9d4dba5ed1838d20c7698',
+                              media: {
+                                id: 2,
+                                alt: null,
+                                prefix: 'media',
+                                updatedAt: '2025-02-08T12:32:42.621Z',
+                                createdAt: '2025-02-08T12:32:42.621Z',
+                                url: '/slide_3_transparent_trimmed.png',
+                                thumbnailURL: '/api/media/file/Fayy0Ql49FqefU1Rv1Vg1-300x169.jpg',
+                                filename: 'Fayy0Ql49FqefU1Rv1Vg1.jpg',
+                                mimeType: 'image/jpeg',
+                                filesize: 174350,
+                                width: 2309,
+                                height: 1299,
+                                focalX: 50,
+                                focalY: 50,
+                              },
+                              blockName: '',
+                              blockType: 'mediaBlock',
+                            },
+                            format: '',
+                            version: 2,
+                          },
+                        ],
+                        direction: null,
+                      },
+                    },
+                    enableLink: null,
+
+                    link: {
+                      type: 'none',
+                      newTab: null,
+                      url: null,
+                      label: null,
+                      appearance: 'default',
+                    },
+                  },
+                ],
+                blockType: 'content',
+                theme: {
+                  settings: {
+                    theme: 'green',
+                    background: 'solid',
+                    image: null,
+                    overlay: null,
+                  },
+                },
+              },
+            ],
+
+            meta: {
+              title: null,
+              image: null,
+              description: null,
+            },
+            publishedAt: '2025-02-10T10:25:51.839Z',
+            links: [],
+            slug: 'about-reply',
+            slugLock: true,
+            updatedAt: '2025-02-10T18:45:48.581Z',
+            createdAt: '2025-02-10T10:25:51.836Z',
+          },
+          customId: null,
+          blockName: 'About Reply',
+          blockType: 'reusableContentBlock',
         },
       ],
-      updatedAt: '2025-01-22T10:15:12.002Z',
-      createdAt: '2025-01-21T15:21:20.859Z',
+      publishedAt: '2025-02-10T17:49:57.369Z',
+      authors: [],
+      populatedAuthors: [],
+      slug: 'test-proposal',
+      slugLock: true,
+      updatedAt: '2025-02-10T17:49:57.370Z',
+      createdAt: '2025-02-10T10:29:21.057Z',
       _status: 'published',
     },
   },

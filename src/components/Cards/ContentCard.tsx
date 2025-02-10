@@ -30,7 +30,7 @@ export function ContentCard({
   buttonHref,
 }: ContentCardProps) {
   const variants = {
-    solid: 'bg-[#A42368]',
+    solid: 'bg-accent',
     light: 'bg-white',
     gradient: 'bg-gradient-to-br from-[#A42368] to-[#4A1030]',
     radial: 'bg-gradient-to-br from-[#4A1030] to-[#2D0A1D] relative overflow-hidden',
@@ -38,7 +38,7 @@ export function ContentCard({
   return (
     <div
       className={cn(
-        'rounded-3xl p-8 md:p-12',
+        'rounded-3xl p-8 md:p-12 min-w-56',
         variants[variant],
         variant === 'light' ? 'text-gray-900' : 'text-white',
         className,
@@ -60,20 +60,20 @@ export function ContentCard({
             )}
           </div>
         )}
-        <h2
+        <div
           className={cn(
             'font-semibold',
             variant === 'solid' || variant === 'light' ? 'text-2xl' : 'text-4xl',
           )}
         >
           {heading}
-        </h2>
+        </div>
       </div>
 
       {/* Statistic Display */}
       {variant === 'solid' && statistic && (
         <div className="mb-6">
-          <div className="text-[8rem] font-bold leading-none">{statistic}</div>
+          <div className="text-4xl text-wrap font-bold leading-none overflow-hidden">{statistic}</div>
         </div>
       )}
 

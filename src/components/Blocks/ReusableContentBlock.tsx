@@ -7,7 +7,7 @@ import { ContentBlock } from './Content'
 // import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from './MediaBlock'
 import { FeaturesBlock } from './FeaturesBlock'
-
+import { Theme } from './RenderBlocks'
 // import { RenderBlocks } from './RenderBlocks'
 import React from 'react'
 
@@ -52,7 +52,7 @@ const RenderBlocks: React.FC<{
               return (
                 <div className="py-6 relative" key={index}>
                   {/* <Theme block={block} index={index} /> */}
-                  <div className={cn("container", theme?.settings?.theme === 'dark' ? 'dark' : '')}>
+                  <div className={cn(theme?.settings?.theme === 'dark' ? 'dark' : theme?.settings?.theme === 'green' ? 'green' : '')}>
                   <Block {...block} />
                   </div>
                 </div>

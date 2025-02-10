@@ -38,7 +38,7 @@ export const RenderBlocks: React.FC<{
               return (
                 <div className="py-6 relative" key={index}>
                   <Theme block={block} index={index} />
-                  <div className={cn("container", theme?.settings?.theme === 'dark' ? 'dark' : '')}>
+                  <div className={cn("container", theme?.settings?.theme === 'dark' ? 'dark' : theme?.settings?.theme === 'green' ? 'green' : '')}>
                   <Block {...block} />
                   </div>
                 </div>
@@ -55,7 +55,7 @@ export const RenderBlocks: React.FC<{
 }
 
 
-const Theme: React.FC<{
+export const Theme: React.FC<{
   block: any
   index: number
 }> = (props) => {
@@ -72,7 +72,7 @@ if (!('theme' in props.block)) {
     }
     return (
 
-      <div className={cn("absolute inset-0 w-full h-full -z-10", theme.settings.theme === 'dark' ? 'dark bg-background' : '')}>
+      <div className={cn("absolute inset-0 w-full h-full -z-10", theme.settings.theme === 'dark' ? 'dark bg-background' : theme.settings.theme === 'green' ? 'green bg-background' : '')}>
               <Image src={theme.settings.image.url || "/placeholder.svg"} alt={theme.settings.image.alt} fill className="object-cover" priority />
               {theme.settings.overlay && (
                 <div
@@ -89,6 +89,6 @@ if (!('theme' in props.block)) {
     )
   }
   return (
-    <div className={cn("absolute inset-0 -z-10 w-screen h-full", theme.settings.theme === 'dark' ? 'dark bg-background' : '')}></div>
+    <div className={cn("absolute inset-0 -z-10 w-screen h-full", theme.settings.theme === 'dark' ? 'dark bg-background' : theme.settings.theme === 'green' ? 'green bg-background' : '')}></div>
   )
 }
