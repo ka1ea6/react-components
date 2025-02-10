@@ -164,7 +164,16 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FormBlock | FeaturesBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ImageBlock
+    | ArchiveBlock
+    | FormBlock
+    | FeaturesBlock
+    | ReusableContentBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -969,6 +978,108 @@ export interface FeaturesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReusableContentBlock".
+ */
+export interface ReusableContentBlock {
+  reusableContent: number | ReusableContent;
+  customId?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reusableContentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content".
+ */
+export interface ReusableContent {
+  id: number;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom' | 'none') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ImageBlock
+    | ArchiveBlock
+    | FormBlock
+    | FeaturesBlock
+    | ReusableContentBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  relatedDocument?: {
+    relationTo: 'propositions';
+    value: number | Proposition;
+  } | null;
+  /**
+   * Links to other pages or external content
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'none') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "propositions".
  */
 export interface Proposition {
@@ -1113,7 +1224,16 @@ export interface PublishedPage {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FormBlock | FeaturesBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ImageBlock
+    | ArchiveBlock
+    | FormBlock
+    | FeaturesBlock
+    | ReusableContentBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -1148,88 +1268,6 @@ export interface PublishedPage {
   slug?: string | null;
   slugLock?: boolean | null;
   pageId: number;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusable-content".
- */
-export interface ReusableContent {
-  id: number;
-  title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom' | 'none') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: number | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FormBlock | FeaturesBlock)[];
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  relatedDocument?: {
-    relationTo: 'propositions';
-    value: number | Proposition;
-  } | null;
-  /**
-   * Links to other pages or external content
-   */
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom' | 'none') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: number | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1549,16 +1587,7 @@ export interface Proposal {
     | ImageBlock
     | FormBlock
     | FeaturesBlock
-    | {
-        reusableContent: number | ReusableContent;
-        /**
-         * This is a custom ID that can be used to target this block with CSS or JavaScript.
-         */
-        customId?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'reusableContentBlock';
-      }
+    | ReusableContentBlock
   )[];
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
@@ -1923,6 +1952,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         features?: T | FeaturesBlockSelect<T>;
+        reusableContentBlock?: T | ReusableContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -2119,6 +2149,16 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReusableContentBlock_select".
+ */
+export interface ReusableContentBlockSelect<T extends boolean = true> {
+  reusableContent?: T;
+  customId?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "published-pages_select".
  */
 export interface PublishedPagesSelect<T extends boolean = true> {
@@ -2155,6 +2195,7 @@ export interface PublishedPagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         features?: T | FeaturesBlockSelect<T>;
+        reusableContentBlock?: T | ReusableContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -2223,6 +2264,7 @@ export interface ReusableContentSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         features?: T | FeaturesBlockSelect<T>;
+        reusableContentBlock?: T | ReusableContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -2936,14 +2978,7 @@ export interface ProposalsSelect<T extends boolean = true> {
         imageBlock?: T | ImageBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         features?: T | FeaturesBlockSelect<T>;
-        reusableContentBlock?:
-          | T
-          | {
-              reusableContent?: T;
-              customId?: T;
-              id?: T;
-              blockName?: T;
-            };
+        reusableContentBlock?: T | ReusableContentBlockSelect<T>;
       };
   publishedAt?: T;
   authors?: T;
