@@ -1,4 +1,4 @@
-import type { Proposal, ReusableContent } from '@/payload-types'
+import type { ReusableContent } from '@/payload-types'
 
 import { RenderBlocks } from './RenderBlocks'
 import React from 'react'

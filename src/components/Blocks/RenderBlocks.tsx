@@ -9,7 +9,8 @@ import { ContentBlock } from './Content'
 // import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from './MediaBlock'
 import { FeaturesBlock } from './FeaturesBlock'
-import { ReusableContentBlock } from './ReusableContent'
+import { ReusableContentBlock } from './ReusableContentBlock'
+import * as Blocks from './ReusableContentBlock';
 
 const blockComponents: { [key: string]: React.FC<any> } = {
   content: ContentBlock,
@@ -25,7 +26,8 @@ export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
 }> = (props) => {
   const { blocks } = props
-
+  console.log("Blocks:", Blocks);
+  console.log("blockComponents keys:", Object.keys(blockComponents));
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   if (hasBlocks) {
