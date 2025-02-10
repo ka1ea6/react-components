@@ -36,7 +36,7 @@ export const RenderBlocks: React.FC<{
           console.log('RenderBlocks:block', util.inspect(block, false, null, true /* enable colors */))
           const { blockType } = block as { blockType: keyof typeof blockComponents }
           const theme = (block as any)?.theme;
-          console.log('RenderBlocks:blockType', util.inspect(block, false, null, true /* enable colors */))
+          console.log('RenderBlocks:blockType', util.inspect(blockType, false, null, true /* enable colors */))
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]

@@ -115,7 +115,7 @@ export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
         relatedContent={args.relatedContent}
       >
         <RenderBlocks blocks={contentWithIds} />
-        <RenderBlocks blocks={temp as PageType['layout']} />
+        {/* <RenderBlocks blocks={temp as PageType['layout']} /> */}
 
         {/* <RenderBlocks blocks={args.page.layout} /> */}
       </MainPageSection>

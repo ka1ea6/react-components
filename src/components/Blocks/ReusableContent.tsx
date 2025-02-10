@@ -11,7 +11,8 @@ type Props = {
 
 export const ReusableContentBlock: React.FC<Props> = (props) => {
   const { customId, reusableContent } = props as { customId: string, reusableContent: ReusableContent }
-
+  console.log('ReusableContentBlock:reusableContent', reusableContent)
+  console.log('ReusableContentBlock:object', typeof reusableContent === 'object')
   if (typeof reusableContent === 'object' && reusableContent !== null) {
     return <RenderBlocks blocks={reusableContent.layout} />
   }

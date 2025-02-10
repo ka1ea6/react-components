@@ -48,7 +48,7 @@ export function getTableOfContents(page: Page) {
             })
           }
 
-          if (column.richText?.root?.children) {
+          if (column.richText?.root?.children && column.richText?.root?.children.length === 1) {
             const headings = column.richText.root.children.filter(
               (child: { type: string }) => child !== undefined && child.type === 'heading',
             )
@@ -127,7 +127,7 @@ function processContentWithIds(layout: any[]): any[] {
                   tag?: string
                   children: { text: string }[]
                 }) => {
-                  if (child.type === 'heading') {
+                  if (child.type === 'heading' && child.children[0].text) {
                     child.id = generateId(child.children[0].text, globalIndex++) // Inject ID
                   }
                   return child
