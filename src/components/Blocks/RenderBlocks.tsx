@@ -6,11 +6,9 @@ import type { Page, Media } from '@/payload-types'
 
 import { CallToActionBlock } from './CallToAction'
 import { ContentBlock } from './Content'
-// import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from './MediaBlock'
 import { FeaturesBlock } from './FeaturesBlock'
 import { ReusableContentBlock } from './ReusableContentBlock'
-import * as Blocks from './ReusableContentBlock';
 
 const blockComponents: { [key: string]: React.FC<any> } = {
   content: ContentBlock,
@@ -26,23 +24,16 @@ export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
 }> = (props) => {
   const { blocks } = props
-  console.log("Blocks:", Blocks);
-  console.log("blockComponents keys:", Object.keys(blockComponents));
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   if (hasBlocks) {
     return (
       <section id='render-blocks'>
-        {blocks.map((block, index) => {
-          const util = require('util')
-          console.log('RenderBlocks:block', util.inspect(block, false, null, true /* enable colors */))
+        {blocks.map((block, index) => {          
           const { blockType } = block as { blockType: keyof typeof blockComponents }
           const theme = (block as any)?.theme;
-          console.log('RenderBlocks:blockType', util.inspect(blockType, false, null, true /* enable colors */))
-
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
-            console.log('BLOCK TYPE EXISTS', Block)
             if (Block) {
               return (
                 <div className="py-6 relative" key={index}>
