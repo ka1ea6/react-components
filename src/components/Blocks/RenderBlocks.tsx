@@ -40,7 +40,7 @@ export const RenderBlocks: React.FC<{
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
-
+            console.log('BLOCK TYPE EXISTS', Block)
             if (Block) {
               return (
                 <div className="py-6 relative" key={index}>

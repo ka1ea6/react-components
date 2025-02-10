@@ -10,6 +10,8 @@ type Props = {
 }
 
 export const ReusableContentBlock: React.FC<Props> = (props) => {
+  console.log('ReusableContentBlock:props', props)
+
   const { customId, reusableContent } = props as { customId: string, reusableContent: ReusableContent }
   console.log('ReusableContentBlock:reusableContent', reusableContent)
   console.log('ReusableContentBlock:object', typeof reusableContent === 'object')
