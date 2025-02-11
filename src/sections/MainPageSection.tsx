@@ -282,7 +282,7 @@ const Sidebar = ({
 
   const handlePrintView = () => {
     const newPathz = currentPath.split('/')
-    const newPath = '/print/' + newPathz[1]
+    const newPath = '/print' + currentPath
     const printWindow = window.open(
       newPath,
       'Print',
@@ -293,7 +293,8 @@ const Sidebar = ({
 
   const handlePresentView = () => {
     const newPathz = currentPath.split('/')
-    const newPath = '/present/' + newPathz[1]
+    const newPath = '/present' + currentPath
+    console.log(newPath)
     const printWindow = window.open(
       newPath,
       'Print',
@@ -347,7 +348,7 @@ const Sidebar = ({
           <hr className="dark:border-gray-400" />
 
           <a
-            href="/"
+            onClick={handlePresentView}
             className="flex aspect-square min-h-[25px] w-12 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700  dark:text-gray-400 hover:text-accent"
           >
             {/* <!-- HeroIcon - Home Modern --> */}
@@ -358,7 +359,7 @@ const Sidebar = ({
             <small className="text-xs font-medium">Present</small>
           </a>
           <a
-            href="/"
+            onClick={handlePrintView}
             className="flex aspect-square min-h-[25px] w-12 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700  dark:text-gray-400 hover:text-accent"
           >
             {/* <!-- HeroIcon - Home Modern --> */}
