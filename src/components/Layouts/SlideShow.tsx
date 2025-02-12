@@ -207,7 +207,7 @@ export const Footer: React.FC = () => {
         <span className="pl-12 text-sm">Power up your people</span>
       </div>
 
-      <a href="https://airwalkreply.com" className="text-sm hover:underline">
+      <a href="https://cortexreply.com" className="text-sm hover:underline">
         cortexreply.com
       </a>
     </footer>
