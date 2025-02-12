@@ -1,12 +1,15 @@
 import React from 'react'
 
-import Website from './Publish'
+import SlideShow from './Publish'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
 import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react'
 import pattern1 from '@/images/hero/image-hero1.webp'
+
+import { ImageTest, BlocksTest } from '@/tests/payload'
+
 
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
@@ -22,7 +25,7 @@ const ProductIcon = () => <DynamicIcon iconName="development" size="4x" type="ki
 
 export default {
   title: 'Example Pages/Slideshow',
-  component: Website,
+  component: SlideShow,
   // decorators: [
   //   (Story: React.FC) => (
   //     <div>
@@ -32,9 +35,9 @@ export default {
   // ],
 }
 
-const Template = (args: any) => <Website {...args} />
+const Template = (args: any) => <SlideShow {...args} />
 
-type PageStory = StoryObj<typeof Website>
+type PageStory = StoryObj<typeof SlideShow>
 
 export const Default: PageStory = {
   render: Template,
@@ -1147,7 +1150,7 @@ export const Default: PageStory = {
   },
 }
 
-export const SlideShow = {
+export const SlideShow2 = {
   args: {
     ...Default.args,
     hero: {
@@ -1189,7 +1192,7 @@ export const SlideShow = {
                 children: [
                   {
                     mode: 'normal',
-                    text: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+                    text: 'How we work',
                     type: 'text',
                     style: '',
                     detail: 0,
@@ -1198,27 +1201,6 @@ export const SlideShow = {
                   },
                 ],
                 direction: 'ltr',
-              },
-              {
-                type: 'paragraph',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    mode: 'normal',
-                    text: 'Sed non velit nec arcu volutpat dignissim in a lorem.',
-                    type: 'text',
-                    style: '',
-                    detail: 0,
-                    format: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                textStyle: '',
-                textFormat: 0,
               },
             ],
             direction: 'ltr',
@@ -1907,7 +1889,7 @@ export const SlideShowWithThemes = {
       layout: [
         {
           id: '67a74c276365f244c8b6d149',
-          blockName: null,
+          blockName: 'Lorum Ipsum',
 
           columns: [
             {
@@ -2074,7 +2056,7 @@ export const SlideShowWithThemes = {
             },
           },
         },
-
+        BlocksTest.content.oneThirdWithImageThemeShort,
         {
           id: '67a74edb6365f244c8b6d14d',
 
@@ -2153,7 +2135,6 @@ export const SlideShowWithThemes = {
           blockName: null,
           blockType: 'mediaBlock',
         },
-
         {
           id: '67a74ef36365f244c8b6d14f',
           title: 'Test Feature',
@@ -2712,27 +2693,42 @@ export const SlideShowWithThemes = {
     },
     hero: {
       type: 'highImpact',
-      children: (
-        <div className="max-w-none mx-auto prose dark:prose-invert mb-6">
-          <h1 className="col-start-2">High Impact Hero </h1>
-          <p className="col-start-2"></p>
-          <p className="col-start-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
-            vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor
-            lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus
-            et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim
-            in a lorem.
-          </p>
-          <p className="col-start-2"></p>
-          <p className="col-start-2">
-            Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit
-            amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros
-            fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu
-            pellentesque. Phasellus imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.
-          </p>
-        </div>
-      ),
-      media: 'stock1.jpg?height=400&width=800',
-    }
+
+      richText: {
+        root: {
+          type: 'root',
+          format: '',
+          indent: 0,
+          version: 1,
+
+          children: [
+            {
+              tag: 'h1',
+              type: 'heading',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'How we work',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'ltr',
+            },
+          ],
+          direction: 'ltr',
+        },
+      },
+      links: [],
+
+      media: ImageTest.hero
+    },
   }
 }

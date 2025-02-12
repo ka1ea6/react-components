@@ -22,13 +22,14 @@ const blockComponents: { [key: string]: React.FC<any> } = {
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  fill?: boolean
 }> = (props) => {
   const { blocks } = props
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   if (hasBlocks) {
     return (
-      <section id='render-blocks'>
+      <section id='render-blocks' className={cn(props.fill ? 'h-full w-full' : '')}>
         {blocks.map((block, index) => {          
           const { blockType } = block as { blockType: keyof typeof blockComponents }
           const theme = (block as any)?.theme;
@@ -36,7 +37,7 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
             if (Block) {
               return (
-                <div className="py-6 relative" key={index}>
+                <div className={cn("py-6 relative",props.fill && 'flex h-full items-center justify-center' )} key={index}>
                   <Theme block={block} index={index} />
                   <div className={cn("container", theme?.settings?.theme === 'dark' ? 'dark' : theme?.settings?.theme === 'green' ? 'green' : '')}>
                   <Block {...block} />

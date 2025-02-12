@@ -36,7 +36,7 @@ export default function WebsiteSection({ ...args  }: WebsiteSectionProps) {
       
 {/* <MainPageSection edit={args.edit} pageId={args.page.id} tableOfContents={tableOfContents} relatedContent={args.relatedContent}> */}
 
-<SlideShow blocks={contentWithIds} />
+<SlideShow blocks={contentWithIds} hero={args.hero} title={args.page.title}/>
 {/* <RenderBlocks blocks={contentWithIds} />
 </VerticalSlider> */}
 {/* </MainPageSection> */}

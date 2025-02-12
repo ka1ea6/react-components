@@ -11,6 +11,7 @@
       "@/lib/utils/*": ["./src/utils/*"],
       "@/components/*": ["./src/components/*"],
       "@/images/*": ["./src/images/*"],
+      "@/tests/*": ["./src/tests/*"],
       "@/hooks/*": ["./src/hooks/*"],
     "@/payload-types" : ["./src/payload-types"],
     "@/common-types" : ["./src/common-types"]

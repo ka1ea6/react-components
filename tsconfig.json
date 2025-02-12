@@ -9,6 +9,7 @@
       "@/components/*": ["./src/components/*"],
       "@/images/*": ["./src/images/*"],
       "@/hooks/*": ["./src/hooks/*"],
+      "@/tests/*": ["./src/tests/*"],
       "@/payload-types" : ["./src/payload-types"],
       "@/common-types" : ["./src/common-types"],
     }
