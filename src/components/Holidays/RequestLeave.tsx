@@ -10,7 +10,7 @@ import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
-import { dayOffUtil } from '@/lib/utils/DayOffUtil'
+import { getTotalDaysBetween, isDayOff, getIsMultipleDays } from '@/lib/utils/DaysUtil'
 
 interface RequestLeaveProps {
   remainingDays: number
@@ -52,11 +52,11 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
   const router = useRouter()
 
   useEffect(() => {
-    setIsMultipleDays(startDate !== endDate || !startDate || !endDate)
+    const isMultipleDays = getIsMultipleDays(startDate, endDate)
+    setIsMultipleDays(isMultipleDays)
     if (isMultipleDays) {
       setLeaveType('Full Day')
     }
-    console.log('startDate:', startDate)
   }, [startDate, endDate])
 
   useEffect(() => {
@@ -65,23 +65,9 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
       return
     }
 
-    let days = 0
+    const daysOf = getTotalDaysBetween(startDate, endDate, leaveType !== 'Full Day')
 
-    for (
-      let currentDate = new Date(startDate);
-      currentDate <= endDate;
-      currentDate.setDate(currentDate.getDate() + 1)
-    ) {
-      if (dayOffUtil(currentDate)) {
-        days++
-      }
-    }
-
-    if (leaveType === 'Morning' || leaveType === 'Afternoon') {
-      days = 0.5
-    }
-
-    setTotalDays(days)
+    setTotalDays(daysOf)
   }, [startDate, endDate, leaveType])
 
   const handleLeaveTypeChange = (leaveType: string) => {

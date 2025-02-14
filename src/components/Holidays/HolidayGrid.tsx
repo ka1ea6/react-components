@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Holiday } from '../../model/Holiday'
 import { Employee } from '../../model/Employee'
-import { dayOffUtil } from '@/lib/utils/DayOffUtil'
+import { isDayOff } from '@/lib/utils/DaysUtil'
 
 interface HolidayGridProps {
   currentDate: Date
@@ -102,14 +102,12 @@ export function HolidayGrid({
                       index + 1,
                     )
 
-                    const isDayOff = dayOffUtil(date)
-
                     return (
                       <th
                         key={index}
                         scope="col"
                         className={`sticky top-0 z-10 border-b border-r border-gray-300 bg-white bg-opacity-75 px-0 py-3.5 text-center text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter ${
-                          isDayOff ? 'bg-gray-200' : ''
+                          isDayOff(date) ? 'bg-gray-200' : ''
                         }`}
                       >
                         <div>{getDayInitial(date)}</div>
@@ -153,7 +151,7 @@ export function HolidayGrid({
                         currentDate.getMonth(),
                         day + 1,
                       )
-                      const isDayOff = dayOffUtil(date)
+
                       const holiday = holidays.find(
                         (h) =>
                           h.userId === employee.id &&
@@ -166,7 +164,7 @@ export function HolidayGrid({
                           className={classNames(
                             employeeIdx !== employees.length - 1 ? 'border-r border-gray-200' : '',
                             'whitespace-nowrap border-r border-gray-200',
-                            isDayOff ? 'bg-gray-200' : '',
+                            isDayOff(date) ? 'bg-gray-200' : '',
                           )}
                         >
                           <div
