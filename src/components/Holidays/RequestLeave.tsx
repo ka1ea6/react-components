@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { format } from "date-fns"
+import { Calendar } from '@/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
+import { dayOffUtil } from '@/lib/utils/DayOffUtil'
 
 interface RequestLeaveProps {
   remainingDays: number
@@ -30,7 +31,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({ options, value, onChange, dis
         <Button
           key={option}
           type="button"
-          variant={value === option ? "default" : "outline"}
+          variant={value === option ? 'default' : 'outline'}
           onClick={() => onChange(option)}
           disabled={disabled[index]}
           className="flex-1 hover:bg-accent hover:text-accent-foreground"
@@ -47,6 +48,7 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
   const [endDate, setEndDate] = useState<Date | undefined>(new Date())
   const [leaveType, setLeaveType] = useState('Full Day')
   const [isMultipleDays, setIsMultipleDays] = useState(false)
+  const [totalDays, setTotalDays] = useState(1)
   const router = useRouter()
 
   useEffect(() => {
@@ -54,27 +56,46 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
     if (isMultipleDays) {
       setLeaveType('Full Day')
     }
+    console.log('startDate:', startDate)
   }, [startDate, endDate])
 
-  const handleLeaveTypeChange = (leaveType : string) => {
-    setLeaveType(leaveType);
-  };
+  useEffect(() => {
+    if (!startDate || !endDate) {
+      setTotalDays(0)
+      return
+    }
+
+    let days = 0
+
+    for (
+      let currentDate = new Date(startDate);
+      currentDate <= endDate;
+      currentDate.setDate(currentDate.getDate() + 1)
+    ) {
+      if (dayOffUtil(currentDate)) {
+        days++
+      }
+    }
+
+    if (leaveType === 'Morning' || leaveType === 'Afternoon') {
+      days = 0.5
+    }
+
+    setTotalDays(days)
+  }, [startDate, endDate, leaveType])
+
+  const handleLeaveTypeChange = (leaveType: string) => {
+    setLeaveType(leaveType)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!startDate || !endDate) {
       toast.error('Please select both start and end dates')
-      // alert('Please select both start and end dates')
       return
     }
-    // check the number of days selected doesn't exceed the remaining days
-    let days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
-    if (leaveType === 'Morning' || leaveType === 'Afternoon') {
-      days = 0.5
-    }
-    if (days > remainingDays) {
+    if (totalDays > remainingDays) {
       toast.error('You do not have enough leave days remaining')
-      // alert('You do not have enough leave days remaining')
       return
     }
 
@@ -82,7 +103,7 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
     formData.append('startDate', startDate.toISOString())
     formData.append('endDate', endDate.toISOString())
     formData.append('leaveType', leaveType)
-    formData.append('duration', days.toString())
+    formData.append('duration', totalDays.toString())
     const result = await (submitLeaveRequest || defaultSubmitLeaveRequest)(formData)
 
     if (result.success) {
@@ -107,14 +128,14 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={"outline"}
+                  variant={'outline'}
                   className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !startDate && "text-muted-foreground"
+                    'w-full justify-start text-left font-normal',
+                    !startDate && 'text-muted-foreground',
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {startDate ? format(startDate, "PPP") : <span>Pick a date</span>}
+                  {startDate ? format(startDate, 'PPP') : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -137,14 +158,14 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={"outline"}
+                  variant={'outline'}
                   className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground"
+                    'w-full justify-start text-left font-normal',
+                    !endDate && 'text-muted-foreground',
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endDate ? format(endDate, "PPP") : <span>Pick a date</span>}
+                  {endDate ? format(endDate, 'PPP') : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -159,7 +180,7 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
             </Popover>
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <Label>Leave Type</Label>
           <ButtonGroup
@@ -170,20 +191,29 @@ export function RequestLeave({ remainingDays, submitLeaveRequest }: RequestLeave
           />
         </div>
 
-        <Button type="submit" className="w-full hover:bg-accent hover:text-accent-foreground">Submit Request</Button>
+        <p className="text-sm text-gray-500">Total days: {totalDays}</p>
+
+        <Button
+          disabled={totalDays <= 0}
+          type="submit"
+          className="w-full hover:bg-accent hover:text-accent-foreground"
+        >
+          Submit Request
+        </Button>
       </form>
-      <Toaster richColors position="top-right" closeButton visibleToasts={9} className='z-50'/>
+      <Toaster richColors position="top-right" closeButton visibleToasts={9} className="z-50" />
     </div>
   )
 }
 
 // Default server action implementation
 const defaultSubmitLeaveRequest = async (formData: FormData) => {
-  const formDataEntries: { [key: string]: any } = {};
+  const formDataEntries: { [key: string]: any } = {}
   formData.forEach((value, key) => {
-    formDataEntries[key] = value;
-  });
-  // console.log('Leave request submitted:', formDataEntries);
-  return { success: true, message: `Leave request submitted successfully for ${formData.get('duration')}` }
+    formDataEntries[key] = value
+  })
+  return {
+    success: true,
+    message: `Leave request submitted successfully for ${formData.get('duration')}`,
+  }
 }
-
