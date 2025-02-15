@@ -12,7 +12,7 @@ interface WebsiteSectionProps {
   hero: any
   page: Page
   type: 'print' | 'slideshow'
-  orientation: 'portrait' | 'landscape'
+  orientation: 'portrait' | 'landscape' | 'flow'
   [key: string]: any
 }
 interface TableOfContentsItem {
@@ -52,5 +52,5 @@ export default function WebsiteSection({
         <Printable page={args.page} layout={orientation} />
       // </div>
     )
-  }
+  } 
 }

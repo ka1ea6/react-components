@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
     const { title, hero } = props
   
     return (
-      <div className="relative w-full h-full flex flex-col justify-center p-10">
+      <div className="relative w-full h-full flex flex-col justify-center min-h-[500px] p-10">
         <div className="absolute inset-0">
           <Image
             src={hero.media ? (hero.media as Media).url : Image1}
@@ -65,7 +65,7 @@ export const Footer: React.FC = () => {
         {/* Logos */}
         <div className="absolute left-16 z-50 top-4 flex flex-col items-start gap-4">
           {logoDark && (
-            <div className="h-48 w-96">
+            <div className="h-24">
               <Image
                 src={logoDark}
                 alt="Company logo"
