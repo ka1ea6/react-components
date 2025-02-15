@@ -48,9 +48,9 @@ export default function WebsiteSection({
     )
   } else if (type === 'print') {
     return (
-      <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
+      // <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
         <Printable page={args.page} layout={orientation} />
-      </div>
+      // </div>
     )
   }
 }

@@ -1,37 +1,151 @@
-import React from 'react'
-
-import Printable from './Publish'
-import { fn } from '@storybook/test'
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
+import { Printable } from './Printable';
+import { fn } from '@storybook/test';
+import { DynamicIcon } from '@/components/Images'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
-import { Meta, StoryObj } from '@storybook/react'
+
+const GithubIcon = () => (
+  // <FontAwesomeIcon icon={faGithub} size="10x" />
+  <DynamicIcon iconName="github" size="4x" type="brands" />
+)
+const AWSIcon = () => <DynamicIcon iconName="aws" type="brands" />
+const AzureIcon = () => <DynamicIcon iconName="azure" type="kit" />
+const SolutionIcon = () => <DynamicIcon iconName="people-sharing" size="4x" type="kit" />
+
+const ServiceIcon = () => <DynamicIcon iconName="cloud-network-sharing" size="4x" type="kit" />
+
+const ProductIcon = () => <DynamicIcon iconName="development" size="4x" type="kit" />
 
 
-
-export default {
-  title: 'Example Pages/Print',
+const meta: Meta<typeof Printable> = {
+  title: 'Example Pages/Print2',
   component: Printable,
-  // decorators: [
-  //   (Story: React.FC) => (
-  //     <div>
-  //       <Story />
-  //     </div>
-  //   ),
-  // ],
-}
+  parameters: {
+    layout: 'fullscreen',
+  },
+  argTypes: {
+    layout: {
+      control: { type: 'radio' },
+      options: ['portrait', 'landscape'],
+    },
+  },
+};
+
+export default meta;
+
 
 const Template = (args: any) => <Printable {...args} />
-
 type PageStory = StoryObj<typeof Printable>
 
 export const Default: PageStory = {
   render: Template,
   args: {
-    type: 'print',
-    orientation: 'portrait',
+    layout: 'landscape',
+    title: 'Storage Service',
+    section: 'Storage',
+    description:
+      'A scalable object storage service that offers industry-leading performance, security, and availability.',
+    children: (
+      <div className="prose max-w-none">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua.
+        </p>
+        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
+          <div className="flex h-full items-center justify-center">Video Placeholder</div>
+        </div>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum,
+          urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi
+          tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu
+          volutpat dignissim in a lorem.
+        </p>
+        <p>
+          Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit
+          amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum.
+          Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu pellentesque. Phasellus
+          imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.
+        </p>
+        <p>
+          Suspendisse potenti. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel
+          lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero
+          convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis
+          sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum
+          felis.
+        </p>
+        <p>
+          Aenean ut ligula ac libero vehicula luctus. Integer ultricies nisl id mi dictum, eget
+          tincidunt augue interdum. Sed eu malesuada erat. Nam fringilla lectus id dolor gravida
+          lacinia. Aliquam erat volutpat. Vestibulum nec ipsum vitae elit dapibus suscipit vel at
+          ipsum.
+        </p>
+        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
+          <div className="flex h-full items-center justify-center">Video Placeholder</div>
+        </div>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua.
+        </p>
+        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
+          <div className="flex h-full items-center justify-center">Video Placeholder</div>
+        </div>
+      </div>
+    ),
+    header: {
+      menuItems: [
+        {
+          name: 'Documentation',
+          items: [
+            {
+              name: 'Platforms & Services',
+              description: 'Cloud services',
+              href: '#',
+              icon: ServiceIcon, // Pass the component, not <ChartPieIcon />
+            },
+            {
+              name: 'Solutions & Propositions',
+              description: 'Solutions that we have built',
+              href: '#',
+              icon: SolutionIcon,
+            },
+            {
+              name: 'Products',
+              description: 'Products that we sell',
+              href: '#',
+              icon: ProductIcon,
+            },
+          ],
+        },
+        {
+          name: 'Resources',
+          items: [
+            { name: 'Documentation', href: '#', icon: ChartPieIcon },
+            { name: 'API Reference', href: '#', icon: CursorArrowRaysIcon },
+            { name: 'Github', href: '#', icon: GithubIcon },
+          ],
+          actions: [
+            { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+            { name: 'Contact sales', href: '#', icon: PhoneIcon },
+            { name: 'View all products', href: '#', icon: RectangleGroupIcon },
+          ],
+        },
+        {
+          name: 'Intranet',
+          href: '#',
+        },
+      ],
+    },
     page: {
       id: 7,
       title: 'Ways of Working',
+
       hero: {
         type: 'highImpact',
 
@@ -69,74 +183,7 @@ export const Default: PageStory = {
         },
         links: [],
 
-        media: {
-          id: 34,
-          alt: 'Global digital mesh network',
-          prefix: 'media',
-          updatedAt: '2025-01-08T23:05:26.243Z',
-          createdAt: '2025-01-08T23:05:26.243Z',
-          url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF.jpg',
-          thumbnailURL: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
-          filename: 'a-Ht-M8SAwtqOdjTkdVwF.jpg',
-          mimeType: 'image/jpeg',
-          filesize: 190660,
-          width: 2121,
-          height: 1414,
-          focalX: 50,
-          focalY: 50,
-
-          sizes: {
-            thumbnail: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
-              width: 300,
-              height: 200,
-              mimeType: 'image/jpeg',
-              filesize: 11319,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-300x200.jpg',
-            },
-            square: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
-              width: 500,
-              height: 500,
-              mimeType: 'image/jpeg',
-              filesize: 38667,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-500x500.jpg',
-            },
-            small: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
-              width: 600,
-              height: 400,
-              mimeType: 'image/jpeg',
-              filesize: 32551,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-600x400.jpg',
-            },
-            medium: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
-              width: 900,
-              height: 600,
-              mimeType: 'image/jpeg',
-              filesize: 58719,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-900x600.jpg',
-            },
-            large: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
-              width: 1400,
-              height: 933,
-              mimeType: 'image/jpeg',
-              filesize: 107469,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1400x933.jpg',
-            },
-
-            xlarge: {
-              url: '/api/media/file/a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
-              width: 1920,
-              height: 1280,
-              mimeType: 'image/jpeg',
-              filesize: 165278,
-              filename: 'a-Ht-M8SAwtqOdjTkdVwF-1920x1280.jpg',
-            },
-          },
-        },
+        
       },
       layout: [
         {
@@ -1033,6 +1080,7 @@ export const Default: PageStory = {
       createdAt: '2024-12-30T14:47:05.921Z',
       _status: 'published',
     },
+    edit: true,
   },
 }
 
@@ -1043,6 +1091,11 @@ export const Simple = {
       type: 'mediumImpact',
       media: 'stock1.jpg?height=400&width=800',
       children: <h1 className="text-4xl font-bold">Medium Impact Hero</h1>,
+    },
+    relatedContent: {
+      title: 'Related Links',
+      links: [
+      ],
     },
     page: {
       id: 19,
@@ -1108,7 +1161,7 @@ export const Simple = {
 
         media: {
           id: 34,
-          alt: 'Global digital mesh network',
+          alt: '',
           prefix: 'media',
           updatedAt: '2025-01-08T23:05:26.243Z',
           createdAt: '2025-01-08T23:05:26.243Z',
@@ -1738,7 +1791,7 @@ export const Simple = {
 }
 
 export const WithThemes = {
-  args : {
+  args: {
     ...Default.args,
     page: {
       id: 1,
@@ -2591,6 +2644,7 @@ export const WithThemes = {
       createdAt: '2025-02-08T12:20:41.149Z',
       _status: 'published',
     },
+    layout: 'landscape',
     hero: {
       type: 'highImpact',
       children: (
@@ -2619,8 +2673,15 @@ export const WithThemes = {
 }
 
 export const Portrait = {
-  args : {
-    ...WithThemes.args,
-    orientation: 'portrait',
+  args: {
+    ...Default.args,
+    layout: 'portrait',
+  }
+}
+
+export const Lanscape = {
+  args: {
+    ...Default.args,
+    layout: 'landscape',
   }
 }
