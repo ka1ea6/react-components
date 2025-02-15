@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Website from './Publish'
+import Printable from './Publish'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
@@ -20,19 +20,18 @@ export default {
   // ],
 }
 
-const Template = (args: any) => <Website {...args} />
+const Template = (args: any) => <Printable {...args} />
 
-type PageStory = StoryObj<typeof Website>
+type PageStory = StoryObj<typeof Printable>
 
 export const Default: PageStory = {
   render: Template,
   args: {
-    title: 'Storage Service',
-    section: 'Storage',
+    type: 'print',
+    orientation: 'portrait',
     page: {
       id: 7,
       title: 'Ways of Working',
-
       hero: {
         type: 'highImpact',
 
@@ -1044,15 +1043,6 @@ export const Simple = {
       type: 'mediumImpact',
       media: 'stock1.jpg?height=400&width=800',
       children: <h1 className="text-4xl font-bold">Medium Impact Hero</h1>,
-    },
-    relatedContent: {
-      title: 'Related Links',
-      links: [
-        { title: 'Employee Handbook', url: '/handbook' },
-        { title: 'IT Support', url: '/it-support' },
-        { title: 'HR Portal', url: '/hr' },
-        { title: 'Company Directory', url: '/directory' },
-      ],
     },
     page: {
       id: 19,
@@ -2601,7 +2591,6 @@ export const WithThemes = {
       createdAt: '2025-02-08T12:20:41.149Z',
       _status: 'published',
     },
-    layout: 'landscape',
     hero: {
       type: 'highImpact',
       children: (
@@ -2632,6 +2621,6 @@ export const WithThemes = {
 export const Portrait = {
   args : {
     ...WithThemes.args,
-    layout: 'portrait',
+    orientation: 'landscape',
   }
 }
