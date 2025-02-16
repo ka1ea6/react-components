@@ -118,13 +118,13 @@ export const SlideShow: React.FC<{
 
       {/* Vertical Slider */}
 
-      <div className="fixed left-0 top-0 flex h-screen w-9 z-10 flex-col items-center justify-center bg-gray-100">
+      <div className="fixed left-0 top-0 flex h-screen w-9 z-10 flex-col items-center justify-center bg-gray-900">
         {hasBlocks &&
           blocksWithHero.map((section: any, id: number) => (
             <button
               key={section.id}
               className={`group relative flex items-center justify-center my-2 h-16 w-4 rounded-full transition-all hover:bg-accent duration-300 ${
-                activeSection === id ? 'bg-accent' : 'bg-gray-300'
+                activeSection === id ? 'bg-accent' : 'bg-gray-600'
               }`}
               onClick={() => handleSliderClick(id)}
             >
@@ -179,7 +179,7 @@ const ScrollDownIcon: React.FC = () => (
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-      className={cn('w-fit min-h-[50px] min-w-[20px] p-1 border-2 rounded-full', 'border-gray-800')}
+      className={cn('w-fit min-h-[50px] min-w-[20px] p-1 border-2 rounded-full', 'border-accent')}
     >
       <motion.div
         initial={{ y: 0 }}
@@ -190,7 +190,7 @@ const ScrollDownIcon: React.FC = () => (
           repeat: Infinity,
           repeatDelay: 1,
         }}
-        className={cn('w-[12px] h-[12px] rounded-full', 'bg-gray-800')}
+        className={cn('w-[12px] h-[12px] rounded-full', 'bg-accent')}
       />
     </motion.div>
   </AnimatePresence>

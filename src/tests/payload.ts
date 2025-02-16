@@ -822,6 +822,27 @@ export const HeroTest = {
             ],
             direction: 'ltr',
           },
+          {
+            type: 'paragraph',
+            format: '',
+            indent: 0,
+            version: 1,
+  
+            children: [
+              {
+                mode: 'normal',
+                text: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum felis.',
+                type: 'text',
+                style: '',
+                detail: 0,
+                format: 0,
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            textStyle: '',
+            textFormat: 0,
+          },
         ],
         direction: 'ltr',
       },

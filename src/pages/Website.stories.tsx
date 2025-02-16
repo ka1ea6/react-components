@@ -8,6 +8,8 @@ import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react'
 import pattern1 from '@/images/hero/image-hero1.webp'
 import { AOSInit } from '@/lib/utils/AOSInit'
+import { ImageTest, BlocksTest, HeroTest } from '../tests/payload'
+
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
   <DynamicIcon iconName="github" size="4x" type="brands" />
@@ -1063,30 +1065,7 @@ export const MediumImpactHero = {
 export const HighImpactHero = {
   args: {
     ...Default.args,
-    hero: {
-      type: 'highImpact',
-      children: (
-        <div className="max-w-none mx-auto prose dark:prose-invert mb-6">
-          <h1 className="col-start-2">High Impact Hero </h1>
-          <p className="col-start-2"></p>
-          <p className="col-start-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
-            vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor
-            lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus
-            et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim
-            in a lorem.
-          </p>
-          <p className="col-start-2"></p>
-          <p className="col-start-2">
-            Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit
-            amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros
-            fermentum. Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu
-            pellentesque. Phasellus imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.
-          </p>
-        </div>
-      ),
-      media: 'stock1.jpg?height=400&width=800',
-    },
+    hero: HeroTest.highImpactSimple,
     media: 'stock1.jpg?height=400&width=800',
   },
 }

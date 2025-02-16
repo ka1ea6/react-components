@@ -57,7 +57,7 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 36	164	143;
+    --primary: 36 164 143;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 35, 100%, 55%;
@@ -150,14 +150,19 @@
     display: inline-block;
   }
 
-  prose-h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 20%;
-    height: 2px;
-    background-color: rgb(var(--accent));
+  .prose {
+    h2 {
+      color: rgb(var(--primary));
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 20%;
+      height: 1px;
+      background-color: rgb(var(--primary));
+    }
   }
 }
 
