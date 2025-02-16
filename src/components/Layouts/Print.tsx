@@ -17,6 +17,7 @@ import { HeadingImage } from '../Blocks'
 import { Footer, HeaderTop, TitleSlide } from './OutputHeaderFooter'
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { cn } from '@/lib/utils'
 interface PrintableProps {
   page: Page
   layout?: 'portrait' | 'landscape' | 'flow'
@@ -68,8 +69,6 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     const scale = window.devicePixelRatio;
     customCanvas.width = Math.max(root.clientWidth || 0) * scale;
     customCanvas.height = Math.max(root.clientHeight || 0) * scale + 100;
-    console.log('customCanvas.width', customCanvas.width)
-    console.log('customCanvas.height', customCanvas.height)
     const ctx = customCanvas.getContext('2d');
     const originalDrawImage = ctx.drawImage;
     
@@ -143,15 +142,6 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     
       return originalDrawImage.call(ctx, image, sx, sy, sw, sh, dx, dy, dw, dh);
     };
-    
-    // const canvas = await html2canvas(root, {
-    //   canvas: customCanvas,
-    //   windowHeight: 1080,
-    //   windowWidth: 1920,
-    // });
-
-
-
 
     const element = document.getElementById(elementToPrintId);
     if (!element) {
@@ -160,9 +150,7 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     var w = customCanvas.width
     var h = customCanvas.height
     // var w = Math.max(element.clientWidth || 0);
-    console.log('h/w', h, w)
-    console.log('element', element.clientHeight, element.clientWidth)
-    const canvas = await html2canvas(element, { canvas: customCanvas, windowHeight: h *2, windowWidth: w*2, scale: 2 });
+    const canvas = await html2canvas(element, { canvas: customCanvas, windowHeight: h, windowWidth: w, scale: window.devicePixelRatio });
     const data = canvas.toDataURL("image/png");
     const pdf = new jsPDF({
       // orientation: "landscape",
@@ -170,24 +158,20 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
       // format: [297, h],
     });
     const imgProperties = pdf.getImageProperties(data);
-    // const pdfWidth = pdf.internal.pageSize.getWidth();
+    
     const pdfWidth = 297;
     const pdfHeight = pdfWidth * (imgProperties.height / imgProperties.width);
-    // const pdfHeight = (customCanvas.height * pdfWidth) / customCanvas.width ;
-    console.log('pdfWidth', pdfWidth)
-    console.log('pdfHeight', pdfHeight)
-    console.log('imgProperties', imgProperties)
+    
     const pdfRightSized = new jsPDF({
       // orientation: "landscape",
       unit: "mm",
       format: [pdfWidth, pdfHeight],
     });
-    console.log('height', pdfRightSized.internal.pageSize.getHeight())
     
     pdfRightSized.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-    html2canvas(document.getElementById(elementToPrintId), { canvas: customCanvas, windowHeight: h *2, windowWidth: w *2, scale: 2}).then(canvas => {
-      document.body.appendChild(canvas)
-  });
+  //   html2canvas(document.getElementById(elementToPrintId), { canvas: customCanvas, windowHeight: h *2, windowWidth: w *2, scale: 2}).then(canvas => {
+  //     document.body.appendChild(canvas)
+  // });
     pdfRightSized.save("print.pdf");
   };
 
@@ -276,76 +260,6 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
 
   const blocksWithHero = [emptyContentBlock, ...contentWithIds]
 
-  // useEffect(() => {
-  //   const style = document.createElement('style')
-  //   style.textContent = `
-  //     @media print {
-  //         @page {
-  //           size: ${layout === 'landscape' ? 'A4 landscape' : 'A4 portrait'} !important;
-  //           margin: 10mm 15mm;
-  //           bleed: 6mm;
-  //           marks: crop cross;
-  //         }
-
-  //         body,
-  //         .pagedjs-container {
-  //           margin: 0;
-  //           padding: 0;
-  //         }
-
-  //         .pagedjs-content {
-  //           margin-top: 50mm;
-  //         }
-
-  //         .pagedjs-header {
-  //           position: running(header);
-  //           padding: 5mm 0;
-  //           page-break-after: auto;
-  //         }
-
-  //         .pagedjs-footer {
-  //           position: running(footer);
-  //           text-align: center;
-  //           font-size: 12px;
-  //           padding: 5mm 0;
-  //           border-top: 1px solid #ccc;
-  //         }
-
-  //         .pagedjs-section {
-  //           break-inside: avoid;
-  //           page-break-inside: avoid;
-  //           page-break-after: auto;
-  //           display: flex;
-  //           flex-direction: column;
-  //           justify-content: space-between;
-  //           margin: 10px 0;
-  //         }
-
-  //         table,
-  //         figure,
-  //         h1,
-  //         h2,
-  //         h3,
-  //         h4,
-  //         h5 {
-  //           page-break-inside: avoid;
-  //         }
-
-  //         h1:first-of-type {
-  //           break-before: avoid;
-  //         }
-
-  //         .pagedjs-title-page {
-  //           break-after: page;
-  //           text-align: center;
-  //           padding: 50px;
-  //         }
-  //       }
-  //     `
-  //   document.head.appendChild(style)
-  //   return () => document.head.removeChild(style)
-  // }, [layout])
-
   const updatePagedPreview = useCallback(() => {
     if (!previewContainer.current) return
     // Clear the content of previewContainer
@@ -355,7 +269,7 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     pagedRef.current
       .preview(
         document.getElementById('printable-content')!.innerHTML,
-        ['./print.css'],
+        ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'],
         previewContainer.current,
       )
       .then((result) => setPageCount(result.pageCount))
@@ -380,7 +294,7 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
       if (previewContainer.current) {
         previewContainer.current.innerHTML = '';
       }
-      paged.preview(contentMdx, ['/print.css'], previewContainer.current).then((result) => setPageCount(result.pageCount))
+      paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result) => setPageCount(result.pageCount))
       .catch((error) => console.error('Paged.js error:', error))
   
 
@@ -461,7 +375,7 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
               ) : (
                 <section
                   key={index}
-                  className="normal-page"
+                  className={cn("normal-page h-full", block.theme?.settings?.theme === 'dark' ? 'dark bg-background' : 'light')}
                 >
                   {block.blockName && <HeaderTop title={block.blockName} />}
                   <RenderBlocks blocks={[block]} />
@@ -480,32 +394,3 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     </div>
   )
 }
-
-
-// const Footer: React.FC = () => {
-//   const { theme } = useTheme();
-
-//   return (
-//     <footer className="pagedjs-footer flex justify-between items-center p-4 border-t border-gray-300 shadow-md bg-white dark:bg-gray-900 print:fixed print:bottom-0 print:left-0 print:w-full">
-//       <div className="flex items-center space-x-4">
-//         <Image src={theme === 'dark' ? logoDark : logoLight} alt="Reply Logo" width={35} height={35} />
-//         <div>
-//           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100"> Reply</h3>
-//           <p className="text-sm text-gray-600 dark:text-gray-400">Technology, done right</p>
-//         </div>
-//       </div>
-
-//       <nav className="flex space-x-6 text-sm">
-//         <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Privacy Policy</a>
-//         <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Terms of Service</a>
-//         <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Support</a>
-//       </nav>
-//       <div className="text-right">
-//         <p className="text-sm text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} Reply</p>
-//         <a href="https://airwalkreply.com" className="text-blue-600 hover:underline dark:text-blue-400">
-//           airwalkreply.com
-//         </a>
-//       </div>
-//     </footer>
-//   );
-// };
