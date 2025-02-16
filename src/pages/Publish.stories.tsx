@@ -42,105 +42,8 @@ type PageStory = StoryObj<typeof SlideShow>
 export const Default: PageStory = {
   render: Template,
   args: {
-    title: 'Storage Service',
-    section: 'Storage',
-    description:
-      'A scalable object storage service that offers industry-leading performance, security, and availability.',
-    children: (
-      <div className="prose max-w-none">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </p>
-        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
-          <div className="flex h-full items-center justify-center">Video Placeholder</div>
-        </div>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum,
-          urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi
-          tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu
-          volutpat dignissim in a lorem.
-        </p>
-        <p>
-          Proin sagittis sem et elit fringilla, nec fringilla eros maximus. Nulla facilisi. Ut sit
-          amet facilisis lectus. Fusce ornare metus at ante tristique, nec elementum eros fermentum.
-          Integer volutpat magna sed justo tincidunt, sit amet aliquam arcu pellentesque. Phasellus
-          imperdiet mi vitae ligula pharetra, a dignissim velit vehicula.
-        </p>
-        <p>
-          Suspendisse potenti. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel
-          lacus varius varius nec id metus. Praesent faucibus, orci a varius dapibus, lorem libero
-          convallis est, et consequat libero magna sit amet risus. Maecenas tincidunt erat et felis
-          sodales, nec malesuada sem tincidunt. Duis sed nisl euismod, ullamcorper augue at, rutrum
-          felis.
-        </p>
-        <p>
-          Aenean ut ligula ac libero vehicula luctus. Integer ultricies nisl id mi dictum, eget
-          tincidunt augue interdum. Sed eu malesuada erat. Nam fringilla lectus id dolor gravida
-          lacinia. Aliquam erat volutpat. Vestibulum nec ipsum vitae elit dapibus suscipit vel at
-          ipsum.
-        </p>
-        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
-          <div className="flex h-full items-center justify-center">Video Placeholder</div>
-        </div>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </p>
-        <div className="aspect-video overflow-hidden rounded-lg bg-slate-100">
-          <div className="flex h-full items-center justify-center">Video Placeholder</div>
-        </div>
-      </div>
-    ),
-    header: {
-      menuItems: [
-        {
-          name: 'Documentation',
-          items: [
-            {
-              name: 'Platforms & Services',
-              description: 'Cloud services',
-              href: '#',
-              icon: ServiceIcon, // Pass the component, not <ChartPieIcon />
-            },
-            {
-              name: 'Solutions & Propositions',
-              description: 'Solutions that we have built',
-              href: '#',
-              icon: SolutionIcon,
-            },
-            {
-              name: 'Products',
-              description: 'Products that we sell',
-              href: '#',
-              icon: ProductIcon,
-            },
-          ],
-        },
-        {
-          name: 'Resources',
-          items: [
-            { name: 'Documentation', href: '#', icon: ChartPieIcon },
-            { name: 'API Reference', href: '#', icon: CursorArrowRaysIcon },
-            { name: 'Github', href: '#', icon: GithubIcon },
-          ],
-          actions: [
-            { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-            { name: 'Contact sales', href: '#', icon: PhoneIcon },
-            { name: 'View all products', href: '#', icon: RectangleGroupIcon },
-          ],
-        },
-        {
-          name: 'Intranet',
-          href: '#',
-        },
-      ],
-    },
+    type: 'slideshow',
+    orientation: 'landscape',
     page: {
       id: 7,
       title: 'Ways of Working',
@@ -1146,7 +1049,6 @@ export const Default: PageStory = {
       createdAt: '2024-12-30T14:47:05.921Z',
       _status: 'published',
     },
-    edit: true,
   },
 }
 
@@ -1157,15 +1059,6 @@ export const SlideShow2 = {
       type: 'mediumImpact',
       media: 'stock1.jpg?height=400&width=800',
       children: <h1 className="text-4xl font-bold">Medium Impact Hero</h1>,
-    },
-    relatedContent: {
-      title: 'Related Links',
-      links: [
-        { title: 'Employee Handbook', url: '/handbook' },
-        { title: 'IT Support', url: '/it-support' },
-        { title: 'HR Portal', url: '/hr' },
-        { title: 'Company Directory', url: '/directory' },
-      ],
     },
     page: {
       id: 19,
@@ -1841,6 +1734,7 @@ export const SlideShow2 = {
 
 export const SlideShowWithThemes = {
   args : {
+    ...Default.args,
     page: {
       id: 1,
       title: 'Demo Page 1',

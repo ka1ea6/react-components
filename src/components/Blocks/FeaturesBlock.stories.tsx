@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { FeaturesBlock } from './FeaturesBlock'
+import { ImageTest, BlocksTest, HeroTest, RichTextTest } from '../../tests/payload'
 
 const meta: Meta<typeof FeaturesBlock> = {
   title: 'Reusable Blocks/FeaturesBlock',
@@ -15,28 +16,75 @@ type Story = StoryObj<typeof FeaturesBlock>
 
 export const Default: Story = {
   args: {
-    title: 'What Are Digital Colleagues?',
-    description: 'some other words',
+    title: 'Lorem ipsum dolor sit amet',
+    description: 'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
     features: [
       {
         icon: { type: 'fa-thin', icon: 'robot' },
-        title: 'AI-Powered Assistants',
-        content:
-          'Digital colleagues are generative AI tools that augment your existing workforce, enhancing productivity and customer experience.',
+        title: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+          settings: {
+            card: 'outline',
+          },
       },
       {
         icon: { type: 'fa-thin', icon: 'lightbulb' },
         link: { label: 'label', type: 'custom', url: '#' },
         title: 'Intelligent Insights',
+        statistic: '80%',
         content:
           'They provide valuable insights and improve ways of working, saving time and boosting efficiency across your organisation.',
+          settings: {
+            card: 'default',
+          },
       },
       {
-        icon: { type: 'fa-kit', icon: 'delivery' },
+        icon: { type: 'fa-kit', icon: 'software' },
         // link: { reference: { relationTo: 'pages', value: { slug: 'contact' } } },
-        title: 'Collaborative Partners (internal link)',
+        title: 'Collaborative Partners',
+        statistic: '80%',
         content:
           'Digital colleagues work alongside human employees, assisting with tasks and enhancing overall performance.',
+          settings: {
+            card: 'solid',
+          },
+      },
+    ],
+  },
+}
+
+export const MoreOptions: Story = {
+  args: {
+    
+    features: [
+      {
+        icon: { type: 'fa-thin', icon: 'robot' },
+        title: 'Sed at eros vel lacus varius varius nec id metus.',
+        link: { label: 'label', type: 'custom', url: '#' },
+        content: RichTextTest.simple,
+          settings: {
+            card: 'outline',
+          },
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'lightbulb' },
+        link: { label: 'label', type: 'custom', url: '#' },
+        title: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+        statistic: '80%',
+          settings: {
+            card: 'radial',
+          },
+      },
+      {
+        icon: { type: 'fa-kit', icon: 'software' },
+        // link: { reference: { relationTo: 'pages', value: { slug: 'contact' } } },
+        title: 'Sed at eros vel lacus.',
+        content: RichTextTest.simple,
+        statistic: '80%',
+          settings: {
+            card: 'gradient',
+          },
       },
     ],
   },
