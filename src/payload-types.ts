@@ -12,6 +12,7 @@ export interface Config {
   };
   collections: {
     pages: Page;
+    assessment: Assessment;
     'published-pages': PublishedPage;
     'reusable-content': ReusableContent;
     posts: Post;
@@ -42,6 +43,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    assessment: AssessmentSelect<false> | AssessmentSelect<true>;
     'published-pages': PublishedPagesSelect<false> | PublishedPagesSelect<true>;
     'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -934,11 +936,7 @@ export interface FeaturesBlock {
           /**
            * Card style
            */
-          card?: ('default' | 'solid' | 'gradient' | 'radial') | null;
-          /**
-           * Card contents style
-           */
-          contents?: ('icon' | 'statistic' | 'text') | null;
+          card?: ('default' | 'solid' | 'gradient' | 'radial' | 'outline') | null;
         };
         link?: {
           type?: ('reference' | 'custom' | 'none') | null;
@@ -981,6 +979,20 @@ export interface FeaturesBlock {
  * via the `definition` "ReusableContentBlock".
  */
 export interface ReusableContentBlock {
+  theme?: {
+    settings?: {
+      /**
+       * Set the background style
+       */
+      theme?: ('default' | 'light' | 'dark' | 'green') | null;
+      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
+      image?: (number | null) | Media;
+      /**
+       * Overlay the theme colour on top of the image
+       */
+      overlay?: boolean | null;
+    };
+  };
   reusableContent: number | ReusableContent;
   customId?: string | null;
   id?: string | null;
@@ -1178,6 +1190,28 @@ export interface Proposition {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assessment".
+ */
+export interface Assessment {
+  id: number;
+  assessmentType: 'ai' | 'fin-ops' | 'cybersecurity' | 'data-governance';
+  title: string;
+  sections: {
+    section: 'governance' | 'strategy' | 'skills' | 'foundations' | 'data' | 'operations';
+    questions: {
+      text: string;
+      'answer-options': string[];
+      'free-text'?: boolean | null;
+      weighting?: ('1' | '2' | '3') | null;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1781,6 +1815,10 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'assessment';
+        value: number | Assessment;
+      } | null)
+    | ({
         relationTo: 'published-pages';
         value: number | PublishedPage;
       } | null)
@@ -2124,7 +2162,6 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
           | T
           | {
               card?: T;
-              contents?: T;
             };
         link?:
           | T
@@ -2152,10 +2189,47 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
  * via the `definition` "ReusableContentBlock_select".
  */
 export interface ReusableContentBlockSelect<T extends boolean = true> {
+  theme?:
+    | T
+    | {
+        settings?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              image?: T;
+              overlay?: T;
+            };
+      };
   reusableContent?: T;
   customId?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assessment_select".
+ */
+export interface AssessmentSelect<T extends boolean = true> {
+  assessmentType?: T;
+  title?: T;
+  sections?:
+    | T
+    | {
+        section?: T;
+        questions?:
+          | T
+          | {
+              text?: T;
+              'answer-options'?: T;
+              'free-text'?: T;
+              weighting?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

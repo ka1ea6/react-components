@@ -70,6 +70,9 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     customCanvas.width = Math.max(root.clientWidth || 0) * scale;
     customCanvas.height = Math.max(root.clientHeight || 0) * scale + 100;
     const ctx = customCanvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Failed to get 2D context');
+    }
     const originalDrawImage = ctx.drawImage;
     
     const images: { [key: string]: HTMLImageElement } = Array.from(root.getElementsByTagName('img')).reduce(
@@ -80,7 +83,8 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
       {} as { [key: string]: HTMLImageElement },
     );
     
-    ctx.drawImage = function (image, sx, sy, sw, sh, dx, dy, dw, dh) {
+    ctx.drawImage = function (...args: any[]): void {
+      let [image, sx, sy, sw, sh, dx, dy, dw, dh] = args;
       if (image instanceof HTMLImageElement) {
         const objectFit = images[image.src].style.objectFit || 'fill'; // Default to 'fill'
         const objectPosition = images[image.src].style.objectPosition || 'center center'; // Default to 'center center'
@@ -260,26 +264,23 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
 
   const blocksWithHero = [emptyContentBlock, ...contentWithIds]
 
-  const updatePagedPreview = useCallback(() => {
-    if (!previewContainer.current) return
-    // Clear the content of previewContainer
-    if (previewContainer.current) {
-      previewContainer.current.innerHTML = '';
-    }
-    pagedRef.current
-      .preview(
-        document.getElementById('printable-content')!.innerHTML,
-        ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'],
-        previewContainer.current,
-      )
-      .then((result) => setPageCount(result.pageCount))
-      .catch((error) => console.error('Paged.js error:', error))
-  }, [])
+  // const updatePagedPreview = useCallback(() => {
+  //   if (!previewContainer.current) return
+  //   // Clear the content of previewContainer
+  //   if (previewContainer.current) {
+  //     previewContainer.current.innerHTML = '';
+  //   }
+  //   pagedRef.current
+  //     .preview(
+  //       document.getElementById('printable-content')!.innerHTML,
+  //       ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'],
+  //       previewContainer.current,
+  //     )
+  //     .then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
+  //     .catch((error: any) => console.error('Paged.js error:', error))
+  // }, [])
 
-  // useEffect(() => {
-  //   pagedRef.current = new Previewer()
-  //   updatePagedPreview()
-  // }, [updatePagedPreview])
+  
 
   useEffect(() => {
     // if (!rendered && children) {
@@ -294,8 +295,8 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
       if (previewContainer.current) {
         previewContainer.current.innerHTML = '';
       }
-      paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result) => setPageCount(result.pageCount))
-      .catch((error) => console.error('Paged.js error:', error))
+      paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
+      .catch((error: any) => console.error('Paged.js error:', error))
   
 
         // Delay the removal of the second instance of .pagedjs_pages
@@ -345,21 +346,6 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
           Print to PDF
         </Button>
       </div>
-      <div className="fixed top-40 right-4 z-[1000] print:hidden">
-        <Button onClick={updatePagedPreview} variant="outline" className="px-5 py-2 text-sm font-semibold">
-          Refresh
-        </Button>
-      </div>
-
-      {/* <div className="relative w-full h-screen print:page-break-before">
-        
-        <HeadingImage
-          image={Image1}
-          title="Reply Cortex"
-        />
-      </div> */}
-
-      {/* <TitleSlide hero={page.hero} title={page.title} /> */}
 
       <div id="printable-content" ref={contentContainer} style={{ display: 'none' }}>
         {/* {page.hero && <RenderHero {...page.hero} />} */}

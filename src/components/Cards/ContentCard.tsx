@@ -19,7 +19,7 @@ function isDynamicIconProps(icon: any): icon is DynamicIconProps {
   return icon && typeof icon === 'object' && 'type' in icon && 'iconName' in icon
 }
 export function ContentCard({
-  variant = 'light',
+  variant = 'outline',
   className,
   icon,
   heading,
@@ -40,7 +40,7 @@ export function ContentCard({
       className={cn(
         'rounded-3xl p-8 md:p-8 min-w-56',
         variants[variant],
-        variant === 'light' ? 'text-gray-900' : 'text-white',
+        variant === 'outline' ? 'text-gray-900' : 'text-white',
         className,
       )}
     >

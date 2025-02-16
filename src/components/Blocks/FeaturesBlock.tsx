@@ -42,8 +42,8 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
       <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length : 1}`}>
         {features &&
           features.map((section, index) => {
-            // card?: ('default' | 'solid' | 'gradient' | 'radial' | 'none') | null;
-            if (section.settings?.card === 'default' || section.settings?.card === 'none' || !section.settings?.card) {
+            // card?: ('outline' | 'solid' | 'gradient' | 'radial' | 'none') | null;
+            if (section.settings?.card === 'default' || !section.settings?.card) {
               return <IconFeature key={index} section={section} index={index} />
             } else {
               const icon = () => {
