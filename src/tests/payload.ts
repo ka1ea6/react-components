@@ -715,6 +715,79 @@ export const BlocksTest = {
         blockType: 'mediaBlock',
       },
   },
+  features: {
+    iconWithText:         {
+        id: '67a74ef36365f244c8b6d14f',
+        title: 'Test Feature',
+        description: null,
+        blockName: null,
+
+        features: [
+          {
+            id: '67a74efc6365f244c8b6d151',
+            title: 'Feature 1',
+
+            content: RichTextTest.simple,
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'cloud',
+            },
+          },
+
+          {
+            id: '67a74f116365f244c8b6d153',
+            title: 'Feature 2',
+
+            content: RichTextTest.simple,
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'user',
+            },
+          },
+
+          {
+            id: '67a74f246365f244c8b6d155',
+            title: 'Feature 3',
+
+            content: RichTextTest.simple,
+
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'messages-dollar',
+            },
+          },
+        ],
+        blockType: 'features',
+
+        theme: {
+          settings: {
+            theme: 'dark',
+            background: 'solid',
+          },
+        },
+      },
+  }
 }
 
 export const HeroTest = {
@@ -739,7 +812,7 @@ export const HeroTest = {
             children: [
               {
                 mode: 'normal',
-                text: 'How we work',
+                text: 'Lorum Ipsum Dolor Sit Amet',
                 type: 'text',
                 style: '',
                 detail: 0,

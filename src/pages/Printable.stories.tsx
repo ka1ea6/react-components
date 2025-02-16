@@ -39,6 +39,7 @@ export const Default: PageStory = {
         BlocksTest.content.oneThirdWithImageThemeShort,
         BlocksTest.content.oneThirdWithImageTheme3Collumns,
         BlocksTest.content.media,
+        BlocksTest.features.iconWithText,
         {
           id: '67a74c276365f244c8b6d149',
           blockName: null,

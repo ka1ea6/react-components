@@ -17,45 +17,7 @@ type Props = {
   id?: string | null
 }
 
-type Section = NonNullable<FeaturesBlockProps['features']>[number];
-
-// type RichText = {
-//   root: {
-//     type: string
-//     children: {
-//       type: string
-//       version: number
-//       [k: string]: unknown
-//     }[]
-//     direction: ('ltr' | 'rtl') | null
-//     format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-//     indent: number
-//     version: number
-//   }
-//   [k: string]: unknown
-// } | null
-
-// export interface Section {
-//   icon?: { type: string; icon: string }
-//   link?: {
-//     type?: ('reference' | 'custom' | 'none') | null
-//     newTab?: boolean | null
-//     reference?: {
-//       relationTo: 'pages'
-//       value: number | Page
-//     } | null
-//     url?: string | null
-//     // label: string
-//   }
-//   title: string
-//   content?: string | Record<string, any> | null
-// }
-
-// const iconMap: Record<Section['icon'], LucideIcon> = {
-//   robot: Bot,
-//   lightbulb: Lightbulb,
-//   handshake: HandshakeIcon,
-// }
+type Section = NonNullable<FeaturesBlockProps['features']>[number]
 
 export const FeaturesBlock: React.FC<Props> = ({ title, description, features, id }) => {
   // export function FeatureBlock({ title, features, theme = 'dark' }: FeatureBlockProps) {
@@ -64,15 +26,15 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
   return (
     <section className={cn('container w-full rounded-lg', 'dark:text-gray-300 text-gray-800')}>
       {title && (
-        <h2 className="mb-6 mt-0 text-2xl font-bold md:text-3xl" id={id || ''}>
+        <h2 className="mb-6 mt-0 text-2xl font-bold md:text-3xl text-primary" id={id || ''}>
           {title}
         </h2>
       )}
       {description && typeof description === 'string' && (
-        <p className="mb-5 text-xl tracking-tight md:text-xl">{description}</p>
+        <p className="mb-5 text-xl tracking-tight md:text-xl text-foreground">{description}</p>
       )}
       {description && typeof description === 'object' && (
-        <p className="mb-5 text-xl tracking-tight md:text-xl">
+        <p className="mb-5 text-xl tracking-tight md:text-xl text-foreground">
           <RichText content={description} enableGutter={false} />
         </p>
       )}
@@ -80,33 +42,35 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
       <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length : 1}`}>
         {features &&
           features.map((section, index) => {
-
-            if (section.settings?.contents === 'icon') {
-            return (
-              <IconFeature key={index} section={section} index={index} />
-              
-            )} else {
+            // card?: ('default' | 'solid' | 'gradient' | 'radial' | 'none') | null;
+            if (section.settings?.card === 'default' || section.settings?.card === 'none' || !section.settings?.card) {
+              return <IconFeature key={index} section={section} index={index} />
+            } else {
               const icon = () => {
-                if (section.icon.type !== 'none') {
-                  return { type: section.icon.type, iconName: section.icon.icon } as unknown as DynamicIconProps
+                if (section.icon && 'type' in section.icon && section.icon.type !== 'none') {
+                  return {
+                    type: section.icon.type,
+                    iconName: section.icon.icon,
+                  } as unknown as DynamicIconProps
                 }
-                return  undefined
+                return undefined
               }
               return (
-                
-
-
-<ContentCard key={index}  variant={section.settings?.card === 'default' ? 'solid' : section.settings?.card || 'solid' }
-  icon={icon() || undefined}
-  heading={section.title || ''}
-  content={section.content || undefined}
-  statistic={section.statistic || undefined}
-  buttonText={section.link?.url ? 'Find out more' : undefined}
-  buttonHref={section.link?.url || undefined} />
+                <ContentCard
+                  key={index}
+                  variant={
+                    section.settings?.card || 'outline'
+                  }
+                  icon={icon() || undefined}
+                  heading={section.title || ''}
+                  content={section.content || undefined}
+                  statistic={section.statistic || undefined}
+                  buttonText={section.link?.url ? 'Find out more' : undefined}
+                  buttonHref={section.link?.url || undefined}
+                />
               )
             }
             // const Icon = <div><i className=`${section.icon.type} ${section.icon.icon}`></i></div>
-            
           })}
       </div>
     </section>
@@ -122,7 +86,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
               /> */
 }
 
-const IconFeature = ({ section, index }: { section: Section, index: number }) => {
+const IconFeature = ({ section, index }: { section: Section; index: number }) => {
   if (!section) return null
   const content = (
     <div key={index} className="flex flex-col gap-4">
@@ -134,11 +98,14 @@ const IconFeature = ({ section, index }: { section: Section, index: number }) =>
       <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-400">
         {section.title}
       </h3>
+      {/* Statistic Display */}
+      {section.statistic && (
+        <div className="mb-6">
+          <div className="text-4xl text-wrap font-bold leading-none overflow-hidden text-foreground">{section.statistic}</div>
+        </div>
+      )}
       {section.content && typeof section.content != 'object' && (
-        <div
-          className="text-lg opacity-80"
-          dangerouslySetInnerHTML={{ __html: section.content }}
-        />
+        <div className="text-lg opacity-80" dangerouslySetInnerHTML={{ __html: section.content }} />
       )}
       {section.content && typeof section.content === 'object' && (
         <div className="text-lg opacity-80">
