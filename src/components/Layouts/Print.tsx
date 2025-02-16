@@ -67,7 +67,7 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     const customCanvas = document.createElement('canvas');
     const scale = window.devicePixelRatio;
     customCanvas.width = Math.max(root.clientWidth || 0) * scale;
-    customCanvas.height = Math.max(root.clientHeight || 0) * scale;
+    customCanvas.height = Math.max(root.clientHeight || 0) * scale + 100;
     console.log('customCanvas.width', customCanvas.width)
     console.log('customCanvas.height', customCanvas.height)
     const ctx = customCanvas.getContext('2d');
@@ -162,7 +162,7 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     // var w = Math.max(element.clientWidth || 0);
     console.log('h/w', h, w)
     console.log('element', element.clientHeight, element.clientWidth)
-    const canvas = await html2canvas(element, { canvas: customCanvas, windowHeight: h, windowWidth: w, scale: 2 });
+    const canvas = await html2canvas(element, { canvas: customCanvas, windowHeight: h *2, windowWidth: w*2, scale: 2 });
     const data = canvas.toDataURL("image/png");
     const pdf = new jsPDF({
       // orientation: "landscape",
@@ -177,14 +177,17 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
     console.log('pdfWidth', pdfWidth)
     console.log('pdfHeight', pdfHeight)
     console.log('imgProperties', imgProperties)
-    console.log('height', pdf.internal.pageSize.getHeight())
     const pdfRightSized = new jsPDF({
       // orientation: "landscape",
       unit: "mm",
       format: [pdfWidth, pdfHeight],
     });
+    console.log('height', pdfRightSized.internal.pageSize.getHeight())
     
     pdfRightSized.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
+    html2canvas(document.getElementById(elementToPrintId), { canvas: customCanvas, windowHeight: h *2, windowWidth: w *2, scale: 2}).then(canvas => {
+      document.body.appendChild(canvas)
+  });
     pdfRightSized.save("print.pdf");
   };
 
@@ -223,6 +226,23 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
               )}
             </>
           ))}
+          
+          <section className='normal-page'>
+            <div
+        className="w-full py-2 px-8 flex justify-between items-center
+        dark bg-background text-primary"
+      >
+        <div className="flex px-6 items-center space-x-2">
+          <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
+          <span className="pl-12 text-sm">Power up your people</span>
+        </div>
+  
+        <a href="https://cortexreply.com" className="text-sm hover:underline">
+          cortexreply.com
+        </a>
+      </div>
+          
+      </section>
       </div>
 
       {/* <style jsx global>{}</style> */}
