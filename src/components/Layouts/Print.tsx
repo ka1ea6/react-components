@@ -35,7 +35,7 @@ export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait' 
 
 
 
-const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
+export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
   const { contentWithIds } = getTableOfContents(page)
   const emptyContentBlock = {
     id: '0000000000000000000',
@@ -239,7 +239,7 @@ const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
 }
 
 
-const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
+export const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
   const { contentWithIds } = getTableOfContents(page)
   const previewContainer = useRef<HTMLDivElement>(null)
   const contentContainer = useRef<HTMLDivElement>(null)
@@ -280,37 +280,47 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
   //     .catch((error: any) => console.error('Paged.js error:', error))
   // }, [])
 
+
+
+  // useEffect(() => {
+  //   const style = document.createElement('style');
+  //   style.textContent = `@page { size: 445.5mm 297mm ${layout}; margin: 0mm; }`;
+  //   document.head.appendChild(style);
+  //   return () => document.head.removeChild(style);
+  // }, [layout]);
   
+
+  // useEffect(() => {
+  //   const timerId = setTimeout(() => { // wait for a bit!
+  //     const paged = new Previewer();
+  //     if (!contentContainer.current) return
+  //     const contentMdx = `${contentContainer.current.innerHTML}`;
+  //     // Clear the content of previewContainer
+  //     if (previewContainer.current) {
+  //       previewContainer.current.innerHTML = '';
+  //     }
+  //     paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
+  //     .catch((error: any) => console.error('Paged.js error:', error))
+  //     }, 50);
+  
+  //     // Clean up the timer to avoid memory leaks
+  //     return () => clearTimeout(timerId);
+  //   }, [page, layout]);
+
+const updatePagedPreview = useCallback(() => {
+    if (!previewContainer.current) return;
+    if (previewContainer.current) {
+             previewContainer.current.innerHTML = '';
+            }
+    pagedRef.current.preview(document.getElementById('printable-content')!.innerHTML, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current)
+      .then(result => setPageCount(result.pageCount))
+      .catch(error => console.error('Paged.js error:', error));
+  }, []);
 
   useEffect(() => {
-    // if (!rendered && children) {
-
-    const timerId = setTimeout(() => { // wait for a bit!
-      const paged = new Previewer();
-      if (!contentContainer.current) return
-
-      const contentMdx = `${contentContainer.current.innerHTML}`;
-
-      // Clear the content of previewContainer
-      if (previewContainer.current) {
-        previewContainer.current.innerHTML = '';
-      }
-      paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
-      .catch((error: any) => console.error('Paged.js error:', error))
-  
-
-        // Delay the removal of the second instance of .pagedjs_pages
-        // setTimeout(() => {
-        //   const pagedPages = previewContainer.current.getElementsByClassName('pagedjs_pages');
-        //   if (pagedPages.length > 1) {
-        //     pagedPages[0].remove();
-        //   }
-        // }, 0);
-      }, 50);
-  
-      // Clean up the timer to avoid memory leaks
-      return () => clearTimeout(timerId);
-    }, [page, layout]);
+    pagedRef.current = new Previewer();
+    updatePagedPreview();
+  }, [updatePagedPreview]);
 
 
   // useEffect(() => {
@@ -340,28 +350,28 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
   }
 
   return (
-    <div>
+    <div className={`pagedjs-container`}>
       <div className="fixed top-20 right-4 z-[1000] print:hidden">
         <Button onClick={handlePrint} variant="outline" className="px-5 py-2 text-sm font-semibold">
           Print to PDF
         </Button>
       </div>
 
-      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }}>
+      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }} className="pagedjs-content">
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
               {index === 0 ? (
                 <section
                   key={index}
-                  className="title-page w-full h-full"
+                  className="pagedjs-section title-page w-full h-full"
                 >
                   <TitleSlide hero={page.hero} title={page.title} />
                 </section>
               ) : (
                 <section
                   key={index}
-                  className={cn("normal-page h-full", block.theme?.settings?.theme === 'dark' ? 'dark bg-background' : 'light')}
+                  className={cn("pagedjs-section normal-page h-full", block.theme?.settings?.theme === 'dark' ? 'dark bg-background' : 'light')}
                 >
                   {block.blockName && <HeaderTop title={block.blockName} />}
                   <RenderBlocks blocks={[block]} />
@@ -377,6 +387,7 @@ const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  })
 
       {/* <style jsx global>{}</style> */}
       <div ref={previewContainer} className="preview-container"></div>
+
     </div>
   )
 }
