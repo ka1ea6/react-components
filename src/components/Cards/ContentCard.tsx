@@ -62,12 +62,12 @@ export function ContentCard({
       {subheading && <div className="mb-4 text-xl md:text-2xl font-light">{subheading}</div>}
 
       {content && typeof content === 'object' && (
-        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-600' : 'text-gray-300')}>
-          <RichText enableGutter={false} content={content} enableProse={false} className={cn( variant === 'outline' ? 'prose' : 'prose prose-headings:text-white prose-p:text-gray-300')} />
+        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-300' : 'text-gray-300')}>
+          <RichText enableGutter={false} content={content} enableProse={false} className={cn( variant === 'outline' ? 'prose prose-headings:text-white prose-p:text-gray-300' : 'prose prose-headings:text-white prose-p:text-gray-300')} />
         </div>
       )}
       {content && typeof content === 'string' && (
-        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-600' : 'text-gray-300')}>
+        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-300' : 'text-gray-300')}>
           {content}
         </div>
       )}
