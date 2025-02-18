@@ -38,6 +38,7 @@ export const Default: PageStory = {
 
         BlocksTest.content.oneThirdWithImageThemeShort,
         BlocksTest.content.oneThirdWithImageTheme3Collumns,
+        BlocksTest.content.headerAndTheme3Collumns,
         BlocksTest.content.halfWithEmbeddedImage,
         BlocksTest.content.media,
         BlocksTest.features.iconWithText,

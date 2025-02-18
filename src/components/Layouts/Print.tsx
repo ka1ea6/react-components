@@ -23,13 +23,15 @@ interface PrintableProps {
   layout?: 'portrait' | 'landscape' | 'flow'
 }
 
-function xToPx(x) {
+function xToPx(x: string) {
   var div = document.createElement('div');
   div.style.display = 'block';
   div.style.height = x;
   document.body.appendChild(div);
   var px = parseFloat(window.getComputedStyle(div, null).height);
-  div.parentNode.removeChild(div);
+  if (div.parentNode) {
+    div.parentNode.removeChild(div);
+  }
   // round down to the nearest whole number
 
   return Math.floor(px);
@@ -326,8 +328,8 @@ const updatePagedPreview = useCallback(() => {
              previewContainer.current.innerHTML = '';
             }
     pagedRef.current.preview(document.getElementById('printable-content')!.innerHTML, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current)
-      .then(result => setPageCount(result.pageCount))
-      .catch(error => console.error('Paged.js error:', error));
+      .then((result: { pageCount: number }) => setPageCount(result.pageCount))
+      .catch((error: unknown) => console.error('Paged.js error:', error));
   }, []);
 
   useEffect(() => {
@@ -370,7 +372,7 @@ const updatePagedPreview = useCallback(() => {
         </Button>
       </div>
 
-      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }} className="pagedjs-content">
+      <div id="printable-content" ref={contentContainer} style={{ display: 'block' }} className="pagedjs-content">
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
