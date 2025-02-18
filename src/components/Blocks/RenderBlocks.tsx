@@ -47,7 +47,7 @@ export const RenderBlocks: React.FC<{
                   <Theme block={block} index={index} />
                   <div
                     className={cn(
-                      'container',
+                      'container h-full',
                       theme?.settings?.theme === 'dark'
                         ? 'dark'
                         : theme?.settings?.theme === 'green'

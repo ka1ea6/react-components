@@ -370,7 +370,7 @@ const updatePagedPreview = useCallback(() => {
         </Button>
       </div>
 
-      <div id="printable-content" ref={contentContainer} style={{ display: 'block' }} className="pagedjs-content">
+      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }} className="pagedjs-content">
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
@@ -384,7 +384,7 @@ const updatePagedPreview = useCallback(() => {
               ) : (
                 <section
                   key={index}
-                  className={cn("pagedjs-section normal-page max-h-[699px]",`h-[${xToPx('185mm')}px]`, block.theme?.settings?.theme === 'dark' ? 'dark' : 'light')}
+                  className={cn("pagedjs-section normal-page h-[699px]",`h-[${xToPx('185mm')}px]`, block.theme?.settings?.theme === 'dark' ? 'dark' : 'light')}
                 >
                   {block.blockName && <HeaderTop title={block.blockName} /> }
                   <RenderBlocks blocks={[block]} fill />
