@@ -23,6 +23,19 @@ interface PrintableProps {
   layout?: 'portrait' | 'landscape' | 'flow'
 }
 
+function xToPx(x) {
+  var div = document.createElement('div');
+  div.style.display = 'block';
+  div.style.height = x;
+  document.body.appendChild(div);
+  var px = parseFloat(window.getComputedStyle(div, null).height);
+  div.parentNode.removeChild(div);
+  // round down to the nearest whole number
+
+  return Math.floor(px);
+}
+
+
 export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait' }) => {
   if (layout === 'flow') {
     return <FlowPrintable page={page} layout={layout} />
@@ -357,7 +370,7 @@ const updatePagedPreview = useCallback(() => {
         </Button>
       </div>
 
-      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }} className="pagedjs-content">
+      <div id="printable-content" ref={contentContainer} style={{ display: 'block' }} className="pagedjs-content">
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
@@ -371,10 +384,10 @@ const updatePagedPreview = useCallback(() => {
               ) : (
                 <section
                   key={index}
-                  className={cn("pagedjs-section normal-page h-full", block.theme?.settings?.theme === 'dark' ? 'dark bg-background' : 'light')}
+                  className={cn("pagedjs-section normal-page max-h-[699px]",`h-[${xToPx('185mm')}px]`, block.theme?.settings?.theme === 'dark' ? 'dark' : 'light')}
                 >
-                  {block.blockName && <HeaderTop title={block.blockName} />}
-                  <RenderBlocks blocks={[block]} />
+                  {block.blockName && <HeaderTop title={block.blockName} /> }
+                  <RenderBlocks blocks={[block]} fill />
                   {/* <footer className="pagedjs-footer flex justify-between items-center p-4 border-t border-gray-300 shadow-md bg-white dark:bg-gray-900 print:fixed print:bottom-0 print:left-0 print:w-full"> */}
                     {/* <footer className="pagedjs-footer"> 
                     <Footer />
