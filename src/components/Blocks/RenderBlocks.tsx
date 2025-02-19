@@ -97,8 +97,8 @@ export const Theme: React.FC<{
         )}
       >
         <Image
-          src={theme.settings.image.url || '/placeholder.svg'}
-          alt={theme.settings.image.alt}
+          src={theme.settings?.image?.url || '/placeholder.svg'}
+          alt={theme.settings?.image?.alt || ''}
           fill
           className="object-cover"
           priority

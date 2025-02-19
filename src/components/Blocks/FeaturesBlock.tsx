@@ -43,9 +43,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
         {features &&
           features.map((section, index) => {
             // card?: ('outline' | 'solid' | 'gradient' | 'radial' | 'none') | null;
-            if (section.settings?.card === 'default' || !section.settings?.card) {
-              return <IconFeature key={index} section={section} index={index} />
-            } else {
+       
               const icon = () => {
                 if (section.icon && 'type' in section.icon && section.icon.type !== 'none') {
                   return {
@@ -59,9 +57,11 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                 <ContentCard
                   key={index}
                   variant={
-                    section.settings?.card || 'outline'
+                    section.settings?.card === 'default' ? 'light' : section.settings?.card || 'outline'
                   }
                   icon={icon() || undefined}
+                  iconSize={section.settings?.iconSize || 'large'}
+                  width='auto'
                   heading={section.title || ''}
                   content={section.content || undefined}
                   statistic={section.statistic || undefined}
@@ -69,7 +69,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                   buttonHref={section.link?.url || undefined}
                 />
               )
-            }
+            
             // const Icon = <div><i className=`${section.icon.type} ${section.icon.icon}`></i></div>
           })}
       </div>

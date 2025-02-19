@@ -41,7 +41,7 @@ export const Default: PageStory = {
         BlocksTest.content.headerAndTheme3Collumns,
         BlocksTest.content.halfWithEmbeddedImage,
         BlocksTest.content.media,
-        BlocksTest.features.iconWithText,
+        BlocksTest.content.boxesWithThreeColumns,
         {
           id: '67a74c276365f244c8b6d149',
           blockName: null,

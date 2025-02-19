@@ -124,6 +124,10 @@ const config = {
     // Add other dynamic class names as needed
   ],
   theme: {
+    fontFamily: {
+      sans: ['Proxima Nova', 'sans-serif'],
+      mono: ['JetBrains Mono', 'monospace'],
+    },
     screens: {
       xs: '320px', // Extra small screens (custom)
       sm: '480px', // Small screens

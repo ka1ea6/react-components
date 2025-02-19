@@ -354,6 +354,7 @@ export interface ContentBlock {
        * Overlay the theme colour on top of the image
        */
       overlay?: boolean | null;
+      box?: ('none' | 'line') | null;
     };
   };
   columns?:
@@ -401,6 +402,20 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
+  theme?: {
+    settings?: {
+      /**
+       * Set the background style
+       */
+      theme?: ('default' | 'light' | 'dark' | 'green') | null;
+      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
+      image?: (number | null) | Media;
+      /**
+       * Overlay the theme colour on top of the image
+       */
+      overlay?: boolean | null;
+    };
+  };
   media: number | Media;
   id?: string | null;
   blockName?: string | null;
@@ -411,6 +426,20 @@ export interface MediaBlock {
  * via the `definition` "ImageBlock".
  */
 export interface ImageBlock {
+  theme?: {
+    settings?: {
+      /**
+       * Set the background style
+       */
+      theme?: ('default' | 'light' | 'dark' | 'green') | null;
+      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
+      image?: (number | null) | Media;
+      /**
+       * Overlay the theme colour on top of the image
+       */
+      overlay?: boolean | null;
+    };
+  };
   media: number | Image;
   id?: string | null;
   blockName?: string | null;
@@ -581,10 +610,6 @@ export interface Post {
         name?: string | null;
       }[]
     | null;
-  /**
-   * Publish this page to the public website
-   */
-  publishedInternal?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -937,6 +962,10 @@ export interface FeaturesBlock {
            * Card style
            */
           card?: ('default' | 'solid' | 'gradient' | 'radial' | 'outline') | null;
+          /**
+           * Icon Size
+           */
+          iconSize?: ('large' | 'small') | null;
         };
         link?: {
           type?: ('reference' | 'custom' | 'none') | null;
@@ -979,20 +1008,6 @@ export interface FeaturesBlock {
  * via the `definition` "ReusableContentBlock".
  */
 export interface ReusableContentBlock {
-  theme?: {
-    settings?: {
-      /**
-       * Set the background style
-       */
-      theme?: ('default' | 'light' | 'dark' | 'green') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown' | 'image') | null;
-      image?: (number | null) | Media;
-      /**
-       * Overlay the theme colour on top of the image
-       */
-      overlay?: boolean | null;
-    };
-  };
   reusableContent: number | ReusableContent;
   customId?: string | null;
   id?: string | null;
@@ -1089,6 +1104,7 @@ export interface ReusableContent {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1345,10 +1361,6 @@ export interface PublishedPost {
         name?: string | null;
       }[]
     | null;
-  /**
-   * Publish this page to the public website
-   */
-  publishedInternal?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -2069,6 +2081,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               background?: T;
               image?: T;
               overlay?: T;
+              box?: T;
             };
       };
   columns?:
@@ -2097,6 +2110,18 @@ export interface ContentBlockSelect<T extends boolean = true> {
  * via the `definition` "MediaBlock_select".
  */
 export interface MediaBlockSelect<T extends boolean = true> {
+  theme?:
+    | T
+    | {
+        settings?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              image?: T;
+              overlay?: T;
+            };
+      };
   media?: T;
   id?: T;
   blockName?: T;
@@ -2106,6 +2131,18 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "ImageBlock_select".
  */
 export interface ImageBlockSelect<T extends boolean = true> {
+  theme?:
+    | T
+    | {
+        settings?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              image?: T;
+              overlay?: T;
+            };
+      };
   media?: T;
   id?: T;
   blockName?: T;
@@ -2162,6 +2199,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
           | T
           | {
               card?: T;
+              iconSize?: T;
             };
         link?:
           | T
@@ -2189,18 +2227,6 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
  * via the `definition` "ReusableContentBlock_select".
  */
 export interface ReusableContentBlockSelect<T extends boolean = true> {
-  theme?:
-    | T
-    | {
-        settings?:
-          | T
-          | {
-              theme?: T;
-              background?: T;
-              image?: T;
-              overlay?: T;
-            };
-      };
   reusableContent?: T;
   customId?: T;
   id?: T;
@@ -2367,6 +2393,7 @@ export interface ReusableContentSelect<T extends boolean = true> {
   slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2392,7 +2419,6 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  publishedInternal?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2423,7 +2449,6 @@ export interface PublishedPostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  publishedInternal?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

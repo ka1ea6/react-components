@@ -385,6 +385,102 @@ export const RichTextTest = {
       direction: 'ltr',
     },
   },
+  complex: {
+    root: {
+      children: [
+        {
+          type: 'text',
+          text: 'This is a regular text.',
+        },
+        {
+          type: 'text',
+          text: 'This is bold text.',
+          format: 1, // IS_BOLD
+        },
+        {
+          type: 'text',
+          text: 'This is italic text.',
+          format: 2, // IS_ITALIC
+        },
+        {
+          type: 'text',
+          text: 'This is underline text.',
+          format: 4, // IS_UNDERLINE
+        },
+        {
+          type: 'text',
+          text: 'This is strikethrough text.',
+          format: 8, // IS_STRIKETHROUGH
+        },
+        {
+          type: 'text',
+          text: 'This is subscript text.',
+          format: 16, // IS_SUBSCRIPT
+        },
+        {
+          type: 'text',
+          text: 'This is superscript text.',
+          format: 32, // IS_SUPERSCRIPT
+        },
+        {
+          type: 'text',
+          text: 'This is code text.',
+          format: 64, // IS_CODE
+        },
+        {
+          type: 'table',
+          children: [
+            {
+              type: 'tableRow',
+              children: [
+                {
+                  type: 'tableCell',
+                  children: [
+                    {
+                      type: 'text',
+                      text: 'Cell 1',
+                    },
+                  ],
+                },
+                {
+                  type: 'tableCell',
+                  children: [
+                    {
+                      type: 'text',
+                      text: 'Cell 2',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'tableRow',
+              children: [
+                {
+                  type: 'tableCell',
+                  children: [
+                    {
+                      type: 'text',
+                      text: 'Cell 3',
+                    },
+                  ],
+                },
+                {
+                  type: 'tableCell',
+                  children: [
+                    {
+                      type: 'text',
+                      text: 'Cell 4',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 }
 
 export const BlocksTest = {
@@ -1066,75 +1162,248 @@ export const BlocksTest = {
       blockName: null,
       blockType: 'mediaBlock',
     },
-  },
-  features: {
-    iconWithText: {
-      id: '67a74ef36365f244c8b6d14f',
-      title: 'Test Feature',
-      description: null,
+    boxesWithThreeColumns: {
+      id: '67a74c276365f244c8b6d149',
       blockName: null,
 
-      features: [
+      columns: [
         {
-          id: '67a74efc6365f244c8b6d151',
-          title: 'Feature 1',
+          id: '67a74ea16365f244c8b6d14b',
+          size: 'full',
 
-          content: RichTextTest.simple,
+          richText: RichTextTest.titleAndBody,
+          enableLink: null,
 
           link: {
             type: 'none',
             newTab: null,
             url: null,
-          },
-
-          icon: {
-            type: 'fa-thin',
-            icon: 'cloud',
+            label: null,
+            appearance: 'default',
           },
         },
-
         {
-          id: '67a74f116365f244c8b6d153',
-          title: 'Feature 2',
+          id: '67a74ea16365f244c8b6d14b',
+          size: 'oneThird',
 
-          content: RichTextTest.simple,
+          richText: {
+            root: {
+              type: 'root',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'ltr',
+                  textStyle: '',
+                  textFormat: 0,
+                },
+              ],
+              direction: 'ltr',
+            },
+          },
+          enableLink: null,
 
           link: {
             type: 'none',
             newTab: null,
             url: null,
-          },
-
-          icon: {
-            type: 'fa-thin',
-            icon: 'user',
+            label: null,
+            appearance: 'default',
           },
         },
-
         {
-          id: '67a74f246365f244c8b6d155',
-          title: 'Feature 3',
+          id: '67a74ea16365f244c8b6d14b',
+          size: 'oneThird',
 
-          content: RichTextTest.simple,
+          richText: {
+            root: {
+              type: 'root',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'ltr',
+                  textStyle: '',
+                  textFormat: 0,
+                },
+              ],
+              direction: 'ltr',
+            },
+          },
+          enableLink: null,
 
           link: {
             type: 'none',
             newTab: null,
             url: null,
+            label: null,
+            appearance: 'default',
           },
+        },
+        {
+          id: '67a74ea16365f244c8b6d14b',
+          size: 'oneThird',
 
-          icon: {
-            type: 'fa-thin',
-            icon: 'messages-dollar',
+          richText: {
+            root: {
+              type: 'root',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, libero a pharetra dictum, urna lectus porttitor lacus, at dapibus justo quam vel metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non velit nec arcu volutpat dignissim in a lorem.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'ltr',
+                  textStyle: '',
+                  textFormat: 0,
+                },
+              ],
+              direction: 'ltr',
+            },
+          },
+          enableLink: null,
+
+          link: {
+            type: 'none',
+            newTab: null,
+            url: null,
+            label: null,
+            appearance: 'default',
           },
         },
       ],
-      blockType: 'features',
+      blockType: 'content',
 
       theme: {
         settings: {
           theme: 'dark',
-          background: 'solid',
+          background: 'image',
+          overlay: true,
+          box: 'line',
+        },
+      },
+    },
+    features: {
+      iconWithText: {
+        id: '67a74ef36365f244c8b6d14f',
+        title: 'Test Feature',
+        description: null,
+        blockName: null,
+
+        features: [
+          {
+            id: '67a74efc6365f244c8b6d151',
+            title: 'Feature 1',
+
+            content: RichTextTest.simple,
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'cloud',
+            },
+          },
+
+          {
+            id: '67a74f116365f244c8b6d153',
+            title: 'Feature 2',
+
+            content: RichTextTest.simple,
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'user',
+            },
+          },
+
+          {
+            id: '67a74f246365f244c8b6d155',
+            title: 'Feature 3',
+
+            content: RichTextTest.simple,
+
+            link: {
+              type: 'none',
+              newTab: null,
+              url: null,
+            },
+
+            icon: {
+              type: 'fa-thin',
+              icon: 'messages-dollar',
+            },
+          },
+        ],
+        blockType: 'features',
+
+        theme: {
+          settings: {
+            theme: 'dark',
+            background: 'solid',
+          },
         },
       },
     },
