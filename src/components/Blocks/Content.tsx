@@ -83,7 +83,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
           columns.map((col, index) => {
             const { enableLink, link, richText, size } = col
             
-            const { processedRichText, heading} = separateH2(richText,theme?.settings?.box || 'none', size)
+            const { processedRichText, heading} = separateH2(richText,theme?.settings?.box || 'none', size || 'full')
             return (
               <div
                 className={cn(
@@ -94,6 +94,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                   variants[(size !== 'full' && !hasRichTextMedia(richText as any) && theme?.settings?.box) || 'none'],
                 )}
                 key={index}
+                data-aos="zoom-in"
               >
                 { heading && <div className="bg-primary mb-4 -mt-4 -mx-4 px-4 py-2 text-xl">{heading.children[0].text}</div> }
                 {processedRichText && <RichText content={processedRichText} enableGutter={false} className="rich-text" />}

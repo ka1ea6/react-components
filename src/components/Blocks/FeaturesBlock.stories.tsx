@@ -25,6 +25,7 @@ export const Default: Story = {
         content: RichTextTest.simple,
           settings: {
             card: 'outline',
+            icon: 'large',
           },
       },
       {
@@ -35,7 +36,7 @@ export const Default: Story = {
         content:
           'They provide valuable insights and improve ways of working, saving time and boosting efficiency across your organisation.',
           settings: {
-            card: 'default',
+            card: 'light',
           },
       },
       {
@@ -64,6 +65,7 @@ export const MoreOptions: Story = {
         content: RichTextTest.simple,
           settings: {
             card: 'outline',
+            iconSize: 'large',
           },
       },
       {
@@ -74,6 +76,7 @@ export const MoreOptions: Story = {
         statistic: '80%',
           settings: {
             card: 'radial',
+            iconSize: 'small',
           },
       },
       {
@@ -84,6 +87,47 @@ export const MoreOptions: Story = {
         statistic: '80%',
           settings: {
             card: 'gradient',
+            iconSize: 'large',
+          },
+      },
+    ],
+  },
+}
+
+
+export const OtherOptions: Story = {
+  args: {
+    
+    features: [
+      {
+        icon: { type: 'fa-thin', icon: 'robot' },
+        title: 'Sed at eros vel lacus varius varius nec id metus.',
+        link: { label: 'label', type: 'custom', url: '#' },
+        content: RichTextTest.simple,
+          settings: {
+            card: 'outline',
+            iconSize: 'small',
+          },
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'lightbulb' },
+        link: { label: 'label', type: 'custom', url: '#' },
+        title: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+          settings: {
+            card: 'light',
+            iconSize: 'small',
+          },
+      },
+      {
+        icon: { type: 'fa-kit', icon: 'software' },
+        // link: { reference: { relationTo: 'pages', value: { slug: 'contact' } } },
+        title: 'Sed at eros vel lacus.',
+        content: RichTextTest.simple,
+        statistic: '80%',
+          settings: {
+            card: 'gradient',
+            iconSize: 'small',
           },
       },
     ],

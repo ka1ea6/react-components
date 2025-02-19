@@ -5,9 +5,11 @@ import { RichText } from '@/components/Payload/RichText'
 import { DynamicIcon, type DynamicIconProps } from '../Images'
 
 export interface ContentCardProps {
-  variant?: 'solid' | 'outline' | 'gradient' | 'radial' 
+  variant?: 'solid' | 'outline' | 'gradient' | 'radial' | 'light'
   className?: string
   icon?: React.ReactNode | DynamicIconProps
+  iconSize?: 'small' | 'large'
+  width?: '1/4' | '1/3' | '1/2' | 'full' | 'auto'
   heading: string
   subheading?: string
   content?: Record<string, any> | string
@@ -22,6 +24,8 @@ export function ContentCard({
   variant = 'outline',
   className,
   icon,
+  iconSize = 'large',
+  width = 'auto',
   heading,
   subheading,
   content,
@@ -34,25 +38,37 @@ export function ContentCard({
     outline: 'bg-background border border-accent',
     gradient: 'bg-gradient-to-br from-[#A42368] to-[#4A1030]',
     radial: 'bg-gradient-to-br from-[#4A1030] to-[#2D0A1D] relative overflow-hidden',
+    light: '',
+  }
+  const sizes = {
+    '1/4': 'w-1/4',
+    '1/3': 'w-1/3',
+    '1/2': 'w-1/2',
+    full: 'w-full',
+    auto: 'w-full',
   }
   return (
     <div
       className={cn(
-        'rounded-3xl p-8 md:p-8 min-w-56',
+        'rounded-3xl p-8 md:p-8 min-w-56 flex flex-col group',
         variants[variant],
         variant === 'outline' ? 'text-gray-900' : 'text-white',
         className,
+        sizes[width],
       )}
+      data-aos="flip-left"
+     data-aos-easing="ease-out-cubic"
+     data-aos-duration="1000"
     >
       {/* Header Section */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-2">
 
-        <IconLocation icon={icon} heading={heading} variant={variant}/>
+        <IconLocation icon={icon} heading={heading} variant={variant} iconSize={iconSize}/>
 
       </div>
 
       {/* Statistic Display */}
-      {variant === 'solid' && statistic && (
+      {statistic && (
         <div className="mb-6">
           <div className="text-4xl text-wrap font-bold leading-none overflow-hidden">{statistic}</div>
         </div>
@@ -74,11 +90,11 @@ export function ContentCard({
 
       {/* CTA Button */}
       {buttonText && (
-        <div className="mt-8">
+        <div className="mt-auto pt-6 flex items-center justify-center">
           <Button
             size="lg"
             // className="bg-[#A42368] hover:bg-[#8B1E57] text-white px-8 py-6 text-lg rounded-xl"
-            className="text-white text-lg rounded-xl w-full"
+            className="text-white text-lg rounded-xl w-full mt-auto items-center justify-center"
             asChild
           >
             <a href={buttonHref}>
@@ -103,18 +119,19 @@ export function ContentCard({
 }
 
 
-const IconLocation = ({ icon, heading, variant }: { icon?: React.ReactNode | DynamicIconProps
-  heading: string, variant?: 'solid' | 'outline' | 'gradient' | 'radial' 
+const IconLocation = ({ icon, heading, variant, iconSize }: { icon?: React.ReactNode | DynamicIconProps
+  heading: string, variant?: 'solid' | 'outline' | 'gradient' | 'radial' | 'light', iconSize?: 'small' | 'large'
 }) => {
 
-    if (icon && heading.length < 30 ) {
+    if (icon && iconSize === 'small') {
       return (
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-start gap-4 mb-2">
           {isDynamicIconProps(icon) && (
             <div
               className={cn(
-                'rounded-full p-0',
-                variant === 'outline' ? 'text-accent' : 'text-foreground',
+                'rounded-full p-0 transform group-hover:scale-110 transition-transform duration-400',
+                (variant === 'outline' || variant === 'light') ? 'text-accent' : 'text-foreground',
+                iconSize === 'small' ? 'mt-2' : '',
               )}
             >
               
@@ -125,7 +142,8 @@ const IconLocation = ({ icon, heading, variant }: { icon?: React.ReactNode | Dyn
           <div
           className={cn(
             'font-semibold',
-            variant === 'outline' ? 'text-2xl text-primary' : 'text-3xl',
+            (variant === 'outline' || variant === 'light') ? 'text-primary' : 'text-foreground',
+            iconSize === 'small' ? 'text-2xl' : 'text-3xl',
           )}
         >
           {heading}
@@ -138,13 +156,13 @@ const IconLocation = ({ icon, heading, variant }: { icon?: React.ReactNode | Dyn
 
       {isDynamicIconProps(icon) && (
 
-        <div className="text-accent h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-400">
+        <div className={cn("h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-400", (variant === 'outline' || variant === 'light') ? 'text-accent' : 'text-foreground')}>
                 <DynamicIcon type={icon.type} iconName={icon.iconName} size="4x" />
                 </div>)}
       
       <h3 className={cn(
-            'font-semibold group-hover:text-accent transition-colors duration-400',
-            variant === 'outline' ? 'text-2xl text-primary' : 'text-3xl',
+            'font-semibold',
+            (variant === 'outline' || variant === 'light') ? 'text-2xl text-primary' : 'text-3xl',
           )}>
         {heading}
       </h3>
@@ -152,11 +170,11 @@ const IconLocation = ({ icon, heading, variant }: { icon?: React.ReactNode | Dyn
       )
     } else {
       return (
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-2">
           <div
           className={cn(
             'font-semibold',
-            variant === 'outline' ? 'text-2xl text-primary' : 'text-3xl',
+            (variant === 'outline' || variant === 'light') ? 'text-2xl text-primary' : 'text-3xl',
           )}
         >
           {heading}
