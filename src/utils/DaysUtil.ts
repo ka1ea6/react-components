@@ -35,6 +35,5 @@ export const getIsMultipleDays = (startDate?: Date, endDate?: Date) => {
   }
 
   const isMultipleDays = startDate.toDateString() !== endDate.toDateString()
-  console.log('isMultipleDaysfunc:', isMultipleDays)
   return isMultipleDays
 }

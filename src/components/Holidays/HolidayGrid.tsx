@@ -25,12 +25,10 @@ export function HolidayGrid({
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
 
   const prevMonth = () => {
-    console.log('prevMonth')
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
   }
 
   const nextMonth = () => {
-    console.log('nextMonth')
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
   }
   const setToday = () => {

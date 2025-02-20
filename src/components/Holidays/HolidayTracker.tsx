@@ -40,29 +40,16 @@ export function HolidayTracker({
   rejectLeave,
 }: HolidayTrackerProps) {
   const [currentTab, setCurrentTab] = useState('Calendar View')
-  //   const { user, isLoading } = useUser()
   const router = useRouter()
 
   const isLoading = false
-  // For preview purposes, we'll assume the user is a manager
-  // const previewUser = {
-  //   id: 'manager1',
-  //   firstName: 'Manager',
-  //   lastName: 'User',
-  //   grade: 'manager',
-  //   remainingLeaveDays: 20,
-  // }
+
   const parsedCurrentDate = parseISO(currentDate)
 
-  // console.log('parsedCurrentDate:holidayTracker:', parsedCurrentDate)
-
   const setCurrentDate = async (date: Date) => {
-    // Add the date queryParam to the URL
-    // // console.log('Setting current date:', date);
     const formattedDate = format(date, 'dd-MM-yyyy')
     const url = new URL(window.location.href)
     url.searchParams.set('date', formattedDate)
-    // console.log('URL:', url.toString())
     router.push(url.toString())
 
     return { success: true }
@@ -75,9 +62,6 @@ export function HolidayTracker({
       </div>
     )
   }
-
-  // Use the preview user for demonstration
-  // const currentUser = previewUser
 
   const tabs = [
     { name: 'Grid View', icon: Grid, current: currentTab === 'Grid View' },

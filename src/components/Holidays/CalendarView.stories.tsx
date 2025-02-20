@@ -63,10 +63,7 @@ export const Default: Story = {
     return (
       <CalendarView
         currentDate={currentDate}
-        setCurrentDate={(date) => {
-          setCurrentDate(date)
-          console.log('setCurrentDate:', date)
-        }}
+        setCurrentDate={setCurrentDate}
         holidays={mockHolidays}
       />
     )
