@@ -9,42 +9,16 @@ import { RequestLeave } from './RequestLeave'
 import { ApproveLeave } from './ApproveLeave'
 // import { useUser } from './hooks/useUser'
 import { useRouter } from 'next/navigation'
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns'
+import { Holiday } from '../../model/Holiday'
+import { LeaveRequest } from '../../model/LeaveRequest'
+import { Employee } from '../../model/Employee'
 
-interface Holiday {
-  id: string
-  userId: string
-  userName: string
-  startDate: string
-  endDate: string
-  status: 'approved' | 'requested' | 'rejected'
-  totalDays: number
-  leaveType: 'Full Day' | 'Morning' | 'Afternoon'
-}
-interface LeaveRequest {
-  id: string
-  userId: string
-  userName: string
-  userEmail: string
-  userImage?: string
-  startDate: string
-  endDate: string
-  status: 'requested' | 'approved' | 'rejected'
-  totalDays: number
-  leaveType: 'Full Day' | 'Morning' | 'Afternoon'
-}
-
-interface Employee {
-  id: string
-  name: string
-  email: string
-  image?: string
-}
 interface HolidayTrackerProps {
   holidays: Holiday[]
   leaveApprovals: LeaveRequest[]
   employees: Employee[]
-  currentDate: string; // ISO 8601 string
+  currentDate: string // ISO 8601 string
   currentUser: { grade: string; remainingLeaveDays: number }
   submitLeaveRequest?: (formData: FormData) => Promise<{ success: boolean; message: string }>
   approveLeave: (ids: string[]) => Promise<{ success: boolean; message: string }>
@@ -66,29 +40,16 @@ export function HolidayTracker({
   rejectLeave,
 }: HolidayTrackerProps) {
   const [currentTab, setCurrentTab] = useState('Calendar View')
-  //   const { user, isLoading } = useUser()
   const router = useRouter()
 
   const isLoading = false
-  // For preview purposes, we'll assume the user is a manager
-  // const previewUser = {
-  //   id: 'manager1',
-  //   firstName: 'Manager',
-  //   lastName: 'User',
-  //   grade: 'manager',
-  //   remainingLeaveDays: 20,
-  // }
-  const parsedCurrentDate = parseISO(currentDate);
 
-  // console.log('parsedCurrentDate:holidayTracker:', parsedCurrentDate)
+  const parsedCurrentDate = parseISO(currentDate)
 
   const setCurrentDate = async (date: Date) => {
-    // Add the date queryParam to the URL
-    // // console.log('Setting current date:', date);
     const formattedDate = format(date, 'dd-MM-yyyy')
     const url = new URL(window.location.href)
     url.searchParams.set('date', formattedDate)
-    // console.log('URL:', url.toString())
     router.push(url.toString())
 
     return { success: true }
@@ -101,9 +62,6 @@ export function HolidayTracker({
       </div>
     )
   }
-
-  // Use the preview user for demonstration
-  // const currentUser = previewUser
 
   const tabs = [
     { name: 'Grid View', icon: Grid, current: currentTab === 'Grid View' },
