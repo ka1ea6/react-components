@@ -52,6 +52,34 @@ export const Solid: Story = {
   },
 }
 
+
+export const Minimal: Story = {
+  args: {
+    variant: 'outline',
+    heading: 'Lorem ipsum dolor sit',
+    icon: { type: 'kit', iconName: 'software' },
+    iconSize: 'small',
+    width: '1/4',
+    
+    // content: {
+    //   root: {
+    //     children: [
+    //       {
+    //         type: 'paragraph',
+    //         children: [
+    //           {
+    //             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //             mode: 'normal',
+    //             type: 'text',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // },
+  },
+}
+
 export const Light: Story = {
   args: {
     variant: 'light',

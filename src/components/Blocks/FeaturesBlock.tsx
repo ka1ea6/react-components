@@ -62,6 +62,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                   icon={icon() || undefined}
                   iconSize={section.settings?.iconSize || 'large'}
                   width='auto'
+                  order={index}
                   heading={section.title || ''}
                   content={section.content || undefined}
                   statistic={section.statistic || undefined}

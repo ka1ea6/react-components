@@ -92,11 +92,12 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                     'md:col-span-2': size !== 'full',
                   },
                   variants[(size !== 'full' && !hasRichTextMedia(richText as any) && theme?.settings?.box) || 'none'],
+                  'intersect intersect-full animate-flip-up',
+        index === 0 ? '' : `animate-delay-${index}00`
                 )}
                 key={index}
-                data-aos="zoom-in"
               >
-                { heading && <div className="bg-primary mb-4 -mt-4 -mx-4 px-4 py-2 text-xl">{heading.children[0].text}</div> }
+                { heading && <div className="bg-primary text-primary-foreground mb-4 -mt-4 -mx-4 px-4 py-2 text-xl">{heading.children[0].text}</div> }
                 {processedRichText && <RichText content={processedRichText} enableGutter={false} className="rich-text" />}
 
                 {enableLink && <CMSLink {...link} />}

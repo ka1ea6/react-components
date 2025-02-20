@@ -8,7 +8,8 @@ const basePath = location.pathname.split('/').slice(0, -1).join('/')
 const apiMockServiceWorkerUrl = `${basePath}/apiMockServiceWorker.js`
 import { ComponentCode } from './componentCode'
 import React from 'react'
-import { AOSInit } from '@/lib/utils/AOSInit'
+// import { AOSInit } from '@/lib/utils/AOSInit'
+import { Observer } from 'tailwindcss-intersect';
 
 import '../src/globals.css'
 initialize({
@@ -56,10 +57,10 @@ const preview = {
   decorators: [
     (Story) => (
       <>
-        <AOSInit />
         <Story />
       </>
     ),
+    Observer.start(),
     withThemeByClassName({
       themes: {
         light: '',

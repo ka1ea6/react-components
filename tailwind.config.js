@@ -11,9 +11,14 @@ const config = {
   corePlugins: {
     // preflight: false
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [require('tailwindcss-animated'), require('@tailwindcss/typography'), require('tailwindcss-intersect')],
   prefix: '',
   safelist: [
+    'animate-delay-100',
+    'animate-delay-200',
+    'animate-delay-300',
+    'animate-delay-400',
+    'animate-delay-500',
     'lg:col-span-4',
     'lg:col-span-6',
     'lg:col-span-8',
