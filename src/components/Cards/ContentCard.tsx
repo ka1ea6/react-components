@@ -10,6 +10,7 @@ export interface ContentCardProps {
   icon?: React.ReactNode | DynamicIconProps
   iconSize?: 'small' | 'large'
   width?: '1/4' | '1/3' | '1/2' | 'full' | 'auto'
+  order?: number
   heading: string
   subheading?: string
   content?: Record<string, any> | string
@@ -26,6 +27,7 @@ export function ContentCard({
   icon,
   iconSize = 'large',
   width = 'auto',
+  order = 0,
   heading,
   subheading,
   content,
@@ -55,10 +57,9 @@ export function ContentCard({
         variant === 'outline' ? 'text-gray-900' : 'text-white',
         className,
         sizes[width],
+        'intersect intersect-full animate-flip-up',
+        order === 0 ? '' : `animate-delay-${order}00`
       )}
-      data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="1000"
     >
       {/* Header Section */}
       <div className="flex items-center gap-4 mb-2">
@@ -70,7 +71,7 @@ export function ContentCard({
       {/* Statistic Display */}
       {statistic && (
         <div className="mb-6">
-          <div className="text-4xl text-wrap font-bold leading-none overflow-hidden">{statistic}</div>
+          <div className={cn("text-4xl text-wrap font-bold leading-none overflow-hidden",(variant === 'outline' || variant === 'light') ? 'text-primary' : 'text-white' )}>{statistic}</div>
         </div>
       )}
 
@@ -78,12 +79,12 @@ export function ContentCard({
       {subheading && <div className="mb-4 text-xl md:text-2xl font-light">{subheading}</div>}
 
       {content && typeof content === 'object' && (
-        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-300' : 'text-gray-300')}>
-          <RichText enableGutter={false} content={content} enableProse={false} className={cn( variant === 'outline' ? 'prose prose-headings:text-white prose-p:text-gray-300' : 'prose prose-headings:text-white prose-p:text-gray-300')} />
+        <div className={cn('space-y-6')}>
+          <RichText enableGutter={false} content={content} enableProse={false} className={cn( (variant === 'outline' || variant === 'light') ? 'prose prose-headings:text-foreground prose-p:text-foreground' : 'prose prose-headings:text-white prose-p:text-gray-100')} />
         </div>
       )}
       {content && typeof content === 'string' && (
-        <div className={cn('space-y-6', variant === 'outline' ? 'text-gray-300' : 'text-gray-300')}>
+        <div className={cn('space-y-6', (variant === 'outline' || variant === 'light') ? 'text-gray-900' : 'text-gray-100')}>
           {content}
         </div>
       )}
@@ -130,7 +131,7 @@ const IconLocation = ({ icon, heading, variant, iconSize }: { icon?: React.React
             <div
               className={cn(
                 'rounded-full p-0 transform group-hover:scale-110 transition-transform duration-400',
-                (variant === 'outline' || variant === 'light') ? 'text-accent' : 'text-foreground',
+                (variant === 'outline' || variant === 'light') ? 'text-primary' : 'text-white',
                 iconSize === 'small' ? 'mt-2' : '',
               )}
             >
@@ -142,7 +143,7 @@ const IconLocation = ({ icon, heading, variant, iconSize }: { icon?: React.React
           <div
           className={cn(
             'font-semibold',
-            (variant === 'outline' || variant === 'light') ? 'text-primary' : 'text-foreground',
+            (variant === 'outline' || variant === 'light') ? 'text-primary' : 'text-white',
             iconSize === 'small' ? 'text-2xl' : 'text-3xl',
           )}
         >
@@ -156,7 +157,7 @@ const IconLocation = ({ icon, heading, variant, iconSize }: { icon?: React.React
 
       {isDynamicIconProps(icon) && (
 
-        <div className={cn("h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-400", (variant === 'outline' || variant === 'light') ? 'text-accent' : 'text-foreground')}>
+        <div className={cn("h-12 w-12 mb-3 transform group-hover:scale-110 transition-transform duration-400", (variant === 'outline' || variant === 'light') ? 'text-accent' : '')}>
                 <DynamicIcon type={icon.type} iconName={icon.iconName} size="4x" />
                 </div>)}
       
