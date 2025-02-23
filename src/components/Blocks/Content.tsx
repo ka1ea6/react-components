@@ -8,7 +8,6 @@ import { CMSLink } from '@/components/Payload/Link'
 
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { columns, theme } = props
-
   const colsSpanClasses = {
     full: '12',
     half: '6',
@@ -82,8 +81,9 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
           columns.length > 0 &&
           columns.map((col, index) => {
             const { enableLink, link, richText, size } = col
-            
+            // console.log('richText', index, size, richText) 
             const { processedRichText, heading} = separateH2(richText,theme?.settings?.box || 'none', size || 'full')
+            // console.log('processedRichText', processedRichText)
             return (
               <div
                 className={cn(
@@ -92,8 +92,8 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                     'md:col-span-2': size !== 'full',
                   },
                   variants[(size !== 'full' && !hasRichTextMedia(richText as any) && theme?.settings?.box) || 'none'],
-                  'intersect intersect-full animate-flip-up',
-        index === 0 ? '' : `animate-delay-${index}00`
+                  'intersect-once intersect:animate-flip-up opacity-0 intersect:opacity-100 animate-duration-500',
+        `animate-delay-${index + 1}00`
                 )}
                 key={index}
               >

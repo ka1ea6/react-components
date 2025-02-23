@@ -36,7 +36,6 @@ export default {
 
 const Template = (args: any) => (
   <>
-    <AOSInit />
     <Website {...args} />
   </>
 )
@@ -2874,5 +2873,13 @@ export const SideBySide = {
       createdAt: '2025-02-10T10:29:21.057Z',
       _status: 'published',
     },
+  },
+}
+
+export const Broken = {
+  args: {
+    // ...Default.args,
+    hero: BlocksTest.content.complex.hero,
+    page: BlocksTest.content.complex,
   },
 }

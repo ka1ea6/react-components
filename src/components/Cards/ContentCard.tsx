@@ -57,8 +57,8 @@ export function ContentCard({
         variant === 'outline' ? 'text-gray-900' : 'text-white',
         className,
         sizes[width],
-        'intersect intersect-full animate-flip-up',
-        order === 0 ? '' : `animate-delay-${order}00`
+        'intersect-once intersect:animate-flip-up opacity-0 intersect:opacity-100 intersect:animate-duration-500',
+        `intersect:animate-delay-${order + 1}00`
       )}
     >
       {/* Header Section */}

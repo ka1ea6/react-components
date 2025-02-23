@@ -60,7 +60,6 @@ const preview = {
         <Story />
       </>
     ),
-    Observer.start(),
     withThemeByClassName({
       themes: {
         light: '',

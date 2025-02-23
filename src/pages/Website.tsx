@@ -6,6 +6,8 @@ import logoDark from '../images/cortex-reply-dark.png'
 import { MainPageSection } from '../sections/MainPageSection'
 import { Page as PageType, ReusableContent } from '@/payload-types'
 import { getTableOfContents } from '../utils'
+import { Observer } from 'tailwindcss-intersect'
+import { useEffect } from 'react'
 
 interface WebsiteSectionProps {
   hero: any
@@ -22,9 +24,12 @@ interface TableOfContentsItem {
 
 export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
   const page = args.page
-
+  console.log('page', page.layout)
   const { contentWithIds, tableOfContents } = getTableOfContents(page)
-
+  console.log('contentWithIds', contentWithIds)
+  useEffect(() => {
+    Observer.start()
+  }, [])
   return (
     <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
       <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />

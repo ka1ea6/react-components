@@ -193,7 +193,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'code':
               return <CodeBlock className="col-start-2" key={index} {...block as CodeBlockProps} />
             case 'features':
-                return <FeaturesBlock key={index} {...block as FeaturesBlockProps} />
+                return <FeaturesBlock key={index} {...block as FeaturesBlockProps} nested/>
             case 'reusableContentBlock':
               serializeLexical({ nodes: (block.reusableContent as unknown as { layout: unknown }).layout as NodeTypes[] })
               // return <ReusableContentBlock key={index} {...block} reusableContent={block.reusableContent as ReusableContent} />
