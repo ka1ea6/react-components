@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
         <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
   
         <div className="relative pl-24 z-10 max-w-3xl">
-          <p className="text-lg font-medium text-accent mb-2">{title}</p>
+          <p className="text-lg font-medium pt-48 text-accent mb-2">{title}</p>
   
           
             {hero.richText && (

@@ -33,7 +33,6 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     src: srcFromProps,
     loading: loadingFromProps,
   } = props
-
   let width: number | undefined
   let height: number | undefined
   let alt = altFromProps
@@ -48,8 +47,18 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       width: fullWidth,
     } = resource
 
-    width = fullWidth!
-    height = fullHeight!
+    if (fullHeight && fullHeight > 500) {
+      // reduce the size of the image to 600px
+      const ratio = 500 / fullHeight
+      width = fullWidth! * ratio
+      height = fullHeight! * ratio
+    } else {
+      width = fullWidth!
+      height = fullHeight!
+    }
+
+
+    
     alt = altFromResource || ''
 
     // src = `${getClientSideURL()}${url}`

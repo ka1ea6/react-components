@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SlideShow from './Publish'
+import { Publish } from './Publish'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
@@ -24,8 +24,8 @@ const ServiceIcon = () => <DynamicIcon iconName="cloud-network-sharing" size="4x
 const ProductIcon = () => <DynamicIcon iconName="development" size="4x" type="kit" />
 
 export default {
-  title: 'Example Pages/Slideshow',
-  component: SlideShow,
+  title: 'Example Pages/Publish',
+  component: Publish,
   // decorators: [
   //   (Story: React.FC) => (
   //     <div>
@@ -35,9 +35,9 @@ export default {
   // ],
 }
 
-const Template = (args: any) => <SlideShow {...args} />
+const Template = (args: any) => <Publish {...args} />
 
-type PageStory = StoryObj<typeof SlideShow>
+type PageStory = StoryObj<typeof Publish>
 
 export const Default: PageStory = {
   render: Template,

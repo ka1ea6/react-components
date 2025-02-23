@@ -15,8 +15,7 @@ import { getTableOfContents } from '../../utils'
 import Image1 from '../../images/hero/hero-3.jpg'
 import { HeadingImage } from '../Blocks'
 import { Footer, HeaderTop, TitleSlide } from './OutputHeaderFooter'
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
+
 import { cn } from '@/lib/utils'
 interface PrintableProps {
   page: Page
@@ -47,9 +46,6 @@ export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait' 
   
 }
 
-
-
-
 export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
   const { contentWithIds } = getTableOfContents(page)
   const emptyContentBlock = {
@@ -68,141 +64,13 @@ export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
     },
   } as ContentBlock
 
-  const handlePrint = async () => {
-    generatePDF('printable-content')
-  }
 
-  const generatePDF = async (elementToPrintId: string) => {
 
-    const root =  document.getElementById(elementToPrintId);
-
-    if (!root) {
-      throw new Error(`Element with id ${elementToPrintId} not found`);
-    }
-
-    const customCanvas = document.createElement('canvas');
-    const scale = window.devicePixelRatio;
-    customCanvas.width = Math.max(root.clientWidth || 0) * scale;
-    customCanvas.height = Math.max(root.clientHeight || 0) * scale + 100;
-    const ctx = customCanvas.getContext('2d');
-    if (!ctx) {
-      throw new Error('Failed to get 2D context');
-    }
-    const originalDrawImage = ctx.drawImage;
-    
-    const images: { [key: string]: HTMLImageElement } = Array.from(root.getElementsByTagName('img')).reduce(
-      (map, img) => {
-        map[img.src] = img;
-        return map;
-      },
-      {} as { [key: string]: HTMLImageElement },
-    );
-    
-    ctx.drawImage = function (...args: any[]): void {
-      let [image, sx, sy, sw, sh, dx, dy, dw, dh] = args;
-      if (image instanceof HTMLImageElement) {
-        const objectFit = images[image.src].style.objectFit || 'fill'; // Default to 'fill'
-        const objectPosition = images[image.src].style.objectPosition || 'center center'; // Default to 'center center'
-        sh = image.height;
-        sw = image.width;
-    
-        const sourceRatio = sw / sh;
-        const destinationRatio = dw / dh;
-    
-        // Parse objectPosition to determine alignment
-        let [horizontalPosition, verticalPosition] = objectPosition.split(' ');
-        if (!verticalPosition) {
-          // If only one value is provided, use it for both directions
-          verticalPosition = horizontalPosition;
-        }
-    
-        // Adjust source dimensions and positions based on object-fit
-        switch (objectFit) {
-          case 'cover':
-            if (sourceRatio > destinationRatio) {
-              const newSw = sh * destinationRatio;
-              let offsetX = (sw - newSw) / 2; // Default center
-              if (horizontalPosition === 'left') offsetX = 0;
-              if (horizontalPosition === 'right') offsetX = sw - newSw;
-              sx += offsetX;
-              sw = newSw;
-            } else {
-              const newSh = sw / destinationRatio;
-              let offsetY = (sh - newSh) / 2; // Default center
-              if (verticalPosition === 'top') offsetY = 0;
-              if (verticalPosition === 'bottom') offsetY = sh - newSh;
-              sy += offsetY;
-              sh = newSh;
-            }
-            break;
-          case 'contain':
-            if (sourceRatio > destinationRatio) {
-              const newDh = dw / sourceRatio;
-              let offsetY = (dh - newDh) / 2; // Default center
-              if (verticalPosition === 'top') offsetY = 0;
-              if (verticalPosition === 'bottom') offsetY = dh - newDh;
-              dy += offsetY;
-              dh = newDh;
-            } else {
-              const newDw = dh * sourceRatio;
-              let offsetX = (dw - newDw) / 2; // Default center
-              if (horizontalPosition === 'left') offsetX = 0;
-              if (horizontalPosition === 'right') offsetX = dw - newDw;
-              dx += offsetX;
-              dw = newDw;
-            }
-            break;
-          case 'fill':
-            // No adjustments needed for object-position
-            break;
-          // Implement other object-fit values if needed
-        }
-      }
-    
-      return originalDrawImage.call(ctx, image, sx, sy, sw, sh, dx, dy, dw, dh);
-    };
-
-    const element = document.getElementById(elementToPrintId);
-    if (!element) {
-      throw new Error(`Element with id ${elementToPrintId} not found`);
-    }
-    var w = customCanvas.width
-    var h = customCanvas.height
-    // var w = Math.max(element.clientWidth || 0);
-    const canvas = await html2canvas(element, { canvas: customCanvas, windowHeight: h, windowWidth: w, scale: window.devicePixelRatio });
-    const data = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      // orientation: "landscape",
-      // unit: "mm",
-      // format: [297, h],
-    });
-    const imgProperties = pdf.getImageProperties(data);
-    
-    const pdfWidth = 297;
-    const pdfHeight = pdfWidth * (imgProperties.height / imgProperties.width);
-    
-    const pdfRightSized = new jsPDF({
-      // orientation: "landscape",
-      unit: "mm",
-      format: [pdfWidth, pdfHeight],
-    });
-    
-    pdfRightSized.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-  //   html2canvas(document.getElementById(elementToPrintId), { canvas: customCanvas, windowHeight: h *2, windowWidth: w *2, scale: 2}).then(canvas => {
-  //     document.body.appendChild(canvas)
-  // });
-    pdfRightSized.save("print.pdf");
-  };
+ 
 
   const blocksWithHero = [emptyContentBlock, ...contentWithIds]
   return (
-    <div className='w-[297mm]'>
-      <div className="fixed top-20 right-4 z-[1000] print:hidden">
-        <Button onClick={handlePrint} variant="outline" className="px-5 py-2 text-sm font-semibold">
-          Print to PDF
-        </Button>
-      </div>
-      
+    <div className='w-[297mm]'>      
       <div id="printable-content" >
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
@@ -217,7 +85,7 @@ export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
               ) : (
                 <section
                   key={index}
-                  className="normal-page"
+                  className="normal-page overflow-hidden"
                 >
                   {block.blockName && <HeaderTop title={block.blockName} />}
                   <RenderBlocks blocks={[block]} fill/>
@@ -335,7 +203,7 @@ const updatePagedPreview = useCallback(() => {
   useEffect(() => {
     pagedRef.current = new Previewer();
     updatePagedPreview();
-  }, [updatePagedPreview]);
+  }, [updatePagedPreview, layout]);
 
 
   // useEffect(() => {
@@ -359,20 +227,11 @@ const updatePagedPreview = useCallback(() => {
   //   updatePagedPreview();
   // }, [updatePagedPreview]);
 
-  const handlePrint = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 300))
-    window.print()
-  }
+
 
   return (
     <div className={`pagedjs-container`}>
-      <div className="fixed top-20 right-4 z-[1000] print:hidden">
-        <Button onClick={handlePrint} variant="outline" className="px-5 py-2 text-sm font-semibold">
-          Print to PDF
-        </Button>
-      </div>
-
-      <div id="printable-content" ref={contentContainer} style={{ display: 'block' }} className="pagedjs-content">
+      <div id="printable-content" ref={contentContainer} style={{ display: 'none' }} className="pagedjs-content">
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
