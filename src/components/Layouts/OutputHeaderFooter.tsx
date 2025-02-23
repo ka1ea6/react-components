@@ -1,26 +1,25 @@
 import { RichText } from '../Payload'
-import Image1 from '../../images/hero/hero-3.jpg'
 import Image from 'next/image'
 import logoDark from '../../images/cortex-reply-dark.png'
 import { Page, Media } from '@/payload-types'
 
-export const Footer: React.FC = () => {
-    return (
-      <footer
-        className="absolute bottom-0 left-0 w-full py-2 px-8 flex justify-between items-center transition-colors duration-300 
-        dark bg-background text-primary"
-      >
-        <div className="flex px-6 items-center space-x-2">
-          <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
-          <span className="pl-12 text-sm">Power up your people</span>
-        </div>
+// export const Footer: React.FC = () => {
+//     return (
+//       <footer
+//         className="absolute bottom-0 left-0 w-full py-2 px-8 flex justify-between items-center transition-colors duration-300 
+//         dark bg-background text-primary"
+//       >
+//         <div className="flex px-6 items-center space-x-2">
+//           <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
+//           <span className="pl-12 text-sm">Power up your people</span>
+//         </div>
   
-        <a href="https://cortexreply.com" className="text-sm hover:underline">
-          cortexreply.com
-        </a>
-      </footer>
-    )
-  }
+//         <a href="https://cortexreply.com" className="text-sm hover:underline">
+//           cortexreply.com
+//         </a>
+//       </footer>
+//     )
+//   }
   
   interface HeaderTopProps {
     title: string
@@ -46,7 +45,7 @@ export const Footer: React.FC = () => {
       <div className="relative w-full h-full flex flex-col justify-center min-h-[500px] p-10">
         <div className="absolute inset-0">
           <Image
-            src={hero.media ? (hero.media as Media).url : Image1}
+            src={hero.media && (hero.media as Media).url ? (hero.media as Media).url! : '/hero.png'}
             alt="Background"
             width={
               hero.media && (hero.media as Media).width ? ((hero.media as Media).width ?? 1920) : 1920

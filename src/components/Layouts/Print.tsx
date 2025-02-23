@@ -14,7 +14,7 @@ import { Page, ContentBlock } from '@/payload-types'
 import { getTableOfContents } from '../../utils'
 import Image1 from '../../images/hero/hero-3.jpg'
 import { HeadingImage } from '../Blocks'
-import { Footer, HeaderTop, TitleSlide } from './OutputHeaderFooter'
+import { HeaderTop, TitleSlide } from './OutputHeaderFooter'
 
 import { cn } from '@/lib/utils'
 interface PrintableProps {
