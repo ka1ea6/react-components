@@ -15,16 +15,17 @@ type Props = {
   description?: Record<string, any> | string | null
   features?: Section[] | null
   id?: string | null
+  nested?: boolean
 }
 
 type Section = NonNullable<FeaturesBlockProps['features']>[number]
 
-export const FeaturesBlock: React.FC<Props> = ({ title, description, features, id }) => {
+export const FeaturesBlock: React.FC<Props> = ({ title, description, features, id, nested=false }) => {
   // export function FeatureBlock({ title, features, theme = 'dark' }: FeatureBlockProps) {
   // return null
 
   return (
-    <section className={cn('container w-full rounded-lg', 'dark:text-gray-300 text-gray-800')}>
+    <section className={cn(!nested && 'container', 'w-full rounded-lg', 'dark:text-gray-300 text-gray-800')}>
       {title && (
         <h2 className="mb-6 mt-0 text-2xl font-bold md:text-3xl text-primary" id={id || ''}>
           {title}

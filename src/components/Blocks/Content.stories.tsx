@@ -53,3 +53,9 @@ export const BoxesWithImage: Story = {
     },
   },
 }
+
+export const Features: Story = {
+  args: {
+    ...BlocksTest.content.halfWithFeature,
+  },
+}

@@ -14,6 +14,11 @@ const config = {
   plugins: [require('tailwindcss-animated'), require('@tailwindcss/typography'), require('tailwindcss-intersect')],
   prefix: '',
   safelist: [
+    'intersect:animate-delay-100',
+    'intersect:animate-delay-200',
+    'intersect:animate-delay-300',
+    'intersect:animate-delay-400',
+    'intersect:animate-delay-500',
     'animate-delay-100',
     'animate-delay-200',
     'animate-delay-300',
