@@ -3,23 +3,23 @@ import Image from 'next/image'
 import logoDark from '../../images/cortex-reply-dark.png'
 import { Page, Media } from '@/payload-types'
 
-// export const Footer: React.FC = () => {
-//     return (
-//       <footer
-//         className="absolute bottom-0 left-0 w-full py-2 px-8 flex justify-between items-center transition-colors duration-300 
-//         dark bg-background text-primary"
-//       >
-//         <div className="flex px-6 items-center space-x-2">
-//           <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
-//           <span className="pl-12 text-sm">Power up your people</span>
-//         </div>
+export const Footer: React.FC = () => {
+    return (
+      <footer
+        className="absolute bottom-0 left-0 w-full py-2 px-8 flex justify-between items-center transition-colors duration-300 
+        dark bg-background text-primary"
+      >
+        <div className="flex px-6 items-center space-x-2">
+          <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
+          <span className="pl-12 text-sm">Power up your people</span>
+        </div>
   
-//         <a href="https://cortexreply.com" className="text-sm hover:underline">
-//           cortexreply.com
-//         </a>
-//       </footer>
-//     )
-//   }
+        <a href="https://cortexreply.com" className="text-sm hover:underline">
+          cortexreply.com
+        </a>
+      </footer>
+    )
+  }
   
   interface HeaderTopProps {
     title: string

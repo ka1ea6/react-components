@@ -95,7 +95,7 @@ export const SlideShow: React.FC<{
   }
 
   useEffect(() => {
-    AOS.init({ duration: 1000 })
+    // AOS.init({ duration: 1000 })
     window.addEventListener('wheel', handleWheel)
     window.addEventListener('keydown', handleKeyDown)
 
