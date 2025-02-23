@@ -92,8 +92,8 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                     'md:col-span-2': size !== 'full',
                   },
                   variants[(size !== 'full' && !hasRichTextMedia(richText as any) && theme?.settings?.box) || 'none'],
-                  'intersect-once intersect:animate-flip-up opacity-0 intersect:opacity-100 animate-duration-500',
-        `animate-delay-${index + 1}00`
+                  'intersect-once intersect:animate-flip-up opacity-0 intersect:opacity-100 intersect:animate-duration-500',
+        `intersect:animate-delay-${index + 1}00`
                 )}
                 key={index}
               >
