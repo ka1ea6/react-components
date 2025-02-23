@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Printable from './Publish'
+import { Publish } from './Publish'
 import { fn } from '@storybook/test'
 import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
@@ -11,7 +11,7 @@ import { ImageTest, BlocksTest, HeroTest } from '../tests/payload'
 
 export default {
   title: 'Example Pages/Print',
-  component: Printable,
+  component: Publish,
   // decorators: [
   //   (Story: React.FC) => (
   //     <div>
@@ -21,9 +21,9 @@ export default {
   // ],
 }
 
-const Template = (args: any) => <Printable {...args} />
+const Template = (args: any) => <Publish {...args} />
 
-type PageStory = StoryObj<typeof Printable>
+type PageStory = StoryObj<typeof Publish>
 
 export const Default: PageStory = {
   render: Template,
