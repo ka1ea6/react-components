@@ -6,11 +6,13 @@ import { SlideShow, Printable } from '../components'
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { cn } from '@/lib/utils/cn'
+import { type StaticImageData } from 'next/image'
 interface WebsiteSectionProps {
   hero: any
   page: Page
   type: 'print' | 'slideshow'
   orientation: 'portrait' | 'landscape' | 'flow'
+  logoImage?: StaticImageData
   [key: string]: any
 }
 
@@ -37,7 +39,7 @@ export function Publish({
 
         {/* <MainPageSection edit={args.edit} pageId={args.page.id} tableOfContents={tableOfContents} relatedContent={args.relatedContent}> */}
 
-        <SlideShow blocks={contentWithIds} hero={args.hero} title={args.page.title} />
+        <SlideShow blocks={contentWithIds} hero={args.hero} title={args.page.title} logoImage={args.logoImage}/>
         {/* <RenderBlocks blocks={contentWithIds} />
 </VerticalSlider> */}
         {/* </MainPageSection> */}
@@ -48,7 +50,7 @@ export function Publish({
       <>
       <Controls layout={orientation} changeLayout={setOrientation}/>
       
-        <Printable page={args.page} layout={orientation} />
+        <Printable page={args.page} layout={orientation} logoImage={args.logoImage}/>
         </>
       
     )
