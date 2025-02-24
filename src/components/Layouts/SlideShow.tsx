@@ -6,25 +6,23 @@ import { RenderBlocks } from '../Blocks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Header } from '../HeaderFooter'
-import logoDark from '../../images/cortex-reply-dark.png'
-import logoLight from '../../images/cortex-reply-light.png'
+
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import 'pagedjs'
-import Image1 from '../../images/hero/hero-3.jpg'
-import ReplyLogo from '../../images/cortex-reply-light.png'
 import { useTheme } from 'next-themes'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { RichText } from '../Payload'
 import { Footer, HeaderTop, TitleSlide } from './OutputHeaderFooter'
 export const SlideShow: React.FC<{
   title?: string
   hero: Page['hero']
   blocks: Page['layout'][0][]
+  logoImage? : StaticImageData
 }> = (props) => {
   const [activeSection, setActiveSection] = useState(0)
 
-  const { blocks, hero } = props
+  const { blocks, hero, logoImage } = props
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   const emptyContentBlock = {
@@ -146,12 +144,12 @@ export const SlideShow: React.FC<{
           w-full h-full bg-cover bg-center`}
             >
               {index === 0 ? (
-                <TitleSlide hero={hero} title={props.title} />
+                <TitleSlide hero={hero} title={props.title} logoImage={logoImage} />
               ) : (
                 <>
                   {block.blockName && <HeaderTop title={block.blockName} />}
                   <RenderBlocks blocks={[block]} fill />
-                  <Footer />
+                  <Footer logoImage={logoImage} />
                 </>
               )}
             </div>

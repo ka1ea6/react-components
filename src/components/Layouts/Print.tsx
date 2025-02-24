@@ -4,15 +4,12 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Previewer } from 'pagedjs'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
-import Image from 'next/image'
-import logoDark from '../../images/cortex-reply-dark.png'
-import logoLight from '../../images/cortex-reply-light.png'
+import Image, { StaticImageData } from 'next/image'
 import { Header } from '../HeaderFooter'
 import { RenderHero } from '@/components/Heros/RenderHero'
 import { RenderBlocks } from '@/components/Blocks/RenderBlocks'
 import { Page, ContentBlock } from '@/payload-types'
 import { getTableOfContents } from '../../utils'
-import Image1 from '../../images/hero/hero-3.jpg'
 import { HeadingImage } from '../Blocks'
 import { HeaderTop, TitleSlide } from './OutputHeaderFooter'
 
@@ -20,6 +17,7 @@ import { cn } from '@/lib/utils'
 interface PrintableProps {
   page: Page
   layout?: 'portrait' | 'landscape' | 'flow'
+  logoImage?: StaticImageData
 }
 
 function xToPx(x: string) {
@@ -46,7 +44,7 @@ export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait' 
   
 }
 
-export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait'  }) => {
+export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait', logoImage }) => {
   const { contentWithIds } = getTableOfContents(page)
   const emptyContentBlock = {
     id: '0000000000000000000',
@@ -104,7 +102,7 @@ export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
         dark bg-background text-primary"
       >
         <div className="flex px-6 items-center space-x-2">
-          <img src={logoDark.src} alt="Cortex Reply Logo" className="h-8" />
+          { logoImage && <img src={logoImage.src} alt="Cortex Reply Logo" className="h-8" /> }
           <span className="pl-12 text-sm">Power up your people</span>
         </div>
   
