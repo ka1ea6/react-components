@@ -8,7 +8,7 @@ import { DynamicIcon } from '@/components/Images'
 import { Meta, StoryObj } from '@storybook/react'
 import pattern1 from '@/images/hero/image-hero1.webp'
 import { AOSInit } from '@/lib/utils/AOSInit'
-import { ImageTest, BlocksTest, HeroTest } from '../tests/payload'
+import { ImageTest, BlocksTest, HeroTest, PagesTest } from '../tests/payload'
 
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
@@ -2879,7 +2879,7 @@ export const SideBySide = {
 export const Broken = {
   args: {
     // ...Default.args,
-    hero: BlocksTest.content.complex.hero,
-    page: BlocksTest.content.complex,
+    hero: PagesTest.digitalColleaguesOverview.hero,
+    page: PagesTest.digitalColleaguesOverview,
   },
 }

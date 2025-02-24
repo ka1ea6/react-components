@@ -386,199 +386,198 @@ export const RichTextTest = {
     },
   },
   simpleWithFeatures: {
- 
-      root: {
-        type: 'root',
-        format: '',
-        indent: 0,
-        version: 1,
+    root: {
+      type: 'root',
+      format: '',
+      indent: 0,
+      version: 1,
 
-        children: [
-          {
-            type: 'paragraph',
-            format: '',
-            indent: 0,
-            version: 1,
+      children: [
+        {
+          type: 'paragraph',
+          format: '',
+          indent: 0,
+          version: 1,
 
-            children: [
-              {
-                mode: 'normal',
-                text: 'feature below',
-                type: 'text',
-                style: '',
-                detail: 0,
-                format: 0,
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            textStyle: '',
-            textFormat: 0,
-          },
+          children: [
+            {
+              mode: 'normal',
+              text: 'feature below',
+              type: 'text',
+              style: '',
+              detail: 0,
+              format: 0,
+              version: 1,
+            },
+          ],
+          direction: 'ltr',
+          textStyle: '',
+          textFormat: 0,
+        },
 
-          {
-            type: 'block',
+        {
+          type: 'block',
 
-            fields: {
-              id: '67b7a622461b99f5aa0f492c',
+          fields: {
+            id: '67b7a622461b99f5aa0f492c',
 
-              theme: {
-                settings: {
-                  theme: 'light',
-                  background: 'transparent',
-                },
-              },
-
-              features: [
-                {
-                  id: '67b7a627c8e5ee7b495ddd62',
-
-                  icon: {
-                    icon: 'cloud',
-                    type: 'fa-thin',
-                  },
-
-                  link: {
-                    type: 'none',
-                  },
-                  title: 'test 1',
-
-                  content: {
-                    root: {
-                      type: 'root',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          type: 'paragraph',
-                          format: '',
-                          indent: 0,
-                          version: 1,
-
-                          children: [
-                            {
-                              mode: 'normal',
-                              text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
-                              type: 'text',
-                              style: '',
-                              detail: 0,
-                              format: 0,
-                              version: 1,
-                            },
-                          ],
-                          direction: 'ltr',
-                          textStyle: '',
-                          textFormat: 0,
-                        },
-                      ],
-                      direction: 'ltr',
-                    },
-                  },
-
-                  settings: {
-                    card: 'default',
-                    iconSize: 'large',
-                  },
-                },
-
-                {
-                  id: '67b7a633c8e5ee7b495ddd64',
-
-                  icon: {
-                    icon: 'cloud',
-                    type: 'fa-thin',
-                  },
-
-                  link: {
-                    type: 'none',
-                  },
-                  title: 'test 2',
-
-                  content: {
-                    root: {
-                      type: 'root',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          type: 'paragraph',
-                          format: '',
-                          indent: 0,
-                          version: 1,
-
-                          children: [
-                            {
-                              mode: 'normal',
-                              text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
-                              type: 'text',
-                              style: '',
-                              detail: 0,
-                              format: 0,
-                              version: 1,
-                            },
-                          ],
-                          direction: 'ltr',
-                          textStyle: '',
-                          textFormat: 0,
-                        },
-                      ],
-                      direction: 'ltr',
-                    },
-                  },
-
-                  settings: {
-                    card: 'default',
-                    iconSize: 'large',
-                  },
-                },
-              ],
-              blockName: '',
-              blockType: 'features',
-
-              description: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
+            theme: {
+              settings: {
+                theme: 'light',
+                background: 'transparent',
               },
             },
-            format: '',
-            version: 2,
+
+            features: [
+              {
+                id: '67b7a627c8e5ee7b495ddd62',
+
+                icon: {
+                  icon: 'cloud',
+                  type: 'fa-thin',
+                },
+
+                link: {
+                  type: 'none',
+                },
+                title: 'test 1',
+
+                content: {
+                  root: {
+                    type: 'root',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+
+                    children: [
+                      {
+                        type: 'paragraph',
+                        format: '',
+                        indent: 0,
+                        version: 1,
+
+                        children: [
+                          {
+                            mode: 'normal',
+                            text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
+                            type: 'text',
+                            style: '',
+                            detail: 0,
+                            format: 0,
+                            version: 1,
+                          },
+                        ],
+                        direction: 'ltr',
+                        textStyle: '',
+                        textFormat: 0,
+                      },
+                    ],
+                    direction: 'ltr',
+                  },
+                },
+
+                settings: {
+                  card: 'default',
+                  iconSize: 'large',
+                },
+              },
+
+              {
+                id: '67b7a633c8e5ee7b495ddd64',
+
+                icon: {
+                  icon: 'cloud',
+                  type: 'fa-thin',
+                },
+
+                link: {
+                  type: 'none',
+                },
+                title: 'test 2',
+
+                content: {
+                  root: {
+                    type: 'root',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+
+                    children: [
+                      {
+                        type: 'paragraph',
+                        format: '',
+                        indent: 0,
+                        version: 1,
+
+                        children: [
+                          {
+                            mode: 'normal',
+                            text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
+                            type: 'text',
+                            style: '',
+                            detail: 0,
+                            format: 0,
+                            version: 1,
+                          },
+                        ],
+                        direction: 'ltr',
+                        textStyle: '',
+                        textFormat: 0,
+                      },
+                    ],
+                    direction: 'ltr',
+                  },
+                },
+
+                settings: {
+                  card: 'default',
+                  iconSize: 'large',
+                },
+              },
+            ],
+            blockName: '',
+            blockType: 'features',
+
+            description: {
+              root: {
+                type: 'root',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    type: 'paragraph',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+
+                    children: [
+                      {
+                        mode: 'normal',
+                        text: 'Agentic AI describes autonomous AI systems that operate with minimal human oversight. We call this “Digital Colleagues”. These systems can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. Agentic AI has huge potential to transform all oganisations. We propose an initial Proof of Value to demonstrate the value of “Digital Colleagues”.',
+                        type: 'text',
+                        style: '',
+                        detail: 0,
+                        format: 0,
+                        version: 1,
+                      },
+                    ],
+                    direction: 'ltr',
+                    textStyle: '',
+                    textFormat: 0,
+                  },
+                ],
+                direction: 'ltr',
+              },
+            },
           },
-        ],
-        direction: 'ltr',
-      },
+          format: '',
+          version: 2,
+        },
+      ],
+      direction: 'ltr',
+    },
   },
   complex: {
     root: {
@@ -2473,5 +2472,1671 @@ export const HeroTest = {
     links: [],
 
     media: ImageTest.hero,
+  },
+}
+
+export const PagesTest = {
+  digitalColleaguesOverview: {
+    id: 56,
+    title: 'Digital Colleagues - Sales Brochure',
+
+    hero: {
+      type: 'highImpact',
+
+      richText: {
+        root: {
+          type: 'root',
+          format: '',
+          indent: 0,
+          version: 1,
+
+          children: [
+            {
+              tag: 'h1',
+              type: 'heading',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'Digital Colleagues',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'ltr',
+            },
+          ],
+          direction: 'ltr',
+        },
+      },
+      links: [],
+
+      media: {
+        id: 59,
+        alt: 'Red gradient',
+        prefix: 'media',
+        updatedAt: '2025-01-11T23:03:48.548Z',
+        createdAt: '2025-01-11T23:03:48.548Z',
+        url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ.png',
+        thumbnailURL: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
+        filename: 'BhkOkUO2efEsQ6LRiTjlQ.png',
+        mimeType: 'image/png',
+        filesize: 71842,
+        width: 1920,
+        height: 1080,
+        focalX: 50,
+        focalY: 50,
+
+        sizes: {
+          thumbnail: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
+            width: 300,
+            height: 169,
+            mimeType: 'image/png',
+            filesize: 4148,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
+          },
+          square: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-500x500.png',
+            width: 500,
+            height: 500,
+            mimeType: 'image/png',
+            filesize: 9982,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-500x500.png',
+          },
+          small: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-600x338.png',
+            width: 600,
+            height: 338,
+            mimeType: 'image/png',
+            filesize: 9891,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-600x338.png',
+          },
+          medium: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-900x506.png',
+            width: 900,
+            height: 506,
+            mimeType: 'image/png',
+            filesize: 23375,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-900x506.png',
+          },
+          large: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-1400x788.png',
+            width: 1400,
+            height: 788,
+            mimeType: 'image/png',
+            filesize: 54495,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-1400x788.png',
+          },
+
+          xlarge: {
+            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-1920x1080.png',
+            width: 1920,
+            height: 1080,
+            mimeType: 'image/png',
+            filesize: 71842,
+            filename: 'BhkOkUO2efEsQ6LRiTjlQ-1920x1080.png',
+          },
+        },
+      },
+    },
+    layout: [
+      {
+        id: '67bca9d229ea527ac2d174f4',
+
+        reusableContent: {
+          id: 2,
+          title: 'Digital Colleagues Overview',
+
+          hero: {
+            type: 'highImpact',
+
+            richText: {
+              root: {
+                type: 'root',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    tag: 'h1',
+                    type: 'heading',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+
+                    children: [
+                      {
+                        mode: 'normal',
+                        text: 'Digital Colleagues',
+                        type: 'text',
+                        style: '',
+                        detail: 0,
+                        format: 0,
+                        version: 1,
+                      },
+                    ],
+                    direction: 'ltr',
+                  },
+                  {
+                    tag: 'h3',
+                    type: 'heading',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+
+                    children: [
+                      {
+                        mode: 'normal',
+                        text: 'An introduction',
+                        type: 'text',
+                        style: '',
+                        detail: 0,
+                        format: 0,
+                        version: 1,
+                      },
+                    ],
+                    direction: 'ltr',
+                  },
+
+                  {
+                    type: 'paragraph',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+                    children: [],
+                    direction: null,
+                    textStyle: '',
+                    textFormat: 0,
+                  },
+                ],
+                direction: 'ltr',
+              },
+            },
+            links: [],
+            media: 59,
+          },
+          layout: [
+            {
+              id: '67bca70450228d1962b15bbc',
+              blockName: 'Intro',
+
+              columns: [
+                {
+                  id: '67bca72650228d1962b15bbd',
+                  size: 'full',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          tag: 'h2',
+                          type: 'heading',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Does your business have challenges where more people could solve the problem?',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'block',
+
+                          fields: {
+                            id: '67bca75906007f37629f63af',
+
+                            theme: {
+                              settings: {
+                                theme: 'default',
+                                background: 'transparent',
+                              },
+                            },
+                            features: [
+                              {
+                                id: '67bca75c972e03c019ea149b',
+
+                                icon: {
+                                  icon: 'people-group',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Resource constraints',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Teams that are under-resourced for the volume of tasks they need to complete.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'radial',
+                                  iconSize: 'large',
+                                },
+                              },
+                              {
+                                id: '67bca79e972e03c019ea149c',
+
+                                icon: {
+                                  icon: 'arrow-progress',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Time consuming processes',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Processes that take up significant cycle time whilst not delivering large business value.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'radial',
+                                  iconSize: 'large',
+                                },
+                              },
+                              {
+                                id: '67bca804972e03c019ea149d',
+
+                                icon: {
+                                  icon: 'arrows-repeat',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Repetative tasks',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Staff repeating the same process repeatedly with no need to deeply think about the inputs or outputs.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'radial',
+                                  iconSize: 'large',
+                                },
+                              },
+                            ],
+                            blockName: '',
+                            blockType: 'features',
+                          },
+                          format: '',
+                          version: 2,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+              ],
+              blockType: 'content',
+              theme: {
+                settings: {
+                  theme: 'default',
+                  background: 'solid',
+                  image: null,
+                  overlay: null,
+                  box: 'none',
+                },
+              },
+            },
+            {
+              id: '67bcaf3429ea527ac2d174f5',
+              blockName: null,
+
+              columns: [
+                {
+                  id: '67bcaf7f29ea527ac2d174f6',
+                  size: 'full',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          type: 'block',
+
+                          fields: {
+                            id: '67bcb30f8fa2b86597d22d3a',
+
+                            theme: {
+                              settings: {
+                                theme: 'default',
+                                background: 'transparent',
+                              },
+                            },
+                            features: [
+                              {
+                                id: '67bcb31229ea527ac2d174f7',
+
+                                icon: {
+                                  icon: 'robot',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Digital Colleagues is the future of work.',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'We can augment your teams naturally with AI colleagues to pick up the routine, repetative and other tasks more suited to automation over intelligence. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+                                        children: [],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Free your teams to generate business value and focus on the most important tasks, or exceptions to the norm.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'solid',
+                                  iconSize: 'large',
+                                },
+                              },
+                            ],
+                            blockName: '',
+                            blockType: 'features',
+                          },
+                          format: '',
+                          version: 2,
+                        },
+                      ],
+                      direction: null,
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+              ],
+              blockType: 'content',
+              theme: {
+                settings: {
+                  theme: 'dark',
+                  background: 'solid',
+                  image: null,
+                  overlay: null,
+                  box: 'none',
+                },
+              },
+            },
+            {
+              id: '67b394909e8e2312c1563309',
+              blockName: 'Digital Colleagues',
+
+              columns: [
+                {
+                  id: '67b45ff10bd2e3067d3233d5',
+                  size: 'full',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          tag: 'h2',
+                          type: 'heading',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'The detail...',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Agentic AI is the latest development in Generative AI. It describes autonomous AI systems that operate with minimal human oversight. Our “Digital Colleagues” are an extension of this concept where rather than handing off tasks to get a result, Digital Colleagues work like a normal member of your team. These colleagues can interpret their environment, assess the tools and resources available to them, and independently execute actions to fulfil their objectives. ',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'This truly is a transformative technology and has huge potential to transform all organisations. ',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+                {
+                  id: '67b460200bd2e3067d3233d6',
+                  size: 'half',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          tag: 'h2',
+                          type: 'heading',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'The challeng',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+
+                            {
+                              mode: 'normal',
+                              text: 'e',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Organisations have many common challenges including many that in the past have not been treated as IT opportunities. These include:',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          tag: 'ul',
+                          type: 'list',
+                          start: 1,
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              type: 'listitem',
+                              value: 1,
+                              format: '',
+                              indent: 0,
+                              version: 1,
+
+                              children: [
+                                {
+                                  mode: 'normal',
+                                  text: 'Resource constraints: ',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 1,
+                                  version: 1,
+                                },
+
+                                {
+                                  mode: 'normal',
+                                  text: 'Many organisational departments struggle with limited resources, making it difficult to staff roles that may require deep contextual understanding.',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 0,
+                                  version: 1,
+                                },
+                              ],
+                              direction: 'ltr',
+                            },
+                            {
+                              type: 'listitem',
+                              value: 2,
+                              format: '',
+                              indent: 0,
+                              version: 1,
+
+                              children: [
+                                {
+                                  mode: 'normal',
+                                  text: 'Knowledge retention: ',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 1,
+                                  version: 1,
+                                },
+
+                                {
+                                  mode: 'normal',
+                                  text: 'Employee turnover leads to the loss of institutional knowledge, reducing operational effectiveness and increasing training burdens.',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 0,
+                                  version: 1,
+                                },
+                              ],
+                              direction: 'ltr',
+                            },
+                            {
+                              type: 'listitem',
+                              value: 3,
+                              format: '',
+                              indent: 0,
+                              version: 1,
+
+                              children: [
+                                {
+                                  mode: 'normal',
+                                  text: 'Process bottlenecks: ',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 1,
+                                  version: 1,
+                                },
+
+                                {
+                                  mode: 'normal',
+                                  text: 'Critical workflows, especially those where cycle time is key (e.g., review and approval processes), often become organisational roadblocks.',
+                                  type: 'text',
+                                  style: '',
+                                  detail: 0,
+                                  format: 0,
+                                  version: 1,
+                                },
+                              ],
+                              direction: 'ltr',
+                            },
+                          ],
+                          listType: 'bullet',
+                          direction: 'ltr',
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+                {
+                  id: '67b4607e19ad4875377293f6',
+                  size: 'half',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          tag: 'h2',
+                          type: 'heading',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Proving value',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'We believe that ',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                            {
+                              mode: 'normal',
+                              text: 'Digital Colleagues',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                            {
+                              mode: 'normal',
+                              text: ' can be transformative to your business. An initial, tightly scoped ',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                            {
+                              mode: 'normal',
+                              text: 'Proof of Value',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+
+                            {
+                              mode: 'normal',
+                              text: ' engagement will aim to showcase the capability using a known process that has challenges around either resource or knowledge complexity.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Enable Digital Colleagues',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'We will use a cendidate process as the Proof of Value. This will be approached in a way to pave the way for future applications or use-cases to be added easily.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Embed knowledge',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'We will define the process, artefacts and knowledge required to perform the process, ensuring this is well documented and streamlined.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Reimagine',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Next, we will embed the knowledge and process within an AI enabled workflow; demonstrating the transformative power of Agentic Generative AI.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Measure ROI',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 1,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 1,
+                        },
+                        {
+                          type: 'paragraph',
+                          format: 'left',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'We will measure and score the new approach to inform the viability for wider application.',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+              ],
+              blockType: 'content',
+              theme: {
+                settings: {
+                  theme: 'dark',
+                  background: 'image',
+                  image: 81,
+                  overlay: true,
+                  box: 'none',
+                },
+              },
+            },
+            {
+              id: '67b6143657bb518148b195c7',
+              blockName: 'Our Approach',
+
+              columns: [
+                {
+                  id: '67b614f757bb518148b195c8',
+                  size: 'full',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          tag: 'h2',
+                          type: 'heading',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'Our approach',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                        },
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [
+                            {
+                              mode: 'normal',
+                              text: 'The breadth of what is possible with Digital Colleagues is huge. From simple task work, to entire complex projects. Our recomended approach is to start small and build the foundations for success. ',
+                              type: 'text',
+                              style: '',
+                              detail: 0,
+                              format: 0,
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+                {
+                  id: '67b6186553d77cb1d317d33e',
+                  size: 'full',
+
+                  richText: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [],
+                          direction: null,
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                        {
+                          type: 'block',
+
+                          fields: {
+                            id: '67b6186e6e5ae09b0c41c8d2',
+
+                            theme: {
+                              settings: {
+                                theme: 'default',
+                                background: 'transparent',
+                              },
+                            },
+                            title: '',
+                            features: [
+                              {
+                                id: '67b6187453d77cb1d317d33f',
+
+                                icon: {
+                                  icon: 'circle-1',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Task Automation',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Take a simple task that is under resourced within your team and apply it to our Lightweight Digital Colleague platform. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'This task could have input via a messaging system (like Microsoft Teams), Web via a chat interface, or from a ticketing system (like ServiceNow).',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'We will help understand the business process and replicate it within our platform. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'outline',
+                                  iconSize: 'small',
+                                },
+                              },
+                              {
+                                id: '67b6199c53d77cb1d317d340',
+
+                                icon: {
+                                  icon: 'circle-2',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Process Augmenation',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'The next phase is to take a more complex process and create multiple input and outputs (tools) as well as providing the Platform with more knowledge to work with. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'This requires more in-depth understanding of your business processes and often a knowledge collection and refinement excersise. Do you know where the relevant documentation, knowledge and guidance is? We will assist in collecting and refining the information so both your traditional; and the future augmented teams will benefit.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'outline',
+                                  iconSize: 'small',
+                                },
+                              },
+                              {
+                                id: '67b61ab8dfe47943c9e418bb',
+
+                                icon: {
+                                  icon: 'circle-3',
+                                  type: 'fa-thin',
+                                },
+                                link: {
+                                  type: 'none',
+                                },
+                                title: 'Team Augmentation',
+                                content: {
+                                  root: {
+                                    type: 'root',
+                                    format: '',
+                                    indent: 0,
+                                    version: 1,
+
+                                    children: [
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Embedding the Digital Colleague Platform, with multiple Digital Colleagues working together with your staff is where we want to get to. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'This is when the technology is truely transformative.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Tasks can be planned by a Digital Colleague; or a human Manager. ',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                      {
+                                        type: 'paragraph',
+                                        format: '',
+                                        indent: 0,
+                                        version: 1,
+
+                                        children: [
+                                          {
+                                            mode: 'normal',
+                                            text: 'Execution can also be carried out by either option; leaving key decisions for your team, whilst removing the time intensive or less valueble tasks to the Digital Colleagues.',
+                                            type: 'text',
+                                            style: '',
+                                            detail: 0,
+                                            format: 0,
+                                            version: 1,
+                                          },
+                                        ],
+                                        direction: 'ltr',
+                                        textStyle: '',
+                                        textFormat: 0,
+                                      },
+                                    ],
+                                    direction: 'ltr',
+                                  },
+                                },
+
+                                settings: {
+                                  card: 'outline',
+                                  iconSize: 'small',
+                                },
+                              },
+                            ],
+                            blockName: '',
+                            blockType: 'features',
+                          },
+                          format: '',
+                          version: 2,
+                        },
+                      ],
+                      direction: null,
+                    },
+                  },
+                  enableLink: null,
+
+                  link: {
+                    type: 'none',
+                    newTab: null,
+                    url: null,
+                    label: null,
+                    appearance: 'default',
+                  },
+                },
+              ],
+              blockType: 'content',
+              theme: {
+                settings: {
+                  theme: 'dark',
+                  background: 'image',
+                  image: 91,
+                  overlay: true,
+                  box: 'none',
+                },
+              },
+            },
+          ],
+
+          meta: {
+            title: null,
+            image: null,
+            description: null,
+          },
+          publishedAt: '2025-02-17T19:57:05.484Z',
+          links: [],
+          slug: 'digital-colleagues-overview',
+          slugLock: true,
+          updatedAt: '2025-02-24T18:02:28.288Z',
+          createdAt: '2025-02-17T19:56:34.204Z',
+          _status: 'published',
+        },
+        customId: null,
+        blockName: null,
+        blockType: 'reusableContentBlock',
+      },
+    ],
+    meta: {
+      title: null,
+      image: null,
+      description: null,
+    },
+    publishedAt: '2025-02-24T17:18:21.182Z',
+    links: [],
+
+    slug: 'digital-colleagues---sales-brochure',
+    slugLock: true,
+    parent: null,
+    breadcrumbs: [
+      {
+        id: '67bcd175154ac1000152b749',
+        doc: 56,
+        url: null,
+        label: 'Digital Colleagues - Sales Brochure',
+      },
+    ],
+    updatedAt: '2025-02-24T20:07:17.499Z',
+    createdAt: '2025-02-24T17:18:20.475Z',
+    _status: 'published',
   },
 }

@@ -31,11 +31,19 @@ export const RenderBlocks: React.FC<{
     return (
       <section id="render-blocks" className={cn(props.fill ? 'h-full w-full' : '')}>
         {blocks.map((block, index) => {
+          console.log('block', block)
           const { blockType } = block as { blockType: keyof typeof blockComponents }
           const theme = (block as any)?.theme
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
-            if (Block) {
+
+            if (blockType === 'reusableContentBlock') {
+              return (
+                <Fragment key={index}>
+                  <RenderBlocks blocks={(block as any).reusableContent.layout} />
+                </Fragment>
+              )
+            } else if (Block) {
               return (
                 <div
                   className={cn(
