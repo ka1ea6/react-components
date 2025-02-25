@@ -2517,74 +2517,7 @@ export const PagesTest = {
       },
       links: [],
 
-      media: {
-        id: 59,
-        alt: 'Red gradient',
-        prefix: 'media',
-        updatedAt: '2025-01-11T23:03:48.548Z',
-        createdAt: '2025-01-11T23:03:48.548Z',
-        url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ.png',
-        thumbnailURL: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
-        filename: 'BhkOkUO2efEsQ6LRiTjlQ.png',
-        mimeType: 'image/png',
-        filesize: 71842,
-        width: 1920,
-        height: 1080,
-        focalX: 50,
-        focalY: 50,
-
-        sizes: {
-          thumbnail: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
-            width: 300,
-            height: 169,
-            mimeType: 'image/png',
-            filesize: 4148,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-300x169.png',
-          },
-          square: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-500x500.png',
-            width: 500,
-            height: 500,
-            mimeType: 'image/png',
-            filesize: 9982,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-500x500.png',
-          },
-          small: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-600x338.png',
-            width: 600,
-            height: 338,
-            mimeType: 'image/png',
-            filesize: 9891,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-600x338.png',
-          },
-          medium: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-900x506.png',
-            width: 900,
-            height: 506,
-            mimeType: 'image/png',
-            filesize: 23375,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-900x506.png',
-          },
-          large: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-1400x788.png',
-            width: 1400,
-            height: 788,
-            mimeType: 'image/png',
-            filesize: 54495,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-1400x788.png',
-          },
-
-          xlarge: {
-            url: '/api/media/file/BhkOkUO2efEsQ6LRiTjlQ-1920x1080.png',
-            width: 1920,
-            height: 1080,
-            mimeType: 'image/png',
-            filesize: 71842,
-            filename: 'BhkOkUO2efEsQ6LRiTjlQ-1920x1080.png',
-          },
-        },
-      },
+      media: ImageTest.hero,
     },
     layout: [
       {
@@ -3673,7 +3606,7 @@ export const PagesTest = {
                 settings: {
                   theme: 'dark',
                   background: 'image',
-                  image: 81,
+                  image: ImageTest.hero,
                   overlay: true,
                   box: 'none',
                 },
@@ -4090,7 +4023,7 @@ export const PagesTest = {
                 settings: {
                   theme: 'dark',
                   background: 'image',
-                  image: 91,
+                  image: ImageTest.hero,
                   overlay: true,
                   box: 'none',
                 },

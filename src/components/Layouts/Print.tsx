@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useCallback, use } from 'react'
 import { Previewer } from 'pagedjs'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
@@ -34,18 +34,29 @@ function xToPx(x: string) {
   return Math.floor(px);
 }
 
+const pxTomm = (px: number): number => {
+  const mmElement = document.createElement('div');
+  mmElement.style.height = '1mm';
+  document.body.appendChild(mmElement);
+  const mmInPx = parseFloat(window.getComputedStyle(mmElement).height);
+  document.body.removeChild(mmElement);
+  return Math.floor(px / mmInPx);
+};
 
-export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait' }) => {
+export const Printable: React.FC<PrintableProps> = ({ page, layout = 'portrait', logoImage }) => {
   if (layout === 'flow') {
-    return <FlowPrintable page={page} layout={layout} />
+    return <FlowPrintable page={page} layout={layout} logoImage={logoImage}/>
   } else {
-    return <PagePrintable page={page} layout={layout} />
+    return <PagePrintable page={page} layout={layout} logoImage={logoImage}/>
   }
   
 }
 
 export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portrait', logoImage }) => {
   const { contentWithIds } = getTableOfContents(page)
+  const contentContainer = useRef<HTMLDivElement>(null)
+  const previewContainer = useRef<HTMLDivElement>(null)
+  const pagedRef = useRef(new Previewer())
   const emptyContentBlock = {
     id: '0000000000000000000',
     blockName: null,
@@ -62,14 +73,42 @@ export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
     },
   } as ContentBlock
 
+  useEffect(() => {
+    const element = document.getElementById("printable-content");
+    if (element) {
+console.log("Width: " + element.offsetWidth + "px");
+console.log("Width in mm: " + pxTomm(element.offsetWidth) + "mm");
+console.log("Height: " + element.offsetHeight + "px");
+console.log("Height in mm: " + pxTomm(element.offsetHeight) + "mm");
+const style = document.createElement('style');
+     style.textContent = `@page { size: ${pxTomm(element.offsetWidth)}mm ${pxTomm(element.offsetHeight)}mm ; margin: 0mm; width: ${pxTomm(element.offsetWidth)}mm }; .container : { max-width: ${pxTomm(element.offsetWidth)}mm; } .container : { max-width: 100%; }; body { zoom: 100%;}`;
+    //  style.textContent = `@page { size: auto ; margin: 0mm; }; .container : { max-width: ${pxTomm(element.offsetWidth)}mm; } .container : { max-width: 100%; }; body { zoom: 100%;}`;
+     document.head.appendChild(style);
+     return () => document.head.removeChild(style);
+    }
+  }, [layout]);
+  
+  const updatePagedPreview = useCallback(() => {
+    if (!previewContainer.current) return;
+    if (previewContainer.current) {
+             previewContainer.current.innerHTML = '';
+            }
+            const element = document.getElementById("printable-content");
 
+    pagedRef.current.preview(document.getElementById('printable-content')!.innerHTML, [`@page { size: ${pxTomm(element.offsetWidth)}mm ${pxTomm(element.offsetHeight)}mm ; margin: 0mm; }; .container : { max-width: 100%; }; body { zoom: 100%;}`], previewContainer.current)
+      .catch((error: unknown) => console.error('Paged.js error:', error));
+  }, []);
 
- 
+  useEffect(() => {
+    pagedRef.current = new Previewer();
+    // updatePagedPreview();
+  }, [updatePagedPreview, layout]);
 
   const blocksWithHero = [emptyContentBlock, ...contentWithIds]
   return (
-    <div className='w-[297mm]'>      
-      <div id="printable-content" >
+    <div>
+    <div className='w-[1123px] print:w-[1123px]'>      
+      <div id="printable-content" ref={contentContainer} >
         {/* {page.hero && <RenderHero {...page.hero} />} */}
           {blocksWithHero.map((block, index) => (
             <>
@@ -116,6 +155,9 @@ export const FlowPrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
 
       {/* <style jsx global>{}</style> */}
     </div>
+    <div ref={previewContainer} className="preview-container"></div>
+
+    </div>
   )
 }
 
@@ -145,49 +187,6 @@ export const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
 
   const blocksWithHero = [emptyContentBlock, ...contentWithIds]
 
-  // const updatePagedPreview = useCallback(() => {
-  //   if (!previewContainer.current) return
-  //   // Clear the content of previewContainer
-  //   if (previewContainer.current) {
-  //     previewContainer.current.innerHTML = '';
-  //   }
-  //   pagedRef.current
-  //     .preview(
-  //       document.getElementById('printable-content')!.innerHTML,
-  //       ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'],
-  //       previewContainer.current,
-  //     )
-  //     .then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
-  //     .catch((error: any) => console.error('Paged.js error:', error))
-  // }, [])
-
-
-
-  // useEffect(() => {
-  //   const style = document.createElement('style');
-  //   style.textContent = `@page { size: 445.5mm 297mm ${layout}; margin: 0mm; }`;
-  //   document.head.appendChild(style);
-  //   return () => document.head.removeChild(style);
-  // }, [layout]);
-  
-
-  // useEffect(() => {
-  //   const timerId = setTimeout(() => { // wait for a bit!
-  //     const paged = new Previewer();
-  //     if (!contentContainer.current) return
-  //     const contentMdx = `${contentContainer.current.innerHTML}`;
-  //     // Clear the content of previewContainer
-  //     if (previewContainer.current) {
-  //       previewContainer.current.innerHTML = '';
-  //     }
-  //     paged.preview(contentMdx, ['./print.css', layout === 'landscape' ? './landscape.css' : './portrait.css'], previewContainer.current).then((result: { pageCount: React.SetStateAction<number> }) => setPageCount(result.pageCount))
-  //     .catch((error: any) => console.error('Paged.js error:', error))
-  //     }, 50);
-  
-  //     // Clean up the timer to avoid memory leaks
-  //     return () => clearTimeout(timerId);
-  //   }, [page, layout]);
-
 const updatePagedPreview = useCallback(() => {
     if (!previewContainer.current) return;
     if (previewContainer.current) {
@@ -204,26 +203,6 @@ const updatePagedPreview = useCallback(() => {
   }, [updatePagedPreview, layout]);
 
 
-  // useEffect(() => {
-  //   const style = document.createElement('style');
-  //   style.textContent = `@page { size: A4 ${layout}; margin: 20mm; }`;
-  //   document.head.appendChild(style);
-  //   return () => {
-  //     document.head.removeChild(style);
-  //   };
-  // }, [layout]);
-
-  // const updatePagedPreview = useCallback(() => {
-  //   if (!previewContainer.current) return;
-  //   pagedRef.current.preview(document.getElementById('printable-content')!.innerHTML, [], previewContainer.current)
-  //     .then((result: { pageCount: React.SetStateAction<number>; }) => setPageCount(result.pageCount))
-  //     .catch((error: any) => console.error('Paged.js error:', error));
-  // }, []);
-
-  // useEffect(() => {
-  //   pagedRef.current = new Previewer();
-  //   updatePagedPreview();
-  // }, [updatePagedPreview]);
 
 
 

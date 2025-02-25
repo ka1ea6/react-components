@@ -6,7 +6,7 @@ import { PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon } from '@heroicons/react/24/outline'
 import { Meta, StoryObj } from '@storybook/react'
 
-import { ImageTest, BlocksTest, HeroTest } from '../tests/payload'
+import { ImageTest, BlocksTest, HeroTest, PagesTest } from '../tests/payload'
 
 
 export default {
@@ -418,6 +418,7 @@ export const Portrait = {
   args : {
     ...Default.args,
     orientation: 'portrait',
+  
   }
 }
 
@@ -434,4 +435,12 @@ export const Flow = {
     ...Default.args,
     orientation: 'flow',
   }
+}
+
+export const Complex = {
+args : {
+  orientation: 'flow',
+  type: 'print',
+  page: PagesTest.digitalColleaguesOverview
+}
 }
