@@ -184,3 +184,6 @@
 .sb-main-padded {
   padding: 0 !important; /* Override the default Storybook padding */
 }
+.sb-wrapper {
+  padding: 0px !important; /* Override the default Storybook padding */
+}

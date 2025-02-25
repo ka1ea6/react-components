@@ -84,7 +84,7 @@ export const FlowPrintable: React.FC<PrintableProps> = ({
       console.log('Height: ' + element.offsetHeight + 'px')
       console.log('Height in mm: ' + pxTomm(element.offsetHeight) + 'mm')
       const style = document.createElement('style')
-      style.textContent = `@page { size: ${pxTomm(element.offsetWidth)}mm ${pxTomm(element.offsetHeight)}mm ; margin: 0mm; width: ${pxTomm(element.offsetWidth)}mm }; .container : { max-width: ${pxTomm(element.offsetWidth)}mm; } .container : { max-width: 100%; }; body { zoom: 100%;}`
+      style.textContent = `@page { size: ${pxTomm(element.offsetWidth)}mm ${pxTomm(element.offsetHeight)}mm ; margin: 0mm; width: ${pxTomm(element.offsetWidth)}mm }; .container : { max-width: ${pxTomm(element.offsetWidth)}mm; } .container : { max-width: 100%; }; html body * :not(#prinable-content, #printable-content *) { visibility: hidden !important; }`
       document.head.appendChild(style)
       return () => {
         document.head.removeChild(style)
@@ -109,7 +109,7 @@ export const FlowPrintable: React.FC<PrintableProps> = ({
         )
         .catch((error: unknown) => console.error('Paged.js error:', error))
     }
-  }, [])
+  }, [layout])
 
   useEffect(() => {
     pagedRef.current = new Previewer()
@@ -203,12 +203,21 @@ export const PagePrintable: React.FC<PrintableProps> = ({ page, layout = 'portra
       )
       .then((result: { pageCount: number }) => setPageCount(result.pageCount))
       .catch((error: unknown) => console.error('Paged.js error:', error))
-  }, [])
+  }, [layout])
 
   useEffect(() => {
     pagedRef.current = new Previewer()
     updatePagedPreview()
   }, [updatePagedPreview, layout])
+
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.textContent = `@page { size: A4 ${layout} ; margin: 0mm; };`
+    document.head.appendChild(style)
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [])
 
   return (
     <div className={`pagedjs-container`}>

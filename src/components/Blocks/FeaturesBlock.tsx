@@ -41,6 +41,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
       )}
 
       <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length : 1}`}>
+      {/* <div className={`grid gap-8 mt-10 grid-cols-${features ? features.length : 1}`}> */}
         {features &&
           features.map((section, index) => {
             // card?: ('outline' | 'solid' | 'gradient' | 'radial' | 'none') | null;

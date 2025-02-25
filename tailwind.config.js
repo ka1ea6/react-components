@@ -152,8 +152,8 @@ const config = {
         '2xl': '4rem', // 2XL screens
       },
       screens: {
-        xs: '320px', // Extra small screens (custom)
-        sm: '480px', // Small screens
+        xs: '90%', // Extra small screens (custom)
+        sm: '90%', // Small screens
         md: '768px', // Medium screens
         lg: '1024px', // Large screens
         xl: '1280px', // Extra Large screens
