@@ -84,7 +84,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
           </div>
         </div>
       </section>
-      <section className="section-padding-primary">
+      <section className="sticky top-0 h-screen flex flex-col z-2 light bg-background section-padding-primary">
         <div className="relative py-[60px]">
           {/* Image area  */}
           <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">

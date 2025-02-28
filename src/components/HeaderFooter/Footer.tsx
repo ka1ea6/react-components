@@ -69,7 +69,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
   return (
     <footer
       className={cn(
-        'overflow-hidden bg-accent-100 text-accent-800 dark:bg-accent-900 dark:text-body',
+        'relative z-2 flex flex-col section-padding-primary dark bg-background overflow-hidden ',
         className,
       )}
     >

@@ -23,6 +23,9 @@ import image2 from '../../.storybook/public/assets/images/about/about-2.png';
 import image3 from '../../.storybook/public/assets/images/about/about-3.png';
 import image4 from '../../.storybook/public/assets/images/about/about-4.png';
 import pattern from '../../.storybook/public/assets/images/about/pattern-1.png';
+import { FaInstagram, FaLinkedin } from 'react-icons/fa6'
+import logoLight from '../../.storybook/public/cortex-reply-light.png'
+import logoDark from '../../.storybook/public/cortex-reply-dark.png'
 
 function Icon1() {
   return (
@@ -217,7 +220,126 @@ export const Default: PageStory = {
           embedUrl: 'https://www.google.com/maps/embed?...', // Add your Google Maps embed URL here
         },
       ],
-    }
+    },
+    blog: {
+      sectionHeading: {
+        subtitle: 'Payload',
+        title: 'Payload',
+        description: 'Payload',
+      },
+      blogs: [
+        {
+          slug: '/blog/pioneering-progress',
+          image: {
+            src: '/assets/images/blog/istockphoto1.jpg',
+            alt: 'Pioneering Progress, One Algorithm at a Time',
+          },
+          authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
+          categories: ['Technology', 'Other'],
+          publishedAt: '2025-01-01T17:19:41.270Z',
+          commentCount: '05',
+          title: 'Pioneering Progress, One Algorithm at a Time',
+          description:
+            'Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis start fermentum ullamcorper viverra laoreet. By Admin. Technology. 28th February 2022. Leave a comment.',
+        },
+        {
+          slug: '/blog/innovative-solutions',
+          image: {
+            src: '/assets/images/blog/istockphoto2.jpg',
+            alt: 'Innovative Solutions for Modern Problems',
+          },
+          publishedAt: '2025-01-01T17:19:41.270Z',
+          categories: [],
+          commentCount: '10',
+          title: 'Innovative Solutions for Modern Problems',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. By John Doe. Innovation. 15th March 2022. Leave a comment.',
+        },
+        {
+          slug: '/blog/future-of-tech',
+          image: {
+            src: '/assets/images/blog/istockphoto3.jpg',
+            alt: 'The Future of Technology',
+          },
+          authors: [ { name: 'admin'}, { name: 'demo'}],
+          publishedAt: '2025-01-01T17:19:41.270Z',
+          commentCount: '08',
+          title: 'The Future of Technology',
+          description:
+            'Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. By Jane Doe. Future. 22nd April 2022. Leave a comment.',
+        },
+      ],
+    },
+    footer: {
+      className: '',
+      logoLight:logoLight,
+      logoDark:logoDark,
+      footerData: {
+        about: {
+          description: 'This is a sample description for the about section.',
+          socialLinks: [
+            {
+              icon: <FaLinkedin />,
+              href: 'https://www.linkedin.com/company/cortex-reply/',
+            },
+            {
+              icon: <FaInstagram />,
+              href: 'https://www.instagram.com/cortex.reply/',
+            },
+          ],
+        },
+        columnOne: {
+          title: 'Column One',
+          links: [
+            { href: '/link1', label: 'Link 1' },
+            { href: '/link2', label: 'Link 2' },
+          ],
+        },
+        columnTwo: {
+          title: 'Contact Us',
+          location: '1234 Street Name, City, Country',
+          mails: ['contact@example.com', 'support@example.com'],
+        },
+        columnThree: {
+          title: 'Recent Insights',
+          blogs: [
+            {
+              image: {
+                src: '/assets/images/blog/blog-sm-1.jpg',
+                alt: 'We provide a range of IT solutions',
+              },
+              title: 'We provide a range of IT solutions',
+              date: '2025-01-02T00:00:00.000Z',
+              slug: './blog-details',
+            },
+            {
+              image: {
+                src: '/assets/images/blog/blog-sm-2.jpg',
+                alt: 'IT solutions enhance efficiency',
+              },
+              title: 'IT solutions enhance efficiency',
+              date: '2025-01-02T00:00:00.000Z',
+              slug: './blog-details',
+            },
+          ],
+        },
+        footerBottom: {
+          copyrightText: 'copyright',
+          links: [
+            {
+              label: 'Privacy Policy',
+              href: '/privacy-policy',
+              openNewTab: false,
+            },
+            {
+              label: 'Contact Us',
+              href: '/contact',
+              openNewTab: false,
+            },
+          ],
+        },
+      },
+    },
   },
 }
 

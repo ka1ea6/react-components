@@ -74,8 +74,8 @@ import { VideoHeader } from '../components/HeaderFooter'
 import logoVideo from '../images/cortex-reply-bw.png'
 import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
-import { ServiceSection, AboutSection, ContactSection} from '../sections'
-
+import { ServiceSection, AboutSection, ContactSection, BlogList} from '../sections'
+import { Footer } from '../components/HeaderFooter'
 
 export default function LandingPage({ ...args }) {
   return (
@@ -86,7 +86,8 @@ export default function LandingPage({ ...args }) {
       <ServiceSection services={args.services} />
       <AboutSection {...args.about} />
       <ContactSection {...args.contact} />
-
+      <BlogList {...args.blog} />
+      <Footer {...args.footer} />
     </div>
   )
 }
