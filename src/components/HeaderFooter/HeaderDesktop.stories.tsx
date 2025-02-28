@@ -28,7 +28,7 @@ export default {
 
 const Template: StoryFn<typeof HeaderDesktop> = (args) => {
 
-  return <HeaderDesktop {...args}  />;
+  return <div className='bg-red-700 h-full w-full'><HeaderDesktop {...args}  /></div>
 };
 const GithubIcon = (props: any) => <DynamicIcon iconName="github" type="brands" {...props} />
 

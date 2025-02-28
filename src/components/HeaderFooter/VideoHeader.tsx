@@ -68,14 +68,14 @@ export function VideoHeader({
   }
 
   return (
-    <div className="relative h-screen">
-      <div className="absolute inset-0 w-full h-screen overflow-hidden">
-        <video className="object-cover w-full h-full" autoPlay loop muted playsInline>
-          <source src="assets/videos/background.mov" type="video/mp4" />
+    <div className="sticky top-0 h-screen">
+      
+        <video className="fixed inset-0 object-cover w-full h-full z-0" autoPlay loop muted playsInline>
+          <source src="assets/videos/background2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-primary-900/50" />
-      </div>
+        {/* <div className="absolute inset-0 bg-primary-900/50" /> */}
+      
       {!isScrolled && !isMenuOpen && (
         <button
           className="fixed hidden lg:block top-4 right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
@@ -106,14 +106,14 @@ export function VideoHeader({
         />
       </div>
       
-      <div className="absolute inset-0 h-full z-10 flex flex-col items-center justify-between text-white text-center px-4">
-        <Image
+      <div className="fixed inset-0 h-full z-10 flex flex-col items-center justify-between text-white text-center px-4">
+        { !isScrolled && !isMenuOpen && <Image
           src={logoVideo}
           alt="Cortex Reply Logo"
           width={720}
           height={320}
           className={cn('absolute top-2.5 h-auto w-auto mt-8 hidden lg:block', isMenuOpen && 'lg:hidden')}
-        />
+        />}
         <div className="absolute top-1/2vv h-full flex flex-col px-4 items-center justify-center">
           <h1 className="text-6xl font-bold pt-auto mb-12">{title && title}</h1>
           <div className="text-3xl mb-8 max-w-2xl">{subtitle && subtitle}</div>

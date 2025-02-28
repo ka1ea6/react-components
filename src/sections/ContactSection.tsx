@@ -40,7 +40,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
 
   return (
     <>
-      <section className="section-padding-primary">
+      <section className="sticky top-0 h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
         <div className="">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">

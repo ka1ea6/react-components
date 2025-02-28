@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Container } from '@/components/Other/Container'
+import { Button } from '@/components/ui'
 import { BrandLogo } from './BrandLogo'
 import { useTheme } from 'next-themes'
 
@@ -13,9 +13,10 @@ interface HeaderProps {
   logoLight: StaticImageData
   logoDark: StaticImageData
   menuItems?: HeaderMenuProps[]
+  themeControl?: boolean
 }
 
-export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: HeaderProps) {
+export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, themeControl=false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [currentTheme, setCurrentTheme] = useState('')
   const themes = ['light', 'dark']
@@ -58,9 +59,9 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
           isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
         }`}
       > */}
-        <Container className="px-0">
-          <nav className="backdrop-blur-sm text-white p-0 rounded-b-xl">
-            <div className="flex items-center justify-between bg-background px-9 py-0 dark:bg-[#212124] rounded-b-xl border border-t-0 border-accent">
+        {/* <Container className="px-0"> */}
+          <nav className="backdrop-blur-sm text-white p-0">
+            <div className="flex items-center justify-between bg-background/80 px-9 py-0">
               <BrandLogo logoDark={logoDark} logoLight={logoLight} />
               {/* <ul className="flex items-center justify-center flex-grow space-x-8 text-md">
                 <li>
@@ -91,8 +92,10 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
               <PopoverGroup className="hidden lg:flex lg:gap-x-12">
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}
               </PopoverGroup>
-              <div className="flex items-center space-x-4">
-                <button
+             <div className="flex items-center space-x-4">
+              <Button variant="outline" size="sm" className="border-accent bg-transparent rounded-2xl px-6">Contact Us</Button>
+              
+             { themeControl &&    <button
                   className="fixed right-4 z-[60] p-2 rounded-full hover:border hover:border-accent backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-primary dark:text-white hover:text-accent hover:scale-125"
                   onClick={toggleTheme}
                 >
@@ -101,11 +104,11 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems }: He
                     <Moon className="absoulte h-6 w-6 rotate-0 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
                     {/* <X className="w-6 h-6 text-white" /> */}
                   </div>
-                </button>
-              </div>
+                </button> }
+              </div> 
             </div>
           </nav>
-        </Container>
+        {/* </Container> */}
       </header>
     </>
   )
