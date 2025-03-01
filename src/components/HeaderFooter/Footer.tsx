@@ -218,7 +218,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
       </div>
       <div className="flex min-h-[90px] items-center border-t border-accent-800 border-opacity-20 py-5 dark:border-body dark:border-opacity-20">
         <div className="container">
-          <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 md:gap-x-10">
+          <div className="flex flex-wrap items-center text-xs justify-between gap-x-8 gap-y-4 md:gap-x-10">
             <p>{footerBottom.copyrightText}</p>
             {footerBottom.links && footerBottom.links.length > 0 && (
               <nav aria-label="footer bottom navigation">
