@@ -60,10 +60,10 @@ export function SectionHeading({
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}
       {typeof description === 'string'
-        ? description && <p className={'mt-5 whitespace-pre-line'}>{description}</p>
+        ? description && <p className={'mt-5 whitespace-pre-line text-primary'}>{description}</p>
         : description && (
             // <p className={'mt-5 whitespace-pre-line'}>
-            <RichText content={description} enableGutter={false} />
+            <RichText content={description} enableGutter={false} className='prose-headings:text-accent prose-p:text-primary' />
             // </p>
           )}
     </div>

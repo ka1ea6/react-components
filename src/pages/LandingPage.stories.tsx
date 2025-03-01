@@ -27,6 +27,10 @@ import { FaInstagram, FaLinkedin } from 'react-icons/fa6'
 import logoLight from '../../.storybook/public/cortex-reply-light.png'
 import logoDark from '../../.storybook/public/cortex-reply-dark.png'
 
+import serviceImage from '../../.storybook/public/assets/images/background/waves.jpg'
+import { image } from 'html2canvas/dist/types/css/types/image'
+
+
 function Icon1() {
   return (
     <svg
@@ -139,6 +143,7 @@ export const Default: PageStory = {
         },
       ],
     },
+    service :{
     services: [
       {
         icon: { type: 'thin', iconName: 'image' },
@@ -159,6 +164,8 @@ export const Default: PageStory = {
         slug: '/service',
       },
     ],
+    image: serviceImage,
+  },
     about: {
       images: {
         image1: image1,

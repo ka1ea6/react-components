@@ -85,7 +85,7 @@ export default function LandingPage({ ...args }) {
       <div className="h-screen relative overflow-hidden snap-start">
       <VideoHeader {...args.header} logoVideo={logoVideo} logoLight={logoLight} logoDark={logoDark} />
       </div>
-      <ServiceSection services={args.services} />
+      <ServiceSection {...args.service} />
       <AboutSection {...args.about} />
       <ContactSection {...args.contact} />
       <BlogList {...args.blog} />

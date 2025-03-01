@@ -50,7 +50,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
                 ))}
               </div>
             )}
-            {description && <p className="mt-5 md:mt-[1.875rem]">{description}</p>}
+            {description && <p className="mt-5 text-primary md:mt-[1.875rem]">{description}</p>}
           </div>
 
           {/* Images  */}
