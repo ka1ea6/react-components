@@ -13,7 +13,7 @@ export interface ServiceSectionProps {
 
 export function ServiceSection({ services, className, image }: ServiceSectionProps) {
   return (
-    <section id="next-section" className={cn('sticky md:h-screen snap-start md:top-0 flex flex-col items-center justify-center section-padding-primary dark bg-background border-t border-accent', className)} 
+    <section id="next-section" className={cn('sticky md:h-screen snap-start md:top-0 flex flex-col items-center justify-center section-padding-primary dark bg-background', className)} 
     style={{
       backgroundImage: `url(${image?.src})`, // Use the src property from ImageProps
       backgroundSize: 'cover',
