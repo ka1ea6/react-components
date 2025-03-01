@@ -40,7 +40,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
 
   return (
     <>
-      <section className="sticky top-0 h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
+      <section className="sticky top-0 md:h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
         <div className="">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
@@ -84,7 +84,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
           </div>
         </div>
       </section>
-      <section className="sticky top-0 h-screen flex flex-col z-2 light bg-background section-padding-primary">
+      <section className="sticky top-0 md:h-screen flex flex-col z-2 light bg-background section-padding-primary">
         <div className="relative py-[60px]">
           {/* Image area  */}
           <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">

@@ -93,7 +93,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, them
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}
               </PopoverGroup>
              <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" className="border-accent bg-transparent rounded-2xl px-6">Contact Us</Button>
+              <Button asChild variant="outline" size="sm" className="border-accent bg-transparent rounded-2xl px-6 hover:bg-accent"><a href='/contact'>Contact Us</a></Button>
               
              { themeControl &&    <button
                   className="fixed right-4 z-[60] p-2 rounded-full hover:border hover:border-accent backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-primary dark:text-white hover:text-accent hover:scale-125"
