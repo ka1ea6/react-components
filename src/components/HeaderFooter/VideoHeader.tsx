@@ -55,6 +55,7 @@ export function VideoHeader({
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
+        setIsMenuOpen(false)
       }
     }
 
@@ -68,6 +69,7 @@ export function VideoHeader({
   }
 
   return (
+    <div>
     <div className="sticky top-0 h-screen">
       
         <video className="fixed inset-0 object-cover w-full h-full z-0" autoPlay loop muted playsInline>
@@ -91,20 +93,7 @@ export function VideoHeader({
 
         </button>
       )}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <HeaderDesktop
-          isMenuOpen={isScrolled || isMenuOpen}
-          logoLight={logoLight}
-          logoDark={logoDark}
-          menuItems={menuItems}
-        />
-        <HeaderMobile
-          isMenuOpen={true}
-          logoLight={logoLight}
-          logoDark={logoDark}
-          menuItems={menuItems}
-        />
-      </div>
+      
       
       <div className="fixed inset-0 h-full z-10 flex flex-col items-center justify-between text-white text-center px-4">
         { !isScrolled && !isMenuOpen && <Image
@@ -128,5 +117,20 @@ export function VideoHeader({
         </div>
       </div>
     </div>
+    <div className="fixed top-0 left-0 right-0 z-50">
+    <HeaderDesktop
+      isMenuOpen={isScrolled || isMenuOpen}
+      logoLight={logoLight}
+      logoDark={logoDark}
+      menuItems={menuItems}
+    />
+    <HeaderMobile
+      isMenuOpen={true}
+      logoLight={logoLight}
+      logoDark={logoDark}
+      menuItems={menuItems}
+    />
+  </div>
+  </div>
   )
 }

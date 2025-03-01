@@ -78,9 +78,11 @@ import { ServiceSection, AboutSection, ContactSection, BlogList} from '../sectio
 import { Footer } from '../components/HeaderFooter'
 
 export default function LandingPage({ ...args }) {
+
+
   return (
-    <div className="relative">
-      <div className="h-screen relative overflow-hidden">
+    <div className="relative overflow-y-none scroll-smooth snap-y snap-mandatory">
+      <div className="h-screen relative overflow-hidden snap-start">
       <VideoHeader {...args.header} logoVideo={logoVideo} logoLight={logoLight} logoDark={logoDark} />
       </div>
       <ServiceSection services={args.services} />

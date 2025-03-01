@@ -30,7 +30,7 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
   return (
     <section
       className={cn(
-        'sticky top-0 h-screen z-2 flex flex-col items-center justify-center section-padding-primary dark bg-background overflow-hidden ',
+        'sticky md:top-0 md:h-screen min-h-screen z-2 flex flex-col items-center justify-center section-padding-primary dark bg-background overflow-auto',
         // className,
       )}
     >

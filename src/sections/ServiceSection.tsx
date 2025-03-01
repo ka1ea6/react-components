@@ -11,7 +11,7 @@ export interface ServiceSectionProps {
 
 export function ServiceSection({ services, className }: ServiceSectionProps) {
   return (
-    <section id="next-section" className={cn('sticky top-0 h-screen flex flex-col items-center justify-center z-2 section-padding-primary dark bg-background border-t border-accent', className)}>
+    <section id="next-section" className={cn('sticky md:h-screen snap-start md:top-0 flex flex-col items-center justify-center section-padding-primary dark bg-background border-t border-accent', className)}>
       <Container className='py-8'>
         {services && services.length > 0 && (
           <div className="flex flex-wrap justify-center gap-y-8">

@@ -25,7 +25,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
   const { images, sectionHeading, keyPoints, description } = aboutSectionData
 
   return (
-        <section id="about-section" className={cn('sticky top-0 h-screen z-2 flex flex-col items-center justify-center section-padding-primary light bg-background', aboutSectionData.className || '')}>
+        <section id="about-section" className={cn('sticky md:top-0 md:h-screen z-2 flex flex-col items-center justify-center section-padding-primary light bg-background', aboutSectionData.className || '')}>
     
     {/* <section className="section-padding-primary overflow-hidden"> */}
       <Container>
