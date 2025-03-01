@@ -69,7 +69,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
   return (
     <footer
       className={cn(
-        'sticky z-2 flex flex-col section-padding-primary dark bg-background overflow-hidden ',
+        'sticky md:h-screen md:top-0 z-2 flex flex-col section-padding-primary dark bg-background overflow-hidden ',
         className,
       )}
     >
