@@ -80,16 +80,15 @@ export function HeaderMobile({
                 <span className="sr-only">Open main menu</span>
                 <Bars3Icon aria-hidden="true" className="h-4 w-4" />
               </button>
-              <button
+              {/* <button
                 className="fixed right-16 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20  text-white dark:hover:text-accent"
                 onClick={toggleTheme}
               >
                 <div className="relative">
                   <Sun className="absolute h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
                   <Moon className="absoulte h-4 w-4 rotate-0 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
-                  {/* <X className="w-6 h-6 text-white" /> */}
                 </div>
-              </button>
+              </button> */}
             </div>
           </div>
         </nav>
