@@ -41,11 +41,11 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
       data-theme="dark"
     >
       <div className="container mt-[20rem] mb-8 z-10 relative flex items-end justify-center">
-        <div className="text-center container">
+        {/* <div className="container"> */}
           {children ||
             (richText && (
               <RichText
-                className="mb-6 prose prose-h1:text-5xl prose-headings:text-foreground prose-p:text-foreground"
+                className="mb-6 ml-0 prose prose-h1:text-5xl prose-headings:text-foreground prose-p:text-foreground"
                 content={richText}
                 enableGutter={true}
               />
@@ -62,7 +62,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
               })}
             </ul>
           )}
-        </div>
+        {/* </div> */}
       </div>
       <div className="min-h-96 select-none">
         {media && typeof media === 'object' && (
