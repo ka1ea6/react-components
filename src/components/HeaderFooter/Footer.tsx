@@ -198,7 +198,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
                             </span>
                             <span>{formatDateTimeStringCompact(blog.date)}</span>
                           </p>
-                          <h4 className="text-md font-bold leading-normal">
+                          <h4 className="text-md leading-normal">
                             <CustomLink
                               href={blog.slug}
                               className="transition-colors duration-300 hover:text-accent"

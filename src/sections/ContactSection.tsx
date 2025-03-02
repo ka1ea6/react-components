@@ -40,7 +40,36 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
 
   return (
     <>
-      <section className="sticky top-0 md:h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
+      
+      <section className="sticky md:top-0 md:h-screen flex flex-col z-2 light bg-background section-padding-primary">
+        <div className="relative py-[60px]">
+          {/* Image area  */}
+          <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-cover"
+              sizes={`(min-width: 768px) 60vw, 100vw`}
+              // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
+              placeholder="blur"
+              blurDataURL={blurDataUrl}
+            />
+          </div>
+
+          <Container>
+            <div className="ml-auto md:w-1/2">
+              <div className="relative z-[2] rounded-5 bg-white p-10 shadow-1 dark:bg-accent-700 lg:p-[60px]">
+                <div className="mb-30px">
+                  <SectionHeading {...sectionHeading} invert />
+                </div>
+                <Form />
+              </div>
+            </div>
+          </Container>
+        </div>
+      </section>
+      <section className="sticky md:top-0 md:h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
         <div className="">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
@@ -84,35 +113,6 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
           </div>
         </div>
       </section>
-      <section className="sticky top-0 md:h-screen flex flex-col z-2 light bg-background section-padding-primary">
-        <div className="relative py-[60px]">
-          {/* Image area  */}
-          <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover"
-              sizes={`(min-width: 768px) 60vw, 100vw`}
-              // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
-              placeholder="blur"
-              blurDataURL={blurDataUrl}
-            />
-          </div>
-
-          <Container>
-            <div className="ml-auto md:w-1/2">
-              <div className="relative z-[2] rounded-5 bg-white p-10 shadow-1 dark:bg-accent-700 lg:p-[60px]">
-                <div className="mb-30px">
-                  <SectionHeading {...sectionHeading} invert />
-                </div>
-                <Form />
-              </div>
-            </div>
-          </Container>
-        </div>
-      </section>
-
       {/* <section className="section-padding-primary">
         <Container>
           <div className="flex flex-col gap-[50px] md:flex-row">
