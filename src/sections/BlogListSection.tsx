@@ -31,7 +31,7 @@ interface CategoryListProps {
   links: LinkProps[]
 }
 
-export function BlogListSection({ blogs, pages, categories, types }: { blogs: BlogProps[]; pages: PagingProps, categories?: CategoryListProps, types: LinkProps[] }) {
+export function BlogListSection({ blogs, pages, categories, types }: { blogs: Partial<Post>[]; pages: PagingProps, categories?: CategoryListProps, types: LinkProps[] }) {
 
   return (
     <section>
