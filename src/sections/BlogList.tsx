@@ -1,4 +1,4 @@
-import { Post } from '@/payload-types'
+import { Post, Media } from '@/payload-types'
 import { formatDateTimeStringShort } from '@/lib/utils/formatDateTime'
 import { SectionHeading, type SectionHeadingWithoutStylingProps } from '@/components/HeaderFooter/SectionHeading'
 import { Container } from '@/components/Other/Container'
@@ -22,7 +22,7 @@ interface BlogProps {
 
 export interface BlogSectionProps {
   sectionHeading?: Pick<SectionHeadingWithoutStylingProps, 'subtitle' | 'title'>
-  blogs: BlogProps[]
+  blogs: Partial<Post>[]
 }
 
 export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) { 
@@ -63,13 +63,13 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
 const inlineFlexLayoutClasses = cn('inline-flex items-center gap-2 text-white')
 const iconClasses = cn('text-sm text-white')
 
-export function BlogCard({ slug, image, authors, title, publishedAt: date, categories }: BlogProps) {
+export function BlogCard({ slug, meta, authors, title, publishedAt: date, categories }: Partial<Post>) {
   return (
     <article className="group/blog relative z-1 flex h-full min-h-[452px] flex-col  overflow-hidden rounded-5 p-0">
       <span className="absolute inset-0 z-[2] "></span>
       <Image
-        src={image.src}
-        alt={image.alt}
+        src={(meta?.image as Media)?.url || '/assets/images/brand/cortex-reply-gradient.png'}
+        alt={(meta?.image as Media)?.alt || 'Blog image'}
         fill
         sizes={`
           (min-width:768px) 50vw, 
@@ -84,8 +84,8 @@ export function BlogCard({ slug, image, authors, title, publishedAt: date, categ
         )}
       />
       <Image
-        src={image.src}
-        alt={image.alt}
+        src={(meta?.image as Media)?.url || '/assets/images/brand/cortex-reply-gradient.png'}
+        alt={(meta?.image as Media)?.alt || 'Blog image'}
         fill
         sizes={`
           (min-width:768px) 50vw, 
@@ -148,7 +148,7 @@ export function BlogCard({ slug, image, authors, title, publishedAt: date, categ
           <h3 className="text-md font-bold w-full p-6 bg-background/60 leading-[1.25] text-foreground md:text-lg">
             <CustomLink
               aria-label={title}
-              href={slug}
+              href={slug || '#'}
               className="transition-colors duration-300 hover:text-primary"
             >
               {title}
@@ -156,7 +156,7 @@ export function BlogCard({ slug, image, authors, title, publishedAt: date, categ
           </h3>
           <div>
             <CustomLink
-              href={slug}
+              href={slug || '#'}
               className={cn(
                 inlineFlexLayoutClasses,
                 'gap-[.625rem] font-secondary border bg-background/80 border-accent px-4 py-2 mx-6 my-3 text-base font-bold uppercase leading-[2] tracking-wide text-foreground transition-colors duration-300 hover:text-accent-foreground',
