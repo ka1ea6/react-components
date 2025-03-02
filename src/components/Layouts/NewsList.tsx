@@ -5,7 +5,7 @@ import { formatDateTimeStringShort } from '@/lib/utils/formatDateTime'
 
 export interface BlogProps {
   image: Omit<ImageProps, 'width' | 'height'>
-  authors?: { name: string; image: ImageProps }[]
+  authors?: { name: string; profilePicture: ImageProps }[]
   categories?: string[]
   commentCount: string
   title: string
@@ -77,10 +77,10 @@ const NewsItem = ({ post, id }: { post: BlogProps; id: number }) => {
         <div className="mt-6 flex flex-wrap lg:border-t gap-y-2 border-gray-200 dark:border-gray-700 pt-6">
           {authors && authors.map((author, index) => (
             <div className="relative flex items-center gap-x-4" key={index}>
-              {author.image ? (
+              {author.profilePicture ? (
                 <img
-                  alt={author.image.alt}
-                  src={author.image.src}
+                  alt={author.profilePicture.alt}
+                  src={author.profilePicture.src}
                   className="size-10 rounded-full bg-gray-50"
                 />
               ) : (
