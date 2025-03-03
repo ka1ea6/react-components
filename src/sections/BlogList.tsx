@@ -149,7 +149,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
           <h3 className="text-md font-bold w-full p-6 bg-background/60 leading-[1.25] text-foreground md:text-lg">
             <CustomLink
               aria-label={title}
-              href={slug || '#'}
+              href={`/${base}/${slug}` || '#'}
               className="transition-colors duration-300 hover:text-primary"
             >
               {title}
