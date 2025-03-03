@@ -15,14 +15,14 @@ export interface BlogProps {
   meta: Post['meta']
 }
 
-export function NewsList({ blogs }: { blogs: Partial<Post>[] }) { 
+export function NewsList({ blogs, base }: { blogs: Partial<Post>[], base:string }) { 
   return (
 
           <div>
             {blogs && blogs.length > 0 && (
               <div className="grid gap-10 lg:gap-10">
                 {blogs.map((post, index) => (
-                  <NewsItem post={post} id={index} key={index}/>
+                  <NewsItem post={post} id={index} key={index} base={base}/>
                 ))}
               </div>
             )}
@@ -30,22 +30,22 @@ export function NewsList({ blogs }: { blogs: Partial<Post>[] }) {
   )
 }
 
-const NewsItem = ({ post, id }: { post: Partial<Post>; id: number }) => {
-  const { slug, authors, categories, title, publishedAt } = post
+const NewsItem = ({ post, id, base }: { post: Partial<Post>; id: number, base: string }) => {
+  const { slug, meta, authors, categories, title, publishedAt } = post
   return (
     <article key={id} className="relative isolate flex flex-col gap-8 lg:flex-row">
       <div className="relative aspect-video sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-        {/* {image && (
+       
           <Image
-            src={image.src}
-            alt={image.alt}
+            src={(meta?.image as Media)?.url || '/assets/images/brand/cortex-reply-gradient.png'}
+            alt={(meta?.image as Media)?.alt || 'Post image'}
             width={850}
             height={575}
             sizes="100vw"
             className="absolute inset-0 size-full rounded-2xl bg-gray-50 object-cover"
 
           />
-        )} */}
+        
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
       <div>
@@ -67,7 +67,7 @@ const NewsItem = ({ post, id }: { post: Partial<Post>; id: number }) => {
         </div>
         <div className="group relative max-w-xl">
           <h3 className="mt-3 text-lg/6 font-semibold text-accent group-hover:text-xl/6">
-            <a href={post.slug || '#'}>
+            <a href={`/${base}/${post.slug}` || '#'}>
               <span className="absolute inset-0" />
               {post.title}
             </a>

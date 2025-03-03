@@ -31,7 +31,7 @@ interface CategoryListProps {
   links: LinkProps[]
 }
 
-export function BlogListSection({ blogs, pages, categories, types }: { blogs: Partial<Post>[]; pages: PagingProps, categories?: CategoryListProps, types: LinkProps[] }) {
+export function BlogListSection({ blogs, pages, categories, types, base }: { blogs: Partial<Post>[]; pages: PagingProps, categories?: CategoryListProps, types: LinkProps[], base: string }) {
 
   return (
     <section>
@@ -39,7 +39,7 @@ export function BlogListSection({ blogs, pages, categories, types }: { blogs: Pa
         <div className="grid gap-30px lg:grid-cols-[1fr_410px]">
           <div>
           { types && <Filter types={types} />}
-          <NewsList blogs={blogs} />
+          <NewsList blogs={blogs} base={base}/>
           <Pagination pages={pages} />
           </div>
           <div className="grid gap-30px w-full self-baseline max-md:mx-auto max-md:max-w-[410px] lg:gap-10">
