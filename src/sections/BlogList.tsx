@@ -23,9 +23,10 @@ interface BlogProps {
 export interface BlogSectionProps {
   sectionHeading?: Pick<SectionHeadingWithoutStylingProps, 'subtitle' | 'title'>
   blogs: Partial<Post>[]
+  base?: string // base path for the blogs
 }
 
-export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) { 
+export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSectionProps) { 
 
   return (
     <section
@@ -50,7 +51,7 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
                 data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
                 className="w-full px-4 md:w-1/2 md:px-[15px] lg:w-1/3"
               >
-                <BlogCard {...blog} />
+                <BlogCard {...blog} base={base}/>
               </div>
             ))}
           </div>
@@ -63,7 +64,7 @@ export function BlogList({ blogs,sectionHeading  }: BlogSectionProps) {
 const inlineFlexLayoutClasses = cn('inline-flex items-center gap-2 text-white')
 const iconClasses = cn('text-sm text-white')
 
-export function BlogCard({ slug, meta, authors, title, publishedAt: date, categories }: Partial<Post>) {
+export function BlogCard({ slug, meta, authors, title, publishedAt: date, categories, base }: Partial<Post> & { base: string }) {
   return (
     <article className="group/blog relative z-1 flex h-full min-h-[452px] flex-col  overflow-hidden rounded-5 p-0">
       <span className="absolute inset-0 z-[2] "></span>
@@ -156,7 +157,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
           </h3>
           <div>
             <CustomLink
-              href={slug || '#'}
+              href={`/${base}/${slug}` || '#'}
               className={cn(
                 inlineFlexLayoutClasses,
                 'gap-[.625rem] font-secondary border bg-background/80 border-accent px-4 py-2 mx-6 my-3 text-base font-bold uppercase leading-[2] tracking-wide text-foreground transition-colors duration-300 hover:text-accent-foreground',
