@@ -961,7 +961,7 @@ export interface FeaturesBlock {
           /**
            * Card style
            */
-          card?: ('default' | 'solid' | 'gradient' | 'radial' | 'outline') | null;
+          card?: ('default' | 'solid' | 'gradient' | 'radial' | 'outline' | 'light') | null;
           /**
            * Icon Size
            */

@@ -97,7 +97,7 @@ export default function LandingPage({ ...args }) {
 }
 
 
-function Services({ services }: { services: Service[] }) {
+function Services({ services }: { services: any[] }) {
   return (
     <>
       {services.map((service, index) => (

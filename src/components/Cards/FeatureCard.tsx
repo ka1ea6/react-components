@@ -8,7 +8,7 @@ import Image, { type StaticImageData } from 'next/image'
 import type { FeaturesBlock as FeaturesBlockProps, Media } from '@/payload-types'
 type Section = NonNullable<FeaturesBlockProps['features']>[number]
 
-export interface FeatureCardProps extends Section {
+interface FeatureCardProps extends Section {
   image?: Partial<Media>
   subtitle?: string
   settings?: Section['settings'] & {

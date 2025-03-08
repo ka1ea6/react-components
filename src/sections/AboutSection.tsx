@@ -155,7 +155,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
         </div>
       </Container>
     </section>
-    <style jsx>{`
+    {/* <style jsx>{`
   .clip-custom-bottom {
   clip-path: polygon(0% 0%, 0% 16.2%, 0% 83.2%, 0% 87.3%, 65.4% 99.6%, 100% 72.9%, 100% 16.2%, 100% 0%);
 }
@@ -165,7 +165,7 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
   .clip-custom-top-l {
   clip-path: polygon(100% 100%, 100% 83.8%, 100% 16.8%, 100% 12.7%, 34.6% 0.4%, 0% 27.1%, 0% 83.8%, 0% 100%);
 }
-`}</style>
+`}</style> */}
     </>
   )
 }

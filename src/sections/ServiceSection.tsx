@@ -2,14 +2,14 @@ import { Container } from '@/components/Other/Container'
 import { getStaggeredDelay } from '@/lib/utils/setStaggeredDelay'
 import { cn } from '@/lib/utils'
 import { ClassValue } from 'clsx'
-import { ServiceCard, ServiceProps } from '@/components/Cards/ServiceCard'
+// import { ServiceCard, ServiceProps } from '@/components/Cards/ServiceCard'
 import { FeatureCard } from '../components'
 import { ImageProps } from 'next/image'
 import { PageShape } from '@/components/Other/PageShape'
 import { Divide } from 'lucide-react'
 
 export interface ServiceSectionProps {
-  services: typeof FeatureCard[]
+  services: any[]
   className?: ClassValue
   image?: ImageProps
 }
@@ -18,8 +18,8 @@ export function ServiceSection({ services, className }: ServiceSectionProps) {
   console.log('ServiceSection', services)
   const cardsettings = {
   settings: {
-    width: 'full',
-    card: 'light',
+    width: 'full' as 'full',
+    card: 'light' as 'light',
   }
   }
 
@@ -53,7 +53,7 @@ export function ServiceSection({ services, className }: ServiceSectionProps) {
                 className="w-full px-4 md:w-1/2 lg:w-1/3"
               >
                 {/* <ServiceCard {...service} /> */}
-                <FeatureCard {...cardsettings} title={service.title} image={service.image} content={service.content} link={service.link} />
+                <FeatureCard {...cardsettings} icon={{ type: 'none'}} title={service.title} image={service.image} content={service.content} link={service.link} />
               </div>
             ))}
           </div>

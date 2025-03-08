@@ -40,12 +40,12 @@ export function ServiceDetailSection({
           <div className={cn('w-full md:w-1/2 max-w-lg text-left', theme === 'dark' && 'mt-48')}>
             <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>
             <p className="mt-4 text-gray-700 text-lg">
-              <RichText
+              {content && <RichText
                 enableGutter={false}
-                content={content}
+                content={content as Record<string, any>}
                 enableProse={false}
                 className={cn('prose prose-headings:text-gray-700 prose-p:text-gray-700')}
-              />
+              />}
             </p>
 
             {/* CTA Button */}
@@ -56,13 +56,14 @@ export function ServiceDetailSection({
 
           {/* Right Side - AI Themed Image */}
           <div className="w-full md:w-1/2 flex justify-center">
+          { image && image.url && (
             <Image
               src={image.url} // Change this to the actual image path
               alt={image.alt || `Image of ${title}`}
               width={400}
               height={400}
               className="max-w-full"
-            />
+            />)}
           </div>
         </div>
         
