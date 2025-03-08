@@ -20,7 +20,7 @@ export function ServiceDetailSection({
 }: ServiceDetailSectionProps) {
   console.log('ServiceDetailSectionProps', image, title, content, link, theme)
   return (
-    <section className="relative">
+    <section className="container relative">
       <div
         className={cn(
           'absolute mt-[50%] w-full h-full',
@@ -67,70 +67,9 @@ export function ServiceDetailSection({
         </div>
         
       </div>
-      <div className="clip-bottom w-full h-[15vh] bg-black"></div>
+      {/* <div className="clip-bottom w-full h-[15vh] bg-black"></div> */}
 
 
-      <style jsx>{`
-      .clip-bottom {
-    clip-path: polygon(0% 0%, 0% 50%, 100% 100%, 100% 0%);
-  }
-        .clip-custom-bottom {
-          clip-path: polygon(
-            0% 0%,
-            0% 16.2%,
-            0% 83.2%,
-            0% 87.3%,
-            65.4% 99.6%,
-            100% 72.9%,
-            100% 16.2%,
-            100% 0%
-          );
-        }
-        .clip-custom-top-r {
-          clip-path: polygon(
-            0% 100%,
-            0% 83.8%,
-            0% 16.8%,
-            0% 12.7%,
-            65.4% 0.4%,
-            100% 27.1%,
-            100% 83.8%,
-            100% 100%
-          );
-        }
-        .clip-custom-top-l {
-          clip-path: polygon(
-            100% 100%,
-            100% 83.8%,
-            100% 16.8%,
-            100% 12.7%,
-            34.6% 0.4%,
-            0% 27.1%,
-            0% 83.8%,
-            0% 100%
-          );
-        }
-        .clip-custom-top-bottom {
-          clip-path: polygon(
-            0% 0%,
-            0% 12.7%,
-            34.6% 0.4%,
-            100% 16.8%,
-            100% 83.8%,
-            65.4% 99.6%,
-            0% 87.3%,
-            0% 100%,
-            100% 100%,
-            100% 83.8%,
-            100% 16.8%,
-            100% 12.7%,
-            65.4% 0.4%,
-            0% 27.1%,
-            0% 83.8%,
-            0% 100%
-          );
-        }
-      `}</style>
     </section>
   )
 }

@@ -151,7 +151,7 @@ export default function Page({ ...args }) {
         <DummyContent />
       </Section>
       <div className="bottom-0">
-      <Footer {...args.footer} />
+        <Footer {...args.footer} />
       </div>
     </div>
   )
@@ -170,37 +170,48 @@ export const RenderHero: React.FC<Page['hero']> = (props) => {
 }
 
 const DummyContent = () => {
+
+    const bgImage = {
+        blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
+        height: 1315,
+        url: '/assets/props/Cortex-Handshake-BG.jpg',
+        width: 1920
+      }
+
+
   return (
-    <div className="w-full flex flex-row items-center justify-center">
-      {/* Left Side Content */}
-      <div className={cn('w-full md:w-1/2 max-w-lg text-left')}>
-        <h2 className="text-3xl md:text-5xl text-primary">Lorum ipsum...</h2>
-        <p className="mt-4 text-gray-700 text-lg">
-          <RichText
-            enableGutter={false}
-            content={content(
-              'Lorum ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec dui ac odio. Nulla facilisi. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Lorum ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec dui ac odio. Nulla facilisi. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies.',
-            )}
-            enableProse={false}
-            className={cn('prose prose-headings:text-foreground prose-p:text-foreground')}
+    <div className="container">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
+        {/* Left Side Content */}
+        <div className={cn('w-full text-left')}>
+          <h2 className="text-3xl md:text-5xl text-primary">Lorum ipsum...</h2>
+          <p className="mt-4 text-gray-700 text-lg">
+            <RichText
+              enableGutter={false}
+              content={content(
+                'Lorum ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec dui ac odio. Nulla facilisi. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Lorum ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec dui ac odio. Nulla facilisi. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies. Nullam nec nisi nec odio ultricies ultricies.',
+              )}
+              enableProse={false}
+              className={cn('prose prose-headings:text-foreground prose-p:text-foreground')}
+            />
+          </p>
+
+          {/* CTA Button */}
+          <button className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full text-base hover:bg-accent hover:text-accent-foreground transition">
+            Click here
+          </button>
+        </div>
+
+        {/* Right Side - AI Themed Image */}
+        <div className="w-full h-full min-h-96 py-6 md:p-0 flex justify-center">
+          <Image
+            src={bgImage.url} // Change this to the actual image path
+            alt="image"
+            width={bgImage.width}
+            height={bgImage.height}
+            className="max-w-full"
           />
-        </p>
-
-        {/* CTA Button */}
-        <button className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full text-base hover:bg-accent hover:text-accent-foreground transition">
-          Click here
-        </button>
-      </div>
-
-      {/* Right Side - AI Themed Image */}
-      <div className="w-full md:w-1/2 flex justify-center">
-        <Image
-          src="/assets/props/Cortex-Handshake-BG.jpg" // Change this to the actual image path
-          alt="image"
-          width={400}
-          height={400}
-          className="max-w-full"
-        />
+        </div>
       </div>
     </div>
   )
@@ -217,9 +228,9 @@ const Section: React.FC<SectionProps> = ({ children, theme }) => {
       <section id="next-section" className="">
         {/* <div className="absolute w-full h-full bg-accent"></div> */}
         <div className="sticky top-0 light bg-background pt-6 min-h-[80vh]">
-            <div className='relative'>
-          <div className="flex items-center justify-center pt-12">{children}</div>
-          <PageShape className="text-black z-10" position="bottom-right" />
+          <div className="relative">
+            <div className="flex items-center justify-center pt-12">{children}</div>
+            <PageShape className="text-black z-10" position="bottom-right" />
           </div>
         </div>
       </section>
@@ -239,13 +250,12 @@ const Section: React.FC<SectionProps> = ({ children, theme }) => {
     return (
       <section id="next-section" className="">
         <div className="sticky top-0 dark min-h-[80vh] bg-white">
-          <div className="flex items-center justify-center pt-12 bg-background">{children}</div>
-          <PageShape className="text-black z-10" position="top" />
+          <div className="flex items-center justify-center pt-12 bg-black">{children}</div>
+          <PageShape className="text-accent z-10" position="top" />
         </div>
       </section>
     )
   }
-
 
   return (
     <section className="relative">

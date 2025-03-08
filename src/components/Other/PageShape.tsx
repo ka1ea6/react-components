@@ -10,11 +10,11 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
 
   if ( position === 'header') {
     return (
-      <div className="w-full h-[1245px] z-20 text-black">
+      <div className="w-full h-[1240px] z-20 text-black">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1920 1245" // Adjusted viewBox height to 1245 to add 5px at the bottom
+          viewBox="0 0 1920 1240" // Adjusted viewBox height to 1245 to add 5px at the bottom
           className={cn(className, 'absolute bottom-0')}
           transform={transforms[0]}
         >
@@ -34,7 +34,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
   }
   if ( position === 'top') {
     return (
-      <div className="w-full h-[350px] z-20 text-black">
+      <div className="w-full h-[70px] md:h-[350px] z-20 text-black">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -45,10 +45,10 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           <defs>
             <mask id="mask">
               <rect width="100%" height="100%" fill="white" />
-              <polygon points="0 0 0 135 1255.099121 332 1920 0 1920 0 1920 0 0 0" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
             </mask>
           </defs>
-          <polygon points="0 0 0 135 1255.099121 332 1920 0 1920 0 1920 0 0 0" />
+          <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
           {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)" /> */}
           {/* Added white rectangle at the bottom */}
         </svg>
@@ -58,7 +58,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
   }
   if (position === 'bottom-left' || position === 'bottom-right') {
     return (
-      <div className="w-full h-[350px] z-20 text-black">
+      <div className="w-full h-[50px] md:h-[350px] z-20 text-accent">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -69,10 +69,10 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           <defs>
             <mask id="mask">
               <rect width="100%" height="100%" fill="white" />
-              <polygon points="0 0 0 135 1255.099121 332 1920 0 1920 0 1920 0 0 0" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
             </mask>
           </defs>
-          <polygon points="0 0 0 135 1255.099121 332 1920 0 1920 0 1920 0 0 0" />
+          <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
           {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)" /> */}
           {/* Added white rectangle at the bottom */}
         </svg>
