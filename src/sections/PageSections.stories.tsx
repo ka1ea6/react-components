@@ -4,6 +4,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { FaInstagram, FaLinkedin } from 'react-icons/fa6'
 import logoLight from '../../.storybook/public/cortex-reply-light.png'
 import logoDark from '../../.storybook/public/cortex-reply-dark.png'
+import { ImageTest, BlocksTest, HeroTest, PagesTest } from '../tests/payload'
 
 export default {
   title: 'Pages/PageSections',
@@ -136,12 +137,8 @@ export const MediumImpactHero = {
 export const HighImpactHero = {
   args: {
     ...Default.args,
-    hero: {
-      type: 'highImpact',
-      children: <h1 className="text-4xl font-bold">High Impact Hero</h1>,
-      media: 'stock1.jpg?height=400&width=800',
-    },
-    heroBackgroundImage: 'stock1.jpg?height=400&width=800',
+        hero: HeroTest.highImpactSimple,
+    
   },
 }
 

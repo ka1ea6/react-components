@@ -8,6 +8,7 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Payload/Link'
 import { Media } from '@/components/Payload/Media'
 import { RichText } from '@/components/Payload/RichText'
+import { PageShape } from '@/components/Other'
 
 type HighImpactHeroType =
   | {
@@ -36,11 +37,13 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
   // })
 
   return (
-    <div
+    <div>
+    <div className="sticky top-0 h-[70vh] min-h-[600px]">
+
+    {/* <div
       className="relative -mt-[10.4rem] flex items-end justify-center text-white"
-      data-theme="dark"
-    >
-      <div className="container mt-[20rem] mb-8 z-10 relative flex items-end justify-center">
+    > */}
+      <div className="fixed inset-0 container mt-24 mb-8 z-10 flex items-start justify-center">
         {/* <div className="container"> */}
           {children ||
             (richText && (
@@ -64,7 +67,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
           )}
         {/* </div> */}
       </div>
-      <div className="min-h-96 select-none">
+      <div className="fixed inset-0 h-[70vh] min-h-[600px] select-none">
         {media && typeof media === 'object' && (
           <Media
             fill
@@ -81,7 +84,13 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
         )}
         {/* Overlay  */}
         <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-background/0 dark:to-background"></span>
+        
+
       </div>
+      
+    {/* </div> */}
+    <PageShape className="text-black z-10" position="header" />
+    </div>
     </div>
   )
 }
