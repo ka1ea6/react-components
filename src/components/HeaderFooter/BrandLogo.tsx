@@ -2,10 +2,10 @@ import { CustomLink } from '@/components/Other/CustomLink'
 import Image, { StaticImageData } from 'next/image'
 import { cn } from '@/lib/utils/cn'
 
-export function BrandLogo({logoLight, logoDark, mobile = false}:{logoLight: StaticImageData, logoDark: StaticImageData, mobile?:boolean}) {
+export function BrandLogo({logo, mobile = false}:{logo: StaticImageData, mobile?:boolean}) {
   return (
     <CustomLink href="/" className={cn( mobile ? 'py-1' : 'py-2')}>
-      <Image
+      {/* <Image
         className="logo-light dark:hidden"
         src={logoLight.src}
         width={logoLight.width}
@@ -20,12 +20,12 @@ export function BrandLogo({logoLight, logoDark, mobile = false}:{logoLight: Stat
           width: 'auto',
           height : mobile ? 35 : 50
         }}
-      />
+      /> */}
       <Image
-        className="logo-dark hidden dark:block"
-        src={logoDark.src}
-        width={logoDark.width}
-        height={logoDark.height}
+        // className=""
+        src={logo.src}
+        width={logo.width}
+        height={logo.height}
         // placeholder="blur"
         // blurDataURL={logoDark.blurDataURL}
         alt={`${process.env.NEXT_PUBLIC_SITE_NAME} brand logo`}

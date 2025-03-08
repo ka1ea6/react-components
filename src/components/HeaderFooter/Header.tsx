@@ -11,10 +11,11 @@ interface HeaderProps {
   logoDark: StaticImageData
   menuItems?: HeaderMenuProps[]
   className?: string
+  wide?: boolean
 }
 
 
-export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className }: HeaderProps) {
+export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className, wide }: HeaderProps) {
   return (
     <div className={cn('fixed top-0 left-0 right-0 z-50', className)}>
       <HeaderDesktop
@@ -22,6 +23,7 @@ export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className }
         logoLight={logoLight}
         logoDark={logoDark}
         menuItems={menuItems}
+        wide={wide}
       />
       <HeaderMobile
         isMenuOpen={isMenuOpen}

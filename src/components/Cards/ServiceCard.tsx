@@ -19,7 +19,7 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
       <article
         className={cn([
           // General
-          'group/service bg-card shadow-3 transition-transform duration-350 dark:text-white dark:shadow-none',
+          'group/service bg-card shadow-3 transition-transform duration-350 dark:shadow-none',
   
           // Layout
           'relative z-1 block h-full space-y-6 overflow-hidden rounded-5 p-6 md:space-y-7 md:p-10',
@@ -28,7 +28,7 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
           'hover:[transform:translateY(-.5rem)]',
         ])}
       >
-        <div className="flex items-center gap-5">
+        <div className="flex items-center text-foreground gap-5">
           <span className="flex-none text-[2.5rem] transition-all duration-300 group-hover/service:scale-90 group-hover/service:text-accent md:text-[4rem]">
           {isDynamicIconProps(icon) ? (
             <DynamicIcon type={icon.type} iconName={icon.iconName} size="sm" />
@@ -36,11 +36,11 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
             icon
           }            
           </span>
-          <h2 className="text-md font-bold leading-[1.25] md:text-lg">
+          <h2 className="text-md font-medium leading-[1.25] md:text-lg">
            { slug ? <CustomLink href={slug}>{title}</CustomLink> : title }
           </h2>
         </div>
-        <p className="text-body dark:text-body">{description}</p>
+        <p className="text-foreground">{description}</p>
         {slug && <Button
           asChild
           className={cn([
@@ -54,7 +54,7 @@ export function ServiceCard({ icon, title, description, slug }: ServiceProps) {
             'border-current bg-transparent text-foreground hover:bg-transparent hover:text-accent',
   
             // Dark
-            'dark:bg-background',
+            // 'dark:bg-background',
             // 'dark:border-accent-900 dark:bg-accent-900 dark:text-white dark:hover:text-primary  group-hover/service:dark:bg-transparent',
   
             // stop default button hover effects

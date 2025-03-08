@@ -4,43 +4,37 @@
 
 @layer base {
   font-face {
-    font-family: 'Proxima Nova';
+    font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;
-    src: url(https://fonts.gstatic.com/l/font?kit=FwZc7-Am2FI_-VOxaLDvvq27pmO73q3LkQ&skey=96867d716c89840e&v=v19) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    src: url('fonts/Manrope-Regular.ttf') format('ttf');
   }
   
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --primary: 0 65 73;
+    --primary: 36 164 143;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 35, 100%, 55%;
     --secondary-foreground: 240 5.9% 10%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    /* --accent: 328, 65%, 39%; */
     --accent: 164 35 104;
     --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 142.1 76.2% 36.3%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
 
     --radius: 0.3rem;
 
@@ -48,13 +42,18 @@
     --warning: 34 89% 85%;
     --error: 10 100% 86%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 328, 65%, 39%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 328, 65%, 39%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 224.3 76.3% 48%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .light {
@@ -67,7 +66,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 0 65 73;
+    --primary: 34 178 170;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 35, 100%, 55%;
@@ -207,7 +206,10 @@
     h2 {
       color: rgb(var(--primary));
     }
-    h2::after {
+    b {
+      color: rgb(var(--accent));
+    }
+    /* h2::after {
       content: '';
       position: absolute;
       left: 0;
@@ -215,7 +217,7 @@
       width: 20%;
       height: 1px;
       background-color: rgb(var(--primary));
-    }
+    } */
   }
 }
 

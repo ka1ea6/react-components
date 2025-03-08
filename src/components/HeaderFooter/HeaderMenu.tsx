@@ -24,7 +24,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
     return (
       <a
         href={href}
-        className="flex items-center gap-x-1 text-sm font-semibold text-foreground group"
+        className="flex items-center gap-x-1 text-sm text-foreground group"
       >
         <span className="relative">
           {name}
@@ -35,7 +35,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
   }
   return (
     <Popover>
-      <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-foreground outline-none group">
+      <PopoverButton className="flex items-center gap-x-1 text-sm/6 text-foreground outline-none group">
         <span className="relative">
           {name}
           <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
@@ -57,7 +57,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
                 </div>
                 <a
                   href={item.href}
-                  className="mt-6 block font-semibold text-popover-foreground group-hover:text-accent"
+                  className="mt-6 block  text-popover-foreground group-hover:text-accent"
                 >
                   {item.name}
                   <span className="absolute inset-0" />
@@ -76,7 +76,7 @@ const HeaderMenu = ({ name, items, actions = [], href }: HeaderMenuProps) => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="flex items-center max-h-12 justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
+                    className="flex items-center max-h-12 justify-center gap-x-2.5 p-3 text-sm/6  text-gray-900 hover:bg-gray-100"
                   >
                     {item.icon && (
                       <Icon icon={item.icon} className="h-5 w-5 flex-none text-gray-400" />

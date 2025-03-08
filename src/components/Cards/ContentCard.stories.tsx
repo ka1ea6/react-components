@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ContentCard } from './ContentCard'
+import { ImageTest, BlocksTest, HeroTest, RichTextTest } from '../../tests/payload'
 
 const meta: Meta<typeof ContentCard> = {
   title: 'Reusable Blocks/ContentCard',
@@ -190,3 +191,77 @@ export const CustomStyling: Story = {
     className: 'max-w-md',
   },
 }
+
+
+export const IconOutline: Story = {
+args:
+
+{
+        icon: { type: 'fa-thin', iconName: 'robot' },
+        heading: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+          settings: {
+            card: 'outline',
+            icon: 'large',
+          },
+      }
+
+    }
+    export const NoOutline: Story = {
+      args:    
+      {
+        icon: { type: 'fa-thin', iconName: 'lightbulb' },
+        link: { label: 'label', type: 'custom', url: '#' },
+        heading: 'Intelligent Insights',
+        statistic: '80%',
+        content:
+          'They provide valuable insights and improve ways of working, saving time and boosting efficiency across your organisation.',
+          variant: 'light'
+        
+      },
+    }
+
+    export const IconOutlineCTA: Story = {
+      args:
+      {
+        icon: { type: 'fa-thin', iconName: 'robot' },
+        heading: 'Sed at eros vel lacus varius varius nec id metus.',
+        link: { label: 'label', type: 'custom', url: '#' },
+        content: RichTextTest.simple,
+          settings: {
+            card: 'outline',
+            iconSize: 'large',
+          },
+      }
+    }
+
+    export const SmallIcon: Story = {
+      args: {
+        icon: { type: 'fa-thin', iconName: 'lightbulb' },
+        link: { label: 'label', type: 'custom', url: '#' },
+        heading: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+        iconSize: 'small',
+        statistic: '80%',
+          settings: {
+            card: 'radial',
+            
+          },
+      }
+    }
+
+    export const Image: Story = {
+      args: {
+        image: ImageTest.hero,
+        icon: { type: 'fa-thin', iconName: 'lightbulb' },
+        link: { label: 'label', type: 'custom', url: '#' },
+        heading: 'Sed at eros vel lacus varius varius nec id metus.',
+        content: RichTextTest.simple,
+        iconSize: 'small',
+        statistic: '80%',
+          settings: {
+            card: 'radial',
+            
+          },
+      }
+    }

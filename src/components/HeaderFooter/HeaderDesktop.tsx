@@ -8,15 +8,19 @@ import { Moon, Sun } from 'lucide-react'
 import { StaticImageData } from 'next/image'
 import HeaderMenu, { type HeaderMenuProps } from './HeaderMenu'
 import { PopoverGroup } from '@headlessui/react'
+import { Container } from '@/components/Other/Container'
+import { cn } from '@/lib/utils'
+
 interface HeaderProps {
   isMenuOpen: boolean
   logoLight: StaticImageData
   logoDark: StaticImageData
   menuItems?: HeaderMenuProps[]
   themeControl?: boolean
+  wide?: boolean 
 }
 
-export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, themeControl=false }: HeaderProps) {
+export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, themeControl=false, wide=false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [currentTheme, setCurrentTheme] = useState('')
   const themes = ['light', 'dark']
@@ -54,46 +58,19 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, them
           isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
         }`}
       >
-        {/* <header
-        className={`fixed top-0 left-0 right-0 z-50 mx-auto transition-all duration-300 ${
-          isScrolled || isMenuOpen ? 'translate-y-0' : '-translate-y-full bg-transparent'
-        }`}
-      > */}
+        
         {/* <Container className="px-0"> */}
-          <nav className="backdrop-blur-sm text-white p-0">
-            <div className="flex items-center justify-between bg-background/80 px-9 py-0">
-              <BrandLogo logoDark={logoDark} logoLight={logoLight} />
-              {/* <ul className="flex items-center justify-center flex-grow space-x-8 text-md">
-                <li>
-                  <a href="/services" className="relative transition-colors group">
-                    Services
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/insights" className="relative transition-colors group">
-                    Insights
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/about" className="relative transition-colors group">
-                    About Us
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/contact" className="relative transition-colors group">
-                    Contact
-                    <span className="absolute -bottom-1 left-1/2 w-1/2 h-0.5 bg-white dark:bg-accent transform -translate-x-1/2 scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
-                  </a>
-                </li>
-              </ul> */}
+          <nav className="backdrop-blur-sm bg-background/80 text-white p-0">
+          
+            <div className={cn("flex items-center justify-between px-9 py-0", !wide && 'container')}>
+            {/* <Container className="px-0"> */}
+              <BrandLogo logo={logoDark}  />
+              
               <PopoverGroup className="hidden lg:flex lg:gap-x-12">
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}
               </PopoverGroup>
-             <div className="flex items-center space-x-4">
-              <Button asChild variant="outline" size="sm" className="border-accent bg-transparent rounded-2xl px-6 hover:bg-accent"><a href='/contact'>Contact Us</a></Button>
+             {/* <div className="flex items-center space-x-4"> */}
+              {/* <Button asChild variant="outline" size="sm" className="border-accent bg-transparent rounded-2xl px-6 hover:bg-accent"><a href='/contact'>Contact Us</a></Button> */}
               
              { themeControl &&    <button
                   className="fixed right-4 z-[60] p-2 rounded-full hover:border hover:border-accent backdrop-blur-sm transition-all duration-300 hover:bg-white/20 text-primary dark:text-white hover:text-accent hover:scale-125"
@@ -105,7 +82,8 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, them
                     {/* <X className="w-6 h-6 text-white" /> */}
                   </div>
                 </button> }
-              </div> 
+              {/* </div> */}
+              
             </div>
           </nav>
         {/* </Container> */}

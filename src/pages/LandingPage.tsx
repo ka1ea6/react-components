@@ -74,7 +74,7 @@ import { VideoHeader } from '../components/HeaderFooter'
 import logoVideo from '../images/cortex-reply-bw.png'
 import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
-import { ServiceSection, AboutSection, ContactSection, BlogList} from '../sections'
+import { ServiceSection, AboutSection, ContactSection, BlogList, ServiceDetailSection} from '../sections'
 import { Footer } from '../components/HeaderFooter'
 
 export default function LandingPage({ ...args }) {
@@ -86,10 +86,23 @@ export default function LandingPage({ ...args }) {
       <VideoHeader {...args.header} logoVideo={logoVideo} logoLight={logoLight} logoDark={logoDark} />
       </div>
       <ServiceSection {...args.service} />
-      <AboutSection {...args.about} />
+      {/* <AboutSection {...args.about} /> */}
+
+      <Services {...args.service} />
       <ContactSection {...args.contact} />
       <BlogList {...args.blog} />
       <Footer {...args.footer} />
     </div>
+  )
+}
+
+
+function Services({ services }: { services: Service[] }) {
+  return (
+    <>
+      {services.map((service, index) => (
+      <ServiceDetailSection key={index} {...service} theme={index % 2 === 0 ? 'dark' : 'light'} />
+      ))}
+    </>
   )
 }

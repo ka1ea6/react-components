@@ -69,8 +69,8 @@ export function HeaderMobile({
       >
         {/* <Container className='px-0'> */}
         <nav className={cn('backdrop-blur-sm text-white p-0', mobileMenuOpen && 'hidden')}>
-          <div className="flex items-stretch justify-between bg-accent px-2 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] dark:border-b dark:border-accent">
-            <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true} />
+          <div className="flex items-stretch justify-between bg-background px-2 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] dark:border-b dark:border-accent">
+            <BrandLogo logo={logoDark} mobile={true} />
             <div className="flex items-center space-x-4">
               <button
                 type="button"
@@ -94,16 +94,16 @@ export function HeaderMobile({
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <div className="fixed inset-0 z-10 bg-black bg-opacity-50" aria-hidden="true" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white dark:bg-[#212124] px-2 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-background dark:bg-[#212124] px-2 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-stretch justify-between">
               {/* <a href="/" className="-m-1.5 p-1.5 outline-none"> */}
-              <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true} />
+              <BrandLogo logo={logoDark} mobile={true} />
 
               {/* </a> */}
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-foreground outline-none hover:text-accent"
+                className="-m-2.5 rounded-md p-2.5 text-foreground dark:text-foreground outline-none hover:text-accent"
               >
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon aria-hidden="true" className="h-6 w-6" />
@@ -130,7 +130,7 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
     return (
       <a
         href={href}
-        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold dark:text-foreground text-gray-900 hover:bg-gray-50 hover:text-accent"
+        className="-mx-3 block rounded-lg px-3 py-2 text-base  dark:text-foreground  text-foreground hover:bg-gray-50 hover:text-accent"
       >
         {name}
       </a>
@@ -138,7 +138,7 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
   }
   return (
     <Disclosure as="div" className="-mx-3">
-      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold dark:text-foreground text-gray-900 hover:bg-gray-50 hover:text-accent">
+      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base  dark:text-foreground  text-foreground hover:bg-gray-50 hover:text-accent">
         {name}
       </DisclosureButton>
       <DisclosurePanel className="mt-2 space-y-2">
@@ -148,7 +148,7 @@ function DisclosureItem({ name, items, actions, href }: HeaderMenuProps) {
               key={item.name}
               as="a"
               href={item.href}
-              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold dark:text-foreground text-gray-900 hover:bg-gray-50 hover:text-accent"
+              className="block rounded-lg py-2 pl-6 pr-3 text-sm  dark:text-foreground  text-foreground hover:bg-gray-50 hover:text-accent"
             >
               {item.name}
             </DisclosureButton>

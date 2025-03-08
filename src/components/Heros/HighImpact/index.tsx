@@ -45,7 +45,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
           {children ||
             (richText && (
               <RichText
-                className="mb-6 ml-0 prose prose-h1:text-5xl prose-headings:text-foreground prose-p:text-foreground"
+                className="max-w-none mb-6 ml-0 prose prose-h1:text-5xl prose-headings:text-foreground prose-p:text-foreground"
                 content={richText}
                 enableGutter={true}
               />

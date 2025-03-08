@@ -31,28 +31,70 @@ export default {
   ],
 } as Meta
 
+
+const bgImage = {
+  blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
+  height: 1315,
+  url: '/assets/props/Cortex-Handshake-BG.jpg',
+  width: 1920
+}
+
 const Template: StoryFn<ServiceSectionProps> = (args) => <ServiceSection {...args} />
+
+const content = (description: string) => {
+    return { root: {
+        type: 'root',
+        format: '',
+        indent: 0,
+        version: 1,
+  
+        children: [
+          {
+            type: 'paragraph',
+            format: '',
+            indent: 0,
+            version: 1,
+  
+            children: [
+              {
+                mode: 'normal',
+                text: description,
+                type: 'text',
+                style: '',
+                detail: 0,
+                format: 0,
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            textStyle: '',
+            textFormat: 0,
+          },
+        ],
+        direction: 'ltr',
+      }}
+    }
 
 export const Default = Template.bind({})
 Default.args = {
   services: [
     {
-      icon: <FaCog />,
+      image: bgImage,
       title: 'Service Title',
-      description: 'This is a description of the service.',
-      slug: '/service',
+      content: content('This is a description of the service.'),
+      link: {label: 'find out more', url: '#' } 
     },
     {
-      icon: { type: 'thin', iconName: 'image' },
+      image: bgImage,
       title: 'Service Title',
-      description: 'This is a description of the service.',
-      slug: '/service',
+      content: content('This is a description of the service.'),
+      link: {label: 'find out more', url: '#' } 
     },
     {
-      icon: { type: 'kit', iconName: 'software' },
+      image: bgImage,
       title: 'Service Title',
-      description: 'This is a description of the service.',
-      slug: '/service',
+      content: content('This is a description of the service.'),
+      link: {label: 'find out more', url: '#' } 
     },
   ],
 }

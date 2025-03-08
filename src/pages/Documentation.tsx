@@ -79,7 +79,7 @@ export default function Documentation({ ...args }) {
   return (
     // <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
     <div className='bg-sidebar'>
-      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header} className='bg-sidebar'/>
+      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header} wide={true} className='bg-sidebar'/>
       <SidebarProvider className="top-24 mb-4 h-full max-h-[calc(100vh-3.5rem)] flex-1 flex-row overflow-y-clip">
         <SidebarLeft {...args.sidebarLeft} className="flex-none top-24" />
         <SidebarInset className="grow overflow-hidden">

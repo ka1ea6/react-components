@@ -69,7 +69,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
   return (
     <footer
       className={cn(
-        'sticky md:h-screen md:top-0 z-2 flex flex-col section-padding-primary dark bg-background overflow-hidden ',
+        'sticky z-2 flex flex-col dark bg-background overflow-hidden pt-12',
         className,
       )}
     >
@@ -78,7 +78,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
           <div className="grid gap-10 md:grid-cols-2  xl:grid-cols-4">
             {/* About  */}
             <div data-aos="fade-up" data-aos-delay="200">
-              <BrandLogo logoLight={logoLight} logoDark={logoDark} />
+              <BrandLogo logo={logoDark} />
               <p className="mb-7 mt-3">{about.description}</p>
               {about.socialLinks && about.socialLinks.length > 0 && (
                 <nav aria-label="social links">

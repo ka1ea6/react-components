@@ -1,31 +1,28 @@
 import { Copy, Check } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
-const brandColors = [
-  {
-    name: 'one',
-    colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  },
-  {
-    name: 'two',
-    colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  },
-  {
-    name: 'three',
-    colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  },
-  {
-    name: 'four',
-    colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  },
-]
+const colors = ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+const brandColors = ['plum', 'blue', 'green', 'orange']
+// const brandColors = [
+//   {
+//     name: 'plum',
+//     colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   },
+//   {
+//     name: 'blue',
+//     colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   },
+//   {
+//     name: 'green',
+//     colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   },
+//   {
+//     name: 'orange',
+//     colors: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   },
+// ]
 
 const colorGroups = [
   {
@@ -60,6 +57,10 @@ const colorGroups = [
     name: 'Destructive',
     colors: ['destructive', 'destructive-foreground'],
   },
+]
+
+
+const colorGroups2 = [
   {
     name: 'Border & Input',
     colors: ['border', 'input', 'ring'],
@@ -147,7 +148,76 @@ export default function ThemeColors() {
       <div>
         <h1 className="text-3xl font-semibold py-4">Brand Colors</h1>
 
-        {brandColors.map((group) => (
+        <div className="grid grid-cols-11 gap-1">
+          <div></div><div>Default</div>
+          {colors.map((color) => (
+            <div key={color}>{color}</div>
+          ))}
+          {brandColors.map((brand) => (
+            <React.Fragment key={brand}>
+              <div>{brand}</div>
+              <div
+                  className={`w-12 h-12 rounded-md bg-brand-${brand} border border-grey-500`}
+                  aria-label={`${brand} color swatch`}
+                />
+              {colors.map((color) => (
+                <div
+                  key={color}
+                  className={`w-12 h-12 rounded-md bg-brand-${brand}-${color} border border-grey-500`}
+                  aria-label={`${brand} ${color} color swatch`}
+                />
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+
+        <h2 className="text-3xl font-semibold py-4">Other Theme Colors</h2>
+        {colorGroups2.map((group) => (
+          <div key={group.name} className="space-y-4 bg-grey-500">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <h2 className="text-2xl font-semibold">{group.name}</h2>
+              {group.colors.map((color) => (
+                <div key={color} className="flex items-center space-x-2 p-2 rounded-lg bg-grey-500">
+                  <div
+                    className={`w-12 h-12 rounded-md bg-${color} text-${color}-foreground border border-grey-500 flex items-center justify-center`}
+                    aria-label={`${color} color swatch`}
+                  >
+                    F
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium truncate">{color}</p>
+                    {/* <p className="text-xs text-muted-foreground truncate">
+                    {`bg-${color}`}
+                  </p> */}
+                  </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => copyToClipboard(`bg-${color}`)}
+                          aria-label={`Copy ${color} class`}
+                        >
+                          {copiedColor === `bg-${color}` ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{copiedColor === `bg-${color}` ? 'Copied!' : 'Copy to clipboard'}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* {brandColors.map((group) => (
           <div key={group.name} className="space-y-4 bg-grey-500">
             <div className="grid grid-cols-11 sm:grid-cols-6 md:grid-cols-11 lg:grid-cols-11 gap-0">
               <h2 className="text-2xl font-semibold">{group.name}</h2>
@@ -180,7 +250,7 @@ export default function ThemeColors() {
               ))}
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   )

@@ -4,6 +4,8 @@ import { Container } from '@/components/Other/Container'
 import { SectionHeading, SectionHeadingWithoutStylingProps } from '@/components/HeaderFooter/SectionHeading'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import { PageShape } from '@/components/Other/PageShape'
+
 export interface AboutSectionProps {
   images?: {
     pattern: ImageProps
@@ -25,8 +27,17 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
   const { images, sectionHeading, keyPoints, description } = aboutSectionData
 
   return (
-        <section id="about-section" className={cn('sticky md:top-0 md:h-screen z-2 flex flex-col items-center justify-center section-padding-primary light bg-background', aboutSectionData.className || '')}>
-    
+    <>
+    {/* <div className="sticky top-0">
+       <PageShape className="text-black z-10" position='bottom' />
+       </div> */}
+        <section id="about-section" className={cn(' clip-custom-top-l sticky md:top-0 md:h-screen z-2 flex flex-col items-center justify-center section-padding-primary dark bg-background', aboutSectionData.className || '')}>
+        {/* <Mask className="absolute inset-0" /> */}
+
+        {/* <div className="absolute w-full -top-[1245px]">
+          <PageShape className="text-black z-10" position="top" />
+        </div> */}
+
     {/* <section className="section-padding-primary overflow-hidden"> */}
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[.92fr_1fr] 2xl:gap-20">
@@ -144,5 +155,41 @@ export function AboutSection(aboutSectionData: AboutSectionProps) {
         </div>
       </Container>
     </section>
+    <style jsx>{`
+  .clip-custom-bottom {
+  clip-path: polygon(0% 0%, 0% 16.2%, 0% 83.2%, 0% 87.3%, 65.4% 99.6%, 100% 72.9%, 100% 16.2%, 100% 0%);
+}
+  .clip-custom-top-r {
+  clip-path: polygon(0% 100%, 0% 83.8%, 0% 16.8%, 0% 12.7%, 65.4% 0.4%, 100% 27.1%, 100% 83.8%, 100% 100%);
+}
+  .clip-custom-top-l {
+  clip-path: polygon(100% 100%, 100% 83.8%, 100% 16.8%, 100% 12.7%, 34.6% 0.4%, 0% 27.1%, 0% 83.8%, 0% 100%);
+}
+`}</style>
+    </>
   )
 }
+const Mask = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1920 1245"
+      className={cn(className, 'absolute w-full h-full')}
+    >
+      <defs>
+        <mask id="mask">
+          {/* The entire section is black, meaning it's hidden */}
+          <rect width="100%" height="100%" fill="black" />
+          {/* The polygon shape is white, meaning it's visible (transparent) */}
+          <polygon
+            fill="white"
+            points="0 0 0 201.561092 0 1036.200679 0 1087.625789 1255.099121 1240.909908 1920 908.450984 1920 201.561092 1920 0 0 0"
+          />
+        </mask>
+      </defs>
+
+      {/* Apply the mask to a black rectangle to create transparency */}
+      <rect width="100%" height="100%" fill="black" mask="url(#mask)" />
+    </svg>
+  );
+};

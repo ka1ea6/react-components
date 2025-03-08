@@ -12,7 +12,7 @@ export const PostHero: React.FC<PostHeroProps> = ({ post }) => {
   const { categories, meta, populatedAuthors, publishedAt, title } = post
 
   return (
-    <div className="relative grid">
+    <div className="relative grid pt-24">
       <div className="relative z-10 flex flex-col justify-end min-h-[50vh] text-foreground dark:text-foreground pt-24 p-6 lg:p-12">
         <div className="container mx-auto">
           <h1 className="mb-6 text-[clamp(2rem,1.5rem+1.5vw,3.5rem)] font-bold leading-tight ">

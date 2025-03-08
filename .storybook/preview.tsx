@@ -62,7 +62,7 @@ const preview = {
     ),
     withThemeByClassName({
       themes: {
-        light: '',
+        light: 'light',
         dark: 'dark',
         green: 'green',
       },
