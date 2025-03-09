@@ -178,7 +178,7 @@ export default function Page({ ...args }) {
         <LocationsSection {...args.contact} />
       </Section>
 
-      <Section theme="dark" style={style}>
+      <Section theme="last" style={style}>
         <BlogList {...args.blog} />
       </Section>
 
@@ -251,7 +251,7 @@ interface SectionProps {
   children: React.ReactNode
   neighbours?: ('scroll' | 'slide')[] // describes the sections above and below. fixed means the section is fixed and does not move. normal means the section is scrollable
   shape?: ('left' | 'right')[]
-  theme: 'light' | 'dark' | 'first' | 'test'
+  theme: 'light' | 'dark' | 'first' | 'last'
   style?: 'scroll' | 'slide' // anything that is fixed
   image? : MediaType
 }
@@ -355,7 +355,19 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
       </section>
     )
   }
+  if (theme === 'last') {
+    return (
+      <section id="next-section" className="">
+        <div className="sticky top-0 dark min-h-[80vh] bg-white">
+          {/* <BackgroundImage {...image} /> */}
+          <PageShape className="text-black z-10" position="bottom-right" />
 
+          <div className="flex items-center justify-center pb-12 bg-black min-h-[80vh]"><div className='container'>{children}</div></div>
+          {/* <PageShape className="text-accent z-10" position="top" /> */}
+        </div>
+      </section>
+    )
+  }
 
   
  // style={{
