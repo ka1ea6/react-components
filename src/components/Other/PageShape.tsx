@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn'
 interface PageShapeProps {
   className?: string
-  position: 'top' | 'bottom-left' | 'bottom-right' | 'header' | 'dark-top' | 'dark-bottom' | 'light-bottom'
+  position: 'top' | 'bottom-left' | 'bottom-right' | 'header' | 'dark-top' | 'dark-bottom' | 'light-bottom' | 'light-top'
 }
 
 export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }) => {

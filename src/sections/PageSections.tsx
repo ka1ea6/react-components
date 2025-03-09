@@ -13,7 +13,7 @@ import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
 import { Container, PageShape } from '@/components/Other'
 import { SectionHero } from '@/components/Heros/SectionHero'
-import { type Page, type Media } from '@/payload-types'
+import { type Page, type Media as MediaType } from '@/payload-types'
 import { RichText } from '@/components/Payload/RichText'
 import { cn } from '@/lib/utils/cn'
 import { Footer } from '../components/HeaderFooter'
@@ -253,7 +253,7 @@ interface SectionProps {
   shape?: ('left' | 'right')[]
   theme: 'light' | 'dark' | 'first' | 'test'
   style?: 'scroll' | 'slide' // anything that is fixed
-  image? : Media
+  image? : MediaType
 }
 
 
@@ -262,7 +262,7 @@ interface SectionProps {
 export const Section: React.FC<SectionProps> = ({ children, theme, style, neighbours, shape, image }) => {
 
   // const actionType = action === 'slide' ? 'sticky' : 'relative'
-  const BackgroundImage = (media: Media) => {
+  const BackgroundImage = (media: MediaType) => {
     return (
       <div className="select-none">
               {media && typeof media === 'object' && (
@@ -293,10 +293,10 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
       <section id="next-section" className="sticky md:top-0 h-screen">
         {/* <div className="absolute w-full h-full bg-accent"></div> */}
         <div className="dark pt-0 min-h-[80vh]">
-          <PageShape className="z-10" position="dark-top" shape={shape && shape[0]}/>
+          <PageShape className="z-10" position="dark-top"/>
           <div className="relative">
             <div className="flex items-center bg-black justify-center pt-12"><div className='container'>{children}</div></div>
-            <PageShape className="text-black z-10" position="dark-bottom" shape={shape && shape[1]} />
+            <PageShape className="text-black z-10" position="dark-bottom" />
           </div>
         </div>
       </section>
