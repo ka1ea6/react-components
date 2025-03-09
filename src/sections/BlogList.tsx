@@ -29,12 +29,7 @@ export interface BlogSectionProps {
 export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSectionProps) { 
 
   return (
-    <section
-      className={cn(
-        'sticky md:top-0 md:h-screen min-h-screen z-2 flex flex-col items-center justify-center section-padding-primary dark bg-background overflow-auto',
-        // className,
-      )}
-    >
+  
       <Container>
         <div className="mx-auto max-w-[630px]">
           { sectionHeading && (<div data-aos="fade-up" data-aos-delay="100">
@@ -57,7 +52,6 @@ export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSection
           </div>
         )}
       </Container>
-    </section>
   )
 }
 

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn'
 interface PageShapeProps {
   className?: string
-  position: 'top' | 'bottom-left' | 'bottom-right' | 'header'
+  position: 'top' | 'bottom-left' | 'bottom-right' | 'header' | 'dark-top' | 'dark-bottom' | 'light-bottom'
 }
 
 export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }) => {
@@ -62,6 +62,90 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
       </div>
     )
   }
+  if ( position === 'dark-top') { //top of a white section
+    return (
+      <div className="w-full h-[70px] md:h-[332px] z-20 content-end block overflow-hidden">
+        <svg
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
+          preserveAspectRatio="xMidYMax meet"
+          className={cn(className, 'relative ')}
+          style={{ fontSize: 0, float:'left' }}
+          transform={transforms[3]}
+        >
+          <defs>
+            <mask id="mask">
+              <rect width="100%" height="100%" fill="white" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
+            </mask>
+          </defs>
+          <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" fill='black'/>
+          {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)" /> */}
+          {/* Added white rectangle at the bottom */}
+        </svg>
+        {/* <div className="absolute bottom-0 border-none left-0 w-full h-[20px] z-10 bg-white" /> */}
+      </div>
+    )
+  }
+  if (position === 'dark-bottom' ) { // bottom of a white section
+    return (
+      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-start block overflow-hidden bg-white">
+        <svg
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
+          // preserveAspectRatio="xMidYMax meet"
+          preserveAspectRatio="none"
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain' }}
+          className={cn(className, 'w-full block overflow-hidden')}
+          transform={transforms[1]}
+        >
+          {/* <defs>
+            <mask id="mask">
+              <rect width="100%" height="100%" fill="white" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
+            </mask>
+          </defs> */}
+          <polygon points="0 0 0 135 1255 332 1920 5 1920 0 1920 0 0 0" fill='black' />
+          {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)"fill='#0D0907' /> */}
+          {/* Added white rectangle at the bottom */}
+        </svg>
+ {/*        <div className="absolute bottom-0 border-none left-0 w-full h-[20px] z-10 bg-white" /> */}
+      </div>
+    )
+  } 
+
+
+  if (position === 'light-bottom') { // bottom of a white section
+    return (
+      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden">
+        <svg
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
+          // preserveAspectRatio="xMidYMax meet"
+          preserveAspectRatio="none"
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain' }}
+          className={cn(className, 'w-full block overflow-hidden')}
+
+          transform={transforms[3]}
+        >
+          {/* <defs>
+            <mask id="mask">
+              <rect width="100%" height="100%" fill="white" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
+            </mask>
+          </defs> */}
+          <polygon points="0 0 0 135 1255 332 1920 5 1920 0 1920 0 0 0" fill='black' />
+          {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)"fill='#0D0907' /> */}
+          {/* Added white rectangle at the bottom */}
+        </svg>
+ {/*        <div className="absolute bottom-0 border-none left-0 w-full h-[20px] z-10 bg-white" /> */}
+      </div>
+    )
+  } 
+
   if (position === 'bottom-left' || position === 'bottom-right') { // bottom of a white section
     return (
       <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden">

@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import { ImageProps, blurDataUrl } from '@/common-types'
 import { Container } from '@/components/Other/Container'
-import { SectionHeading, type SectionHeadingWithoutStylingProps } from '@/components/HeaderFooter/SectionHeading'
+import {
+  SectionHeading,
+  type SectionHeadingWithoutStylingProps,
+} from '@/components/HeaderFooter/SectionHeading'
 // import { BREAKPOINTS } from '@/src/themes/interface'
 import { Form } from './form'
 // import { cn } from '@/src/utils/shadcn'
@@ -39,81 +42,82 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
   const { sectionHeading, image } = contactSectionData
 
   return (
-    <>
-      
-      <section className="sticky md:top-0 md:h-screen flex flex-col z-2 light bg-background section-padding-primary">
-        <div className="relative py-[60px]">
-          {/* Image area  */}
-          <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover"
-              sizes={`(min-width: 768px) 60vw, 100vw`}
-              // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
-              placeholder="blur"
-              blurDataURL={blurDataUrl}
-            />
-          </div>
+    <div className="relative w-full py-[60px]">
+      {/* Image area  */}
+      <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          className="object-cover"
+          sizes={`(min-width: 768px) 60vw, 100vw`}
+          // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
+          placeholder="blur"
+          blurDataURL={blurDataUrl}
+        />
+      </div>
 
-          <Container>
-            <div className="ml-auto md:w-1/2">
-              <div className="relative z-[2] rounded-5 bg-white p-10 shadow-1 dark:bg-accent-700 lg:p-[60px]">
-                <div className="mb-30px">
-                  <SectionHeading {...sectionHeading} invert />
-                </div>
-                <Form />
-              </div>
+      <Container>
+        <div className="ml-auto md:w-1/2">
+          <div className="relative z-[2] rounded-5 bg-white p-10 shadow-1 dark:bg-accent-700 lg:p-[60px]">
+            <div className="mb-30px">
+              <SectionHeading {...sectionHeading} invert />
             </div>
-          </Container>
+            <Form />
+          </div>
         </div>
-      </section>
-      <section className="sticky md:top-0 md:h-screen flex flex-col items-center justify-center z-2 dark bg-background section-padding-primary">
-        <div className="">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
-              <div className="grid grid-cols-1 gap-10 pt-16 lg:grid-cols-3">
-                <div>
-                  <h2 className="text-pretty text-4xl font-semibold tracking-tight text-accent">
-                    Locations
-                  </h2>
-                  <p className="mt-4 text-base/7 text-foreground">
-                    We have multiple locations across the UK where we are based. These are our key
-                    locations.
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
-                  {contactSectionData.locations &&
-                    contactSectionData.locations.map((location, index) => (
-                      <div key={index} className="rounded-2xl p-10 border">
-                        <h3 className="text-base/7 font-semibold text-accent">{location.title}</h3>
-                        <address className="mt-3 space-y-1 text-sm/6 not-italic text-foreground">
-                          {location.location
-                            .split(',')
-                            ?.map((line, index) => <p key={index}>{line}</p>)}{' '}
-                          {location.mails && (
-                            <p className="flex items-center space-x-2">
-                              <FaEnvelope className="pr-2 text-accent size-auto" />
-                              <span>{location.mails[0]}</span>
-                            </p>
-                          )}
-                          {location.phoneNumbers && location.phoneNumbers.length > 0 && (
-                            <p className="flex items-center space-x-2">
-                              <FaPhoneFlip className="pr-2 text-accent size-auto" />
-                              {location.phoneNumbers[0]}
-                            </p>
-                          )}
-                        </address>
-                      </div>
-                    ))}
-                </div>
-              </div>
+      </Container>
+    </div>
+  )
+}
+export function LocationsSection(contactSectionData: ContactSectionProps) {
+  return (
+    <div className="">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
+          <div className="grid grid-cols-1 gap-10 pt-16 lg:grid-cols-3">
+            <div>
+              <h2 className="text-pretty text-4xl font-semibold tracking-tight text-accent">
+                Locations
+              </h2>
+              <p className="mt-4 text-base/7 text-foreground">
+                We have multiple locations across the UK where we are based. These are our key
+                locations.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
+              {contactSectionData.locations &&
+                contactSectionData.locations.map((location, index) => (
+                  <div key={index} className="rounded-2xl p-10 border">
+                    <h3 className="text-base/7 font-semibold text-accent">{location.title}</h3>
+                    <address className="mt-3 space-y-1 text-sm/6 not-italic text-foreground">
+                      {location.location
+                        .split(',')
+                        ?.map((line, index) => <p key={index}>{line}</p>)}{' '}
+                      {location.mails && (
+                        <p className="flex items-center space-x-2">
+                          <FaEnvelope className="pr-2 text-accent size-auto" />
+                          <span>{location.mails[0]}</span>
+                        </p>
+                      )}
+                      {location.phoneNumbers && location.phoneNumbers.length > 0 && (
+                        <p className="flex items-center space-x-2">
+                          <FaPhoneFlip className="pr-2 text-accent size-auto" />
+                          {location.phoneNumbers[0]}
+                        </p>
+                      )}
+                    </address>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
-      </section>
-      {/* <section className="section-padding-primary">
+      </div>
+    </div>
+  )
+}
+{
+  /* <section className="section-padding-primary">
         <Container>
           <div className="flex flex-col gap-[50px] md:flex-row">
             <div className="md:w-1/2 lg:w-2/3">
@@ -150,7 +154,5 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
             </div>
           </div>
         </Container>
-      </section> */}
-    </>
-  )
+      </section> */
 }

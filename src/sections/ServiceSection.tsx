@@ -26,21 +26,6 @@ export function ServiceSection({ services, className }: ServiceSectionProps) {
   
 
   return (
-    <>
-    <div className='absolute w-full h-full bg-white'></div>
-    <section id="next-section" className={cn('sticky snap-start md:top-0 flex flex-col items-center justify-center py-4 light bg-background', className)} 
-    
-    
-    // style={{
-    //   backgroundImage: `url(${image?.src})`, // Use the src property from ImageProps
-    //   backgroundSize: 'cover',
-    //   backgroundPosition: 'center',
-    // }}
-    >
-      <div className='absolute w-full -top-[1245px]'>
-      {/* <PageShape className="text-black z-10" position='top' /> */}
-
-     </div>
       <Container className='py-8'>
         {services && services.length > 0 && (
           <div className="flex flex-wrap justify-center gap-y-8">
@@ -59,14 +44,7 @@ export function ServiceSection({ services, className }: ServiceSectionProps) {
           </div>
         )}
       </Container>
-      {/* <PageShape className="text-black z-10" position='bottom' /> */}
-
-      </section>
      
-      {/* <div className='relative top-0'>
-        <PageShape className="text-black z-10" position='bottom' />
-      </div> */}
-      </>
   )
 }
 

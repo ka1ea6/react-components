@@ -13,10 +13,20 @@ import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
 import { Container, PageShape } from '@/components/Other'
 import { SectionHero } from '@/components/Heros/SectionHero'
-import { type Page } from '@/payload-types'
+import { type Page, type Media } from '@/payload-types'
 import { RichText } from '@/components/Payload/RichText'
 import { cn } from '@/lib/utils/cn'
 import { Footer } from '../components/HeaderFooter'
+import { Media } from '@/components/Payload/Media'
+import {
+  ServiceSection,
+  AboutSection,
+  ContactSection,
+  LocationsSection,
+  BlogList,
+  ServiceDetailSection,
+} from '../sections'
+
 interface TopSectionProps {
   children: React.ReactNode
 }
@@ -129,30 +139,52 @@ const heroes = {
 }
 
 export default function Page({ ...args }) {
+  const style = 'scroll'
+
+
   return (
     <div className="relative overflow-y-none scroll-smooth snap-y snap-mandatory">
       {/* <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain"> */}
       <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header} />
       <RenderHero {...args.hero} />
+      <Section theme="light" style={style}>
+        <ServiceSection {...args.service} />
+      </Section>
+      
+      <Section theme="dark" style={style} image={args.service.services[0].image}>
+        <DummyContent />
+      </Section>
+      <Section theme="light" style={style}>
+        <DummyContent />
+      </Section>
+      <Section theme="dark" shape={['left', 'left']}>
+        <DummyContent />
+      </Section>
 
-      <Section theme="first">
+      <Section theme="light" style={style}>
         <DummyContent />
       </Section>
-      <Section theme="dark">
+      <Section theme="dark" style={style}>
         <DummyContent />
       </Section>
-      <Section theme="light">
+      <Section theme="light" style={style}>
         <DummyContent />
       </Section>
-      <Section theme="dark">
-        <DummyContent />
+      <Section theme="dark" style={style}>
+        <ContactSection {...args.contact} />
       </Section>
-      <Section theme="light">
-        <DummyContent />
+
+      <Section theme="light" style={style}>
+        <LocationsSection {...args.contact} />
       </Section>
-      <div className="bottom-0">
-        <Footer {...args.footer} />
-      </div>
+
+      <Section theme="dark" style={style}>
+        <BlogList {...args.blog} />
+      </Section>
+
+      {/* <div className="bottom-0"> */}
+      <Footer {...args.footer} />
+      {/* </div> */}
     </div>
   )
 }
@@ -170,14 +202,12 @@ const RenderHero: React.FC<Page['hero']> = (props) => {
 }
 
 const DummyContent = () => {
-
-    const bgImage = {
-        blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
-        height: 1315,
-        url: '/assets/props/Cortex-Handshake-BG.jpg',
-        width: 1920
-      }
-
+  const bgImage = {
+    blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
+    height: 1315,
+    url: '/assets/props/Cortex-Handshake-BG.jpg',
+    width: 1920,
+  }
 
   return (
     <div className="container">
@@ -219,17 +249,82 @@ const DummyContent = () => {
 
 interface SectionProps {
   children: React.ReactNode
-  theme: 'light' | 'dark' | 'first'
+  neighbours?: ('scroll' | 'slide')[] // describes the sections above and below. fixed means the section is fixed and does not move. normal means the section is scrollable
+  shape?: ('left' | 'right')[]
+  theme: 'light' | 'dark' | 'first' | 'test'
+  style?: 'scroll' | 'slide' // anything that is fixed
+  image? : Media
 }
 
-export const Section: React.FC<SectionProps> = ({ children, theme }) => {
+
+
+
+export const Section: React.FC<SectionProps> = ({ children, theme, style, neighbours, shape, image }) => {
+
+  // const actionType = action === 'slide' ? 'sticky' : 'relative'
+  const BackgroundImage = (media: Media) => {
+    return (
+      <div className="select-none">
+              {media && typeof media === 'object' && (
+                <Media
+                  fill
+                  imgClassName="z-5 object-cover"
+                  priority={false}
+                  loading="lazy"
+                  resource={media}
+                />
+              )}
+              {media && typeof media === 'string' && (
+                <div>
+                  <Image className="-z-10 object-cover" alt="" fill priority src={media} />
+                </div>
+              )}
+              {/* Overlay  */}
+              {/* <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-background/0 dark:to-background"></span> */}
+              
+      
+            </div>
+    )
+  }
+
+
+  if (theme === 'dark' && style === 'slide') {
+    return (
+      <section id="next-section" className="sticky md:top-0 h-screen">
+        {/* <div className="absolute w-full h-full bg-accent"></div> */}
+        <div className="dark pt-0 min-h-[80vh]">
+          <PageShape className="z-10" position="dark-top" shape={shape && shape[0]}/>
+          <div className="relative">
+            <div className="flex items-center bg-black justify-center pt-12"><div className='container'>{children}</div></div>
+            <PageShape className="text-black z-10" position="dark-bottom" shape={shape && shape[1]} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (theme === 'light' && style === 'slide') {
+    return (
+      <section id="next-section" className="">
+        {/* <div className="absolute w-full h-full bg-accent"></div> */}
+        <div className="sticky top-0 light pt-0 min-h-[80vh]">
+          <PageShape className="z-10" position="light-top" />
+          <div className="relative">
+            <div className="flex items-center bg-white justify-center pt-12"><div className='container'>{children}</div></div>
+            <PageShape className="text-black z-10" position="light-bottom" />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   if (theme === 'first') {
     return (
       <section id="next-section" className="">
         {/* <div className="absolute w-full h-full bg-accent"></div> */}
         <div className="sticky top-0 light bg-background pt-6 min-h-[80vh]">
           <div className="relative">
-            <div className="flex items-center justify-center pt-12">{children}</div>
+            <div className="flex items-center justify-center pt-12"><div className='container'>{children}</div></div>
             <PageShape className="text-black z-10" position="bottom-right" />
           </div>
         </div>
@@ -239,9 +334,10 @@ export const Section: React.FC<SectionProps> = ({ children, theme }) => {
   if (theme === 'light') {
     return (
       <section id="next-section" className="">
-        <div className="sticky top-0 light bg-background pt-6 min-h-[80vh]">
-          <div className="flex items-center justify-center pt-12">{children}</div>
-          <PageShape className="text-black z-10" position="bottom-right" />
+        <div className="sticky top-0 light bg-background min-h-[50vh]">
+          {/* <PageShape className="text-black z-10" position="top" /> */}
+          <div className="flex items-center justify-center"><div className='container'>{children}</div></div>
+          {/* <PageShape className="text-black z-10" position="bottom-right" /> */}
         </div>
       </section>
     )
@@ -250,96 +346,107 @@ export const Section: React.FC<SectionProps> = ({ children, theme }) => {
     return (
       <section id="next-section" className="">
         <div className="sticky top-0 dark min-h-[80vh] bg-white">
-          <div className="flex items-center justify-center pt-12 bg-black">{children}</div>
+          {/* <BackgroundImage {...image} /> */}
+          <PageShape className="text-black z-10" position="bottom-right" />
+
+          <div className="flex items-center justify-center pt-12 bg-black"><div className='container'>{children}</div></div>
           <PageShape className="text-accent z-10" position="top" />
         </div>
       </section>
     )
   }
 
-//   return (
-//     <section className="relative">
-//       {/* <div
-//         className={cn(
-//           'absolute mt-[50%] w-full h-full',
-//           theme === 'dark' ? 'bg-white' : 'bg-black',
-//         )}
-//       ></div> */}
 
-//       {/* <div
-//         className={cn(
-//           'flex flex-col md:flex-row items-center justify-between gap-12 px-6 md:px-16 py-16 bg-background',
-//           theme,
-//           theme === 'dark' && 'bg-black clip-custom-top-l',
-//         )}
-//       > */}
+  
+ // style={{
+    //   backgroundImage: `url(${image?.src})`, // Use the src property from ImageProps
+    //   backgroundSize: 'cover',
+    //   backgroundPosition: 'center',
+    // }}
 
-//       <div className={cn('sticky top-0 light bg-background py-6', theme)}>
-//         {children}
-//         {/* <div className="clip-bottom w-full h-[15vh] bg-black"></div> */}
-//         <style jsx>{`
-//           .clip-bottom {
-//             clip-path: polygon(0% 0%, 0% 50%, 100% 100%, 100% 0%);
-//           }
-//           .clip-custom-bottom {
-//             clip-path: polygon(
-//               0% 0%,
-//               0% 16.2%,
-//               0% 83.2%,
-//               0% 87.3%,
-//               65.4% 99.6%,
-//               100% 72.9%,
-//               100% 16.2%,
-//               100% 0%
-//             );
-//           }
-//           .clip-custom-top-r {
-//             clip-path: polygon(
-//               0% 100%,
-//               0% 83.8%,
-//               0% 16.8%,
-//               0% 12.7%,
-//               65.4% 0.4%,
-//               100% 27.1%,
-//               100% 83.8%,
-//               100% 100%
-//             );
-//           }
-//           .clip-custom-top-l {
-//             clip-path: polygon(
-//               100% 100%,
-//               100% 83.8%,
-//               100% 16.8%,
-//               100% 12.7%,
-//               34.6% 0.4%,
-//               0% 27.1%,
-//               0% 83.8%,
-//               0% 100%
-//             );
-//           }
-//           .clip-custom-top-bottom {
-//             clip-path: polygon(
-//               0% 0%,
-//               0% 12.7%,
-//               34.6% 0.4%,
-//               100% 16.8%,
-//               100% 83.8%,
-//               65.4% 99.6%,
-//               0% 87.3%,
-//               0% 100%,
-//               100% 100%,
-//               100% 83.8%,
-//               100% 16.8%,
-//               100% 12.7%,
-//               65.4% 0.4%,
-//               0% 27.1%,
-//               0% 83.8%,
-//               0% 100%
-//             );
-//           }
-//         `}</style>
-//       </div>
-//       {/* { theme === 'dark' &&         <PageShape className="text-black z-10" position="top" /> } */}
-//     </section>
-//   )
+  //   return (
+  //     <section className="relative">
+  //       {/* <div
+  //         className={cn(
+  //           'absolute mt-[50%] w-full h-full',
+  //           theme === 'dark' ? 'bg-white' : 'bg-black',
+  //         )}
+  //       ></div> */}
+
+  //       {/* <div
+  //         className={cn(
+  //           'flex flex-col md:flex-row items-center justify-between gap-12 px-6 md:px-16 py-16 bg-background',
+  //           theme,
+  //           theme === 'dark' && 'bg-black clip-custom-top-l',
+  //         )}
+  //       > */}
+
+  //       <div className={cn('sticky top-0 light bg-background py-6', theme)}>
+  //         {children}
+  //         {/* <div className="clip-bottom w-full h-[15vh] bg-black"></div> */}
+  //         <style jsx>{`
+  //           .clip-bottom {
+  //             clip-path: polygon(0% 0%, 0% 50%, 100% 100%, 100% 0%);
+  //           }
+  //           .clip-custom-bottom {
+  //             clip-path: polygon(
+  //               0% 0%,
+  //               0% 16.2%,
+  //               0% 83.2%,
+  //               0% 87.3%,
+  //               65.4% 99.6%,
+  //               100% 72.9%,
+  //               100% 16.2%,
+  //               100% 0%
+  //             );
+  //           }
+  //           .clip-custom-top-r {
+  //             clip-path: polygon(
+  //               0% 100%,
+  //               0% 83.8%,
+  //               0% 16.8%,
+  //               0% 12.7%,
+  //               65.4% 0.4%,
+  //               100% 27.1%,
+  //               100% 83.8%,
+  //               100% 100%
+  //             );
+  //           }
+  //           .clip-custom-top-l {
+  //             clip-path: polygon(
+  //               100% 100%,
+  //               100% 83.8%,
+  //               100% 16.8%,
+  //               100% 12.7%,
+  //               34.6% 0.4%,
+  //               0% 27.1%,
+  //               0% 83.8%,
+  //               0% 100%
+  //             );
+  //           }
+  //           .clip-custom-top-bottom {
+  //             clip-path: polygon(
+  //               0% 0%,
+  //               0% 12.7%,
+  //               34.6% 0.4%,
+  //               100% 16.8%,
+  //               100% 83.8%,
+  //               65.4% 99.6%,
+  //               0% 87.3%,
+  //               0% 100%,
+  //               100% 100%,
+  //               100% 83.8%,
+  //               100% 16.8%,
+  //               100% 12.7%,
+  //               65.4% 0.4%,
+  //               0% 27.1%,
+  //               0% 83.8%,
+  //               0% 100%
+  //             );
+  //           }
+  //         `}</style>
+  //       </div>
+  //       {/* { theme === 'dark' &&         <PageShape className="text-black z-10" position="top" /> } */}
+  //     </section>
+  //   )
 }
