@@ -139,7 +139,7 @@ const heroes = {
 }
 
 export default function Page({ ...args }) {
-  const style = 'scroll'
+  const style = args.style
 
 
   return (
@@ -154,25 +154,25 @@ export default function Page({ ...args }) {
       <Section theme="dark" style={style} image={args.service.services[0].image}>
         <DummyContent />
       </Section>
-      <Section theme="light" style={style}>
+      {/* <Section theme="light" style={style}>
         <DummyContent />
       </Section>
       <Section theme="dark" shape={['left', 'left']}>
         <DummyContent />
-      </Section>
+      </Section> */}
 
-      <Section theme="light" style={style}>
+      {/* <Section theme="light" style={style}>
         <DummyContent />
       </Section>
       <Section theme="dark" style={style}>
         <DummyContent />
-      </Section>
+      </Section> */}
       <Section theme="light" style={style}>
         <DummyContent />
-      </Section>
+      </Section> 
       <Section theme="dark" style={style}>
         <ContactSection {...args.contact} />
-      </Section>
+      </Section> 
 
       <Section theme="light" style={style}>
         <LocationsSection {...args.contact} />
@@ -233,7 +233,7 @@ const DummyContent = () => {
         </div>
 
         {/* Right Side - AI Themed Image */}
-        <div className="w-full h-full min-h-96 py-6 md:p-0 flex justify-center">
+        <div className="w-full h-full min-h-96 p-6 md:p-6 flex justify-center">
           <Image
             src={bgImage.url} // Change this to the actual image path
             alt="image"
@@ -305,13 +305,14 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
 
   if (theme === 'light' && style === 'slide') {
     return (
-      <section id="next-section" className="">
+      <section id="next-section" className="sticky top-0 light pt-0 h-screen">
         {/* <div className="absolute w-full h-full bg-accent"></div> */}
-        <div className="sticky top-0 light pt-0 min-h-[80vh]">
+        <div className="sticky top-0 light pt-0 h-screen">
           <PageShape className="z-10" position="light-top" />
-          <div className="relative">
+          <div className="relative bg-white">
             <div className="flex items-center bg-white justify-center pt-12"><div className='container'>{children}</div></div>
-            <PageShape className="text-black z-10" position="light-bottom" />
+            <div className="h-[200px] bg-white"></div>
+            {/* <PageShape className="text-black z-10" position="light-bottom" /> */}
           </div>
         </div>
       </section>

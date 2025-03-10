@@ -75,7 +75,7 @@ export function Form() {
               onChange={handleChange}
               onBlur={handleBlur}
               disabled={isSubmitting}
-              icon={<FaUser />}
+              icon={<FaUser className="text-primary" />}
               className={cn(fieldCommonClasses, errors.name && touched.name && errorClasses)}
             />
             {errors.name && touched.name && (
@@ -98,7 +98,7 @@ export function Form() {
               onChange={handleChange}
               onBlur={handleBlur}
               disabled={isSubmitting}
-              icon={<SendIcon />}
+              icon={<SendIcon/>}
               className={cn(fieldCommonClasses, errors.email && touched.email && errorClasses)}
             />
             {errors.email && touched.email && (
@@ -157,9 +157,9 @@ export function Form() {
               </p>
             )}
           </div>
-          <div className="lg:col-span-2">
-            <Button type="submit" className="w-full outline outline-accent bg-accent text-accent-foreground hover:bg-white hover:text-accent" disabled={isSubmitting}>
-              <span>SEND</span>
+          <div className="lg:col-span-2 light">
+            <Button type="submit" className="w-full outline rounded-full outline-accent bg-background text-foreground hover:bg-accent hover:text-accent-foreground" disabled={isSubmitting}>
+              <span>Send</span>
             </Button>
           </div>
         </form>
@@ -177,6 +177,7 @@ function SendIcon() {
       viewBox="0 0 16 15"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
+      className="text-primary"
     >
       <path d="M14.9727 1.76172L13.2227 13.1094C13.1953 13.3828 13.0312 13.6289 12.7852 13.7656C12.6484 13.8203 12.5117 13.875 12.3477 13.875C12.2383 13.875 12.1289 13.8477 12.0195 13.793L8.68359 12.3984L7.28906 14.4766C7.17969 14.668 6.98828 14.75 6.79688 14.75C6.49609 14.75 6.25 14.5039 6.25 14.2031V11.5781C6.25 11.3594 6.30469 11.168 6.41406 11.0312L12.375 3.375L4.33594 10.6211L1.51953 9.44531C1.21875 9.30859 1 9.03516 1 8.67969C0.972656 8.29688 1.13672 8.02344 1.4375 7.85938L13.6875 0.886719C13.9609 0.722656 14.3438 0.722656 14.6172 0.914062C14.8906 1.10547 15.0273 1.43359 14.9727 1.76172Z" />
     </svg>
@@ -191,6 +192,7 @@ function MessageIcon() {
       viewBox="0 0 14 11"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
+      className="text-primary"
     >
       <path d="M12.6875 0.5C13.3984 0.5 14 1.10156 14 1.8125C14 2.25 13.7812 2.63281 13.4531 2.87891L7.51953 7.33594C7.19141 7.58203 6.78125 7.58203 6.45312 7.33594L0.519531 2.87891C0.191406 2.63281 0 2.25 0 1.8125C0 1.10156 0.574219 0.5 1.3125 0.5H12.6875ZM5.93359 8.04688C6.5625 8.51172 7.41016 8.51172 8.03906 8.04688L14 3.5625V9.25C14 10.2344 13.207 11 12.25 11H1.75C0.765625 11 0 10.2344 0 9.25V3.5625L5.93359 8.04688Z" />
     </svg>

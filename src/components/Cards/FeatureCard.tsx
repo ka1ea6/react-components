@@ -183,7 +183,7 @@ console.log('image', image)
             className="p-0 text-accent text-lg uppercase border-none bg-background w-full mt-auto items-center justify-start"
             asChild
           > */}
-            <a className="text-accent justify-start uppercase" href={link.url || '#'}>
+            <a className="text-accent justify-start font-semibold uppercase" href={link.url || '#'}>
               {link?.label || 'Find out more'}
               {/* <span className="ml-2">↓</span> */}
             </a>

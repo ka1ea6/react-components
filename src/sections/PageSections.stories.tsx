@@ -82,10 +82,13 @@ export const Default: PageStory = {
   args: {
     title: 'Lorem Ipsum',
     subtitle: 'Dolor Sit Amet',
+    style: 'scroll',
     hero: {
       type: 'dummy',
     },
     service :{
+      title: 'Our Services',
+      content: content('What we do.'),
         services: [
           {
             image: bgImage,
@@ -265,6 +268,15 @@ export const Default: PageStory = {
     },
   },
 }
+
+
+export const ParallaxScroll = {
+  args: {
+    ...Default.args,
+    style: 'slide',
+  }
+}
+
 
 export const LowImpactHero = {
   args: {

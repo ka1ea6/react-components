@@ -44,7 +44,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
   return (
     <div className="relative w-full py-[60px]">
       {/* Image area  */}
-      <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden bg-red-500 md:w-[56%] md:rounded-r-5">
+      <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden md:w-[56%] md:rounded-r-5">
         <Image
           src={image.src}
           alt={image.alt}
@@ -77,32 +77,31 @@ export function LocationsSection(contactSectionData: ContactSectionProps) {
         <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
           <div className="grid grid-cols-1 gap-10 pt-16 lg:grid-cols-3">
             <div>
-              <h2 className="text-pretty text-4xl font-semibold tracking-tight text-accent">
+              <h2 className="text-pretty text-4xl text-primary">
                 Locations
               </h2>
               <p className="mt-4 text-base/7 text-foreground">
-                We have multiple locations across the UK where we are based. These are our key
-                locations.
+                We have multiple locations across the UK.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
               {contactSectionData.locations &&
                 contactSectionData.locations.map((location, index) => (
                   <div key={index} className="rounded-2xl p-10 border">
-                    <h3 className="text-base/7 font-semibold text-accent">{location.title}</h3>
+                    <h3 className="text-base/7 text-primary">{location.title}</h3>
                     <address className="mt-3 space-y-1 text-sm/6 not-italic text-foreground">
                       {location.location
                         .split(',')
                         ?.map((line, index) => <p key={index}>{line}</p>)}{' '}
                       {location.mails && (
                         <p className="flex items-center space-x-2">
-                          <FaEnvelope className="pr-2 text-accent size-auto" />
+                          <FaEnvelope className="pr-2 text-primary size-auto" />
                           <span>{location.mails[0]}</span>
                         </p>
                       )}
                       {location.phoneNumbers && location.phoneNumbers.length > 0 && (
                         <p className="flex items-center space-x-2">
-                          <FaPhoneFlip className="pr-2 text-accent size-auto" />
+                          <FaPhoneFlip className="pr-2 text-primary size-auto" />
                           {location.phoneNumbers[0]}
                         </p>
                       )}

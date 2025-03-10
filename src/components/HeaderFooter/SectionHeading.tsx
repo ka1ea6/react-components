@@ -49,13 +49,13 @@ export function SectionHeading({
       {subtitle && (
         <span
           className={
-            'mb-[.625rem] block font-secondary text-base font-bold uppercase leading-[1.5] tracking-widest text-accent md:text-md'
+            'mb-[.625rem] block text-base uppercase text-accent md:text-md'
           }
         >
           {subtitle}
         </span>
       )}
-      <h2 className={cn('font-secondary text-xl font-bold leading-[1.25] text-foreground md:text-2xl', invert && 'text-gray-900')}>
+      <h2 className={cn('text-xl leading-[1.25] text-foreground md:text-2xl', invert && 'text-gray-900')}>
         {title}
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}
