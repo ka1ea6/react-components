@@ -83,3 +83,11 @@ export const Primary: Story = {
     ],
   },
 }
+
+
+export const ThemeControl : Story = {
+args: {
+  ...Primary.args,
+  themeControl: true,
+}
+}

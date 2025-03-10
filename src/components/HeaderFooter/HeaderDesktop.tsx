@@ -64,7 +64,7 @@ export function HeaderDesktop({ isMenuOpen, logoLight, logoDark, menuItems, them
           
             <div className={cn("flex items-center justify-between px-9 py-0", !wide && 'container')}>
             {/* <Container className="px-0"> */}
-              <BrandLogo logo={logoDark}  />
+              <BrandLogo logoDark={logoDark} logoLight={logoLight} />
               
               <PopoverGroup className="hidden lg:flex lg:gap-x-12">
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}

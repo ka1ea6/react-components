@@ -70,7 +70,7 @@ export function HeaderMobile({
         {/* <Container className='px-0'> */}
         <nav className={cn('backdrop-blur-sm text-white p-0', mobileMenuOpen && 'hidden')}>
           <div className="flex items-stretch justify-between bg-background px-2 py-0 dark:bg-[#212124] [&_.logo-light]:[filter:brightness(0)_invert(1)] dark:border-b dark:border-accent">
-            <BrandLogo logo={logoDark} mobile={true} />
+            <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true} />
             <div className="flex items-center space-x-4">
               <button
                 type="button"
@@ -97,7 +97,7 @@ export function HeaderMobile({
           <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-background dark:bg-[#212124] px-2 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-stretch justify-between">
               {/* <a href="/" className="-m-1.5 p-1.5 outline-none"> */}
-              <BrandLogo logo={logoDark} mobile={true} />
+              <BrandLogo logoDark={logoDark} logoLight={logoLight} mobile={true} />
 
               {/* </a> */}
               <button

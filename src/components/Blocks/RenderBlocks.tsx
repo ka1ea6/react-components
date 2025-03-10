@@ -55,12 +55,13 @@ export const RenderBlocks: React.FC<{
                   <Theme block={block} index={index} />
                   <div
                     className={cn(
-                      'container h-full',
-                      theme?.settings?.theme === 'dark'
-                        ? 'dark'
-                        : theme?.settings?.theme === 'green'
-                          ? 'green'
-                          : '',
+                      'container h-full relative',
+                      theme?.settings?.theme || 'dark'
+                      // theme?.settings?.theme === 'dark'
+                      //   ? 'dark'
+                      //   : theme?.settings?.theme === 'green'
+                      //     ? 'green'
+                      //     : '',
                     )}
                   >
                     <Block {...block} />
@@ -83,7 +84,11 @@ export const Theme: React.FC<{
   index: number
 }> = (props) => {
   if (!('theme' in props.block)) {
-    return null
+    return <div
+    className={cn(
+      'absolute inset-0 w-screen h-full dark bg-background',
+    )}
+  ></div>
   }
 
   const theme = (props.block as any)?.theme
@@ -96,12 +101,13 @@ export const Theme: React.FC<{
     return (
       <div
         className={cn(
-          'absolute inset-0 w-full h-full -z-10',
-          theme.settings.theme === 'dark'
-            ? 'dark bg-background'
-            : theme.settings.theme === 'green'
-              ? 'green bg-background'
-              : '',
+          'absolute inset-0 w-full h-full bg-background',
+          theme.settings.theme || 'dark'
+          // theme.settings.theme === 'dark'
+          //   ? 'dark bg-background'
+          //   : theme.settings.theme === 'green'
+          //     ? 'green bg-background'
+          //     : '',
         )}
       >
         <Image
@@ -128,12 +134,13 @@ export const Theme: React.FC<{
   return (
     <div
       className={cn(
-        'absolute inset-0 -z-10 w-screen h-full',
-        theme.settings.theme === 'dark'
-          ? 'dark bg-background'
-          : theme.settings.theme === 'green'
-            ? 'green bg-background'
-            : '',
+        'absolute inset-0 w-screen h-full bg-background',
+        theme.settings.theme || 'dark'
+        // theme.settings.theme === 'dark'
+        //   ? 'dark bg-background'
+        //   : theme.settings.theme === 'green'
+        //     ? 'green bg-background'
+        //     : '',
       )}
     ></div>
   )

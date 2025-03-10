@@ -312,7 +312,7 @@ const Sidebar = ({
       )}
     >
       <div className="flex flex-row-reverse z-20 min-w-64 gap-4">
-        <nav className="z-20 flex grow-0 justify-end gap-4 border-t border-gray-200 bg-white/50 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 min-h-[auto] min-w-[54px] flex-col rounded-lg border">
+        <nav className="z-20 flex grow-0 justify-end gap-4 border-gray-200 bg-card p-2.5 shadow-lg backdrop-blur-lg  min-h-[auto] min-w-[54px] flex-col rounded-lg border">
           {/* Sidebar items with onClick handlers */}
           <Link href={`${path}${pageId}`}
             className="flex aspect-square min-h-[25px] w-12 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700  dark:text-gray-400 hover:text-accent"

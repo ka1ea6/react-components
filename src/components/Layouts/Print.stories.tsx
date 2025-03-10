@@ -2648,7 +2648,7 @@ export const WithThemes = {
     hero: {
       type: 'highImpact',
       children: (
-        <div className="max-w-none mx-auto prose dark:prose-invert mb-6">
+        <div className="max-w-none mx-auto prose mb-6">
           <h1 className="col-start-2">High Impact Hero </h1>
           <p className="col-start-2"></p>
           <p className="col-start-2">

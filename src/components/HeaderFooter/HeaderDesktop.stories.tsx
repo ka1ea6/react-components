@@ -81,3 +81,10 @@ Default.args = {
   ],
 
 };
+
+
+export const ThemeControl = Template.bind({});
+ThemeControl.args = {
+  ...Default.args,
+  themeControl: true,
+};

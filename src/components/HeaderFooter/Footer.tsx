@@ -78,7 +78,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
           <div className="grid gap-10 md:grid-cols-2  xl:grid-cols-4">
             {/* About  */}
             <div data-aos="fade-up" data-aos-delay="200">
-              <BrandLogo logo={logoDark} />
+              <BrandLogo logoDark={logoDark} logoLight={logoLight}/>
               <p className="mb-7 mt-3">{about.description}</p>
               {about.socialLinks && about.socialLinks.length > 0 && (
                 <nav aria-label="social links">

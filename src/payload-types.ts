@@ -6,13 +6,69 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     pages: Page;
     assessment: Assessment;
+    'assessment-answers': AssessmentAnswer;
     'published-pages': PublishedPage;
     'reusable-content': ReusableContent;
     posts: Post;
@@ -44,6 +100,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     assessment: AssessmentSelect<false> | AssessmentSelect<true>;
+    'assessment-answers': AssessmentAnswersSelect<false> | AssessmentAnswersSelect<true>;
     'published-pages': PublishedPagesSelect<false> | PublishedPagesSelect<true>;
     'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -956,7 +1013,7 @@ export interface FeaturesBlock {
   } | null;
   features?:
     | {
-        title: string;
+        title?: string | null;
         settings?: {
           /**
            * Card style
@@ -1216,11 +1273,32 @@ export interface Assessment {
   assessmentType: 'ai' | 'fin-ops' | 'cybersecurity' | 'data-governance';
   title: string;
   sections: {
-    section: 'governance' | 'strategy' | 'skills' | 'foundations' | 'data' | 'operations';
+    'section-title': string;
     questions: {
       text: string;
       'answer-options': string[];
       'free-text'?: boolean | null;
+      weighting?: ('1' | '2' | '3') | null;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assessment-answers".
+ */
+export interface AssessmentAnswer {
+  id: number;
+  assessment: number | Assessment;
+  sections: {
+    'section-title': string;
+    questions: {
+      questionText: string;
+      answerSelected: string;
+      freeTextResponse?: string | null;
       weighting?: ('1' | '2' | '3') | null;
       id?: string | null;
     }[];
@@ -1831,6 +1909,10 @@ export interface PayloadLockedDocument {
         value: number | Assessment;
       } | null)
     | ({
+        relationTo: 'assessment-answers';
+        value: number | AssessmentAnswer;
+      } | null)
+    | ({
         relationTo: 'published-pages';
         value: number | PublishedPage;
       } | null)
@@ -2242,13 +2324,37 @@ export interface AssessmentSelect<T extends boolean = true> {
   sections?:
     | T
     | {
-        section?: T;
+        'section-title'?: T;
         questions?:
           | T
           | {
               text?: T;
               'answer-options'?: T;
               'free-text'?: T;
+              weighting?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assessment-answers_select".
+ */
+export interface AssessmentAnswersSelect<T extends boolean = true> {
+  assessment?: T;
+  sections?:
+    | T
+    | {
+        'section-title'?: T;
+        questions?:
+          | T
+          | {
+              questionText?: T;
+              answerSelected?: T;
+              freeTextResponse?: T;
               weighting?: T;
               id?: T;
             };
@@ -3468,6 +3574,47 @@ export interface MessageOfTheDay {
 export interface Website {
   id: number;
   intro: Intro;
+  propositions?:
+    | {
+        name: string;
+        shortDescription: string;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * Proposition public landing page
+         */
+        landingPage?: {
+          relationTo: 'pages';
+          value: number | Page;
+        } | null;
+        icon: {
+          type: 'fa-kit' | 'fa-light' | 'fa-thin' | 'fa-brands';
+          /**
+           * Provide the FontAwesome icon name (e.g., "fa-home").
+           */
+          icon?: string | null;
+        };
+        /**
+         * Select an image from the images collection.
+         */
+        image?: (number | null) | Media;
+        theme?: ('dark' | 'light') | null;
+        id?: string | null;
+      }[]
+    | null;
   menuItems?:
     | {
         name: string;
@@ -3671,6 +3818,23 @@ export interface MessageOfTheDaySelect<T extends boolean = true> {
  */
 export interface WebsiteSelect<T extends boolean = true> {
   intro?: T | IntroSelect<T>;
+  propositions?:
+    | T
+    | {
+        name?: T;
+        shortDescription?: T;
+        description?: T;
+        landingPage?: T;
+        icon?:
+          | T
+          | {
+              type?: T;
+              icon?: T;
+            };
+        image?: T;
+        theme?: T;
+        id?: T;
+      };
   menuItems?:
     | T
     | {
@@ -3809,3 +3973,4 @@ export interface CodeBlock {
 export interface Auth {
   [k: string]: unknown;
 }
+
