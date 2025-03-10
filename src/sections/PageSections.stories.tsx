@@ -149,9 +149,9 @@ export const Default: PageStory = {
     },
     blog: {
       sectionHeading: {
-        subtitle: 'Payload',
-        title: 'Payload',
-        description: 'Payload',
+        // subtitle: 'Payload',
+        title: 'Insights',
+        description: 'Read our latest thought leadership articles.',
       },
       blogs: [
         {

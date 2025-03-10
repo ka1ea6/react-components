@@ -34,16 +34,18 @@ const Template = (args: BlogSectionProps ) => <BlogList {...args} />
 export const Default = Template.bind({})
 Default.args = {
   sectionHeading: {
-    subtitle: 'Payload',
-    title: 'Payload',
-    description: 'Payload',
+    subtitle: 'Subtitle',
+    title: 'Title',
+    description: 'Description',
   },
   blogs: [
     {
       slug: '/blog/pioneering-progress',
+      meta: {
       image: {
-        src: '/assets/images/blog/istockphoto1.jpg',
+        url: '/assets/images/blog/istockphoto1.jpg',
         alt: 'Pioneering Progress, One Algorithm at a Time',
+      },
       },
       authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
       categories: ['Technology', 'Other'],
@@ -56,7 +58,7 @@ Default.args = {
     {
       slug: '/blog/innovative-solutions',
       image: {
-        src: '/assets/images/blog/istockphoto2.jpg',
+        url: '/assets/images/blog/istockphoto2.jpg',
         alt: 'Innovative Solutions for Modern Problems',
       },
       publishedAt: '2025-01-01T17:19:41.270Z',
@@ -69,7 +71,7 @@ Default.args = {
     {
       slug: '/blog/future-of-tech',
       image: {
-        src: '/assets/images/blog/istockphoto3.jpg',
+        url: '/assets/images/blog/istockphoto3.jpg',
         alt: 'The Future of Technology',
       },
       authors: [ { name: 'admin'}, { name: 'demo'}],

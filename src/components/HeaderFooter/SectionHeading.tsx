@@ -49,18 +49,18 @@ export function SectionHeading({
       {subtitle && (
         <span
           className={
-            'mb-[.625rem] block text-base uppercase text-accent md:text-md'
+            'mb-[.625rem] block text-semibold uppercase text-accent md:text-md'
           }
         >
           {subtitle}
         </span>
       )}
-      <h2 className={cn('text-xl leading-[1.25] text-foreground md:text-2xl', invert && 'text-gray-900')}>
+      <h2 className={cn('text-primary text-2xl md:text-4xl')}>
         {title}
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}
       {typeof description === 'string'
-        ? description && <p className={'mt-5 whitespace-pre-line text-primary'}>{description}</p>
+        ? description && <p className={'mt-5 whitespace-pre-line text-foreground'}>{description}</p>
         : description && (
             // <p className={'mt-5 whitespace-pre-line'}>
             <RichText content={description} enableGutter={false} className='prose-headings:text-accent prose-p:text-primary' />

@@ -27,13 +27,13 @@ export interface BlogSectionProps {
 }
 
 export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSectionProps) { 
-
+  console.log(blogs)
   return (
   
       <Container>
-        <div className="mx-auto max-w-[630px]">
+        <div className="">
           { sectionHeading && (<div data-aos="fade-up" data-aos-delay="100">
-            <SectionHeading {...sectionHeading} alignment="center" hasBottomSpacing />
+            <SectionHeading {...sectionHeading} alignment="start" hasBottomSpacing />
           </div>)
 }
         </div>
