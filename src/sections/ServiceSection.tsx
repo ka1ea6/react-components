@@ -37,7 +37,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
           </p>
         </div>
         {services && services.length > 0 && (
-          <div className="flex flex-wrap justify-items-stretch pt-6 gap-8">
+          <div className="flex flex-wrap justify-between pt-6 gap-8">
             {services.map((service, index) => (
               
               <div
