@@ -83,7 +83,7 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
           </div>
         )}
         {/* Overlay  */}
-        <span className="absolute inset-0 bg-gradient-1 from-white/0 to-white dark:from-background/0 dark:to-background"></span>
+        <span className="absolute inset-0 bg-gradient-to-b from-white dark:from-black"></span>
         
 
       </div>
