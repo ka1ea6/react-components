@@ -38,7 +38,7 @@ export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSection
 }
         </div>
         {blogs && blogs.length > 0 && (
-          <div className="-mx-4 flex flex-wrap justify-between gap-y-4">
+          <div className="-mx-4 flex flex-wrap justify-start gap-y-4">
             {blogs.map((blog, index) => (
               <div
                 key={index}

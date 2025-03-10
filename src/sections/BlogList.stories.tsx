@@ -84,7 +84,38 @@ Default.args = {
   ],
 }
 
-export const LoadsOfBlogs = Template.bind({})
-LoadsOfBlogs.args = {
+export const TwoBlogs = Template.bind({})
+TwoBlogs.args = {
   ...Default.args,
+  blogs: [
+    {
+      slug: '/blog/pioneering-progress',
+      meta: {
+      image: {
+        url: '/assets/images/blog/istockphoto1.jpg',
+        alt: 'Pioneering Progress, One Algorithm at a Time',
+      },
+      },
+      authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
+      categories: ['Technology', 'Other'],
+      publishedAt: '2025-01-01T17:19:41.270Z',
+      commentCount: '05',
+      title: 'Pioneering Progress, One Algorithm at a Time',
+      description:
+        'Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis start fermentum ullamcorper viverra laoreet. By Admin. Technology. 28th February 2022. Leave a comment.',
+    },
+    {
+      slug: '/blog/innovative-solutions',
+      image: {
+        url: '/assets/images/blog/istockphoto2.jpg',
+        alt: 'Innovative Solutions for Modern Problems',
+      },
+      publishedAt: '2025-01-01T17:19:41.270Z',
+      categories: [],
+      commentCount: '10',
+      title: 'Innovative Solutions for Modern Problems',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. By John Doe. Innovation. 15th March 2022. Leave a comment.',
+    },
+  ]
 }
