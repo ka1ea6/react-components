@@ -119,7 +119,7 @@ console.log('image', image)
               type: (icon?.type as IconType) || 'fa-light',
               iconName: icon?.icon || 'no-icon-error',
             }}
-            heading={title}
+            heading={title ?? ''}
             variant={settings?.card === 'default' ? 'solid' : (settings?.card ?? 'solid')}
             iconSize={settings?.iconSize || 'large'}
           />
