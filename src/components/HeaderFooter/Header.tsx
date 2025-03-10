@@ -12,10 +12,11 @@ interface HeaderProps {
   menuItems?: HeaderMenuProps[]
   className?: string
   wide?: boolean
+  themeControl?: boolean
 }
 
 
-export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className, wide }: HeaderProps) {
+export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className, wide, themeControl=false }: HeaderProps) {
   return (
     <div className={cn('fixed top-0 left-0 right-0 z-50', className)}>
       <HeaderDesktop
@@ -23,6 +24,7 @@ export function Header({ isMenuOpen, logoLight, logoDark, menuItems, className, 
         logoLight={logoLight}
         logoDark={logoDark}
         menuItems={menuItems}
+        themeControl={themeControl}
         wide={wide}
       />
       <HeaderMobile
