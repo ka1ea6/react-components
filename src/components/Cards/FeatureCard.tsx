@@ -79,7 +79,7 @@ console.log('image', image)
   return (
     <div
       className={cn(
-        'min-w-56 max-w-xl flex flex-col group',
+        'min-w-56 max-w-xl h-full flex flex-col group',
         image ? 'p-0 md:p-0' : 'p-8 md:p-8',
         settings && !image &&
           variants[
@@ -109,7 +109,7 @@ console.log('image', image)
 
       {/* Body */}
 
-      <div className={cn(image ? 'p-4 pb-8 md:px-12' : 'p-0 md:p-0')}>
+      <div className={cn(image ? 'p-4 pb-8 md:px-12' : 'p-0 md:p-0', 'flex flex-col flex-grow')}>
         {subtitle && <div className="mb-4 text-primary uppercase font-light">{subtitle}</div>}
 
         {/* Header Section */}
@@ -176,7 +176,7 @@ console.log('image', image)
 
         {/* CTA Button */}
         {link && link.url && (
-          <div className="mt-auto pt-6 flex items-center justify-start">
+          <div className="pt-6 h-full flex items-end justify-start">
             {/* <Button
             size="lg"
             // className="bg-[#A42368] hover:bg-[#8B1E57] text-white px-8 py-6 text-lg rounded-xl"

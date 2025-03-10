@@ -81,7 +81,7 @@ Default.args = {
     {
       image: bgImage,
       title: 'Service Title',
-      content: content('This is a description of the service.'),
+      content: content('This is a description of the service. This is a description of the service. This is a description of the service. This is a description of the service.'),
       link: {label: 'find out more', url: '#' } 
     },
     {
