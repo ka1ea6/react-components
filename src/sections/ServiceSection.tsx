@@ -37,14 +37,14 @@ export function ServiceSection({ services, className, title, content }: ServiceS
           </p>
         </div>
         {services && services.length > 0 && (
-          <div className="flex flex-wrap justify-between pt-6 gap-8">
+          <div className="-mx-4 flex flex-wrap justify-between pt-6 gap-y-4">
             {services.map((service, index) => (
               
               <div
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
-                // className="w-full px-0 md:w-1/2 lg:w-1/3"
+                className="w-full md:px-4 md:w-1/2 lg:w-1/3"
               >
                 {/* <ServiceCard {...service} /> */}
                 <FeatureCard {...cardsettings} icon={{ type: 'none'}} title={service.title} image={service.image} content={service.content} link={service.link} />

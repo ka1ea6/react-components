@@ -38,13 +38,13 @@ export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSection
 }
         </div>
         {blogs && blogs.length > 0 && (
-          <div className="-mx-4 flex flex-wrap justify-center gap-y-30px">
+          <div className="-mx-4 flex flex-wrap justify-between gap-y-4">
             {blogs.map((blog, index) => (
               <div
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
-                className="w-full px-4 md:w-1/2 md:px-[15px] lg:w-1/3"
+                className="w-full h-full md:w-1/2 md:px-4 lg:w-1/3"
               >
                 <BlogCard {...blog} base={base}/>
               </div>
