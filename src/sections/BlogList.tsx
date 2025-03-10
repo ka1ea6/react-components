@@ -140,7 +140,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
               <span>Comments ({String(commentCount).padStart(2, '0')})</span> */}
             </p>
           </div>
-          <h3 className="text-md font-bold w-full p-6 bg-background/60 leading-[1.25] text-foreground md:text-lg">
+          <h3 className="text-md font-bold w-full h-28 p-6 bg-background/60 text-foreground md:text-lg">
             <CustomLink
               aria-label={title}
               href={`/${base}/${slug}` || '#'}
@@ -154,7 +154,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
               href={`/${base}/${slug}` || '#'}
               className={cn(
                 inlineFlexLayoutClasses,
-                'gap-[.625rem] font-secondary border bg-background/80 border-accent px-4 py-2 mx-6 my-3 text-base font-bold uppercase leading-[2] tracking-wide text-foreground transition-colors duration-300 hover:text-accent-foreground',
+                'gap-[.625rem] bg-background/80 px-4 py-2 mx-6 my-3 text-base font-semibold uppercase text-foreground transition-colors duration-300 hover:text-accent-foreground',
               )}
             >
               <span>Read More</span>
