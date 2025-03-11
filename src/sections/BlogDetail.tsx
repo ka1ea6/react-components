@@ -75,7 +75,7 @@ export function BlogDetail({
   path = '/admin/collections/posts/',
 }: {
   page: PayloadPost
-  categoryList: CategoryListProps
+  categoryList?: CategoryListProps
   edit?: boolean
   path?: string
 }) {
