@@ -49,7 +49,7 @@ const NewsItem = ({ post, id, base }: { post: Partial<Post>; id: number, base: s
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
       <div>
-        <div className="flex items-center gap-x-4 text-xs">
+        <div className="flex flex-wrap items-center gap-x-4 text-xs">
           <time dateTime={post.publishedAt ?? undefined} className="text-foreground">
             {formatDateTimeStringShort(post.publishedAt ?? '')}
           </time>
