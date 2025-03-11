@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils/cn'
 
 
-export interface ServiceProps {
+    interface ServiceProps {
     icon: React.ReactNode | DynamicIconProps
     title: string
     description: Record<string, unknown>
