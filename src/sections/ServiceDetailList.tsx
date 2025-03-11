@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils/cn'
     style: 'scroll' | 'slide'
   }
   
-  export const Services = ({ dynamicServiceDetail, style }: ServiceDetailProps) => {
+  export const ServiceDetailList = ({ dynamicServiceDetail, style }: ServiceDetailProps) => {
     return dynamicServiceDetail.map((service, index) => (
       <Section id={service.slug} key={index} theme={index % 2 === 0 ? 'dark' : 'light'} style={style}>
         <div className="container">
