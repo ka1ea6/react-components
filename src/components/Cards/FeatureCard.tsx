@@ -19,9 +19,9 @@ interface FeatureCardProps extends Section {
   link?: Section['link'] & {
     label: string
   },
-  icon?: React.ReactNode | DynamicIconProps
-    content?: Record<string, any> | string
-    statistic?: string
+  // icon?: React.ReactNode | DynamicIconProps
+    // content?: Record<string, any> | string
+    // statistic?: string
   title: string
 
 }
