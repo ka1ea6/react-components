@@ -27,7 +27,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
       <Container className='py-8'>
         <div className={cn('w-full text-left')}>
           {title && <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>}
-          <div className="mt-4 text-gray-700 pb-12 ">
+          <div className="mt-4 text-gray-700 py-12 ">
             { content && <RichText
               enableGutter={false}
               content={content}

@@ -157,7 +157,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
                 'gap-[.625rem] bg-background/80 px-4 py-2 mx-6 my-3 text-base font-semibold uppercase text-foreground transition-colors duration-300 hover:text-accent-foreground',
               )}
             >
-              <span>Read More</span>
+              <span>Read article</span>
               <span className="text-accent">
                 <FaArrowRight />
               </span>
