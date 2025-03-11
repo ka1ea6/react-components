@@ -42,7 +42,7 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
   const { sectionHeading, image } = contactSectionData
 
   return (
-    <div className="relative w-full py-[60px]">
+    <div className="relative w-full light py-[60px]">
       {/* Image area  */}
       <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden md:w-[56%] md:rounded-r-5">
         <Image
