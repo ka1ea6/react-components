@@ -9,12 +9,13 @@ import { ContentBlock } from './Content'
 import { MediaBlock } from './MediaBlock'
 import { FeaturesBlock } from './FeaturesBlock'
 import { ReusableContentBlock } from './ReusableContentBlock'
+import { CollapsableBlock } from './CollapsableArea'
 
 const blockComponents: { [key: string]: React.FC<any> } = {
   content: ContentBlock,
   cta: CallToActionBlock,
-  // formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  collasableBlock: CollapsableBlock,
   imageBlock: MediaBlock,
   features: FeaturesBlock,
   reusableContentBlock: ReusableContentBlock,
@@ -56,7 +57,7 @@ export const RenderBlocks: React.FC<{
                   <div
                     className={cn(
                       'container h-full relative',
-                      theme?.settings?.theme || 'dark'
+                      theme?.settings?.theme || 'dark',
                       // theme?.settings?.theme === 'dark'
                       //   ? 'dark'
                       //   : theme?.settings?.theme === 'green'
@@ -84,11 +85,7 @@ export const Theme: React.FC<{
   index: number
 }> = (props) => {
   if (!('theme' in props.block)) {
-    return <div
-    className={cn(
-      'absolute inset-0 w-screen h-full dark bg-background',
-    )}
-  ></div>
+    return <div className={cn('absolute inset-0 w-screen h-full dark bg-background')}></div>
   }
 
   const theme = (props.block as any)?.theme
@@ -102,7 +99,7 @@ export const Theme: React.FC<{
       <div
         className={cn(
           'absolute inset-0 w-full h-full bg-background',
-          theme.settings.theme || 'dark'
+          theme.settings.theme || 'dark',
           // theme.settings.theme === 'dark'
           //   ? 'dark bg-background'
           //   : theme.settings.theme === 'green'
@@ -135,7 +132,7 @@ export const Theme: React.FC<{
     <div
       className={cn(
         'absolute inset-0 w-screen h-full bg-background',
-        theme.settings.theme || 'dark'
+        theme.settings.theme || 'dark',
         // theme.settings.theme === 'dark'
         //   ? 'dark bg-background'
         //   : theme.settings.theme === 'green'
