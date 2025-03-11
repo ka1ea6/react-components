@@ -225,6 +225,7 @@ export interface Page {
   };
   layout: (
     | CallToActionBlock
+    | CollapsableAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -393,6 +394,31 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CollapsableAreaBlock".
+ */
+export interface CollapsableAreaBlock {
+  title?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ca';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1118,6 +1144,7 @@ export interface ReusableContent {
   };
   layout: (
     | CallToActionBlock
+    | CollapsableAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -1354,6 +1381,7 @@ export interface PublishedPage {
   };
   layout: (
     | CallToActionBlock
+    | CollapsableAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -2078,6 +2106,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        ca?: T | CollapsableAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -2145,6 +2174,16 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CollapsableAreaBlock_select".
+ */
+export interface CollapsableAreaBlockSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
   id?: T;
   blockName?: T;
 }
@@ -2395,6 +2434,7 @@ export interface PublishedPagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        ca?: T | CollapsableAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -2464,6 +2504,7 @@ export interface ReusableContentSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        ca?: T | CollapsableAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
