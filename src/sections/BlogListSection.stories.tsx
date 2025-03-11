@@ -36,7 +36,7 @@ const Template = (args: { blogs: BlogProps[] }) => <BlogListSection {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  pages: { totalPages :4, page: 1},
+  pages: { totalPages: 4, page: 1 },
   types: [
     {
       label: 'All',
@@ -61,28 +61,29 @@ Default.args = {
   ],
   categories: {
     title: 'Categories',
-  links: [
-    {
-      label: 'General',
-      href: '1',
-    },
-    {
-      label: 'Business Advice',
-      href: '2',
-    },
-    {
-      label: 'Stock market',
-      href: '3',
-    },
-    {
-      label: 'Regular start',
-      href: '4',
-    },
-    {
-      label: 'Regular start',
-      href: '5',
-    },
-  ],},
+    links: [
+      {
+        label: 'General',
+        href: '1',
+      },
+      {
+        label: 'Business Advice',
+        href: '2',
+      },
+      {
+        label: 'Stock market',
+        href: '3',
+      },
+      {
+        label: 'Regular start',
+        href: '4',
+      },
+      {
+        label: 'Regular start',
+        href: '5',
+      },
+    ],
+  },
   blogs: [
     {
       slug: '/blog/pioneering-progress',
@@ -90,11 +91,11 @@ Default.args = {
         src: '/assets/images/blog/blog-lg-1.png',
         alt: 'Pioneering Progress, One Algorithm at a Time',
       },
-      authors: [ { name: 'admin with a long name'}, { name: 'demo'}],
-      categories: ['Technology', 'Other'],
+      authors: [{ name: 'admin with a long name' }, { name: 'demo' }],
+      categories: [{ title: 'Technology' }, { title: 'Other' }],
       publishedAt: '2025-01-01T17:19:41.270Z',
       commentCount: '05',
-      title: 'Pioneering Progress, One Algorithm at a Time',
+      title: 'Pioneering Progress, One Algorithm at a Time test',
       description:
         'Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis start fermentum ullamcorper viverra laoreet. By Admin. Technology. 28th February 2022. Leave a comment.',
     },
@@ -117,7 +118,7 @@ Default.args = {
         src: '/assets/images/blog/blog-lg-3.png',
         alt: 'The Future of Technology',
       },
-      authors: [ { name: 'admin'}, { name: 'demo'}],
+      authors: [{ name: 'admin' }, { name: 'demo' }],
       publishedAt: '2025-01-01T17:19:41.270Z',
       commentCount: '08',
       title: 'The Future of Technology',
@@ -130,14 +131,13 @@ Default.args = {
 export const LoadsOfBlogs = Template.bind({})
 LoadsOfBlogs.args = {
   ...Default.args,
-  pages: { totalPages: 40, page: 20},
+  pages: { totalPages: 40, page: 20 },
 }
-
-
 
 export const NoCategories = Template.bind({})
 NoCategories.args = {
   ...Default.args,
   categories: {
-    title: 'Categories',}
-  }
+    title: 'Categories',
+  },
+}
