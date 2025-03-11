@@ -27,17 +27,17 @@ export function ServiceSection({ services, className, title, content }: ServiceS
       <Container className='py-8 h-1/2'>
         <div className={cn('w-full text-left')}>
           {title && <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>}
-          <p className="mt-4 text-gray-700 text-lg">
+          <div className="mt-4 text-gray-700 pb-12 ">
             { content && <RichText
               enableGutter={false}
               content={content}
               enableProse={false}
-              className={cn('prose prose-headings:text-foreground prose-p:text-foreground')}
+              className={cn('prose prose-headings:text-3xl prose-p:text-2xl prose-headings:text-foreground prose-p:text-foreground')}
             /> }
-          </p>
+          </div>
         </div>
         {services && services.length > 0 && (
-          <div className="-mx-4 flex h-[32rem] flex-wrap justify-between pt-6 gap-y-4">
+          <div className="-mx-4 flex h-[32rem] flex-wrap justify-between gap-y-4">
             {services.map((service, index) => (
               
               <div

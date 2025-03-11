@@ -77,6 +77,8 @@ const content = (description: string) => {
 
 export const Default = Template.bind({})
 Default.args = {
+  title: 'Lorem ipsum dolor sit amet',
+  content: content('This is a description of the service. This is a description of the service. This is a description of the service. This is a description of the service.'),
   services: [
     {
       image: bgImage,
