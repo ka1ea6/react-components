@@ -80,7 +80,7 @@ export function Pagination({ pages }: { pages: PagingProps }) {
                 paginationItemClasses,
                 page === currentPage
                   ? 'border-accent bg-accent text-accent-foreground'
-                  : ''
+                  : 'border-accent'
               )}
               href="#"
               aria-label={`pagination button ${page}`}

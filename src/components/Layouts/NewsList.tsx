@@ -20,7 +20,7 @@ export function NewsList({ blogs, base }: { blogs: Partial<Post>[], base:string 
 
           <div>
             {blogs && blogs.length > 0 && (
-              <div className="grid gap-10 lg:gap-10">
+              <div className="grid gap-10 lg:gap-10 md:grid-cols-2">
                 {blogs.map((post, index) => (
                   <NewsItem post={post} id={index} key={index} base={base}/>
                 ))}

@@ -33,7 +33,7 @@ export function Filter({ types: categories }: { types?: LinkProps[] }) {
           key={index}
           variant={tab.href === category ? 'default' : 'ghost'}
           className={cn(
-            'rounded-full whitespace-nowrap hover:bg-accent hover:text-accent-foreground',
+            'rounded-full whitespace-nowrap text-foreground border border-accent hover:bg-accent hover:text-accent-foreground',
             tab.href === category && 'bg-accent text-accent-foreground',
           )}
           onClick={() => handlePage(tab.href)}
