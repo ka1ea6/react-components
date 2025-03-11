@@ -1285,7 +1285,6 @@ export const RandomText = {
         {
           id: '67828accbfbb3500011b4cd7',
           blockName: null,
-
           columns: [
             {
               id: '67828accbfbb3500011b4cd6',
@@ -2264,6 +2263,131 @@ export const ReusableContent = {
   },
 }
 
+export const CollapsableArea = {
+  args: {
+    ...Default.args,
+    page: {
+      id: 1,
+      title: 'Test Proposal',
+      hero: {
+        type: 'lowImpact',
+        richText: null,
+        links: [],
+        media: null,
+      },
+      layout: [
+        {
+          id: '67a8fefea2a234ac414429cd',
+          id: 1,
+          title: 'Test Content',
+          richText: {
+            root: {
+              type: 'root',
+              format: '',
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  type: 'block',
+
+                  fields: {
+                    id: '67a9d3b5a12bfd151775ff09',
+
+                    theme: {
+                      settings: {
+                        theme: 'default',
+                        background: 'transparent',
+                      },
+                    },
+                    features: [
+                      {
+                        id: '67a9d48149ed6d71a5065363',
+
+                        icon: {
+                          icon: 'people',
+                          type: 'fa-thin',
+                        },
+                        link: {
+                          type: 'none',
+                        },
+                        title: 'Members of staff',
+                        content: {
+                          root: {
+                            type: 'root',
+                            format: '',
+                            indent: 0,
+                            version: 1,
+
+                            children: [
+                              {
+                                type: 'paragraph',
+                                format: '',
+                                indent: 0,
+                                version: 1,
+                                children: [],
+                                direction: null,
+                                textStyle: '',
+                                textFormat: 0,
+                              },
+                            ],
+                            direction: null,
+                          },
+                        },
+
+                        settings: {
+                          card: 'default',
+                          contents: 'icon',
+                        },
+                        statistic: '15,000',
+                      },
+                      {
+                        id: '67aa42c295a3c6324d117378',
+
+                        icon: {
+                          icon: 'building',
+                          type: 'fa-thin',
+                        },
+                        link: {
+                          type: 'none',
+                        },
+                        title: 'Offices',
+
+                        settings: {
+                          card: 'default',
+                          contents: 'statistic',
+                        },
+                        statistic: '44 offfices across 20 countries ',
+                      },
+                    ],
+                    blockName: '',
+                    blockType: 'features',
+                  },
+                  format: '',
+                  version: 2,
+                },
+              ],
+              direction: null,
+            },
+          },
+          customId: null,
+          blockName: 'About Reply',
+          blockType: 'collasableBlock',
+        },
+      ],
+      publishedAt: '2025-02-09T19:16:29.260Z',
+
+      authors: [],
+
+      populatedAuthors: [],
+      slug: 'test-proposal',
+      slugLock: true,
+      updatedAt: '2025-02-09T19:16:29.261Z',
+      createdAt: '2025-02-09T19:15:56.240Z',
+      _status: 'published',
+    },
+  },
+}
+
 export const ProposalWithReusableContent = {
   args: {
     ...Default.args,
@@ -2282,7 +2406,6 @@ export const ProposalWithReusableContent = {
       layout: [
         {
           id: '67a8fefea2a234ac414429cd',
-
           reusableContent: {
             id: 1,
             title: 'Test Content',

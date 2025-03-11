@@ -18,10 +18,10 @@ const config = {
   ],
   prefix: '',
   safelist: [
-    { 
+    {
       pattern: /bg-brand-(plum|blue|green|orange)(-\d{2,3}|foreground|)/,
     },
-    { 
+    {
       pattern: /text-brand-(plum|blue|green|orange)-\d{2,3}/,
     },
     'intersect:animate-delay-100',
@@ -174,6 +174,8 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        expand: 'expand 0.3s ease-out',
+        collapse: 'collapse 0.3s ease-out',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -230,7 +232,7 @@ const config = {
           ring: 'hsl(var(--sidebar-ring))',
         },
         brand: {
-          'plum': {
+          plum: {
             DEFAULT: '#a52368',
             foreground: '#fff',
             50: '#fcf3f9',
@@ -245,7 +247,7 @@ const config = {
             900: '#7a214f',
             950: '#4a0d2c',
           },
-          'green': {
+          green: {
             DEFAULT: '#22b2aa',
             foreground: '#fff',
             50: '#f1fcfa',
@@ -260,7 +262,7 @@ const config = {
             900: '#184949',
             950: '#072b2c',
           },
-          'blue': {
+          blue: {
             DEFAULT: '#004857',
             foreground: '#fff',
             50: '#e9fffd',
@@ -275,7 +277,7 @@ const config = {
             900: '#0c5e6d',
             950: '#004857',
           },
-          'cyan': {
+          cyan: {
             DEFAULT: '#2dafe5',
             foreground: '#fff',
             50: '#f1f9fe',
@@ -306,7 +308,6 @@ const config = {
             950: '#481a00',
           },
         },
-
       },
       // fontFamily: {
       //   mono: ['var(--font-geist-mono)'],
@@ -325,6 +326,14 @@ const config = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
+        },
+        expand: {
+          from: { height: 0 },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        collapse: {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: 0 },
         },
       },
       clipPath: {
