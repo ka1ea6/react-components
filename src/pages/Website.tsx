@@ -24,9 +24,9 @@ interface TableOfContentsItem {
 
 export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
   const page = args.page
-  console.log('page', page.layout)
+  // console.log('page', page.layout)
   const { contentWithIds, tableOfContents } = getTableOfContents(page)
-  console.log('contentWithIds', contentWithIds)
+  // console.log('contentWithIds', contentWithIds)
   useEffect(() => {
     Observer.start()
   }, [])

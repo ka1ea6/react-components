@@ -27,7 +27,7 @@ export function Publish({
     initialOrientation,
   )
 
-  console.log('args', args)
+  // console.log('args', args)
 
   const { contentWithIds, tableOfContents } = getTableOfContents(page)
 
@@ -70,7 +70,7 @@ const Controls: React.FC<ControlProps> = ({ changeLayout, layout = 'landscape' }
   const handlePrint = async () => {
     if (layout === 'flow') {
       // generatePDF('printable-content')
-      console.log('printing')
+      // console.log('printing')
       // e.preventDefault();
       let divContents = document.getElementById('printable-content')?.innerHTML
       if (divContents) {
@@ -90,7 +90,7 @@ const Controls: React.FC<ControlProps> = ({ changeLayout, layout = 'landscape' }
   }
 
   const generatePDF = async (elementToPrintId: string) => {
-    console.log('elementToPrintId', elementToPrintId)
+    // console.log('elementToPrintId', elementToPrintId)
     const root = document.getElementById(elementToPrintId)
 
     if (!root) {

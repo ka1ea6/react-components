@@ -308,7 +308,7 @@ try {
                   onClick={() => setEditingField('categories')}
                 >
                   {editedDeal.categories && editedDeal.categories.map((cat) => {
-                    console.log('cat', cat)
+                    // console.log('cat', cat)
                     // const category = categories.find((c) => Number(c.id) === (cat as DealCategory).id)
                     const category = (cat as DealCategory)
                     return category ? (

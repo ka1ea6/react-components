@@ -27,7 +27,7 @@ export interface BlogSectionProps {
 }
 
 export function BlogList({ blogs,sectionHeading, base='insights'  }: BlogSectionProps) { 
-  console.log(blogs)
+  // console.log(blogs)
   return (
   
       <Container>

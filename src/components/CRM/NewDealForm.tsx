@@ -121,7 +121,7 @@ export function NewDealForm({
   // }
 
   const handleCategoryChange = (category: DealCategory) => {
-    console.log(category)
+    // console.log(category)
 
     setDeal((prevDeal) => ({
       ...prevDeal,

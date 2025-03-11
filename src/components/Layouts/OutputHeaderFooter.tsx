@@ -41,7 +41,7 @@ export const Footer: React.FC<{logoImage?: StaticImageData}> = ({logoImage}) => 
     logoImage?: StaticImageData
   }> = (props) => {
     const { title, hero, logoImage } = props
-    console.log('TitleSlide', hero)
+    // console.log('TitleSlide', hero)
     return (
       <div className="relative w-full h-full flex flex-col justify-center min-h-[500px] p-10">
         <div className="absolute inset-0">

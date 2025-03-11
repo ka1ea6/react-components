@@ -294,7 +294,7 @@ const Sidebar = ({
   const handlePresentView = () => {
     const newPathz = currentPath.split('/')
     const newPath = '/present' + currentPath
-    console.log(newPath)
+    // console.log(newPath)
     const printWindow = window.open(
       newPath,
       'Print',

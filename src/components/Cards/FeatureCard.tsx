@@ -74,7 +74,7 @@ export function FeatureCard({
     auto: 'w-full',
   }
 
-console.log('image', image)
+//console.log('image', image)
 
   return (
     <div

@@ -79,10 +79,10 @@ export const FlowPrintable: React.FC<PrintableProps> = ({
   useEffect(() => {
     const element = document.getElementById('printable-content')
     if (element) {
-      console.log('Width: ' + element.offsetWidth + 'px')
-      console.log('Width in mm: ' + pxTomm(element.offsetWidth) + 'mm')
-      console.log('Height: ' + element.offsetHeight + 'px')
-      console.log('Height in mm: ' + pxTomm(element.offsetHeight) + 'mm')
+      // console.log('Width: ' + element.offsetWidth + 'px')
+      // console.log('Width in mm: ' + pxTomm(element.offsetWidth) + 'mm')
+      // console.log('Height: ' + element.offsetHeight + 'px')
+      // console.log('Height in mm: ' + pxTomm(element.offsetHeight) + 'mm')
       const style = document.createElement('style')
       style.textContent = `@page { size: ${pxTomm(element.offsetWidth)}mm ${pxTomm(element.offsetHeight)}mm ; margin: 0mm; width: ${pxTomm(element.offsetWidth)}mm }; .container : { max-width: ${pxTomm(element.offsetWidth)}mm; } .container : { max-width: 100%; }; html body * :not(#prinable-content, #printable-content *) { visibility: hidden !important; }`
       document.head.appendChild(style)
