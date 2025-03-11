@@ -24,7 +24,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
   }
   }
   return (
-      <Container className='py-8'>
+    <div className='pb-4 md:pb-0'>
         <div className={cn('w-full text-left')}>
           {title && <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>}
           <div className="mt-4 text-gray-700 py-12 ">
@@ -37,7 +37,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
           </div>
         </div>
         {services && services.length > 0 && (
-          <div className="-mx-4 flex h-[32rem] flex-wrap justify-between gap-y-4">
+          <div className="-mx-4 flex flex-wrap justify-between gap-y-4">
             {services.map((service, index) => (
               
               <div
@@ -52,8 +52,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
             ))}
           </div>
         )}
-      </Container>
-     
+     </div>
   )
 }
 

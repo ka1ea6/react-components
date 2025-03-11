@@ -338,7 +338,7 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
       <section id={id || "next-section"} className="">
         <div className="sticky top-0 light bg-background min-h-[50vh]">
           {/* <PageShape className="text-black z-10" position="top" /> */}
-          <div className="flex items-center justify-center"><div className='container'>{children}</div></div>
+          <div className="flex items-center pt-8 justify-center"><div className='container'>{children}</div></div>
           {/* <PageShape className="text-black z-10" position="bottom-right" /> */}
         </div>
       </section>

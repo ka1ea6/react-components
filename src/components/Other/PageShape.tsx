@@ -18,7 +18,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           preserveAspectRatio="xMidYMax meet"
           style={{ fontSize: 0, float:'left' }}
           className={cn(className, 'absolute -bottom-[2px] flex')}
-          transform={transforms[0]}
+          // transform={transforms[0]}
         >
           <defs>
             <mask id="mask">
@@ -45,8 +45,8 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           preserveAspectRatio="xMidYMax meet"
           className={cn(className, 'absolute ')}
-          style={{ fontSize: 0, float:'left' }}
-          transform={transforms[1]}
+          style={{ fontSize: 0, float:'left', transform: 'scale(-1, 1)' }}
+          // transform={transforms[1]}
         >
           <defs>
             <mask id="mask">
@@ -97,9 +97,9 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           // preserveAspectRatio="xMidYMax meet"
           preserveAspectRatio="none"
-          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain' }}
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain', transform: 'scale(1, -1)' }}
           className={cn(className, 'w-full block overflow-hidden')}
-          transform={transforms[1]}
+          // transform={transforms[1]}
         >
           {/* <defs>
             <mask id="mask">
@@ -148,16 +148,16 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
 
   if (position === 'bottom-left' || position === 'bottom-right') { // bottom of a white section
     return (
-      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden">
+      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden -mb-[1px]">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           // preserveAspectRatio="xMidYMax meet"
           preserveAspectRatio="none"
-          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain' }}
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain', transform: 'scale(1, -1)' }}
           className={cn(className, 'w-full block overflow-hidden')}
-          transform={position === 'bottom-left' ? transforms[3]: transforms[2]}
+          // transform={position === 'bottom-left' ? transforms[3]: transforms[2]}
         >
           {/* <defs>
             <mask id="mask">
