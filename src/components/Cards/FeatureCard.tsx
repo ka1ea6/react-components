@@ -164,9 +164,9 @@ export function FeatureCard({
             cn(
               'space-y-6',
               settings?.card === 'outline' || settings?.card === 'light'
-                ? 'prose prose-headings:text-foreground prose-p:text-foreground'
-                : 'prose prose-headings:text-white prose-p:text-gray-100',
-                image && 'prose prose-headings:text-background prose-p:text-background')
+                ? 'prose text-foreground'
+                : 'prose text-gray-100',
+                image && 'prose text-background')
             
           }
           >
