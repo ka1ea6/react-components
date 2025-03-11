@@ -18,12 +18,16 @@ interface FeatureCardProps extends Section {
   className?: string
   link?: Section['link'] & {
     label: string
-  }
+  },
+  icon?: React.ReactNode | DynamicIconProps
+    content?: Record<string, any> | string
+    statistic?: string
+  title: string
+
 }
 
 //   variant?: 'solid' | 'outline' | 'gradient' | 'radial' | 'light'
-//   className?: string
-//   icon?: React.ReactNode | DynamicIconProps
+
 //   iconSize?: 'small' | 'large'
 //   width?: '1/4' | '1/3' | '1/2' | 'full' | 'auto'
 //   order?: number

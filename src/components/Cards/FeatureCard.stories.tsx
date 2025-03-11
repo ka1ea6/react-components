@@ -277,3 +277,21 @@ export const TitleImage: Story = {
     },
   },
 }
+
+
+export const TitleImagePlainText: Story = {
+  args: {
+    image: ImageTest.hero,
+    // icon: { type: 'fa-thin', icon: 'lightbulb' },
+    link: { label: 'find out more', type: 'custom', url: '#' },
+    title: 'Sed at eros vel lacus varius varius nec id metus.',
+    // subtitle: 'Varius varius nec id metus.',
+    content: 'Varius varius nec id metus. Sed at eros vel lacus varius varius nec id metus.',
+    // statistic: '80%',
+    settings: {
+      card: 'light',
+      // iconSize: 'small',
+
+    },
+  },
+}
