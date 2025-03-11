@@ -24,7 +24,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
   }
   }
   return (
-      <Container className='py-8 h-1/2'>
+      <Container className='py-8'>
         <div className={cn('w-full text-left')}>
           {title && <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>}
           <div className="mt-4 text-gray-700 pb-12 ">
