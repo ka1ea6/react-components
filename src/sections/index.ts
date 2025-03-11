@@ -9,3 +9,4 @@ export * from './ImageSection';
 export * from './BlogList';
 export * from './ServiceDetailSection';
 export * from './PageSections';
+export * from './ServiceDetailList';
