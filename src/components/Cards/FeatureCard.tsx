@@ -82,7 +82,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        'min-w-56 max-w-xl h-full flex flex-col group h-[40vh]',
+        'min-w-56 max-w-xl h-full flex flex-col group h-[35vh]',
         image ? 'p-0 md:p-0' : 'p-8 md:p-8',
         settings &&
           !image &&
