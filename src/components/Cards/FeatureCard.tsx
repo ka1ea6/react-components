@@ -100,7 +100,7 @@ export function FeatureCard({
     >
       {/* Image Section */}
       {image && (
-        <div className="relative h-3/5 md:h-1/2 w-full mb-0">
+        <div className="relative h-1/2 lg:h-2/3 w-full mb-0">
           <Image
             src={image.url || '/placeholder.svg'}
             alt={image.alt || 'card header image'}
@@ -115,8 +115,8 @@ export function FeatureCard({
 
       <div
         className={cn(
-          image ? 'p-4 md:p-1 pb-8 md:px-12' : 'p-0 md:p-0',
-          'flex h-2/5 md:h-1/2 flex-col flex-grow',
+          image ? 'p-4 md:p-1 md:px-8' : 'p-0 md:p-0',
+          'flex h-2/5 md:max-h-1/2 flex-col flex-grow',
         )}
       >
         {subtitle && <div className="mb-4 text-primary uppercase font-light">{subtitle}</div>}
