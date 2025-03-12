@@ -82,7 +82,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        'min-w-56 max-w-xl h-full flex flex-col group h-[33vh]',
+        'min-w-56 max-w-xl h-full flex flex-col group',
         image ? 'p-0 md:p-0' : 'p-8 md:p-8',
         settings &&
           !image &&
@@ -100,7 +100,7 @@ export function FeatureCard({
     >
       {/* Image Section */}
       {image && (
-        <div className="relative h-64 w-full mb-0">
+        <div className="relative h-1/2 lg:h-2/3 w-full mb-0">
           <Image
             src={image.url || '/placeholder.svg'}
             alt={image.alt || 'card header image'}
@@ -113,11 +113,16 @@ export function FeatureCard({
 
       {/* Body */}
 
-      <div className={cn(image ? 'p-4 pb-8 md:px-12' : 'p-0 md:p-0', 'flex flex-col flex-grow')}>
+      <div
+        className={cn(
+          image ? 'p-4 md:p-1 md:px-8' : 'p-0 md:p-0',
+          'flex h-2/5 md:max-h-1/2 flex-col flex-grow',
+        )}
+      >
         {subtitle && <div className="mb-4 text-primary uppercase font-light">{subtitle}</div>}
 
         {/* Header Section */}
-        <div className="flex items-center gap-4 mb-2">
+        <div className="flex items-center gap-4 mb-2 md:mb-0">
           <IconLocation
             icon={{
               type: (icon?.type as IconType) || 'fa-light',

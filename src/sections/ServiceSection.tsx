@@ -47,7 +47,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
               key={index}
               data-aos="fade-up"
               data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
-              className="w-full h-full md:px-4 md:w-1/2 lg:w-1/3"
+              className="w-full h-[33vh] md:h-[40vh] md:px-4 md:w-1/2 lg:w-1/3"
             >
               {/* <ServiceCard {...service} /> */}
               <FeatureCard
