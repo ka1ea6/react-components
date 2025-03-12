@@ -11,7 +11,7 @@ const bgImage = {
   blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
   height: 1315,
   url: '/assets/props/Cortex-Handshake-BG.jpg',
-  width: 1920
+  width: 1920,
 }
 
 const content = (description: string) => {
@@ -50,7 +50,6 @@ const content = (description: string) => {
   }
 }
 
-
 export default {
   title: 'Pages/PageSections',
   component: Page,
@@ -86,31 +85,31 @@ export const Default: PageStory = {
     hero: {
       type: 'dummy',
     },
-    service :{
+    service: {
       title: 'Our Services',
       content: content('What we do.'),
-        services: [
-          {
-            image: bgImage,
-            title: 'Service Title',
-            content: content('This is a description of the service.'),
-            link: {label: 'find out more', url: '#' } 
-          },
-          {
-            image: bgImage,
-            title: 'Service Title',
-            content: content('This is a description of the service.'),
-            link: {label: 'find out more', url: '#' } 
-          },
-          {
-            image: bgImage,
-            title: 'Service Title',
-            content: content('This is a description of the service.'),
-            link: {label: 'find out more', url: '#' } 
-          },
-        ],
-        image: serviceImage,
-      },
+      services: [
+        {
+          image: bgImage,
+          title: 'AI Enablement',
+          content: content('Lay the stable foundations for your AI adoption.'),
+          link: { label: 'find out more', url: '#' },
+        },
+        {
+          image: bgImage,
+          title: 'FinOps',
+          content: content('Maximise the business value of your technology investments.'),
+          link: { label: 'find out more', url: '#' },
+        },
+        {
+          image: bgImage,
+          title: 'Digital Colleagues',
+          content: content('Augment your team with intelligent agents.'),
+          link: { label: 'find out more', url: '#' },
+        },
+      ],
+      image: serviceImage,
+    },
     contact: {
       sectionHeading: {
         title: 'Get in Touch',
@@ -269,14 +268,12 @@ export const Default: PageStory = {
   },
 }
 
-
 export const ParallaxScroll = {
   args: {
     ...Default.args,
     style: 'slide',
-  }
+  },
 }
-
 
 export const LowImpactHero = {
   args: {
