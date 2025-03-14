@@ -240,7 +240,7 @@ const IconLocation = ({
             className={cn(
               'rounded-full p-0 transform group-hover:scale-110 transition-transform duration-400',
               variant === 'outline' || variant === 'light' ? 'text-primary' : 'text-white',
-              iconSize === 'small' ? 'mt-2' : '',
+              iconSize === 'small' ? '-mr-2 ml-1 mt-1' : '',
             )}
           >
             <DynamicIcon type={icon.type} iconName={icon.iconName} size="2x" />
