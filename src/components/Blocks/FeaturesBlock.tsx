@@ -50,7 +50,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                 if (section.icon && 'type' in section.icon && section.icon.type !== 'none') {
                   return {
                     type: section.icon.type,
-                    iconName: section.icon.icon,
+                    icon: section.icon.icon,
                   } as unknown as DynamicIconProps
                 }
                 return undefined
@@ -68,7 +68,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                     order: index,
                   }}
                   link={section.link ? { ...section.link, label: 'Learn more' } : undefined}
-                  icon={((icon() as unknown) as { type: "none" | "fa-kit" | "fa-light" | "fa-thin" | "fa-brands"; iconName?: string | null }) ?? { type: 'none', iconName: null }}
+                  icon={((icon() as unknown) as { type: "none" | "fa-kit" | "fa-light" | "fa-thin" | "fa-brands"; icon?: string | null }) ?? { type: 'none', icon: null }}
                 />
                 // <ContentCard
                 //   key={index}
