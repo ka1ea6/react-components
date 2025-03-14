@@ -154,6 +154,44 @@ export const TwoFeatures: Story = {
   },
 }
 
+export const FiveFeatures: Story = {
+  args: {
+    title: 'Lorum ipsum dolor sit amet',
+    features: [
+      {
+        icon: { type: 'fa-thin', icon: 'robot' },
+        title: 'Lorem ipsum dolor sit amet',
+        content:
+          'lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'lightbulb' },
+        title: 'Sed at eros vel lacus varius varius nec id metus',
+        content:
+          'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'robot' },
+        title: 'Lorem ipsum dolor sit amet',
+        content:
+          'lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'lightbulb' },
+        title: 'Sed at eros vel lacus varius varius nec id metus',
+        content:
+          'Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
+      },
+      {
+        icon: { type: 'fa-thin', icon: 'robot' },
+        title: 'Lorem ipsum dolor sit amet',
+        content:
+          'lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada arcu at velit laoreet convallis. Sed at eros vel lacus varius varius nec id metus.',
+      },
+    ],
+  },
+}
+
 export const OneFeature: Story = {
   args: {
     title: 'What Are Digital Colleagues?',
