@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils/cn'
 import React from 'react'
 import { RichText } from '@/components/Payload/RichText'
 import type { Page } from '@/payload-types'
-import { ContentCard } from '../Cards'
+import { ContentCard, FeatureCard } from '../Cards'
 // type Props = {
 //   className?: string
 // } & FeaturesBlockProps
@@ -56,21 +56,35 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
                 return undefined
               }
               return (
-                <ContentCard
+                <FeatureCard
                   key={index}
-                  variant={
-                    section.settings?.card === 'default' ? 'light' : section.settings?.card || 'outline'
-                  }
-                  icon={icon() || undefined}
-                  iconSize={section.settings?.iconSize || 'large'}
-                  width='auto'
-                  order={index}
-                  heading={section.title || ''}
+                  title={section.title || ''}
+                  // subtitle={section.subtitle || ''}
                   content={section.content || undefined}
                   statistic={section.statistic || undefined}
-                  buttonText={section.link?.url ? 'Find out more' : undefined}
-                  buttonHref={section.link?.url || undefined}
+                  settings={{
+                    ...section.settings,
+                    width: 'auto',
+                    order: index,
+                  }}
+                  link={section.link ? { ...section.link, label: 'Learn more' } : undefined}
+                  icon={((icon() as unknown) as { type: "none" | "fa-kit" | "fa-light" | "fa-thin" | "fa-brands"; iconName?: string | null }) ?? { type: 'none', iconName: null }}
                 />
+                // <ContentCard
+                //   key={index}
+                //   variant={
+                //     section.settings?.card === 'default' ? 'light' : section.settings?.card || 'outline'
+                //   }
+                //   icon={icon() || undefined}
+                //   iconSize={section.settings?.iconSize || 'large'}
+                //   width='auto'
+                //   order={index}
+                //   heading={section.title || ''}
+                //   content={section.content || undefined}
+                //   statistic={section.statistic || undefined}
+                //   buttonText={section.link?.url ? 'Find out more' : undefined}
+                //   buttonHref={section.link?.url || undefined}
+                // />
               )
             
             // const Icon = <div><i className=`${section.icon.type} ${section.icon.icon}`></i></div>
