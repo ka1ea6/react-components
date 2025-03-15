@@ -41,6 +41,7 @@ export function SectionHeading({
     alignment === 'center' && 'text-center',
     alignment === 'end' && 'text-right',
     { 'mb-10 md:mb-[3.75rem]': hasBottomSpacing },
+    'prose',
     className,
   )
 
@@ -49,13 +50,13 @@ export function SectionHeading({
       {subtitle && (
         <span
           className={
-            'mb-[.625rem] block text-semibold uppercase text-accent md:text-md'
+            'mb-[.625rem] block font-bold uppercase text-accent md:text-md'
           }
         >
           {subtitle}
         </span>
       )}
-      <h2 className={cn('text-primary text-2xl md:text-4xl')}>
+      <h2 className={cn('text-primary')}>
         {title}
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}

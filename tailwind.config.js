@@ -1,3 +1,5 @@
+import { fontWeight } from 'html2canvas/dist/types/css/property-descriptors/font-weight'
+
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
@@ -357,6 +359,9 @@ const config = {
               fontSize: '3.5rem',
               fontWeight: 'normal',
               marginBottom: '0.25em',
+            },
+            h2: {
+              fontWeight: 'normal',
             },
           },
         },

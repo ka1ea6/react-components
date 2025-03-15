@@ -59,3 +59,17 @@ SingleLink.args = {
       },
     }]
 }
+
+
+export const ContactUs: Story = Template.bind({});
+ContactUs.args = {
+  ...Default.args,
+  links: [
+    {
+      link: {
+        type: 'custom',
+        label: 'Contact us',
+        url: '/contact',
+      },
+    }]
+}

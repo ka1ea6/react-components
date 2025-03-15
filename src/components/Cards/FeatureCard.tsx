@@ -265,7 +265,7 @@ const IconLocation = ({
         <h3
           className={cn(
             'font-normal',
-            variant === 'outline' || variant === 'light' ? 'text-2xl text-primary' : 'text-3xl',
+            variant === 'outline' || variant === 'light' ? 'text-2xl text-primary' : 'text-3xl text-white',
           )}
         >
           {heading}

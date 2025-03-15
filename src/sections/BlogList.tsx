@@ -99,7 +99,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
       <div className="relative z-10 flex h-full flex-1 w-full flex-col">
         {date && (
           <div>
-            <div className="inline-grid w-full items-center justify-center rounded-5 bg-background/40 px-4 py-3 text-center font-secondary text-md font-bold text-foreground transition-colors group-hover/blog:bg-accent group-hover/blog:text-accent-foreground md:text-lg">
+            <div className="inline-grid w-full items-center justify-center rounded-5 bg-background/70 px-4 py-3 text-center font-secondary text-md font-bold text-foreground transition-colors group-hover/blog:bg-accent group-hover/blog:text-accent-foreground md:text-lg">
             <time dateTime={date} className="text-foreground">
               <span className="block">
                 {formatDateTimeStringShort(date)}
@@ -140,7 +140,7 @@ export function BlogCard({ slug, meta, authors, title, publishedAt: date, catego
               <span>Comments ({String(commentCount).padStart(2, '0')})</span> */}
             </p>
           </div>
-          <h3 className="text-md font-bold w-full h-28 p-6 bg-background/60 text-foreground md:text-lg">
+          <h3 className="text-md font-bold w-full h-28 p-6 bg-background/70 text-foreground md:text-lg">
             <CustomLink
               aria-label={title}
               href={`/${base}/${slug}` || '#'}

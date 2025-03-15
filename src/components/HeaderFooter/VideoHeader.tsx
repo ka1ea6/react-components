@@ -96,8 +96,8 @@ export function VideoHeader({
                   </div> */}
                 <Container>
                   <div className="flex flex-col items-start md:w-1/2 mb-10 z-0 md:mb-0">
-                    <h1 className="text-5xl md:text-6xl mb-6">{title && title}</h1>
-                    <div className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
+                    <h1 className="text-5xl md:text-7xl mb-6">{title && title}</h1>
+                    <div className="text-lg md:text-2xl text-gray-300 mb-8 max-w-lg">
                     {subtitle && subtitle}
                     </div>
                   </div>

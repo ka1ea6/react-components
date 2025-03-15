@@ -25,21 +25,22 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
   // return null
 
   return (
-    <section className={cn(!nested && 'container', 'w-full rounded-lg', 'dark:text-gray-300 text-gray-800')}>
+    <section className={cn(!nested ? 'container' : 'w-full', '')}>
+      <div className='prose prose:max-w-none'>
       {title && (
-        <h2 className="mb-6 mt-0 text-2xl font-bold md:text-3xl text-primary" id={id || ''}>
+        <h2 className="mb-6 mt-0 text-primary" id={id || ''}>
           {title}
         </h2>
       )}
       {description && typeof description === 'string' && (
-        <p className="mb-5 text-xl tracking-tight md:text-xl text-foreground">{description}</p>
+        <p className="mb-5 text-foreground">{description}</p>
       )}
       {description && typeof description === 'object' && (
         <p className="mb-5 text-xl tracking-tight md:text-xl text-foreground">
           <RichText content={description} enableGutter={false} />
         </p>
       )}
-
+</ div>
       <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length > 2 ? 2 : features.length : 1} lg:grid-cols-${features ? features.length > 3 ? 3 : features.length : 1}`}>
       {/* <div className={`grid gap-8 mt-10 grid-cols-${features ? features.length : 1}`}> */}
         {features &&
