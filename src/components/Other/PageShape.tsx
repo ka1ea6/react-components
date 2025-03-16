@@ -157,7 +157,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           // preserveAspectRatio="xMidYMax meet"
           preserveAspectRatio="none"
-          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain', transform: 'scale(1, -1)' }}
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain', transform: 'rotateX(180deg)' }}
           className={cn(className, 'w-full block overflow-hidden')}
           // transform={position === 'bottom-left' ? transforms[3]: transforms[2]}
         >
