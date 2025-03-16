@@ -3,6 +3,7 @@ import { RichText } from '@/components/Payload/RichText'
 import { DynamicIcon, DynamicIconProps } from '@/components/Images'
 import Link from 'next/link'
 import { cn } from '@/lib/utils/cn'
+import { Button } from "@/components/ui/button"
 
 
     interface ServiceProps {
@@ -35,9 +36,9 @@ import { cn } from '@/lib/utils/cn'
               </div>
   
               {/* CTA Button */}
-              <button className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full text-base hover:bg-accent hover:text-accent-foreground transition">
+              <Button asChild className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full hover:bg-accent hover:text-accent-foreground transition no-underline">
                 <Link href={`/${service.slug}`}>Learn more</Link>
-              </button>
+              </Button>
             </div>
   
             {/* Right Side - AI Themed Image */}
