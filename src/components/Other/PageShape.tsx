@@ -38,14 +38,14 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
   }
   if ( position === 'top') { //top of a white section
     return (
-      <div className="w-full h-[70px] md:h-[332px] z-20 ">
+      <div className="w-full z-20 aspect-[1920/332] overflow-hidden ">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
-          preserveAspectRatio="xMidYMax meet"
+          // preserveAspectRatio="xMidYMax meet"
           className={cn(className, 'absolute ')}
-          style={{ fontSize: 0, float:'left', transform: 'scale(-1, 1)' }}
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', transform: 'scale(-1, 1)' }}
           // transform={transforms[1]}
         >
           <defs>
@@ -58,13 +58,13 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)" /> */}
           {/* Added white rectangle at the bottom */}
         </svg>
-        {/* <div className="absolute bottom-0 border-none left-0 w-full h-[20px] z-10 bg-white" /> */}
+        <div className="absolute -bottom-[5px] border-none left-0 w-full h-[6px] z-10 bg-white" />
       </div>
     )
   }
   if ( position === 'dark-top') { //top of a white section
     return (
-      <div className="w-full h-[70px] md:h-[332px] z-20 content-end block overflow-hidden">
+      <div className="w-full aspect-[1920/332] z-20 content-end block overflow-hidden">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -90,13 +90,13 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
   }
   if (position === 'dark-bottom' ) { // bottom of a white section
     return (
-      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-start block overflow-hidden bg-white">
+      <div className="w-full aspect-[1920/332] z-20 content-start block overflow-hidden bg-white">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           // preserveAspectRatio="xMidYMax meet"
-          preserveAspectRatio="none"
+          // preserveAspectRatio="none"
           style={{ fontSize: 0, float:'left', alignContent: 'flex-end', objectFit: 'contain', transform: 'scale(1, -1)' }}
           className={cn(className, 'w-full block overflow-hidden')}
           // transform={transforms[1]}
@@ -119,7 +119,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
 
   if (position === 'light-bottom') { // bottom of a white section
     return (
-      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden">
+      <div className="w-full aspect-[1920/332] z-20 content-end block overflow-hidden">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,9 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
 
   if (position === 'bottom-left' || position === 'bottom-right') { // bottom of a white section
     return (
-      <div className="w-full min-h-[70px] md:min-h-[350px] z-20 content-end block overflow-hidden -mb-[1px]">
+      <div className="w-full aspect-[1920/332] z-20 ">
+        {/* <div className="absolute -top-[10px] border-none left-0 w-full h-[11px] z-10 bg-white" /> */}
+
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"

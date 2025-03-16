@@ -255,12 +255,13 @@ interface SectionProps {
   style?: 'scroll' | 'slide' // anything that is fixed
   image? : MediaType
   id?: string
+  continueTheme? : boolean
 }
 
 
 
 
-export const Section: React.FC<SectionProps> = ({ children, theme, style, neighbours, shape, image, id }) => {
+export const Section: React.FC<SectionProps> = ({ children, theme, style, neighbours, shape, image, id, continueTheme }) => {
 
   // const actionType = action === 'slide' ? 'sticky' : 'relative'
   const BackgroundImage = (media: MediaType) => {
@@ -297,7 +298,7 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
           <PageShape className="z-10" position="dark-top"/>
           <div className="relative">
             <div className="flex items-center bg-black justify-center pt-12"><div className='container'>{children}</div></div>
-            <PageShape className="text-black z-10" position="dark-bottom" />
+            <PageShape className="z-10" position="dark-bottom" />
           </div>
         </div>
       </section>
@@ -336,7 +337,7 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
   if (theme === 'light') {
     return (
       <section id={id || "next-section"} className="">
-        <div className="sticky top-0 light bg-background min-h-[50vh]">
+        <div className={cn("sticky top-0 light bg-background min-h-[50vh]", 'pb-10')}>
           {/* <PageShape className="text-black z-10" position="top" /> */}
           <div className="flex items-center pt-8 justify-center"><div className='container'>{children}</div></div>
           {/* <PageShape className="text-black z-10" position="bottom-right" /> */}
