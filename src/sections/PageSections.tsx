@@ -348,7 +348,7 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
   if (theme === 'dark') {
     return (
       <section id={id || "next-section"} className="">
-        <div className="sticky top-0 dark min-h-[80vh] bg-white">
+        <div className="sticky -top-[1px] dark min-h-[80vh] bg-white">
           {/* <BackgroundImage {...image} /> */}
           <PageShape className="text-black z-10" position="bottom-right" />
 
@@ -361,7 +361,7 @@ export const Section: React.FC<SectionProps> = ({ children, theme, style, neighb
   if (theme === 'last') {
     return (
       <section id={id || "next-section"} className="">
-        <div className="sticky top-0 dark min-h-[80vh] bg-white">
+        <div className="sticky -top-[1px] dark min-h-[80vh] bg-white">
           {/* <BackgroundImage {...image} /> */}
           <PageShape className="text-black z-10" position="bottom-right" />
 
