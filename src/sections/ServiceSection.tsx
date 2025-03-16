@@ -25,8 +25,8 @@ export function ServiceSection({ services, className, title, content }: ServiceS
   }
   return (
     <div className="pb-4 md:pb-0">
-      <div className={cn('w-full text-left')}>
-        {title && <h2 className="text-3xl md:text-5xl text-primary">{title}</h2>}
+      <div className={cn('w-full text-left prose')}>
+        {title && <h2 className="text-primary">{title}</h2>}
         <div className="mt-4 text-gray-700 py-12 ">
           {content && (
             <RichText
@@ -34,7 +34,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
               content={content}
               enableProse={false}
               className={cn(
-                'prose prose-headings:text-3xl prose-p:text-2xl prose-headings:text-foreground prose-p:text-foreground',
+                'prose prose-headings:text-foreground prose-p:text-foreground',
               )}
             />
           )}

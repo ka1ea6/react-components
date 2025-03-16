@@ -1,5 +1,3 @@
-import { fontWeight } from 'html2canvas/dist/types/css/property-descriptors/font-weight'
-
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [

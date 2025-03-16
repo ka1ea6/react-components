@@ -23,9 +23,9 @@ import { cn } from '@/lib/utils/cn'
         <div className="container">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
             {/* Left Side Content */}
-            <div className={cn('w-full text-left')}>
-              <h2 className="text-3xl md:text-5xl text-primary">{service.title}</h2>
-              <div className="mt-4 text-gray-700 text-lg">
+            <div className={cn('w-full text-left prose')}>
+              <h2 className="text-primary">{service.title}</h2>
+              <div className="mt-4">
                 <RichText
                   enableGutter={false}
                   content={service.description}
@@ -52,8 +52,8 @@ import { cn } from '@/lib/utils/cn'
                   )}
                 >
                   <i
-                    className={`${service.icon.type} fa-${service.icon.iconName} fa-10x w-1/2 h-full text-foreground fill-gradient-linear`}
-                    style={{ width: '50%' }}
+                    className={`${service.icon.type} fa-${service.icon.iconName} fa-10x w-3/4 h-full text-foreground fill-gradient-linear`}
+                    style={{ width: '70%' }}
                   />
                   {/* <DynamicIcon
                 type={service.icon.type}
