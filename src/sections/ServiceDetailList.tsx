@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button"
             {/* Left Side Content */}
             <div className={cn('w-full text-left prose')}>
               <h2 className="text-primary">{service.title}</h2>
-              <div className="mt-4">
+              <div className="">
                 <RichText
                   enableGutter={false}
                   content={service.description}
