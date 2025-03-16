@@ -36,12 +36,12 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
         <p className="mb-5 text-foreground">{description}</p>
       )}
       {description && typeof description === 'object' && (
-        <p className="mb-5 text-xl tracking-tight md:text-xl text-foreground">
+        <p className="mb-5 text-foreground">
           <RichText content={description} enableGutter={false} />
         </p>
       )}
 </ div>
-      <div className={`grid gap-8 mt-10 md:grid-cols-${features ? features.length > 2 ? 2 : features.length : 1} lg:grid-cols-${features ? features.length > 3 ? 3 : features.length : 1}`}>
+      <div className={`grid gap-6 mt-6 md:grid-cols-${features ? features.length > 2 ? 2 : features.length : 1} lg:grid-cols-${features ? features.length > 3 ? 3 : features.length : 1}`}>
       {/* <div className={`grid gap-8 mt-10 grid-cols-${features ? features.length : 1}`}> */}
         {features &&
           features.map((section, index) => {
