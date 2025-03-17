@@ -148,7 +148,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
 
   if (position === 'bottom-left' || position === 'bottom-right') { // bottom of a white section
     return (
-      <div className="w-full aspect-[1920/332] z-20">
+      <div className="w-full aspect-[1920/332] z-20 relative -bottom-[1px]">
         {/* <div className="absolute -top-[10px] border-none left-0 w-full h-[11px] z-10 bg-white" /> */}
 
         <svg
