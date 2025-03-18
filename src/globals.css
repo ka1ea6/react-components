@@ -201,24 +201,6 @@
     position: relative;
     display: inline-block;
   }
-
-  .prose {
-    h2 {
-      color: rgb(var(--primary));
-    }
-    b {
-      color: rgb(var(--accent));
-    }
-    /* h2::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 20%;
-      height: 1px;
-      background-color: rgb(var(--primary));
-    } */
-  }
 }
 
 /* adds padding around every section */

@@ -31,7 +31,6 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
   const theme = 'accent';
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Close the modal if the click is on the overlay (not the modal content)
     if (e.target === e.currentTarget) {
@@ -45,7 +44,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
         <div className="mx-auto max-w-2xl text-center prose">
           {richText && (
             <RichText
-              className="mb-0 prose-headings:text-white prose-p:text-white text-white"
+              className="mb-0 prose-headings:text-white prose-h2:text-white prose-p:text-white text-white"
               content={richText}
               enableGutter={false}
             />

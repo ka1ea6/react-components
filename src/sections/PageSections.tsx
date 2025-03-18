@@ -18,6 +18,8 @@ import { RichText } from '@/components/Payload/RichText'
 import { cn } from '@/lib/utils/cn'
 import { Footer } from '../components/HeaderFooter'
 import { Media } from '@/components/Payload/Media'
+
+import { CallToActionBlock } from '@/components/Blocks/CallToAction'
 import {
   ServiceSection,
   AboutSection,
@@ -178,9 +180,14 @@ export default function Page({ ...args }) {
         <LocationsSection {...args.contact} />
       </Section>
 
+
+      
       <Section theme="last" style={style}>
         <BlogList {...args.blog} />
       </Section>
+
+      
+      <CallToActionBlock {...args.cta} /> 
 
       {/* <div className="bottom-0"> */}
       <Footer {...args.footer} />

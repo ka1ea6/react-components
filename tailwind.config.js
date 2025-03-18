@@ -360,10 +360,12 @@ const config = {
             },
             h2: {
               fontWeight: 'normal',
+              color: 'rgb(var(--primary))',
               fontSize: '2em'
             },
             b : {
-              fontWeight: '700'
+              fontWeight: '700',
+              color: 'rgb(var(--accent))'
             }
           },
         },

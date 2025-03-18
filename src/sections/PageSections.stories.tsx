@@ -265,6 +265,46 @@ export const Default: PageStory = {
         },
       },
     },
+    cta: {
+      richText: {
+        root: {
+          type: 'root',
+          format: '',
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              tag: 'h2',
+              type: 'heading',
+              format: '',
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'We would love to talk about transforming your business',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'ltr',
+            },
+          ],
+          direction: 'ltr',
+        },
+      },
+      links: [
+        {
+          link: {
+            label: 'Contact Us',
+            url: '/contact',
+          },
+        },
+      ],
+    },
   },
 }
 
