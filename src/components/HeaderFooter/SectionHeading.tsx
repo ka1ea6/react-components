@@ -56,7 +56,7 @@ export function SectionHeading({
           {subtitle}
         </span>
       )}
-      <h2 className={cn('text-primary')}>
+      <h2 className={cn('text-primary mt-0')}>
         {title}
       </h2>
       {/* If description is an object, this is Rich Text. If it is a string, it is plain text */}
