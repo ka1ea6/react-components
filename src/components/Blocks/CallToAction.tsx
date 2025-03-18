@@ -81,7 +81,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           onClick={handleOverlayClick} // Close modal on overlay click
         >
           <div className="bg-white p-6 pt-10 rounded-lg shadow-lg w-full max-w-lg relative">

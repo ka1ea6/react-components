@@ -187,7 +187,7 @@ export default function Page({ ...args }) {
       </Section>
 
       
-      <CallToActionBlock {...args.cta} /> 
+      <CallToActionBlock {...args.cta} />
 
       {/* <div className="bottom-0"> */}
       <Footer {...args.footer} />
