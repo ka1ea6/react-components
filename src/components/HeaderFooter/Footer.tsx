@@ -55,39 +55,44 @@ export interface FooterSectionProps {
 const socialIconClasses = cn(
   'text-base/[1.75] transition-transform duration-350 hover:-translate-y-1 block px-4',
 )
-const titleClasses = cn(
-  'text-gray-900 dark:text-white  text-md font-bold  leading-[1.25] md:text-lg mb-5 md:mb-[1.875rem]',
-)
+const titleClasses = cn('text-brand-green text-md leading-[1.25] md:text-lg mb-5 md:mb-[1.5rem]')
+
 const addressIconParentClasses = cn(
-  'w-10 h-10 rounded-5 inline-grid place-items-center dark:bg-accent-700 border border-accent-800 dark:border-transparent text-accent flex-none',
+  'bg-brand-green rounded-full p-3 mr-4 text-2xl'
+  // 'w-10 h-10 rounded-5 inline-grid place-items-center dark:bg-accent-700 border border-accent-800 dark:border-transparent text-accent flex-none',
 )
-const addressItemClasses = cn('flex items-center gap-5')
+const addressItemClasses = cn(
+  'flex items-center text-white gap-3',
+  // 'flex items-center gap-5'
+)
 const textColor = cn('transition-colors duration-300 hover:text-accent dark:hover:text-white')
 
 export function Footer({ className, footerData, logoLight, logoDark }: SectionProps) {
-  const { about, columnOne, columnTwo, columnThree, footerBottom } = footerData
+  // const { about, columnOne, columnTwo, columnThree, footerBottom } = footerData
+  const { about, columnOne, columnTwo, footerBottom } = footerData
+  const columnThree = undefined
   return (
     <footer
       className={cn(
-        'sticky z-2 flex flex-col dark bg-black overflow-hidden pt-12',
+        'sticky z-2 flex flex-col dark bg-black overflow-hidden pt-12 prose-base',
         className,
       )}
     >
       <div className="py-16 md:py-20">
         <div className="container">
-          <div className="grid gap-10 md:grid-cols-2  xl:grid-cols-4">
+          <div className="grid gap-10 md:grid-cols-2  xl:grid-cols-3">
             {/* About  */}
             <div data-aos="fade-up" data-aos-delay="200">
               <BrandLogo logoDark={logoDark} logoLight={logoLight}/>
               <p className="mb-7 mt-3">{about.description}</p>
               {about.socialLinks && about.socialLinks.length > 0 && (
                 <nav aria-label="social links">
-                  <ul className="inline-flex min-h-[50px] items-center divide-x rounded-5 bg-accent  text-white">
+                  <ul className="inline-flex pl-0 min-h-[50px] items-center rounded-5 text-white gap-2">
                     {about.socialLinks.map((socialLink, index) => (
-                      <li key={index}>
+                      <li key={index} className="bg-primary rounded-full p-3">
                         <CustomLink
                           aria-label={socialLink.href}
-                          className={socialIconClasses}
+                          className={'text-2xl'}
                           href={socialLink.href}
                           openNewTab
                         >
@@ -105,10 +110,10 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
               <h3 className={titleClasses}>{columnOne.title}</h3>
               {columnOne.links && columnOne.links.length > 0 && (
                 <nav aria-label="footer links navigation">
-                  <ul className="grid gap-2">
+                  <ul className="grid pl-0 gap-2">
                     {columnOne.links.map((link) => (
                       <li key={link.label} className="flex items-center gap-2.5">
-                        <span className="flex-none text-sm/[1] text-gray-900 dark:text-white">
+                        <span className="flex-none text-sm/[1] text-white">
                           <FaChevronRight />
                         </span>
                         <CustomLink
@@ -128,7 +133,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
             {/* Column Two  */}
             <div data-aos="fade-up" data-aos-delay="600">
               <h3 className={titleClasses}>{columnTwo.title}</h3>
-              <ul aria-label="addresses" className="grid gap-5">
+              <ul aria-label="addresses" className="grid gap-2 pl-0">
                 <li className={addressItemClasses}>
                   <span className={addressIconParentClasses}>
                     <FaPaperPlane />

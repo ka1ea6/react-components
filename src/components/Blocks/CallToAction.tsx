@@ -6,6 +6,7 @@ import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
 import { RichText } from '@/components/Payload/RichText'
 import { CMSLink } from '@/components/Payload/Link'
 import { Form } from '../../sections/form';
+import { cn } from '@/lib/utils';
 
 export const CallToActionBlockOld: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
@@ -27,7 +28,7 @@ export const CallToActionBlockOld: React.FC<CTABlockProps> = ({ links, richText 
 
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const theme = 'accent';
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -39,12 +40,12 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
   };
 
   return (
-    <div className="relative isolate overflow-hidden bg-black">
+    <div className={cn("relative isolate overflow-hidden", theme === 'accent' ? 'bg-accent' : 'bg-black')}>
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center prose">
           {richText && (
             <RichText
-              className="mb-0 prose-p:text-white text-white"
+              className="mb-0 prose-headings:text-white prose-p:text-white text-white"
               content={richText}
               enableGutter={false}
             />
@@ -57,7 +58,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
                     <div
                       key={i}
                       onClick={openModal} // Open modal on click
-                      className="rounded-full px-3.5 py-2.5 border border-accent text-white no-underline cursor-pointer"
+                      className={cn("rounded-full px-3.5 py-2.5 border border-accent bg-black text-white no-underline cursor-pointer", theme === 'accent' ? 'border-white bg-accent' : 'border-accent bg-black')}
                     >
                       {link.label}
                     </div>
@@ -67,7 +68,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
                     <CMSLink
                       key={i}
                       size="lg"
-                      className="rounded-full px-3.5 py-2.5 border border-accent text-white no-underline"
+                      className={cn("rounded-full px-3.5 py-2.5 border border-accent bg-black text-white no-underline cursor-pointer", theme === 'accent' ? 'border-white bg-accent' : 'border-accent bg-black')}
                       {...link}
                     />
                   );
@@ -96,7 +97,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
         </div>
       )}
 
-      <svg
+      {/* <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
         className="absolute left-1/2 top-1/2 -z-10 size-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
@@ -114,7 +115,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
             <stop offset={1} stopColor="#22B2AA" />
           </radialGradient>
         </defs>
-      </svg>
+      </svg> */}
     </div>
   );
 };

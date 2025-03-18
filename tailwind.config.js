@@ -360,7 +360,11 @@ const config = {
             },
             h2: {
               fontWeight: 'normal',
+              fontSize: '2em'
             },
+            b : {
+              fontWeight: '700'
+            }
           },
         },
       }),
