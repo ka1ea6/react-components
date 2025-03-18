@@ -18,7 +18,7 @@ export function ServiceDetailSection({
   link,
   theme,
 }: ServiceDetailSectionProps) {
-  console.log('ServiceDetailSectionProps', image, title, content, link, theme)
+  // console.log('ServiceDetailSectionProps', image, title, content, link, theme)
   return (
     <section className="container relative">
       <div
@@ -49,7 +49,7 @@ export function ServiceDetailSection({
             </p>
 
             {/* CTA Button */}
-            <button className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full text-base hover:bg-accent hover:text-white transition">
+            <button className="mt-6 px-6 py-3 border border-1 border-accent text-foreground bg-background rounded-full text-base hover:bg-accent hover:text-white transition">
               <a href={link.url || '#'}>{link.label || 'Learn more'}</a>
             </button>
           </div>

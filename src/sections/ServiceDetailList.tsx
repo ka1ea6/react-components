@@ -36,7 +36,7 @@ import { Button } from "@/components/ui/button"
               </div>
   
               {/* CTA Button */}
-              <Button asChild className="mt-6 px-6 py-3 border border-1 border-accent text-foreground rounded-full hover:bg-accent hover:text-accent-foreground transition no-underline">
+              <Button asChild className="mt-6 px-6 py-3 border border-1 border-accent text-foreground bg-background rounded-full hover:bg-accent hover:text-accent-foreground transition no-underline">
                 <Link href={`/${service.slug}`}>Learn more</Link>
               </Button>
             </div>
@@ -54,7 +54,7 @@ import { Button } from "@/components/ui/button"
                 >
                   <i
                     className={`${service.icon.type} fa-${service.icon.iconName} fa-10x w-3/4 h-full text-foreground fill-gradient-linear`}
-                    style={{ width: '70%' }}
+                    style={{ width: '90%' }}
                   />
                   {/* <DynamicIcon
                 type={service.icon.type}

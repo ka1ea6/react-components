@@ -215,3 +215,49 @@
 .sb-wrapper {
   padding: 0px !important; /* Override the default Storybook padding */
 }
+
+.icon-gradient {
+  background-image: linear-gradient(to bottom, transparent 75%, #2196f3 75%, #4caf50 90%),
+    linear-gradient(to right, #3f51b5 50%, #009688 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#22b2aa), to(#a52368));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+}
+
+.svg-settings {
+  /* Hiding this content since it's just settings. See - https://snook.ca/archives/html_and_css/hiding-content-for-accessibility */
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* linear gradient */
+.fill-gradient-linear path {
+  fill: url(#linear);
+}
+
+/* setting colors for linear gradient */
+.linear-stop1 {
+  stop-color: #22b2aa;
+}
+
+.linear-stop2 {
+  stop-color: #a52368;
+}
+
+.gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(94, 189, 62, 1) 34%,
+    rgba(255, 185, 0, 1),
+    rgba(247, 130, 0, 1),
+    rgba(226, 56, 56, 1),
+    rgba(151, 57, 153, 1),
+    rgba(0, 156, 223, 1) 91%
+  );
+}
