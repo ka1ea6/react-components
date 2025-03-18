@@ -176,7 +176,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
               </ul>
             </div>
 
-            {/* Column three  */}
+            {/* Column three 
             {columnThree && (
               <div data-aos="fade-up" data-aos-delay="800">
                 <h3 className={titleClasses}>{columnThree.title}</h3>
@@ -218,6 +218,7 @@ export function Footer({ className, footerData, logoLight, logoDark }: SectionPr
                 )}
               </div>
             )}
+            */}
           </div>
         </div>
       </div>
