@@ -50,7 +50,7 @@ export const MainPageSection = ({
   }, [window.location.hash])
 
   return (
-    <div>
+    <div className=''>
       {/* Main Content Area */}
       <div className={cn(isSidebarVisible ? 'col-span-3' : 'col-span-4', 'xl:col-span-3')}>
         {children}

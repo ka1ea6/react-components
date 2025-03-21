@@ -9,6 +9,9 @@ import { Meta, StoryObj } from '@storybook/react'
 import pattern1 from '@/images/hero/image-hero1.webp'
 import { AOSInit } from '@/lib/utils/AOSInit'
 import { ImageTest, BlocksTest, HeroTest, PagesTest } from '../tests/payload'
+import logoLight from '../../.storybook/public/cortex-reply-light.png'
+import logoDark from '../../.storybook/public/cortex-reply-dark.png'
+import { FaInstagram, FaLinkedin } from 'react-icons/fa6'
 
 const GithubIcon = () => (
   // <FontAwesomeIcon icon={faGithub} size="10x" />
@@ -142,6 +145,53 @@ export const Default: PageStory = {
           href: '#',
         },
       ],
+    },
+    footer: {
+      className: '',
+      logoLight: logoLight,
+      logoDark: logoDark,
+      footerData: {
+        about: {
+          description: 'This is a sample description for the about section.',
+          socialLinks: [
+            {
+              icon: <FaLinkedin />,
+              href: 'https://www.linkedin.com/company/cortex-reply/',
+            },
+            {
+              icon: <FaInstagram />,
+              href: 'https://www.instagram.com/cortex.reply/',
+            },
+          ],
+        },
+        columnOne: {
+          title: 'Column One',
+          links: [
+            { href: '/link1', label: 'Link 1' },
+            { href: '/link2', label: 'Link 2' },
+          ],
+        },
+        columnTwo: {
+          title: 'Contact Us',
+          location: '1234 Street Name, City, Country',
+          mails: ['contact@example.com', 'support@example.com'],
+        },
+        footerBottom: {
+          copyrightText: 'copyright',
+          links: [
+            {
+              label: 'Privacy Policy',
+              href: '/privacy-policy',
+              openNewTab: false,
+            },
+            {
+              label: 'Contact Us',
+              href: '/contact',
+              openNewTab: false,
+            },
+          ],
+        },
+      },
     },
     hero: {
       type: 'lowImpact',
@@ -646,7 +696,7 @@ export const Default: PageStory = {
         },
         {
           id: '67a74c276365f244c8b6d149',
-          blockName: null,
+          blockName: 'light,background theme',
 
           columns: [
             {
@@ -735,7 +785,7 @@ export const Default: PageStory = {
 
           theme: {
             settings: {
-              theme: 'dark',
+              theme: 'light',
               background: 'image',
 
               image: {
@@ -815,7 +865,7 @@ export const Default: PageStory = {
         },
         {
           id: '67a7859083ee5e530f094671',
-          blockName: null,
+          blockName: 'last',
 
           columns: [
             {

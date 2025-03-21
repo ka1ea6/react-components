@@ -1,6 +1,6 @@
-import { Header } from '../components/HeaderFooter'
+import { Header , Footer} from '../components/HeaderFooter'
 import { RenderHero } from '@/components/Heros/RenderHero'
-import { RenderBlocks } from '@/components/Blocks/RenderBlocks'
+import { RenderBlocks, RenderBlocksWithShapes } from '@/components/Blocks/RenderBlocks'
 import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
 import { MainPageSection } from '../sections/MainPageSection'
@@ -31,18 +31,24 @@ export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
     Observer.start()
   }, [])
   return (
-    <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain">
-      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
-      <RenderHero {...args.hero} />
+    <div className="relative overflow-none scroll-smooth snap-y snap-mandatory overscroll-contain">
 
+    {/* <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain"> */}
+      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+      <div>
+      <RenderHero {...args.hero} />
+      </div>
+{/* 
       <MainPageSection
         edit={args.edit}
         pageId={args.page.id}
         tableOfContents={tableOfContents}
         relatedContent={args.relatedContent}
-      >
-        <RenderBlocks blocks={contentWithIds} />
-      </MainPageSection>
+      > */}
+        <RenderBlocksWithShapes blocks={contentWithIds} />
+        <Footer {...args.footer} />
+      {/* </MainPageSection> */}
+
 
 
 
