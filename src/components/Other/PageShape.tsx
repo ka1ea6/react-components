@@ -23,7 +23,7 @@ export const PageShape: React.FC<PageShapeProps> = ({ position, className = '' }
           <defs>
             <mask id="mask">
               <rect width="1920" height="332" fill="white" />
-              <polygon points="0 0 0 135 1255 330 1920 0 1920 0 1920 0 0 0" stroke-width="2"/>
+              <polygon points="0 0 0 135 1255 330 1920 0 1920 0 1920 0 0 0"/>
 
               {/* <polygon points="0 0 0 201.561092 0 1036.200679 0 1087.625789 1255.099121 1240.909908 1920 908.450984 1920 201.561092 1920 0 0 0" /> */}
             </mask>
