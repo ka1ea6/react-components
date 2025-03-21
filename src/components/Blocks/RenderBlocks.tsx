@@ -365,7 +365,7 @@ export const ThemeWithShapes: React.FC<{
       <section id={props.block.blockName || "content-block-continue"} className='w-full'>
         <BlockTop index={props.index} allBlocks={props.allBlocks} />
         <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
-        <div className={cn('container relative', 'bg-background', theme)}>
+        <div className={cn('container relative bg-background min-h-[22em] content-center', theme)}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -480,21 +480,21 @@ export const DarkTop: React.FC<PageShapeProps> = ({ position }) => {
 
 export const DarkBottom: React.FC<PageShapeProps> = ({ position }) => {
 
-  return (
-    <div className="relative bg-white w-full z-20 aspect-[1920/332] overflow-hidden">
-       <div
-         className="relative w-full z-20 aspect-[1920/332] text-white bg-black"
-         style={{
-          //  clipPath: 'polygon(0 0, 100% 0, 100% 85%, 65% 100%, 0% 85%)',
-          clipPath: 'polygon(0% 0%, 0% 40.66%, 65.36% 100%, 100% 0%)'
-        }}
-       ></div>
-       </div>
-  )
+  // return (
+  //   <div className="relative bg-white w-full z-20 aspect-[1920/332] overflow-hidden">
+  //      <div
+  //        className="relative w-full z-20 aspect-[1920/332] text-white bg-black"
+  //        style={{
+  //         //  clipPath: 'polygon(0 0, 100% 0, 100% 85%, 65% 100%, 0% 85%)',
+  //         clipPath: 'polygon(0% 0%, 0% 40.66%, 65.36% 100%, 100% 0%)'
+  //       }}
+  //      ></div>
+  //      </div>
+  // )
 
 
   return (
-<div className="w-full z-20 aspect-[1920/332] overflow-hidden ">
+<div className="w-full relative z-20 aspect-[1920/332] overflow-hidden ">
         <svg
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
