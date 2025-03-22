@@ -480,6 +480,8 @@ export const DarkTop: React.FC<PageShapeProps> = ({ position }) => {
           alignContent: 'flex-end',
           objectFit: 'contain',
           transform: 'rotateX(180deg)',
+          bottom: '-2px',
+          position: 'absolute'
         }}
         className={cn('w-full block overflow-hidden')}
       >
