@@ -36,9 +36,9 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
         <p className="mb-5 text-foreground">{description}</p>
       )}
       {description && typeof description === 'object' && (
-        <p className="mb-5 text-foreground">
+        <div className="mb-5 text-foreground">
           <RichText content={description} enableGutter={false} />
-        </p>
+        </div>
       )}
 </ div>
       <div className={`grid gap-6 mt-6 md:grid-cols-${features ? features.length > 2 ? 2 : features.length : 1} lg:grid-cols-${features ? features.length > 3 ? 3 : features.length : 1}`}>

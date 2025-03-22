@@ -252,7 +252,7 @@ export const ThemeWithShapes: React.FC<{
 
 
   const prevBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
-    if (index === 0) {
+    if (index === 1) {
       return 'light'
     }
     const prevBlock = allBlocks[index - 1] as any
