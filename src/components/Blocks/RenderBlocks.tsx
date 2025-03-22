@@ -151,7 +151,7 @@ export const RenderBlocksWithShapes: React.FC<{
 
   if (hasBlocks) {
     return (
-      <section id="content-blocks" className={cn(props.fill ? 'h-full w-full' : '')}>
+      <main id="content-blocks" className={cn(props.fill ? 'h-full w-full' : '')}>
         {blocks.map((block, index) => {
           const { blockType } = block as { blockType: keyof typeof blockComponents }
           const theme = (block as any)?.theme
@@ -166,23 +166,23 @@ export const RenderBlocksWithShapes: React.FC<{
               )
             } else if (Block) {
               return (
-                <div
-                  className={cn(
-                    'relative flex w-full',
-                    props.fill && 'h-full items-center justify-center',
-                  )}
-                  key={index}
-                >
+                // <div
+                //   className={cn(
+                //     'relative flex w-full',
+                //     props.fill && 'h-full items-center justify-center',
+                //   )}
+                //   key={index}
+                // >
                   <ThemeWithShapes block={block} allBlocks={blocks} index={index}>
                     <Block {...block} />
                   </ThemeWithShapes>
-                </div>
+                // </div>
               )
             }
           }
           return null
         })}
-      </section>
+      </main>
     )
   }
 
@@ -197,12 +197,12 @@ export const ThemeWithShapes: React.FC<{
 }> = (props) => {
   if (props.index === 0) { // first block. this is always light
     return (
-      <div className='w-full'>
+      <section className='relative flex w-full'>
         <div className={cn('absolute inset-0 w-screen h-full light bg-background')}></div>
-        <div className={cn('container h-full relative', 'light bg-background')}>
+        <div className={cn('container h-full relative pt-6 min-h-[22em] content-center light bg-background')}>
           {props.children}
         </div>
-      </div>
+      </section>
     )
   }
 
@@ -224,10 +224,10 @@ export const ThemeWithShapes: React.FC<{
       // the 2nd block should always have a top shape
       return <DarkTop position="left" />
     }
-    if (prevBlockTheme(index, allBlocks) === 'dark' && currentBlockTheme(allBlocks[index]) === 'light') {
-      return <DarkBottom position="left" />
+    if (prevBlockTheme(index, allBlocks) === 'dark' && currentBlockTheme(index, allBlocks) === 'light') {
+      return <LightTop position="left" />
     }
-    if (prevBlockTheme(index, allBlocks) === 'light' && currentBlockTheme(allBlocks[index]) === 'dark') {
+    if (prevBlockTheme(index, allBlocks) === 'light' && currentBlockTheme(index, allBlocks) === 'dark') {
       return <DarkTop position="left" />
     }
 
@@ -240,11 +240,11 @@ export const ThemeWithShapes: React.FC<{
     index,
     allBlocks,
   }) => {
-    console.log('BlockBottom index:', index, nextBlockTheme(index, allBlocks) , currentBlockTheme(allBlocks[index]))
-    if (nextBlockTheme(index, allBlocks) === 'light' && currentBlockTheme(allBlocks[index]) === 'dark') {
+    console.log('BlockBottom index:', index, nextBlockTheme(index, allBlocks) , currentBlockTheme(index, allBlocks))
+    if (nextBlockTheme(index, allBlocks) === 'light' && currentBlockTheme(index, allBlocks) === 'dark') {
       console.log('BlockBottom index:', index, 'returning dark bottom')
       // the 2nd block should always have a top shape
-      return <DarkBottom position="left" />
+      return <LightTop position="left" />
     }
     // Return null if no valid JSX element is determined
     return null
@@ -266,7 +266,8 @@ export const ThemeWithShapes: React.FC<{
     }
   }
   const nextBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
-    if (index === allBlocks.length - 1) {
+    if (index === allBlocks.length - 1) { // it's the 2nd to last. the footer is always dark.
+      console.log('nextBlockTheme index:', index, 'returning dark')
       return 'dark'
     }
     if (index === 0) {
@@ -283,12 +284,19 @@ export const ThemeWithShapes: React.FC<{
       return 'dark'
     }
   }
-  const currentBlockTheme = (block: any): string => {
+  const currentBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
+    if (index === allBlocks.length - 1) { // it's the 2nd to last. the footer is always dark so this should be dark too.
+      return 'dark'
+    }
+    const block = allBlocks[index] as any
+    if (!block.theme) {
+      return 'dark'
+    }
     // console.log('block.theme ', block.theme)
     if (!block.theme) {
       return 'dark'
     }
-    if (block.theme.settings.theme === 'light') {
+    if (block.theme?.settings?.theme === 'light') {
       return 'light'
     } else {
       return 'dark'
@@ -303,26 +311,26 @@ export const ThemeWithShapes: React.FC<{
       /// continue as dark
       console.log('no theme... index:', props.index, 'continue as dark')
       return (
-        <section id={props.block.name || "content-block"} className='w-full pt-12'>
+        <section id={props.block.name || "content-block"} className='relative flex flex-col w-full pt-12'>
           {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
           <div className={cn('absolute inset-0 w-screen dark bg-background')}></div>
           <div className={cn('container relative', 'dark bg-background')}>
             {props.children}
           </div>
-          <BlockBottom index={props.index} allBlocks={props.allBlocks} />
+          {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
         </section>
       )
     } else {
       console.log('no theme... index:', props.index, 'new dark section')
       return (
-        <section id={props.block.name || "content-block-start"} className='w-full'>
+        <section id={props.block.name || "content-block-start"} className='relative flex flex-col w-full'>
           <BlockTop index={props.index} allBlocks={props.allBlocks} />
           <div className={cn('absolute inset-0 w-screen')}></div>
           <div className="bg-black">
             <div className={cn('container relative', 'dark bg-background')}>
               {props.children}
             </div>
-            <BlockBottom index={props.index} allBlocks={props.allBlocks} />
+            {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
           </div>
         </section>
       )
@@ -331,15 +339,16 @@ export const ThemeWithShapes: React.FC<{
 
   if (
     !('theme' in props.block) ||
-    prevBlockTheme(props.index, props.allBlocks) === currentBlockTheme(props.block)
+    prevBlockTheme(props.index, props.allBlocks) === currentBlockTheme(props.index, props.allBlocks)
   ) {
     // this theme needs to be a continuation of the previous theme
     console.log('contiune theme. index:', props.index)
     console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
-    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.block))
+    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
     console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
+    const theme = currentBlockTheme(props.index, props.allBlocks)
     return (
-      <section id={props.block.name || "content-block-continue"} className='w-full pt-12'>
+      <section id={props.block.name || "content-block-continue"} className=' relative flex flex-col w-full pt-20'>
         {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
         <div className={cn('absolute inset-0 w-screen dark bg-background')}></div>
         <div className={cn('container relative', 'dark bg-background')}>
@@ -351,21 +360,21 @@ export const ThemeWithShapes: React.FC<{
   }
 
   if (
-    prevBlockTheme(props.index, props.allBlocks) !== currentBlockTheme(props.block)
+    prevBlockTheme(props.index, props.allBlocks) !== currentBlockTheme(props.index, props.allBlocks)
   ) {
     // new theme
-    console.log('new theme. index:', props.index, 'theme:', currentBlockTheme(props.block))
+    console.log('new theme. index:', props.index, 'theme:', currentBlockTheme(props.index, props.allBlocks))
     console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
-    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.block))
+    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
     console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
     console.log(props.index, 'content: ', props.block)
-    const theme = currentBlockTheme(props.block)
+    const theme = currentBlockTheme(props.index, props.allBlocks)
     // if (prevBlockTheme(props.index, props.allBlocks) === 'dark') {
     return (
-      <section id={props.block.blockName || "content-block-continue"} className='w-full'>
+      <section id={props.block.blockName || "content-block-continue"} className='relative flex flex-col w-full'>
         <BlockTop index={props.index} allBlocks={props.allBlocks} />
         <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
-        <div className={cn('container relative bg-background min-h-[22em] content-center', theme)}>
+        <div className={cn('container relative bg-background min-h-[22em] content-center', theme, theme ==='light' && 'p-12')}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -478,7 +487,7 @@ export const DarkTop: React.FC<PageShapeProps> = ({ position }) => {
 }
 
 
-export const DarkBottom: React.FC<PageShapeProps> = ({ position }) => {
+export const LightTop: React.FC<PageShapeProps> = ({ position }) => {
 
   // return (
   //   <div className="relative bg-white w-full z-20 aspect-[1920/332] overflow-hidden">
@@ -501,7 +510,7 @@ export const DarkBottom: React.FC<PageShapeProps> = ({ position }) => {
           viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
           // preserveAspectRatio="xMidYMax meet"
           className={cn('absolute ')}
-          style={{ fontSize: 0, float:'left', alignContent: 'flex-end', transform: 'scale(-1, 1)' }}
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end' }}
           // transform={transforms[1]}
         >
           <defs>
