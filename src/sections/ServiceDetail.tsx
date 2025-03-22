@@ -14,13 +14,13 @@ import { Button } from "@/components/ui/button"
   }
   
   interface ServiceDetailProps {
-    dynamicServiceDetail: ServiceProps[]
+    dynamicServiceDetail: ServiceProps
     style: 'scroll' | 'slide'
   }
   
-  export const ServiceDetailList = ({ dynamicServiceDetail, style }: ServiceDetailProps) => {
-    return dynamicServiceDetail.map((service, index) => (
-      <Section id={service.slug} key={index} theme={index % 2 === 0 ? 'dark' : 'light'} style={style}>
+  export const ServiceDetail = ({ dynamicServiceDetail, style }: ServiceDetailProps) => {
+    const service = dynamicServiceDetail
+    return (
         <div className="container">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
             {/* Left Side Content */}
@@ -73,7 +73,6 @@ import { Button } from "@/components/ui/button"
               )}
           </div>
         </div>
-      </Section>
-    ))
+)
   }
   
