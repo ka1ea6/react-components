@@ -159,8 +159,8 @@ export function FeatureCard({
             className={cn(
               'space-y-6',
               settings?.card === 'outline' || settings?.card === 'light'
-                ? 'prose prose-headings:text-foreground prose-p:text-foreground'
-                : 'prose prose-headings:text-white prose-p:text-gray-100',
+                ? 'prose prose-headings:text-foreground prose-p:text-foreground prose-a:text-foreground'
+                : 'prose prose-headings:text-white prose-p:text-gray-100 prose-a:text-gray-100',
               image && 'prose prose-headings:text-background prose-p:text-background',
             )}
           />
