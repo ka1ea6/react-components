@@ -113,7 +113,7 @@ const IconFeature = ({ section, index }: { section: Section; index: number }) =>
           <i className={`${section.icon.type} fa-${section.icon.icon} fa-4x`}></i>
         </div>
       )}
-      <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-400">
+      <h3 className="text-2xl group-hover:text-accent transition-colors duration-400">
         {section.title}
       </h3>
       {/* Statistic Display */}

@@ -228,7 +228,6 @@ const IconLocation = ({
       <div className="flex items-start justify-between w-full mb-2">
         <div
           className={cn(
-            'font-semibold',
             variant === 'outline' || variant === 'light' ? 'text-primary' : 'text-white',
             iconSize === 'small' ? 'text-2xl' : 'text-3xl',
           )}
