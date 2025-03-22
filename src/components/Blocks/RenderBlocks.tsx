@@ -286,10 +286,10 @@ export const ThemeWithShapes: React.FC<{
   }
   const currentBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
 
-    if (index === 1) {
-      console.log('currentBlockTheme index:', index, allBlocks[index]?.theme)
-      console.log('currentBlockTheme index:', index, allBlocks.length)
-    }
+    // if (index === 1) {
+    //   console.log('currentBlockTheme index:', index, allBlocks[index]?.theme)
+    //   console.log('currentBlockTheme index:', index, allBlocks.length)
+    // }
 
 
     if (index === allBlocks.length - 1) { // it's the 2nd to last. the footer is always dark so this should be dark too.
