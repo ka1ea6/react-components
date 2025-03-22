@@ -285,14 +285,17 @@ export const ThemeWithShapes: React.FC<{
     }
   }
   const currentBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
+
+    if (index === 1) {
+      console.log('currentBlockTheme index:', index, allBlocks[index]?.theme)
+      console.log('currentBlockTheme index:', index, allBlocks.length)
+    }
+
+
     if (index === allBlocks.length - 1) { // it's the 2nd to last. the footer is always dark so this should be dark too.
       return 'dark'
     }
     const block = allBlocks[index] as any
-    if (!block.theme) {
-      return 'dark'
-    }
-    // console.log('block.theme ', block.theme)
     if (!block.theme) {
       return 'dark'
     }
@@ -350,8 +353,8 @@ export const ThemeWithShapes: React.FC<{
     return (
       <section id={props.block.name || "content-block-continue"} className=' relative flex flex-col w-full pt-20'>
         {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
-        <div className={cn('absolute inset-0 w-screen dark bg-background')}></div>
-        <div className={cn('container relative', 'dark bg-background')}>
+        <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
+        <div className={cn('container relative bg-background', theme, theme ==='light' && 'p-12')}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -469,7 +472,7 @@ export const DarkTop: React.FC<PageShapeProps> = ({ position }) => {
       <svg
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1920 332"
+        viewBox="0 0 1920 334"
         preserveAspectRatio="none"
         style={{
           fontSize: 0,
