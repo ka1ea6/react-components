@@ -240,9 +240,9 @@ export const ThemeWithShapes: React.FC<{
     index,
     allBlocks,
   }) => {
-    console.log('BlockBottom index:', index, nextBlockTheme(index, allBlocks) , currentBlockTheme(index, allBlocks))
+    // console.log('BlockBottom index:', index, nextBlockTheme(index, allBlocks) , currentBlockTheme(index, allBlocks))
     if (nextBlockTheme(index, allBlocks) === 'light' && currentBlockTheme(index, allBlocks) === 'dark') {
-      console.log('BlockBottom index:', index, 'returning dark bottom')
+      // console.log('BlockBottom index:', index, 'returning dark bottom')
       // the 2nd block should always have a top shape
       return <LightTop position="left" />
     }
@@ -267,7 +267,7 @@ export const ThemeWithShapes: React.FC<{
   }
   const nextBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
     if (index === allBlocks.length - 1) { // it's the 2nd to last. the footer is always dark.
-      console.log('nextBlockTheme index:', index, 'returning dark')
+      // console.log('nextBlockTheme index:', index, 'returning dark')
       return 'dark'
     }
     if (index === 0) {
@@ -287,8 +287,8 @@ export const ThemeWithShapes: React.FC<{
   const currentBlockTheme = (index: number, allBlocks: Page['layout'][0][]): string => {
 
     // if (index === 1) {
-    //   console.log('currentBlockTheme index:', index, allBlocks[index]?.theme)
-    //   console.log('currentBlockTheme index:', index, allBlocks.length)
+    //   // console.log('currentBlockTheme index:', index, allBlocks[index]?.theme)
+    //   // console.log('currentBlockTheme index:', index, allBlocks.length)
     // }
 
 
@@ -307,12 +307,12 @@ export const ThemeWithShapes: React.FC<{
   }
 
 
-  console.log('theme', props.block.theme, props.index)
+  // console.log('theme', props.block.theme, props.index)
   if (!props.block.theme || !props.block.theme.settings) {
     // this theme needs to be a continuation of the previous theme
     if (prevBlockTheme(props.index, props.allBlocks) === 'dark') {
       /// continue as dark
-      console.log('no theme... index:', props.index, 'continue as dark')
+      // console.log('no theme... index:', props.index, 'continue as dark')
       return (
         <section id={props.block.name || "content-block"} className='relative flex flex-col w-full pt-12'>
           {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
@@ -324,7 +324,7 @@ export const ThemeWithShapes: React.FC<{
         </section>
       )
     } else {
-      console.log('no theme... index:', props.index, 'new dark section')
+      // console.log('no theme... index:', props.index, 'new dark section')
       return (
         <section id={props.block.name || "content-block-start"} className='relative flex flex-col w-full'>
           <BlockTop index={props.index} allBlocks={props.allBlocks} />
@@ -345,10 +345,10 @@ export const ThemeWithShapes: React.FC<{
     prevBlockTheme(props.index, props.allBlocks) === currentBlockTheme(props.index, props.allBlocks)
   ) {
     // this theme needs to be a continuation of the previous theme
-    console.log('contiune theme. index:', props.index)
-    console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
-    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
-    console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
+    // console.log('contiune theme. index:', props.index)
+    // console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
+    // console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
+    // console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
     const theme = currentBlockTheme(props.index, props.allBlocks)
     return (
       <section id={props.block.name || "content-block-continue"} className=' relative flex flex-col w-full pt-20'>
@@ -366,11 +366,11 @@ export const ThemeWithShapes: React.FC<{
     prevBlockTheme(props.index, props.allBlocks) !== currentBlockTheme(props.index, props.allBlocks)
   ) {
     // new theme
-    console.log('new theme. index:', props.index, 'theme:', currentBlockTheme(props.index, props.allBlocks))
-    console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
-    console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
-    console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
-    console.log(props.index, 'content: ', props.block)
+    // console.log('new theme. index:', props.index, 'theme:', currentBlockTheme(props.index, props.allBlocks))
+    // console.log('prevBlockTheme:', props.index, prevBlockTheme(props.index, props.allBlocks))
+    // console.log('currentBlockTheme:', props.index, currentBlockTheme(props.index, props.allBlocks))
+    // console.log('nextBlockTheme:', props.index, nextBlockTheme(props.index, props.allBlocks))
+    // console.log(props.index, 'content: ', props.block)
     const theme = currentBlockTheme(props.index, props.allBlocks)
     // if (prevBlockTheme(props.index, props.allBlocks) === 'dark') {
     return (
