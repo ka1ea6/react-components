@@ -43,30 +43,33 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
 
   return (
     <div className="relative w-full light py-[60px]">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
+
       {/* Image area  */}
-      <div className="absolute left-0 top-0 z-1 h-full w-full overflow-hidden md:w-[56%] md:rounded-r-5">
+      <div className="relative h-full w-full">
         <Image
           src={image.src}
           alt={image.alt}
           fill
           className="object-cover"
-          sizes={`(min-width: 768px) 60vw, 100vw`}
+          sizes={`(min-width: 768px) 30vw, 50vw`}
           // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
           placeholder="blur"
           blurDataURL={blurDataUrl}
         />
       </div>
 
-      <Container>
-        <div className="ml-auto md:w-1/2">
-          <div className="relative z-[2] rounded-5 bg-white p-10 shadow-1 dark:bg-accent-700 lg:p-[60px]">
+      
+        <div className="w-full h-full">
+          <div className="bg-white p-10">
             <div className="mb-30px">
               <SectionHeading {...sectionHeading} invert />
             </div>
             <Form />
           </div>
         </div>
-      </Container>
+    
+      </div>
     </div>
   )
 }

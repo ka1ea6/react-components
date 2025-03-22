@@ -137,7 +137,7 @@ export function Form() {
           </div>
           <div className="lg:col-span-2">
             <TextAreaInput
-              placeholder="Write Message..."
+              placeholder="Message..."
               name="message"
               value={values.message}
               onChange={handleChange}
@@ -157,9 +157,9 @@ export function Form() {
               </p>
             )}
           </div>
-          <div className="lg:col-span-2 light">
-            <Button type="submit" className="w-full outline rounded-full outline-accent bg-background text-foreground hover:bg-accent hover:text-accent-foreground" disabled={isSubmitting}>
-              <span>Send</span>
+          <div className="lg:col-span-2 light grid justify-items-center">
+            <Button type="submit" className="outline px-6 rounded-full outline-accent bg-background text-foreground hover:bg-accent hover:text-accent-foreground" disabled={isSubmitting}>
+              Send
             </Button>
           </div>
         </form>

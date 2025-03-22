@@ -50,7 +50,7 @@ export function SectionHeading({
       {subtitle && (
         <span
           className={
-            'mb-[.625rem] block font-bold uppercase text-accent md:text-md'
+            'mb-[.625rem] block font-semibold uppercase text-accent md:text-md'
           }
         >
           {subtitle}
