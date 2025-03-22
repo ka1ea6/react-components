@@ -346,30 +346,32 @@ const config = {
         350: '350ms',
         400: '400ms',
       },
-      typography: ({ theme }) => ({
+      typography: {
         DEFAULT: {
-          css: {
-            color: 'hsl(var(--foreground))',
-            '--tw-prose-bold': 'rgb(var(--accent))',
-            // '--tw-prose-body': 'var(--text)',
-            // '--tw-prose-headings': 'var(--text)',
-            h1: {
-              fontSize: '3.5rem',
-              fontWeight: 'normal',
-              marginBottom: '0.25em',
+          css: [
+            {
+              color: 'hsl(var(--foreground))',
+              // '--tw-prose-bold': 'rgb(var(--accent))',
+              // '--tw-prose-body': 'var(--text)',
+              // '--tw-prose-headings': 'var(--text)',
+              h1: {
+                fontSize: '3.5rem',
+                fontWeight: 'normal',
+                marginBottom: '0.25em',
+              },
+              h2: {
+                fontWeight: 'normal',
+                color: 'rgb(var(--primary))',
+                fontSize: '2em',
+              },
+              strong: {
+                fontWeight: '700',
+                color: 'rgb(var(--accent))',
+              },
             },
-            h2: {
-              fontWeight: 'normal',
-              color: 'rgb(var(--primary))',
-              fontSize: '2em'
-            },
-            b : {
-              fontWeight: '700',
-              color: 'rgb(var(--accent))'
-            }
-          },
+          ],
         },
-      }),
+      },
     },
   },
 }
