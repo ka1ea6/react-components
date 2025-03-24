@@ -1,6 +1,6 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { ContactSection, type ContactSectionProps } from './ContactSection';
+import React from 'react'
+import { Meta, StoryFn } from '@storybook/react'
+import { ContactSection, type ContactSectionProps } from './ContactSection'
 import { Toaster } from 'sonner'
 
 export default {
@@ -11,32 +11,32 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A card component that displays a service with an icon, title, description, and a link.',
+        component:
+          'A card component that displays a service with an icon, title, description, and a link.',
       },
     },
   },
-  argTypes: {
-  },
+  argTypes: {},
   decorators: [
     (Story) => (
       <>
         <Story />
-      <Toaster richColors position="top-right" closeButton visibleToasts={9} />
+        <Toaster richColors position="top-right" closeButton visibleToasts={9} />
       </>
     ),
   ],
-} as Meta;
+} as Meta
 
-const Template: StoryFn<ContactSectionProps> = (args) => <ContactSection {...args} />;
+const Template: StoryFn<ContactSectionProps> = (args) => <ContactSection {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   sectionHeading: {
     title: 'Get in Touch',
     subtitle: 'We would love to hear from you',
   },
   image: {
-    src: '/assets/images/contact.png',
+    src: '/assets/images/People-Hex.webp',
     alt: 'Contact Us',
     blurDataURL: 'data:image/jpeg;base64,...', // Add your blur data URL here
   },
@@ -65,4 +65,4 @@ Default.args = {
       embedUrl: 'https://www.google.com/maps/embed?...', // Add your Google Maps embed URL here
     },
   ],
-};
+}
