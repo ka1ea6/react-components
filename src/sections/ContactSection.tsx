@@ -43,23 +43,21 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
 
   return (
     <div className="relative w-full light py-[60px]">
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-1 items-center justify-center">
+        {/* Image area  */}
+        <div className="relative h-full w-full">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            objectFit="contain"
+            sizes={`(min-width: 768px) 30vw, 50vw`}
+            // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
+            placeholder="blur"
+            blurDataURL={blurDataUrl}
+          />
+        </div>
 
-      {/* Image area  */}
-      <div className="relative h-full w-full">
-        <Image
-          src={image.src}
-          alt={image.alt}
-          fill
-          className="object-cover"
-          sizes={`(min-width: 768px) 30vw, 50vw`}
-          // sizes={`(min-width: ${BREAKPOINTS.md}) 60vw, 100vw`}
-          placeholder="blur"
-          blurDataURL={blurDataUrl}
-        />
-      </div>
-
-      
         <div className="w-full h-full">
           <div className="bg-white p-10">
             <div className="mb-30px">
@@ -68,7 +66,6 @@ export function ContactSection(contactSectionData: ContactSectionProps) {
             <Form />
           </div>
         </div>
-    
       </div>
     </div>
   )
@@ -80,9 +77,7 @@ export function LocationsSection(contactSectionData: ContactSectionProps) {
         <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
           <div className="grid grid-cols-1 gap-10 pt-16 lg:grid-cols-3">
             <div>
-              <h2 className="text-pretty text-4xl text-primary">
-                Locations
-              </h2>
+              <h2 className="text-pretty text-4xl text-primary">Locations</h2>
               <p className="mt-4 text-base/7 text-foreground">
                 We have multiple locations across the UK.
               </p>

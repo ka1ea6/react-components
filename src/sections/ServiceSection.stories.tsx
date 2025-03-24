@@ -31,72 +31,75 @@ export default {
   ],
 } as Meta
 
-
 const bgImage = {
   blurDataURL: '/assets/props/Cortex-Handshake-BG.jpg',
   height: 1315,
   url: '/assets/props/Cortex-Handshake-BG.jpg',
-  width: 1920
+  width: 1920,
 }
 
 const Template: StoryFn<ServiceSectionProps> = (args) => <ServiceSection {...args} />
 
 const content = (description: string) => {
-    return { root: {
-        type: 'root',
-        format: '',
-        indent: 0,
-        version: 1,
-  
-        children: [
-          {
-            type: 'paragraph',
-            format: '',
-            indent: 0,
-            version: 1,
-  
-            children: [
-              {
-                mode: 'normal',
-                text: description,
-                type: 'text',
-                style: '',
-                detail: 0,
-                format: 0,
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            textStyle: '',
-            textFormat: 0,
-          },
-        ],
-        direction: 'ltr',
-      }}
-    }
+  return {
+    root: {
+      type: 'root',
+      format: '',
+      indent: 0,
+      version: 1,
+
+      children: [
+        {
+          type: 'paragraph',
+          format: '',
+          indent: 0,
+          version: 1,
+
+          children: [
+            {
+              mode: 'normal',
+              text: description,
+              type: 'text',
+              style: '',
+              detail: 0,
+              format: 0,
+              version: 1,
+            },
+          ],
+          direction: 'ltr',
+          textStyle: '',
+          textFormat: 0,
+        },
+      ],
+      direction: 'ltr',
+    },
+  }
+}
 
 export const Default = Template.bind({})
 Default.args = {
   title: 'Lorem ipsum dolor sit amet',
-  content: content('This is a description of the service. This is a description of the service. This is a description of the service. This is a description of the service.'),
+  content: content(
+    'This is a description of the service. This is a description of the service. This is a description of the service. This is a description of the service.',
+  ),
   services: [
     {
       image: bgImage,
       title: 'Service Title',
-      content: content('This is a description of the service. This is a description of the service. This is a description of the service. This is a description of the service.'),
-      link: {label: 'find out more', url: '#' } 
+      content: content('Create stable foundations for strategic AI adoption'),
+      link: { label: 'find out more', url: '#' },
     },
     {
       image: bgImage,
       title: 'Service Title',
-      content: content('This is a description of the service.'),
-      link: {label: 'find out more', url: '#' } 
+      content: content('Harness the true value of your technology investments'),
+      link: { label: 'find out more', url: '#' },
     },
     {
       image: bgImage,
       title: 'Service Title',
-      content: content('This is a description of the service.'),
-      link: {label: 'find out more', url: '#' } 
+      content: content('Enhance performance with AI that works like a member of your team'),
+      link: { label: 'find out more', url: '#' },
     },
   ],
 }
