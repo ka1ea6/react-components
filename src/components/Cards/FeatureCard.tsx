@@ -80,7 +80,8 @@ export function FeatureCard({
   //console.log('image', image)
 
   return (
-    <div
+    <a
+      href={link?.url || '#'}
       className={cn(
         'min-w-56 max-w-xl h-full flex flex-col group',
         image ? 'p-0 pb-4' : 'p-8',
@@ -91,7 +92,6 @@ export function FeatureCard({
           ],
         image && 'bg-foreground',
         settings && settings?.card === 'outline' ? 'text-gray-900' : 'text-white',
-        // className,
         sizes[settings?.width ?? 'auto'],
         'intersect-once intersect:animate-flip-up opacity-0 intersect:opacity-100 intersect:animate-duration-500',
         settings && `intersect:animate-delay-${settings.order || 0 + 1}00`,
@@ -112,7 +112,6 @@ export function FeatureCard({
       )}
 
       {/* Body */}
-
       <div
         className={cn(
           image ? 'p-4 md:p-1 md:px-8' : 'p-0 md:p-0',
@@ -182,17 +181,9 @@ export function FeatureCard({
         {/* CTA Button */}
         {link && link.url && (
           <div className="pt-6 h-full flex items-end justify-start">
-            {/* <Button
-            size="lg"
-            // className="bg-[#A42368] hover:bg-[#8B1E57] text-white px-8 py-6 text-lg rounded-xl"
-            className="p-0 text-accent text-lg uppercase border-none bg-background w-full mt-auto items-center justify-start"
-            asChild
-          > */}
-            <a className="text-accent justify-start font-semibold uppercase" href={link.url || '#'}>
+            <span className="text-accent justify-start font-semibold uppercase">
               {link?.label || 'Find out more'}
-              {/* <span className="ml-2">↓</span> */}
-            </a>
-            {/* </Button> */}
+            </span>
           </div>
         )}
 
@@ -206,7 +197,7 @@ export function FeatureCard({
           />
         )}
       </div>
-    </div>
+    </a>
   )
 }
 
