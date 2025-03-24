@@ -178,15 +178,6 @@ export function FeatureCard({
           </div>
         )}
 
-        {/* CTA Button */}
-        {link && link.url && (
-          <div className="pt-6 h-full flex items-end justify-start">
-            <span className="text-accent justify-start font-semibold uppercase">
-              {link?.label || 'Find out more'}
-            </span>
-          </div>
-        )}
-
         {/* Decorative Background for CTA variant */}
         {settings?.card === 'radial' && (
           <div
