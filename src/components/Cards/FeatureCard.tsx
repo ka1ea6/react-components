@@ -100,7 +100,7 @@ export function FeatureCard({
     >
       {/* Image Section */}
       {image && (
-        <div className="relative h-1/2 lg:h-2/3 w-full mb-0">
+        <div className="relative h-1/2 lg:h-2/3 w-full mb-0 pt-2">
           <Image
             src={image.url || '/placeholder.svg'}
             alt={image.alt || 'card header image'}
@@ -264,7 +264,9 @@ const IconLocation = ({
         <h3
           className={cn(
             'font-normal',
-            variant === 'outline' || variant === 'light' ? 'text-2xl text-primary' : 'text-3xl text-white',
+            variant === 'outline' || variant === 'light'
+              ? 'text-2xl text-primary'
+              : 'text-3xl text-white',
           )}
         >
           {heading}
