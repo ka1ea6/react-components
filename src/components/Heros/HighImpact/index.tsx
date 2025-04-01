@@ -89,8 +89,78 @@ export const HighImpactHero: React.FC<HighImpactHeroType> = ({
       </div>
       
     {/* </div> */}
-    <PageShape className="text-black z-10" position="header" />
+    <LightTop />
+    {/* <PageShape className="text-black z-10" position="header" /> */}
     </div>
     </div>
   )
 }
+
+
+
+const LightTop = () => {
+
+  // return (
+  //   <div className="relative bg-white w-full z-20 aspect-[1920/332] overflow-hidden">
+  //      <div
+  //        className="relative w-full z-20 aspect-[1920/332] text-white bg-black"
+  //        style={{
+  //         //  clipPath: 'polygon(0 0, 100% 0, 100% 85%, 65% 100%, 0% 85%)',
+  //         clipPath: 'polygon(0% 0%, 0% 40.66%, 65.36% 100%, 100% 0%)'
+  //       }}
+  //      ></div>
+  //      </div>
+  // )
+
+  return (
+    <div className="w-full h-[1240px] z-10">
+            <svg
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1920 337" // Adjusted viewBox height to 1245 to add 5px at the bottom
+              // preserveAspectRatio="xMidYMax meet"
+              style={{ fontSize: 0, float:'left' }}
+              className='absolute -bottom-[2px] flex'
+              // transform={transforms[0]}
+            >
+              <defs>
+                <mask id="mask">
+                  <rect width="1920" height="332" fill="white" />
+                  <polygon points="0 0 0 135 1255 330 1920 0 1920 0 1920 0 0 0"/>
+    
+                  {/* <polygon points="0 0 0 201.561092 0 1036.200679 0 1087.625789 1255.099121 1240.909908 1920 908.450984 1920 201.561092 1920 0 0 0" /> */}
+                </mask>
+              </defs>
+              <rect width="1920" height="332" fill="white" mask="url(#mask)" />
+              <rect y="330" width="1920" height="7" fill="white" />{' '}
+              {/* Added white rectangle at the bottom */}
+            </svg>
+            {/* <div className="absolute bottom-0 border-none left-0 w-full h-[20px] z-10 bg-white" /> */}
+          </div>
+  )
+
+
+  return (
+<div className="w-full relative z-20 aspect-[1920/332] overflow-hidden ">
+        <svg
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1920 332" // Adjusted viewBox height to 1245 to add 5px at the bottom
+          // preserveAspectRatio="xMidYMax meet"
+          className='absolute'
+          style={{ fontSize: 0, float:'left', alignContent: 'flex-end' }}
+          // transform={transforms[1]}
+        >
+          <defs>
+            <mask id="mask">
+              <rect width="100%" height="100%" fill="white" />
+              <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" />
+            </mask>
+          </defs>
+          <polygon points="0 0 0 135 1255 332 1920 0 1920 0 1920 0 0 0" fill='black'/>
+          {/* <rect width="100%" height="100%" fill="white" mask="url(#mask)" /> */}
+          {/* Added white rectangle at the bottom */}
+        </svg>
+        {/* <div className="absolute -bottom-[5px] border-none left-0 w-full h-[6px] z-10 bg-white" /> */}
+      </div>)
+      }
