@@ -39,13 +39,13 @@ export function ServiceSection({ services, className, title, content }: ServiceS
         </div>
       </div>
       {services && services.length > 0 && (
-        <div className="-mx-4 flex flex-wrap justify-between gap-y-4">
+        <div className="-mx-4 flex flex-wrap justify-between gap-y-8">
           {services.map((service, index) => (
             <div
               key={index}
               data-aos="fade-up"
               data-aos-delay={getStaggeredDelay([200, 400, 600], index)}
-              className="w-full h-[44vh] md:h-[40vh] md:px-4 md:w-1/2 lg:w-1/3"
+              className="w-full px-4 md:w-1/2 lg:w-1/3 flex"
             >
               {/* <ServiceCard {...service} /> */}
               <FeatureCard
@@ -55,6 +55,7 @@ export function ServiceSection({ services, className, title, content }: ServiceS
                 image={service.image}
                 content={service.content}
                 link={service.link}
+                className="w-full"
               />
             </div>
           ))}

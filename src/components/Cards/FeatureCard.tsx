@@ -49,18 +49,7 @@ export function FeatureCard({
   statistic,
   settings,
   link,
-  // variant = 'outline',
   className,
-  // icon,
-  // iconSize = 'large',
-  // width = 'auto',
-  // order = 0,
-  // heading,
-  // subheading,
-  // content,
-  // statistic,
-  // buttonText,
-  // buttonHref,
 }: FeatureCardProps) {
   const variants = {
     solid: 'bg-accent',
@@ -77,14 +66,12 @@ export function FeatureCard({
     auto: 'w-full',
   }
 
-  //console.log('image', image)
-
   return (
     <a
       href={link?.url || '#'}
       className={cn(
-        'min-w-56 max-w-xl h-full flex flex-col group',
-        image ? 'p-0 pb-4' : 'p-8',
+        'min-w-56 max-w-xl h-full flex flex-col group bg-background',
+        image ? 'p-0' : 'p-6 md:p-8',
         settings &&
           !image &&
           variants[
@@ -100,7 +87,7 @@ export function FeatureCard({
     >
       {/* Image Section */}
       {image && (
-        <div className="relative h-1/2 lg:h-2/3 w-full mb-0 pt-2">
+        <div className="relative aspect-[16/9] w-full">
           <Image
             src={image.url || '/placeholder.svg'}
             alt={image.alt || 'card header image'}
@@ -112,80 +99,64 @@ export function FeatureCard({
       )}
 
       {/* Body */}
-      <div
-        className={cn(
-          image ? 'p-4 md:p-1 md:px-8' : 'p-0 md:p-0',
-          'flex h-2/5 md:max-h-1/2 flex-col flex-grow',
-        )}
-      >
-        {subtitle && <div className="mb-4 text-primary uppercase font-light">{subtitle}</div>}
+      <div className={cn(image ? 'p-6 md:p-8' : 'p-0', 'flex flex-col flex-grow')}>
+        <div className="flex flex-col flex-grow">
+          {subtitle && (
+            <div className="text-primary uppercase text-sm font-light mb-4">{subtitle}</div>
+          )}
 
-        {/* Header Section */}
-        <div className="flex items-center gap-4 mb-2 md:mb-0">
-          <IconLocation
-            icon={{
-              type: (icon?.type as IconType) || 'fa-light',
-              iconName: icon?.icon || 'no-icon-error',
-            }}
-            heading={title ?? ''}
-            variant={settings?.card === 'default' ? 'solid' : (settings?.card ?? 'solid')}
-            iconSize={settings?.iconSize || 'large'}
-          />
-        </div>
+          {/* Header Section */}
+          <div className="flex items-start gap-4 mb-4">
+            <IconLocation
+              icon={{
+                type: (icon?.type as IconType) || 'fa-light',
+                iconName: icon?.icon || 'no-icon-error',
+              }}
+              heading={title ?? ''}
+              variant={settings?.card === 'default' ? 'solid' : (settings?.card ?? 'solid')}
+              iconSize={settings?.iconSize || 'large'}
+            />
+          </div>
 
-        {/* Statistic Display */}
-        {statistic && (
-          <div className="mb-6">
+          {/* Content Section */}
+          {content && typeof content === 'object' && (
+            <RichText
+              enableGutter={false}
+              content={content}
+              enableProse={false}
+              className={cn(
+                'prose-sm prose-p:text-lg prose-headings:text-xl',
+                'space-y-3',
+                settings?.card === 'outline' || settings?.card === 'light'
+                  ? 'prose-headings:text-foreground prose-p:text-foreground prose-a:text-foreground'
+                  : 'prose-headings:text-white prose-p:text-gray-100 prose-a:text-gray-100',
+                image && 'prose-headings:text-background prose-p:text-background',
+              )}
+            />
+          )}
+          {content && typeof content === 'string' && (
             <div
               className={cn(
-                'text-4xl text-wrap font-bold leading-none overflow-hidden',
+                'prose-sm prose-p:text-lg prose-headings:text-xl',
+                'space-y-3',
                 settings?.card === 'outline' || settings?.card === 'light'
-                  ? 'text-brand-green'
-                  : 'text-white',
+                  ? 'prose text-foreground'
+                  : 'prose text-gray-100',
+                image && 'prose text-background',
               )}
             >
-              {statistic}
+              {content}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Content Section */}
-        {content && typeof content === 'object' && (
-          <RichText
-            enableGutter={false}
-            content={content}
-            enableProse={false}
-            className={cn(
-              'space-y-6',
-              settings?.card === 'outline' || settings?.card === 'light'
-                ? 'prose prose-headings:text-foreground prose-p:text-foreground prose-a:text-foreground'
-                : 'prose prose-headings:text-white prose-p:text-gray-100 prose-a:text-gray-100',
-              image && 'prose prose-headings:text-background prose-p:text-background',
-            )}
-          />
-        )}
-        {content && typeof content === 'string' && (
-          <div
-            className={cn(
-              'space-y-6',
-              settings?.card === 'outline' || settings?.card === 'light'
-                ? 'prose text-foreground'
-                : 'prose text-gray-100',
-              image && 'prose text-background',
-            )}
-          >
-            {content}
+        {/* CTA Button */}
+        {link && link.url && (
+          <div className="mt-6">
+            <span className="text-accent font-semibold uppercase text-sm block hover:text-accent/80 transition-colors">
+              {link?.label || 'Find out more'}
+            </span>
           </div>
-        )}
-
-        {/* Decorative Background for CTA variant */}
-        {settings?.card === 'radial' && (
-          <div
-            className="absolute bottom-0 right-0 w-2/3 h-2/3 blur-3xl rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(164,35,104,0.3) 0%, rgba(74,16,48,0) 70%)',
-            }}
-          />
         )}
       </div>
     </a>
