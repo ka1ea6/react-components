@@ -98,7 +98,7 @@ Default.args = {
     {
       image: bgImage,
       title: 'Service Title',
-      content: content('Enhance performance with AI that works like a member of your team'),
+      content: content('Enhance performance with AI that works like a member of your team.'),
       link: { label: 'find out more', url: '#' },
     },
   ],
