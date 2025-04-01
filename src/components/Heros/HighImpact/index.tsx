@@ -119,7 +119,7 @@ const LightTop = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 1920 337" // Adjusted viewBox height to 1245 to add 5px at the bottom
               // preserveAspectRatio="xMidYMax meet"
-              style={{ fontSize: 0, float:'left' }}
+              style={{ fontSize: 0, float:'left', zIndex: 20 }}
               className='absolute -bottom-[2px] flex'
               // transform={transforms[0]}
             >
