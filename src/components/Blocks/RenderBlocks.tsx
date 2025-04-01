@@ -377,7 +377,7 @@ export const ThemeWithShapes: React.FC<{
       <section id={props.block.blockName || "content-block-continue"} className='relative flex flex-col w-full'>
         <BlockTop index={props.index} allBlocks={props.allBlocks} />
         <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
-        <div className={cn('container relative bg-background min-h-[22em] content-center', theme, theme ==='light' && 'p-12')}>
+        <div className={cn('container relative bg-background min-h-[22em] content-center', theme, theme === 'light' && 'p-12')}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
