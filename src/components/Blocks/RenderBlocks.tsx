@@ -317,7 +317,7 @@ export const ThemeWithShapes: React.FC<{
         <section id={props.block.name || "content-block"} className='relative flex flex-col w-full pt-12'>
           {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
           <div className={cn('absolute inset-0 w-screen dark bg-background')}></div>
-          <div className={cn('container relative', 'dark bg-background')}>
+          <div className={cn('container relative', 'dark bg-background py-1')}>
             {props.children}
           </div>
           {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -330,7 +330,7 @@ export const ThemeWithShapes: React.FC<{
           <BlockTop index={props.index} allBlocks={props.allBlocks} />
           <div className={cn('absolute inset-0 w-screen')}></div>
           <div className="bg-black">
-            <div className={cn('container relative', 'dark bg-background')}>
+            <div className={cn('container relative', 'dark bg-background py-1')}>
               {props.children}
             </div>
             {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -354,7 +354,7 @@ export const ThemeWithShapes: React.FC<{
       <section id={props.block.name || "content-block-continue"} className=' relative flex flex-col w-full pt-20'>
         {/* <BlockTop index={props.index} allBlocks={props.allBlocks} /> */}
         <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
-        <div className={cn('container relative bg-background', theme, theme ==='light' && 'p-12')}>
+        <div className={cn('container relative bg-background py-1', theme, theme ==='light' && 'py-12')}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -377,7 +377,7 @@ export const ThemeWithShapes: React.FC<{
       <section id={props.block.blockName || "content-block-continue"} className='relative flex flex-col w-full'>
         <BlockTop index={props.index} allBlocks={props.allBlocks} />
         <div className={cn('absolute inset-0 w-screen bg-background', theme)}></div>
-        <div className={cn('container relative bg-background min-h-[22em] content-center', theme, theme === 'light' && 'p-12')}>
+        <div className={cn('container relative bg-background min-h-[22em] content-center py-1', theme, theme === 'light' && 'py-12')}>
           {props.children}
         </div>
         {/* <BlockBottom index={props.index} allBlocks={props.allBlocks} /> */}
@@ -402,7 +402,7 @@ export const ThemeWithShapes: React.FC<{
     // continue the previous theme
     return (
       <div className={cn('container h-full relative', 'dark')}>
-        <div className={cn('absolute inset-0 w-screen h-full dark bg-background')}></div>
+        <div className={cn('absolute inset-0 w-screen h-full dark bg-background py-1')}></div>
         {props.children}
       </div>
     )
