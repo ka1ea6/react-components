@@ -33,7 +33,9 @@ export default {
   ],
 } as Meta
 
-const Template = (args: { page: BlogProps[], categoryList: CategoryListProps }) => <BlogDetail {...args} />
+const Template = (args: { page: BlogProps[]; categoryList: CategoryListProps }) => (
+  <BlogDetail {...args} />
+)
 
 export const Default = Template.bind({})
 Default.args = {
@@ -45,7 +47,7 @@ Default.args = {
       { label: 'Category 3', href: 3 },
     ],
   },
-  page:  {
+  page: {
     id: 2,
     title: 'Test Post 2',
     content: {
@@ -68,12 +70,12 @@ Default.args = {
                 style: '',
                 detail: 0,
                 format: 0,
-                version: 1
-              }
+                version: 1,
+              },
             ],
             direction: 'ltr',
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -83,7 +85,7 @@ Default.args = {
             children: [],
             direction: null,
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -98,12 +100,12 @@ Default.args = {
                 style: '',
                 detail: 0,
                 format: 0,
-                version: 1
-              }
+                version: 1,
+              },
             ],
             direction: 'ltr',
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -113,7 +115,7 @@ Default.args = {
             children: [],
             direction: null,
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -128,12 +130,12 @@ Default.args = {
                 style: '',
                 detail: 0,
                 format: 0,
-                version: 1
-              }
+                version: 1,
+              },
             ],
             direction: 'ltr',
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -143,7 +145,7 @@ Default.args = {
             children: [],
             direction: null,
             textStyle: '',
-            textFormat: 0
+            textFormat: 0,
           },
           {
             type: 'paragraph',
@@ -158,19 +160,28 @@ Default.args = {
                 style: '',
                 detail: 0,
                 format: 0,
-                version: 1
-              }
+                version: 1,
+              },
             ],
             direction: 'ltr',
             textStyle: '',
-            textFormat: 0
-          }
+            textFormat: 0,
+          },
         ],
-        direction: 'ltr'
-      }
+        direction: 'ltr',
+      },
     },
     relatedPosts: [],
-    categories: [{ id: 1, title: 'Test Category 1', slug: 'test-category-1', updatedAt: '2025-01-06T20:16:54.416Z', createdAt: '2025-01-06T20:16:54.416Z', _status: 'published' }],
+    categories: [
+      {
+        id: 1,
+        title: 'Test Category 1',
+        slug: 'test-category-1',
+        updatedAt: '2025-01-06T20:16:54.416Z',
+        createdAt: '2025-01-06T20:16:54.416Z',
+        _status: 'published',
+      },
+    ],
     meta: { title: 'Test Post 1', image: null, description: null },
     publishedAt: '2025-01-06T20:17:25.595Z',
     authors: [
@@ -191,38 +202,36 @@ Default.args = {
         enableAPIKey: null,
         apiKey: null,
         email: 'rob@sdsdd.com',
-        loginAttempts: 0
-      }
+        loginAttempts: 0,
+      },
     ],
-    populatedAuthors: [ { id: 1, name: 'Rob Ellison' } ],
+    populatedAuthors: [{ id: 1, name: 'Rob Ellison' }],
     publishedToWebsite: false,
     slug: 'test-post-2',
     slugLock: true,
     updatedAt: '2025-01-06T20:17:31.465Z',
     createdAt: '2025-01-06T20:17:27.818Z',
-    _status: 'published'
-  }
+    _status: 'published',
+  },
 }
 
 export const LoadsOfBlogs = Template.bind({})
 LoadsOfBlogs.args = {
   ...Default.args,
-  pages: { totalPages: 40, page: 20},
+  pages: { totalPages: 40, page: 20 },
 }
-
-
 
 export const NoCategories = Template.bind({})
 NoCategories.args = {
   ...Default.args,
   page: {
     ...Default.args.page,
-  categoryList: {
-    title: 'Categories',}
+    categoryList: {
+      title: 'Categories',
+    },
   },
-  categoryList: null
+  categoryList: null,
 }
-
 
 export const NoAuthorImage = Template.bind({})
 NoAuthorImage.args = {
@@ -246,9 +255,9 @@ NoAuthorImage.args = {
         createdAt: '2025-01-06T20:16:54.416Z',
         enableAPIKey: null,
         apiKey: null,
-        email: ''
-      }
+        email: '',
+      },
     ],
-    populatedAuthors: [ { id: 1, name: 'Dave Brown' } ],
-  }
+    populatedAuthors: [{ id: 1, name: 'Dave Brown' }],
+  },
 }

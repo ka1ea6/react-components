@@ -115,7 +115,7 @@ export function BlogDetail({
           <div className="[&_p+P]:mt-4">
             <div className="my-4 h-px bg-body/30 lg:my-5"></div>
 
-            <RichText content={content} enableGutter={false} />
+            <RichText content={content} enableGutter={false} className='prose-invert'/>
           </div>
         </div>
         <div className="grid gap-30px self-baseline max-md:mx-auto max-md:max-w-[410px] lg:gap-10">
