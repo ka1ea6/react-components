@@ -8,7 +8,7 @@ import type { Props as MediaProps } from '../types'
 import { getClientSideURL } from '@/lib/utils/getURL'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
-  const { onClick, resource, videoClassName } = props
+  const { onClick, resource, videoClassName, } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
   // const [showFallback] = useState<boolean>()
@@ -37,7 +37,7 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
         playsInline
         ref={videoRef}
       >
-        <source src={`${getClientSideURL()}/media/${filename}`} />
+        <source src={resource.url || ''} />
       </video>
     )
   }
