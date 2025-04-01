@@ -468,20 +468,17 @@ interface PageShapeProps {
 }
 export const DarkTop: React.FC<PageShapeProps> = ({ position }) => {
   return (
-    <div className="w-full aspect-[1920/332] z-20 relative bg-white">
+    <div className="w-full aspect-[1920/360] z-20 relative -top-[2px] bg-white">
       <svg
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1920 334"
+        viewBox="2 2 1920 360"
         preserveAspectRatio="none"
         style={{
-          fontSize: 0,
-          float: 'left',
-          alignContent: 'flex-end',
-          objectFit: 'contain',
           transform: 'rotateX(180deg)',
+          position: 'absolute',
           bottom: '-2px',
-          position: 'absolute'
+
         }}
         className={cn('w-full block overflow-hidden')}
       >
