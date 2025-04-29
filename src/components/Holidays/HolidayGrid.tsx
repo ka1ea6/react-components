@@ -162,7 +162,7 @@ export function HolidayGrid({
                           className={classNames(
                             employeeIdx !== employees.length - 1 ? 'border-r border-gray-200' : '',
                             'whitespace-nowrap border-r border-gray-200',
-                            isDayOff(date) ? 'bg-gray-200' : '',
+                            isDayOff(date) ? 'bg-gray-200' : 'bg-white',
                           )}
                         >
                           <div
