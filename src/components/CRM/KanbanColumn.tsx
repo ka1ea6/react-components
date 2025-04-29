@@ -46,7 +46,7 @@ export function KanbanColumn({
       {addNewDeal && (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="mb-4 w-full bg-green-500 hover:bg-green-600 text-white">
+            <Button className="mb-4 w-full">
               <PlusCircle className="mr-2 h-4 w-4" />
               Add New Deal
             </Button>
