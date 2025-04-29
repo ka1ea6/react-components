@@ -85,7 +85,7 @@ export function CRMKanbanBoard({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="p-4 max-h-[90vh] overflow-auto">
+      <div className="p-4 h-3/4 overflow-auto">
         {/* <h1 className="text-3xl font-bold mb-8">Cortex Sales Pipeline</h1> */}
         <div className="flex space-x-4 pb-4">
           {statuses
