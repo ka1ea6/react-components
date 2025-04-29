@@ -71,7 +71,7 @@ export function KanbanColumn({
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="bg-gray-100 p-4 rounded-lg flex-grow min-h-[200px] shadow-inner"
+            className="bg-background/90 p-4 rounded-lg flex-grow min-h-[200px] shadow-inner"
           >
             {deals.map((deal, index) => (
               <Draggable key={deal.id.toString()} draggableId={deal.id.toString()} index={deal.id}>
@@ -95,7 +95,7 @@ export function KanbanColumn({
           </div>
         )}
       </Droppable>
-      <div className="mt-4 text-sm bg-white p-3 rounded-lg shadow">
+      <div className="mt-4 text-sm p-3 rounded-lg shadow">
         <p className="font-semibold">
           Total:{' '}
           <span className="text-green-600">£{calculateColumnValue(deals).toLocaleString()}</span>

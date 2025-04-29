@@ -15,7 +15,7 @@ export function NewCustomerForm({ onSubmit }: NewCustomerFormProps) {
   const [customer, setCustomer] = useState<Omit<Partial<Customer>, "id">>({
     name: "",
     intro: "",
-    active: true,
+    active: false,
   })
 
   const handleSubmit = (e: React.FormEvent) => {

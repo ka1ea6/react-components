@@ -123,13 +123,13 @@ try {
   const getCategoryColor = (type: DealCategory['type']) => {
     switch (type) {
       case 'proposition':
-        return 'bg-blue-100 text-blue-800'
+        return 'border-blue-800 text-blue-800'
       case 'source':
-        return 'bg-green-100 text-green-800'
+        return 'border-green-800 text-green-800'
       case 'sector':
-        return 'bg-purple-100 text-purple-800'
+        return 'border-purple-800 text-purple-800'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'border-gray-800 text-gray-800'
     }
   }
 
@@ -155,7 +155,7 @@ try {
         <ScrollArea className="flex-grow pr-4">
           {/* row 1 */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="grid gap-2">
+            <div className="grid gap-2 m-1">
               {editingField === 'value' ? (
                 <Input
                   type="number"
@@ -167,15 +167,15 @@ try {
                 />
               ) : (
                 <div
-                  className="text-3xl font-bold text-green-600 cursor-pointer hover:bg-gray-100 p-0 rounded"
+                  className="text-3xl font-bold text-green-600 cursor-pointer p-1 border border-background hover:border-accent rounded"
                   onClick={() => setEditingField('value')}
                 >
                   £{editedDeal.value?.toLocaleString()}
                 </div>
               )}
             </div>
-            <div className="grid gap-2">
-              <Label className="text-sm font-medium text-gray-500">Assignee</Label>
+            <div className="grid gap-2 m-1">
+              <Label className="text-sm font-medium text-accent">Assignee</Label>
               {editingField === 'assignee' ? (
 
                 <Select value={(editedDeal?.assignee as User)?.id?.toString() || ''} onValueChange={(value) => handleChange('assignee', getUserById(value))}>
@@ -198,7 +198,7 @@ try {
                 // />
               ) : (
                 <div
-                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-0 rounded"
+                  className="flex items-center space-x-2 cursor-pointer p-1 border border-background hover:border-accent rounded"
                   onClick={() => setEditingField('assignee')}
                 >
                   <UserIcon className="w-4 h-4 text-gray-400" />
@@ -206,19 +206,20 @@ try {
                 </div>
               )}
             </div>
-            <div className="grid gap-2">
-              <Label className="text-sm font-medium text-gray-500">Closure Date</Label>
+            <div className="grid gap-2 m-1">
+              <Label className="text-sm font-medium text-accent">Closure Date</Label>
               {editingField === 'closureDate' ? (
                 <Input
                   type="date"
                   value={editedDeal.closureDate?.split('T')[0] ?? ''}
                   onChange={(e) => handleChange('closureDate', e.target.value)}
                   onBlur={() => setEditingField(null)}
+                  className='mr-2'
                   autoFocus
                 />
               ) : (
                 <div
-                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-0 rounded"
+                  className="flex items-center space-x-2 cursor-pointer p-1 border border-background hover:border-accent rounded"
                   onClick={() => setEditingField('closureDate')}
                 >
                   <CalendarIcon className="w-4 h-4 text-gray-400" />
@@ -229,8 +230,8 @@ try {
             {/* row 2 */}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-            <div className="grid gap-2">
-              <Label className="text-sm font-medium text-gray-500">Description</Label>
+            <div className="grid gap-2 m-1">
+              <Label className="text-sm font-medium text-accent">Description</Label>
               {editingField === 'description' ? (
                 <Textarea
                   value={editedDeal.description || ''}
@@ -241,7 +242,7 @@ try {
                 />
               ) : (
                 <div
-                  className="cursor-pointer hover:bg-gray-100 pb-5 rounded"
+                  className="cursor-pointer p-1 border border-background hover:border-accent pb-5 rounded"
                   onClick={() => setEditingField('description')}
                 >
                   {editedDeal.description}
@@ -252,8 +253,8 @@ try {
 
           {/* row 3 */}
           <div className="grid grid-cols-1 sm:grid-cols-3 pt-2 gap-4">
-            <div className="grid gap-2">
-              <Label className="text-sm font-medium text-gray-500">Status</Label>
+            <div className="grid gap-2 m-1">
+              <Label className="text-sm font-medium text-accent">Status</Label>
               {editingField === 'status' ? (
                 <Select
                   value={editedDeal.status}
@@ -266,7 +267,7 @@ try {
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                   <SelectContent>
-                    {['Cold', 'Qualified', 'Proposal Made', 'Won', 'Lost'].map((status) => (
+                    {['Cold', 'Qualified', 'Proposal Made', 'SoW Submitted', 'Won', 'Lost'].map((status) => (
                       <SelectItem key={status} value={status}>
                         {status}
                       </SelectItem>
@@ -275,7 +276,7 @@ try {
                 </Select>
               ) : (
                 <div
-                  className="cursor-pointer hover:bg-gray-100 p-0 rounded"
+                  className="cursor-pointer p-1 border border-background hover:border-accent rounded"
                   onClick={() => setEditingField('status')}
                 >
                   {editedDeal.status}
@@ -283,9 +284,9 @@ try {
               )}
             </div>
             <div className="grid col-span-2 gap-2">
-              <Label className="text-sm font-medium text-gray-500">Categories</Label>
+              <Label className="text-sm font-medium text-accent">Categories</Label>
               {editingField === 'categories' ? (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2 m-1">
                   {categories.map((category) => (
                     <div key={category.id} className="flex items-center space-x-2">
                       <Checkbox
@@ -304,7 +305,7 @@ try {
                 </div>
               ) : (
                 <div
-                  className="flex flex-wrap gap-2 cursor-pointer hover:bg-gray-100 p-0 rounded"
+                  className="flex flex-wrap gap-2 cursor-pointer p-1 border border-background hover:border-accent rounded"
                   onClick={() => setEditingField('categories')}
                 >
                   {editedDeal.categories && editedDeal.categories.map((cat) => {
@@ -314,7 +315,7 @@ try {
                     return category ? (
                       <Badge
                         key={category.id}
-                        variant="secondary"
+                        variant="outline"
                         className={getCategoryColor(category.type || 'sector')}
                       >
                         {category.name}
@@ -335,16 +336,16 @@ try {
             </div> */}
           <div className="grid grid-cols-1 sm:grid-cols-1 pt-4 gap-4">
             <div className="grid gap-2">
-              <Label className="text-sm font-medium text-gray-500">Comments</Label>
+              <Label className="text-sm font-medium text-accent">Comments</Label>
               <ScrollArea className="h-[200px] overflow-y-auto">
                 <div className="space-y-2">
                 {editedDeal.comments && editedDeal.comments
                   .slice()
                   .sort((a, b) => new Date(b.timestamp || '').getTime() - new Date(a.timestamp || '').getTime())
                   .map((comment) => (
-                    <div key={comment.id} className="bg-gray-50 p-3 rounded-lg">
-                      <p className="text-sm text-gray-700">{comment.text}</p>
-                      <p className="text-xs text-gray-500 mt-1">
+                    <div key={comment.id} className="p-3 rounded-lg">
+                      <p className="text-sm text-foreground">{comment.text}</p>
+                      <p className="text-xs text-foreground mt-1">
                         {(comment?.author as User)?.name} - {new Date(comment.timestamp || '').toLocaleString()}
                       </p>
                     </div>
@@ -356,7 +357,7 @@ try {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment..."
-                  className="flex-grow"
+                  className="flex-grow ml-1"
                 />
                 <Button onClick={handleAddComment} className="ml-2">
                   <PlusIcon className="w-4 h-4 mr-2" />

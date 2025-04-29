@@ -21,13 +21,13 @@ export function DealCard({ deal, customer, categories, onClick }: DealCardProps)
     >
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
-          <CardTitle className="text-lg font-semibold text-gray-800">{customer?.name}</CardTitle>
+          <CardTitle className="text-lg font-semibold text-foreground">{customer?.name}</CardTitle>
         </div>
         <p className="text-sm text-gray-500 mt-1">{deal.description}</p>
       </CardHeader>
       <CardContent>
         <div className="flex justify-between items-center mb-3">
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-accent">
             <UserIcon className="w-4 h-4 mr-1 text-xs" />
             <span>{(deal.assignee as User).name}</span>
           </div>
