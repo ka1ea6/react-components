@@ -111,14 +111,14 @@ export function CalendarView({ currentDate, setCurrentDate, holidays }: Calendar
             S<span className="sr-only sm:not-sr-only">un</span>
           </div>
         </div>
-        <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+        <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto overflow-visible">
+          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px overflow-visible">
             {days.map((day) => (
               <div
                 key={day.date.toISOString()}
                 className={cn(
                   day.isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-500',
-                  'relative px-3 py-2',
+                  'relative px-3 py-2 overflow-visible',
                 )}
               >
                 <time
@@ -131,13 +131,13 @@ export function CalendarView({ currentDate, setCurrentDate, holidays }: Calendar
                   {day.date.getDate()}
                 </time>
                 {day.holidays.length > 0 && (
-                  <ol className="mt-2 space-y-1">
+                  <ol className="mt-2 space-y-1 overflow-visible">
                     {day.holidays.map((holiday) => (
-                      <li key={holiday.id}>
+                      <li key={holiday.id} className="overflow-visible">
                         <div
                           className={`text-xs px-1 py-0.5 rounded ${
                             holiday.status === 'approved' ? 'border-green-500' : 'border-gray-500'
-                          } border`}
+                          } border overflow-visible`}
                         >
                           {holiday.userName}
                         </div>
