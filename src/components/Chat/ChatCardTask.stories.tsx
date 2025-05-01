@@ -1,6 +1,7 @@
 import React from 'react'
 import { ChatCardTask } from './ChatCardTask'
 import { delay, http, HttpResponse } from 'msw'
+import type { StoryObj } from '@storybook/react'
 
 export default {
   title: 'Chat/ChatCardTask',
@@ -18,14 +19,14 @@ export default {
       handlers: [
         http.get('/api/tasks/1', async () => {
           await delay(800)
-          return HttpResponse.json(testData)
+          return HttpResponse.json(chatCardTestData)
         }),
       ],
     },
   },
 }
 
-const testData = {
+export const chatCardTestData = {
   id: 1,
   name: 'Sample Task',
   description: 'This is a sample task description.',
@@ -40,6 +41,7 @@ const testData = {
 }
 
 const Template = (args) => <ChatCardTask {...args} />
+type Story = StoryObj<typeof ChatCardTask>
 
 export const Default = Template.bind({})
 Default.args = {
@@ -47,7 +49,7 @@ Default.args = {
     id: 1,
     system: 'payload',
     fetchLatest: false,
-    taskData: testData,
+    taskData: chatCardTestData,
   },
 }
 
@@ -64,5 +66,26 @@ Error.args = {
   data: {
     id: 1,
     error: 'Failed to load task data.',
+  },
+}
+export const APIError: Story = {
+  args: {
+    data: {
+      id: 1,
+      system: 'payload',
+      fetchLatest: true,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/api/tasks/1', async () => {
+          await delay(800)
+          return new HttpResponse(null, {
+            status: 403,
+          })
+        }),
+      ],
+    },
   },
 }

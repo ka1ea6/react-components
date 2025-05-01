@@ -1,17 +1,15 @@
+import { dirname, join } from "path";
 import { StorybookConfig } from '@storybook/nextjs';
 const path = require('path')
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    // "@storybook/addon-webpack5-compiler-swc",
-    '@storybook/addon-onboarding',
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    // '@chromatic-com/storybook',
-    '@storybook/addon-interactions',
-    // This addon handles CSS framework integration
-    '@storybook/addon-themes',
+    getAbsolutePath("@storybook/addon-onboarding"),
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-themes"),
     {
       name: '@storybook/addon-styling-webpack',
 
@@ -41,7 +39,7 @@ const config: StorybookConfig = {
     },
   ],
   framework: {
-    name: '@storybook/nextjs',
+    name: getAbsolutePath("@storybook/nextjs"),
     options: {},
   },
   staticDirs: ['./public', './msw', '../src/images'],
@@ -74,3 +72,7 @@ const config: StorybookConfig = {
   // }, // No need for webpackFinal if you're using the addon-styling-webpack
 }
 export default config
+
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
+}

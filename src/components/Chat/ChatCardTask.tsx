@@ -12,15 +12,16 @@ import { CalendarIcon, CheckCircle2, Clock, RefreshCw } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { TaskData } from '@/common-types'
 import { useTask } from './hooks/useTask'
-import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface ChatCardTaskProps {
-  data: {
-    id: number
+  data?: {
+    id?: number
     system?: string
     // If true, will continously fetch the latest task data from the API
     fetchLatest?: boolean
-    taskData? : TaskData
+    taskData?: TaskData
+    error?: Error | null
   }
 }
 
@@ -51,12 +52,16 @@ const formatStatus = (status: string) => {
 }
 
 export function ChatCardTask({
-  data: { id, system, fetchLatest = false, taskData: initialTaskData },
-}: ChatCardTaskProps & { taskData?: TaskData; loading?: boolean; error?: any }) {
-
+  data,
+}: ChatCardTaskProps) {
+  const { id, system, fetchLatest: initialFetchLatest, taskData: initialTaskData, error: initialError } = data || {}
+  if (!id) {
+    return null
+  }
   let taskData: TaskData | null = null
   let loading = true
-  let error = null
+  let error = initialError
+  let fetchLatest = initialFetchLatest || true
   taskData = initialTaskData || {
     id,
     name: 'Loading...',
@@ -66,16 +71,15 @@ export function ChatCardTask({
     project: undefined,
   }
   if (fetchLatest) {
-  // Use the external task data if provided, otherwise fallback to initial props
-  
-  const { task, loading: taskLoading, error:taskError } = useTask({taskId:id, system })
-  taskData = task
-  loading = taskLoading
-  error = taskError
+    // Use the external task data if provided, otherwise fallback to initial props
+    const { task, loading: taskLoading, error: taskError } = useTask({ taskId: id, system })
+    taskData = task
+    loading = taskLoading
+    error = taskError
   } else {
-    loading = false    
+    loading = false
   }
-
+  console.log('ChatCardTask', { taskData, loading, error , fetchLatest})
   const statusColor = getStatusColor(taskData?.status || 'todo')
   const formattedStatus = formatStatus(taskData?.status || 'todo')
 
@@ -91,7 +95,7 @@ export function ChatCardTask({
   }
 
   return (
-    <Card className="w-full max-w-md shadow-md">
+    <Card className={cn('w-full max-w-md shadow-md', error && 'border border-destructive')}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-semibold">
