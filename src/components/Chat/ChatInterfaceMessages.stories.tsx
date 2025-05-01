@@ -1,12 +1,12 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { ChatInterface } from './ChatInterface';
+import { ChatInterfaceMessages } from './ChatInterfaceMessages';
 import { type ChatMessageProps } from './ChatMessage';
 import { delay, http, HttpResponse } from 'msw'
 import type { StoryObj } from '@storybook/react'
 export default {
   title: 'Chat/ChatInterface',
-  component: ChatInterface,
+  component: ChatInterfaceMessages,
     tags: ['autodocs'],
   argTypes: {
     contextType: {
@@ -19,7 +19,7 @@ export default {
 } as Meta;
 
 
-type Story = StoryObj<typeof ChatInterface>
+type Story = StoryObj<typeof ChatInterfaceMessages>
 
 export const TextOnly: Story = {
     args: {
@@ -51,7 +51,7 @@ export const TextOnly: Story = {
         message: { type: 'text', data: { content: 'Its blah blah blah' } },
       },
   ] as ChatMessageProps[],
-  contextType: 'global',
+  
   currentUser: {
     id: 1,
     name: 'John Doe',
@@ -59,9 +59,5 @@ export const TextOnly: Story = {
     avatar: '/path-to-avatar.jpg',
     role: 'user',
   },
-  businessFunctions: [
-    { id: 1, name: 'HR' },
-    { id: 2, name: 'IT' },
-  ],
 }
 }
