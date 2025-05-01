@@ -60,3 +60,16 @@ interface IServerActionFailure {
 }
 
 export type ServerActionResponse<T> = IServerActionSuccess<T> | IServerActionFailure
+
+// Define the task data interface
+export interface TaskData {
+  id: number;
+  name: string;
+  description: string;
+  status: 'backlog' | 'todo' | 'inProgress' | 'done' | 'cancelled';
+  dateLogged: string;
+  project?: {
+    id: number;
+    name: string;
+  };
+}
