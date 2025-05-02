@@ -66,7 +66,7 @@ const preview = {
         dark: 'dark',
         green: 'green',
       },
-      defaultTheme: 'light',
+      defaultTheme: 'dark',
     }),
   ],
 }
