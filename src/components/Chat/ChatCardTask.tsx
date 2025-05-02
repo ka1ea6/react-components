@@ -79,7 +79,6 @@ export function ChatCardTask({
   } else {
     loading = false
   }
-  console.log('ChatCardTask', { taskData, loading, error , fetchLatest})
   const statusColor = getStatusColor(taskData?.status || 'todo')
   const formattedStatus = formatStatus(taskData?.status || 'todo')
 

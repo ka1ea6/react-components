@@ -4,6 +4,8 @@ import { ChatInterfaceMessages } from './ChatInterfaceMessages';
 import { type ChatMessageProps } from './ChatMessage';
 import { delay, http, HttpResponse } from 'msw'
 import type { StoryObj } from '@storybook/react'
+import { chatCardTestData } from './ChatCardTask.stories'
+
 export default {
   title: 'Chat/ChatInterface',
   component: ChatInterfaceMessages,
@@ -50,6 +52,18 @@ export const TextOnly: Story = {
         role: 'assistant',
         message: { type: 'text', data: { content: 'Its blah blah blah' } },
       },
+      {
+        id: '5',
+        role: 'assistant',
+        message: { type: 'task', data: {
+            id: 1,
+            system: 'payload',
+            fetchLatest: false,
+            taskData: chatCardTestData,
+          }, },
+      },
+
+
   ] as ChatMessageProps[],
   
   currentUser: {

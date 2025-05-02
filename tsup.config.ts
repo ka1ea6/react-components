@@ -8,7 +8,7 @@ export default defineConfig(
   (options: Options) =>
     ({
       format: ["cjs", "esm"],
-      target: "es2019",
+      target: "esnext",
       entry: ["./src/**"],
       treeshake: false,
       sourcemap: false,
