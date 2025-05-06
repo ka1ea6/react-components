@@ -61,7 +61,7 @@ export function ChatCardTask({
   let taskData: TaskData | null = null
   let loading = true
   let error = initialError
-  let fetchLatest = initialFetchLatest || true
+  let fetchLatest = initialFetchLatest !== undefined ? initialFetchLatest : true
   taskData = initialTaskData || {
     id,
     name: 'Loading...',
@@ -70,6 +70,8 @@ export function ChatCardTask({
     dateLogged: new Date().toISOString(),
     project: undefined,
   }
+
+  console.log('ChatCardTask', { data, id, initialFetchLatest, system, fetchLatest, taskData, error })
   if (fetchLatest) {
     // Use the external task data if provided, otherwise fallback to initial props
     const { task, loading: taskLoading, error: taskError } = useTask({ taskId: id, system })
