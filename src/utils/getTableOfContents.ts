@@ -106,7 +106,8 @@ function processContentWithIds(layout: any[]): any[] {
                 type: string
                 id?: string
                 tag?: string
-                children: { text: string }[]
+                children?: { text: string }[]
+                fields?: any // Include fields for image blocks
               }[]
             }
           }
@@ -118,17 +119,20 @@ function processContentWithIds(layout: any[]): any[] {
           // Process nested RichText headings
           if (column.richText) {
             column.richText.root.children = column.richText.root.children
-              .filter((child) => child !== undefined)
-              .filter((child) => child.children !== undefined && child.children.length > 0)
+              .filter((child) => child !== undefined) // Keep all defined children
               .map(
                 (child: {
                   type: string
                   id?: string
                   tag?: string
-                  children: { text: string }[]
+                  children?: { text: string }[]
+                  fields?: any // Include fields for image blocks
                 }) => {
-                  if (child.type === 'heading' && child.children[0].text) {
-                    child.id = generateId(child.children[0].text, globalIndex++) // Inject ID
+                  if (child.type === 'heading' && child.children && child.children[0].text) {
+                    child.id = generateId(child.children[0].text, globalIndex++) // Inject ID for headings
+                  } else if (child.type === 'block' && child.fields?.media) {
+                    // Preserve image blocks
+                    child.id = generateId(`image-${globalIndex}`, globalIndex++) // Generate unique ID for images
                   }
                   return child
                 },
