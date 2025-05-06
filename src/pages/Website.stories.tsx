@@ -3931,3 +3931,259 @@ export const Broken = {
     },
   },
 }
+
+export const WithImage = {
+  args: {
+    ...Default.args,
+    page: {
+      id: 1,
+      title: 'Test Page',
+
+      hero: {
+        type: 'lowImpact',
+
+        richText: {
+          root: {
+            type: 'root',
+            format: '',
+            indent: 0,
+            version: 1,
+
+            children: [
+              {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+
+                children: [
+                  {
+                    mode: 'normal',
+                    text: 'Test Page',
+                    type: 'text',
+                    style: '',
+                    detail: 0,
+                    format: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                textStyle: '',
+                textFormat: 0,
+              },
+            ],
+            direction: 'ltr',
+          },
+        },
+
+        links: [],
+        media: null,
+      },
+
+      layout: [
+        {
+          id: '681a4999a2fd5620877e41a0',
+          blockName: null,
+
+          columns: [
+            {
+              id: '681a499ca2fd5620877e41a2',
+              size: 'full',
+
+              richText: {
+                root: {
+                  type: 'root',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'image below',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+
+                    {
+                      type: 'block',
+
+                      fields: {
+                        id: '681a49b9a0eff783489b8eea',
+
+                        media: {
+                          id: 1,
+                          alt: 'Logo',
+                          updatedAt: '2025-05-06T17:41:52.026Z',
+                          createdAt: '2025-05-06T17:41:51.884Z',
+                          url: '/api/images/file/aWkuXsguxANsbGKAUk7Dc.png',
+                          thumbnailURL: '/api/images/file/aWkuXsguxANsbGKAUk7Dc-300x292.png',
+                          filename: 'aWkuXsguxANsbGKAUk7Dc.png',
+                          mimeType: 'image/png',
+                          filesize: 14892,
+                          width: 690,
+                          height: 672,
+                          focalX: 50,
+                          focalY: 50,
+
+                          sizes: {
+                            thumbnail: {
+                              url: '/api/images/file/aWkuXsguxANsbGKAUk7Dc-300x292.png',
+                              width: 300,
+                              height: 292,
+                              mimeType: 'image/png',
+                              filesize: 7250,
+                              filename: 'aWkuXsguxANsbGKAUk7Dc-300x292.png',
+                            },
+
+                            square: {
+                              url: '/api/images/file/aWkuXsguxANsbGKAUk7Dc-500x500.png',
+                              width: 500,
+                              height: 500,
+                              mimeType: 'image/png',
+                              filesize: 14930,
+                              filename: 'aWkuXsguxANsbGKAUk7Dc-500x500.png',
+                            },
+
+                            small: {
+                              url: '/api/images/file/aWkuXsguxANsbGKAUk7Dc-600x584.png',
+                              width: 600,
+                              height: 584,
+                              mimeType: 'image/png',
+                              filesize: 19090,
+                              filename: 'aWkuXsguxANsbGKAUk7Dc-600x584.png',
+                            },
+
+                            medium: {
+                              url: null,
+                              width: null,
+                              height: null,
+                              mimeType: null,
+                              filesize: null,
+                              filename: null,
+                            },
+
+                            large: {
+                              url: null,
+                              width: null,
+                              height: null,
+                              mimeType: null,
+                              filesize: null,
+                              filename: null,
+                            },
+
+                            xlarge: {
+                              url: null,
+                              width: null,
+                              height: null,
+                              mimeType: null,
+                              filesize: null,
+                              filename: null,
+                            },
+                          },
+                        },
+
+                        theme: {
+                          settings: {
+                            theme: 'default',
+                            background: 'transparent',
+                          },
+                        },
+                        blockName: '',
+                        blockType: 'imageBlock',
+                      },
+                      format: '',
+                      version: 2,
+                    },
+
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'image above',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                  ],
+                  direction: 'ltr',
+                },
+              },
+              enableLink: null,
+
+              link: {
+                type: 'none',
+                newTab: null,
+                url: null,
+                label: null,
+                appearance: 'default',
+              },
+            },
+          ],
+          blockType: 'content',
+
+          theme: {
+            settings: {
+              theme: 'default',
+              background: 'transparent',
+              image: null,
+              overlay: null,
+              box: 'none',
+            },
+          },
+        },
+      ],
+
+      meta: {
+        title: null,
+        image: null,
+        description: null,
+      },
+      publishedAt: '2025-05-06T17:41:05.653Z',
+
+      links: [],
+      slug: 'test-page',
+      slugLock: true,
+      parent: null,
+
+      breadcrumbs: [
+        {
+          id: '681a4b7baef9bb382c80db11',
+          doc: 1,
+          url: null,
+          label: 'Test Page',
+        },
+      ],
+      updatedAt: '2025-05-06T17:48:43.724Z',
+      createdAt: '2025-05-06T17:41:05.493Z',
+      _status: 'published',
+    },
+  },
+}

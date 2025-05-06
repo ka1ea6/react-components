@@ -1,7 +1,7 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
-import { ChatInterfaceMessages } from './ChatInterfaceMessages';
-import { type ChatMessageProps } from './ChatMessage';
+import React from 'react'
+import { Meta } from '@storybook/react'
+import { ChatInterfaceMessages } from './ChatInterfaceMessages'
+import { type ChatMessageProps } from './ChatMessage'
 import { delay, http, HttpResponse } from 'msw'
 import type { StoryObj } from '@storybook/react'
 import { chatCardTestData } from './ChatCardTask.stories'
@@ -9,7 +9,7 @@ import { chatCardTestData } from './ChatCardTask.stories'
 export default {
   title: 'Chat/ChatInterface',
   component: ChatInterfaceMessages,
-    tags: ['autodocs'],
+  tags: ['autodocs'],
   argTypes: {
     contextType: {
       control: {
@@ -18,26 +18,25 @@ export default {
       },
     },
   },
-} as Meta;
-
+} as Meta
 
 type Story = StoryObj<typeof ChatInterfaceMessages>
 
 export const TextOnly: Story = {
-    args: {
-  messages: [
-    {
-      id: '1',
-      role: 'user',
-      message: { type: 'text', data: { content: 'Hello!' } },
-    },
-    {
-      id: '2',
-      role: 'assistant',
-      message: { type: 'text', data: { content: 'Hi there! How can I assist you today?' } },
-      currentUser: { name: 'Robot' }
-    },
-    {
+  args: {
+    messages: [
+      {
+        id: '1',
+        role: 'user',
+        message: { type: 'text', data: { content: 'Hello!' } },
+      },
+      {
+        id: '2',
+        role: 'assistant',
+        message: { type: 'text', data: { content: 'Hi there! How can I assist you today?' } },
+        currentUser: { name: 'Robot' },
+      },
+      {
         id: '3',
         role: 'user',
         message: { type: 'text', data: { content: 'What is our leave policy?' } },
@@ -53,25 +52,27 @@ export const TextOnly: Story = {
         message: { type: 'text', data: { content: 'Its blah blah blah' } },
       },
       {
-        id: '5',
+        id: '6',
         role: 'assistant',
-        message: { type: 'task', data: {
+        message: {
+          type: 'tool-invocation',
+          data: {
             id: 1,
+            tool: 'task',
             system: 'payload',
             fetchLatest: false,
             taskData: chatCardTestData,
-          }, },
+          },
+        },
       },
+    ] as ChatMessageProps[],
 
-
-  ] as ChatMessageProps[],
-  
-  currentUser: {
-    id: 1,
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    avatar: '/path-to-avatar.jpg',
-    role: 'user',
+    currentUser: {
+      id: 1,
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      avatar: '/path-to-avatar.jpg',
+      role: 'user',
+    },
   },
-}
 }
