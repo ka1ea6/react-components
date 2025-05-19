@@ -28,7 +28,8 @@ export interface ChatMessageProps {
   }
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ id, message, currentUser, role }) => {
+export const ChatMessage = React.memo(function ChatMessage(props: ChatMessageProps) {
+  const { id, message, currentUser, role } = props
   const isUser = role === 'user'
   const userName = isUser ? currentUser?.name || 'You' : currentUser?.name || 'AI Assistant'
   const userAvatar = isUser
@@ -158,4 +159,4 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ id, message, currentUs
   //       </div>
   //     </div>
   //   );
-}
+})

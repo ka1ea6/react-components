@@ -3054,11 +3054,11 @@ export const Broken = {
     ...Default.args,
     hero: PagesTest.digitalColleaguesOverview.hero,
     page: {
-      id: 21,
-      title: 'AI Enablement',
+      id: 45,
+      title: 'Amazon Connect GTM',
 
       hero: {
-        type: 'highImpact',
+        type: 'lowImpact',
 
         richText: {
           root: {
@@ -3078,7 +3078,7 @@ export const Broken = {
                 children: [
                   {
                     mode: 'normal',
-                    text: 'From AI curiosity to AI capability',
+                    text: 'Go-to-Market Strategy for Amazon Connect in the Insurance Industry',
                     type: 'text',
                     style: '',
                     detail: 0,
@@ -3087,518 +3087,22 @@ export const Broken = {
                   },
                 ],
                 direction: 'ltr',
-              },
-              {
-                type: 'paragraph',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    mode: 'normal',
-                    text: 'AI offers a transformative opportunity, but successful adoption is complex - impacting business strategy, operations, security, and governance. Without a structured approach, organisations risk strategic misalignment, security vulnerabilities, and ethical concerns, often struggling to progress from exploration to execution and failing to unlock AI’s full business value.',
-                    type: 'text',
-                    style: '',
-                    detail: 0,
-                    format: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                textStyle: '',
-                textFormat: 0,
               },
             ],
             direction: 'ltr',
           },
         },
         links: [],
-
-        media: {
-          id: 110,
-          alt: 'Cortex - Cloud',
-          prefix: 'media',
-          updatedAt: '2025-03-14T13:56:42.304Z',
-          createdAt: '2025-03-14T13:56:27.284Z',
-          url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0.png',
-          thumbnailURL: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-300x168.png',
-          filename: 'YnBAtlsj2lkVXVc0J8IA0.png',
-          mimeType: 'image/png',
-          filesize: 21306608,
-          width: 5352,
-          height: 2999,
-          focalX: 50,
-          focalY: 50,
-
-          sizes: {
-            thumbnail: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-300x168.png',
-              width: 300,
-              height: 168,
-              mimeType: 'image/png',
-              filesize: 110341,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-300x168.png',
-            },
-            square: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-500x500.png',
-              width: 500,
-              height: 500,
-              mimeType: 'image/png',
-              filesize: 508496,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-500x500.png',
-            },
-            small: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-600x336.png',
-              width: 600,
-              height: 336,
-              mimeType: 'image/png',
-              filesize: 386606,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-600x336.png',
-            },
-            medium: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-900x504.png',
-              width: 900,
-              height: 504,
-              mimeType: 'image/png',
-              filesize: 815765,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-900x504.png',
-            },
-            large: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-1400x784.png',
-              width: 1400,
-              height: 784,
-              mimeType: 'image/png',
-              filesize: 1876895,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-1400x784.png',
-            },
-
-            xlarge: {
-              url: '/api/media/file/YnBAtlsj2lkVXVc0J8IA0-1920x1076.png',
-              width: 1920,
-              height: 1076,
-              mimeType: 'image/png',
-              filesize: 3457536,
-              filename: 'YnBAtlsj2lkVXVc0J8IA0-1920x1076.png',
-            },
-          },
-        },
+        media: null,
       },
       layout: [
         {
-          id: '67c1e2cf48fd8b75a0dd4815',
-          title: 'Key challenges our clients face',
-
-          description: {
-            root: {
-              type: 'root',
-              format: '',
-              indent: 0,
-              version: 1,
-
-              children: [
-                {
-                  type: 'paragraph',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-                  children: [],
-                  direction: null,
-                  textStyle: '',
-                  textFormat: 0,
-                },
-              ],
-              direction: null,
-            },
-          },
-          blockName: 'Problems',
-          features: [
-            {
-              id: '67c1e32448fd8b75a0dd4816',
-              title: 'Lack of clear AI strategy and alignment​',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Without a clear strategy tied to business goals, AI projects often fail to deliver impact.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'seal-question',
-              },
-            },
-            {
-              id: '67c1e560a7c53a2c519c1306',
-              title: 'Data quality and accessibility',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'AI relies on structured, high-quality data, but many struggle with fragmented datasets.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'face-tissue',
-              },
-            },
-            {
-              id: '67c1e5e5a7c53a2c519c1307',
-              title: 'Security, privacy, and compliance risks',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'AI introduces challenges in data security, regulation, and ethical use.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'user-secret',
-              },
-            },
-          ],
-          blockType: 'features',
-          theme: {
-            settings: {
-              theme: 'light',
-              background: 'transparent',
-              image: null,
-              overlay: null,
-            },
-          },
-        },
-        {
-          id: '67c1e69ca7c53a2c519c130a',
-          title: '',
-
-          description: {
-            root: {
-              type: 'root',
-              format: '',
-              indent: 0,
-              version: 1,
-
-              children: [
-                {
-                  type: 'paragraph',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-                  children: [],
-                  direction: null,
-                  textStyle: '',
-                  textFormat: 0,
-                },
-              ],
-              direction: null,
-            },
-          },
-          blockName: 'Problems',
-          features: [
-            {
-              id: '67c1e69ca7c53a2c519c130c',
-              title: 'Scaling beyond pilots',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Many fail to expand AI from pilot projects to enterprise-wide adoption.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'person-digging',
-              },
-            },
-            {
-              id: '67c1e69ca7c53a2c519c130e',
-              title: 'Lack of Measurable ROI & Performance Tracking',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Measuring AI impact is difficult without clear metrics and tracking.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-                      children: [],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'sack-dollar',
-              },
-            },
-            {
-              id: '67c1e69ca7c53a2c519c1310',
-              title: 'Cultural and organisational shifts',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Embedding AI requires breaking silos between data, engineering, and business teams.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'small',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'arrow-progress',
-              },
-            },
-          ],
-          blockType: 'features',
-          theme: {
-            settings: {
-              theme: 'light',
-              background: 'transparent',
-              image: null,
-              overlay: null,
-            },
-          },
-        },
-        {
-          id: '67d43785aca115e2cb346567',
-          blockName: 'How we can help',
+          id: '67aa3ea149ed6d71a5065366',
+          blockName: null,
 
           columns: [
             {
-              id: '67d437afaca115e2cb346568',
+              id: '67aa3ea549ed6d71a5065367',
               size: 'full',
 
               richText: {
@@ -3619,11 +3123,11 @@ export const Broken = {
                       children: [
                         {
                           mode: 'normal',
-                          text: 'How We Can Help',
+                          text: 'Executive Summary',
                           type: 'text',
                           style: '',
                           detail: 0,
-                          format: 0,
+                          format: 1,
                           version: 1,
                         },
                       ],
@@ -3638,7 +3142,98 @@ export const Broken = {
                       children: [
                         {
                           mode: 'normal',
-                          text: 'At Cortex Reply, we specialise in helping organisations adopt AI strategically, securely, and responsibly. With a proven track record across sectors, we ensure AI investments deliver real, measurable value. Whether supporting agile startups looking to scale quickly or highly regulated enterprises requiring strict compliance and governance, we tailor our approach to each organisation’s unique challenges and objectives. ',
+                          text: 'Amazon Connect is a cloud-based, AI-powered contact center solution that offers scalability, cost efficiency, and seamless integration with the AWS ecosystem. This document outlines a comprehensive go-to-market (GTM) strategy tailored for the insurance industry. Our approach leverages targeted customer segmentation, proprietary insurance-specific intellectual property (IPR), and the AWS Marketplace as a strategic distribution channel. In addition, we delve into customer journey mapping, sales and technical enablement, robust customer success initiatives, strategic pricing, and partnership expansion—all designed to drive adoption and long-term success.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Market Opportunity & Positioning',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Opportunity:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Challenges for Insurance Companies:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' High operational costs, complex customer interactions, strict compliance needs, and the need for improved customer experience.',
                           type: 'text',
                           style: '',
                           detail: 0,
@@ -3659,7 +3254,809 @@ export const Broken = {
                       children: [
                         {
                           mode: 'normal',
-                          text: 'We work closely with clients to assess AI maturity, identify capability gaps, and establish a structured adoption framework. By embedding governance, compliance, and risk management, we de-risk AI initiatives, align them with business priorities, and move organisations beyond experimentation to sustainable, scalable AI success.',
+                          text: 'Positioning:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Modern and AI-Driven:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' A cloud-native contact center that uses AI for automation and efficiency.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Tailored for Insurance:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Includes ready-to-use workflows for claims processing, policy renewals, fraud detection, and compliance.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Target Customer Segments',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Primary:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Large insurance companies (health, auto, life, property & casualty)',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Secondary:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Insurance service providers and BPOs handling claims, customer support, and policy administration',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Key Differentiators',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Pre-Built Insurance Workflows:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Quick deployment for common insurance use cases.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'AI & Automation:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Use of AWS AI/ML services (e.g., Amazon Lex and Transcribe) to streamline operations.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'AWS Integration:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Seamless deployment and scaling with other AWS services.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• ',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                        {
+                          mode: 'normal',
+                          text: 'Compliance & Security:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+
+                        {
+                          mode: 'normal',
+                          text: ' Designed to meet industry-specific regulatory standards.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Sales & Distribution Strategy',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Direct Sales & ABM:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Target decision-makers (CIOs, CTOs, Heads of Claims/Customer Service) with tailored messaging.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'AWS Marketplace:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• List our packaged solutions and accelerators for easy adoption.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Digital Marketing:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Content marketing, SEO/PPC, and social media campaigns focused on insurance industry pain points.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Pricing, Packaging & Partnerships',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Pricing & Packaging:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Flexible models (usage-based, tiered subscriptions) and bundled offerings combining Amazon Connect with our proprietary insurance add-ons.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Pilot programs and trial periods to lower barriers to entry.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Partnerships:',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Collaborate with AWS consulting partners and insurtech firms.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Leverage local partnerships for regional market expansion.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      tag: 'h3',
+                      type: 'heading',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Roadmap & Key Metrics',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Short-Term (0-3 Months):',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Conduct market research, develop key content, and prepare for pilot launches.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Mid-Term (3-6 Months):',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Secure pilot customers, launch initial AWS Marketplace listings, and kick off targeted marketing campaigns.',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 0,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 0,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: 'Long-Term (6-12 Months):',
+                          type: 'text',
+                          style: '',
+                          detail: 0,
+                          format: 1,
+                          version: 1,
+                        },
+                      ],
+                      direction: 'ltr',
+                      textStyle: '',
+                      textFormat: 1,
+                    },
+                    {
+                      type: 'paragraph',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          mode: 'normal',
+                          text: '• Scale sales, broaden the partner network, and continuously enhance product features.',
                           type: 'text',
                           style: '',
                           detail: 0,
@@ -3689,219 +4086,11 @@ export const Broken = {
           blockType: 'content',
           theme: {
             settings: {
-              theme: 'dark',
-              background: 'transparent',
-              image: null,
-              overlay: null,
-              box: 'none',
-            },
-          },
-        },
-        {
-          id: '67d438973586ad9e53a4188c',
-          title: 'Our Services',
-          description: null,
-          blockName: 'Our services',
-
-          features: [
-            {
-              id: '67d438d0dd5a3c76269f2748',
-              title: 'AI Maturity Assessment, Strategy & Roadmap',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'A structured approach to AI adoption',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 1,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Successful AI adoption demands strategic alignment, governance, and operational readiness. Using our proven framework, shaped by real-world experience, we assess AI maturity, identify capability gaps, and define a clear strategy and actionable roadmap.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'We help organisations establish key capabilities across 6 core domains: Strategy Alignment, Governance & Risk, Knowledge, Data, Technology Foundations and Operations.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'large',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'list-check',
-              },
-            },
-            {
-              id: '67d43949dd5a3c76269f2749',
-              title: 'Pathfinder AI Development',
-              statistic: null,
-
-              content: {
-                root: {
-                  type: 'root',
-                  format: '',
-                  indent: 0,
-                  version: 1,
-
-                  children: [
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'Proving AI’s value with a scalable approach',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 1,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: 'We identify a high-value, low-risk AI use case as a Proof of Value, demonstrating AI’s impact while creating a scalable framework for future adoption.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                    {
-                      type: 'paragraph',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-
-                      children: [
-                        {
-                          mode: 'normal',
-                          text: ' Our approach addresses governance and process challenges, aligns AI with strategic priorities, automates workflows and captures repeatable value. By measuring AI’s impact on efficiency, accuracy, and performance, we provide clear evidence of its effectiveness within the organisation.',
-                          type: 'text',
-                          style: '',
-                          detail: 0,
-                          format: 0,
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      textStyle: '',
-                      textFormat: 0,
-                    },
-                  ],
-                  direction: 'ltr',
-                },
-              },
-              settings: {
-                card: 'outline',
-                iconSize: 'large',
-              },
-              link: {
-                type: 'none',
-                newTab: null,
-                url: null,
-              },
-
-              icon: {
-                type: 'fa-thin',
-                icon: 'signs-post',
-              },
-            },
-          ],
-          blockType: 'features',
-          theme: {
-            settings: {
               theme: 'default',
               background: 'transparent',
               image: null,
               overlay: null,
+              box: 'none',
             },
           },
         },
@@ -3911,22 +4100,39 @@ export const Broken = {
         image: null,
         description: null,
       },
-      publishedAt: '2025-01-13T13:30:51.396Z',
+      publishedAt: '2025-02-10T18:06:28.093Z',
       links: [],
 
-      slug: 'ai-enablement',
+      slug: 'amazon-connect-gtm',
       slugLock: true,
-      parent: null,
+      parent: {
+        id: 16,
+        title: 'AWS Partnership',
+        slug: 'aws-partnership',
+      },
       breadcrumbs: [
         {
-          id: '67d9556468ae38000187434a',
-          doc: 21,
+          id: '6825ccbdb3eae80001ae4297',
+          doc: 15,
           url: null,
-          label: 'AI Enablement',
+          label: 'Partnerships',
+        },
+        {
+          id: '6825ccbdb3eae80001ae4298',
+          doc: 16,
+          url: null,
+          label: 'AWS Partnership',
+        },
+
+        {
+          id: '6825ccbdb3eae80001ae4299',
+          doc: 45,
+          url: null,
+          label: 'Amazon Connect GTM',
         },
       ],
-      updatedAt: '2025-03-18T11:13:40.231Z',
-      createdAt: '2025-01-13T13:30:32.175Z',
+      updatedAt: '2025-05-15T11:15:09.886Z',
+      createdAt: '2025-02-10T17:59:45.462Z',
       _status: 'published',
     },
   },

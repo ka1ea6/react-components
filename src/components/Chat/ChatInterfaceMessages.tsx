@@ -36,37 +36,18 @@ interface ChatInterfaceProps {
  * Custom Chat interface component
  */
 export function ChatInterfaceMessages({
-  messages: initialMessages,
-  contextType: contextType,
-  currentUser,
-  businessFunctions,
+  messages,
+  isLoading,
 }: ChatInterfaceProps) {
-  // State for chat messages
-const [messages, setMessages] = useState<ChatMessageProps[]>(initialMessages);
-// State for input field
-const [input, setInput] = useState("");
-// State for loading status
-const [isLoading, setIsLoading] = useState(false);
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
-  const [selectedFunction, setSelectedFunction] = useState<number | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-// Scroll to bottom when messages change
-useEffect(() => {
-    if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector(
-        "[data-radix-scroll-area-viewport]"
-      );
-      if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight;
-      }
-    }
-  }, [messages]);
-
- 
-
+  useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+}, [messages]);
+  
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <ScrollArea className="container flex-1 p-4" ref={scrollAreaRef}>
+      <ScrollArea className="container flex-1 p-4">
         <div className="space-y-6">
           {messages.length === 0 && (
             <div className="flex items-center justify-center h-full pt-60">
@@ -104,6 +85,7 @@ useEffect(() => {
             <ChatMessage key={index} {...message} />
           ))}
         </div>
+        <div ref={messagesEndRef} />
       </ScrollArea>      
     </div>
   )
