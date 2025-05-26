@@ -3049,6 +3049,42 @@ export const SideBySide = {
   },
 }
 
+
+
+export const RelatedPages = {
+  args: {
+    ...Default.args,
+    related: [
+      {
+        href: '#',
+        name: 'Test Page',
+      },
+      {
+        href: '#',
+        name: 'Another Test Page',
+      },
+    ],
+  }
+}
+
+
+export const RelatedPagesHighImpact = {
+  args: {
+    ...HighImpactHero.args,
+    related: [
+      {
+        href: '#',
+        name: 'Test Page',
+      },
+      {
+        href: '#',
+        name: 'Another Test Page',
+      },
+    ],
+  }
+}
+
+
 export const Broken = {
   args: {
     ...Default.args,
@@ -4393,3 +4429,5 @@ export const WithImage = {
     },
   },
 }
+
+
