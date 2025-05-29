@@ -424,12 +424,12 @@ const Sidebar = ({
                     ? content.links.map((link, linkIndex) => (
                         <Link
                           key={linkIndex}
-                          href={link.url}
+                          href={link.href}
                           className="inline-flex items-center text-sm text-primary dark:text-foreground hover:text-accent"
                         >
-                          {link.title}
+                          {link.name}
                           {/* only show the external link for external sites (http/https) */}
-                          {link.url.startsWith('http') && <ExternalLink className="ml-1 h-3 w-3" />}
+                          {link.href.startsWith('http') && <ExternalLink className="ml-1 h-3 w-3" />}
                         </Link>
                       ))
                     : null,
