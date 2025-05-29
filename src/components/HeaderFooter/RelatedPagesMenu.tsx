@@ -22,7 +22,7 @@ export function RelatedPagesMenu({ menuItems, wide = false, dark = true }: Heade
     <>
       <menu
         className={cn(
-          'w-full relative py-2 transition-all duration-300 hidden lg:block',
+          'w-full relative py-2 transition-all duration-300',
           dark ? 'bg-black text-white' : 'light bg-background text-foreground border-b border-accent',
         )}
       >
@@ -32,7 +32,7 @@ export function RelatedPagesMenu({ menuItems, wide = false, dark = true }: Heade
             <div
               className={cn('flex items-center justify-between px-9 py-0', !wide && 'container')}
             >
-              <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+              <PopoverGroup className="flex gap-x-12">
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}
               </PopoverGroup>
             </div>
