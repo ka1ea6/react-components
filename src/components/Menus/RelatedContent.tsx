@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
 
 export interface RelatedContentProps {
-  links: Array<{ title: string; url: string }>
+  links: Array<{ name: string; href: string }>
   title?: string
 }
 
@@ -21,12 +21,12 @@ export const RelatedContent: React.FC<RelatedContentProps> = ({ links, title = '
           {links.map((link, index) => (
             <Link
               key={index}
-              href={link.url}
+              href={link.href}
               className="inline-flex items-center text-sm text-primary dark:text-foreground hover:text-accent"
             >
-              {link.title}
+              {link.name}
               {/* only show the external link for external sites (http/https) */}
-              {link.url.startsWith('http') && <ExternalLink className="ml-1 h-3 w-3" />}
+              {link.href.startsWith('http') && <ExternalLink className="ml-1 h-3 w-3" />}
             </Link>
           ))}
         </nav>
