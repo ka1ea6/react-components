@@ -69,7 +69,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
 
 
   return (
-    <div className="container my-6">
+    <div className="my-6">
       
       <div
         className={cn(

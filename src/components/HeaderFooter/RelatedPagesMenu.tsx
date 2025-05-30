@@ -27,17 +27,15 @@ export function RelatedPagesMenu({ menuItems, wide = false, dark = true }: Heade
         )}
       >
         {/* <Container className="px-0"> */}
-        <nav className="container backdrop-blur-sm p-0">
-          <div className="container">
+        <div className="container backdrop-blur-sm">
             <div
-              className={cn('flex items-center justify-between px-9 py-0', !wide && 'container')}
+              className={cn('flex items-center justify-between py-0', !wide && 'container')}
             >
               <PopoverGroup className="flex gap-x-12">
                 {menuItems && menuItems.map((menu) => <HeaderMenu key={menu.name} {...menu} />)}
               </PopoverGroup>
             </div>
-          </div>
-        </nav>
+        </div>
       </menu>
     </>
   )
