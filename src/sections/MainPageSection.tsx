@@ -37,17 +37,29 @@ export const MainPageSection = ({
   }
 
   useEffect(() => {
-    const hash = window.location.hash
-    if (hash) {
-      const targetId = hash.substring(1) // Remove the '#' character
-      const targetElement = document.getElementById(targetId)
-      if (targetElement) {
-        const yOffset = -300
-        const yPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset
-        window.scrollTo({ top: yPosition, behavior: 'smooth' })
+    if (typeof window === 'undefined') return
+
+    const handleHashChange = () => {
+      const hash = window.location.hash
+      if (hash) {
+        const targetId = hash.substring(1) // Remove the '#' character
+        const targetElement = document.getElementById(targetId)
+        if (targetElement) {
+          const yOffset = -300
+          const yPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset
+          window.scrollTo({ top: yPosition, behavior: 'smooth' })
+        }
       }
     }
-  }, [window.location.hash])
+
+    // Run on mount
+    handleHashChange()
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange)
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
 
   return (
     <div className=''>
