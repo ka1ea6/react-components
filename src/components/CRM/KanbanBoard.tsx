@@ -103,8 +103,8 @@ export function CRMKanbanBoard({
                   onDealClick={setSelectedDeal}
                   calculateColumnValue={calculateColumnValue}
                   calculateWeightedValue={calculateWeightedValue}
-                  addNewDeal={status === 'Cold' ? addNewDeal : undefined}
-                  onAddCustomer={addNewCustomer}
+                  // addNewDeal={status === 'Cold' ? addNewDeal : undefined}
+                  // onAddCustomer={addNewCustomer}
                 />
               )
             })}
