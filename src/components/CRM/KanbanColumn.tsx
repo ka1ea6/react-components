@@ -22,8 +22,8 @@ type KanbanColumnProps = {
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
   calculateWeightedValue: (deals: Deal[], status: CRMStatus | gecoStatus ) => number
-  addNewDeal?: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
-  onAddCustomer?: (customer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  // addNewDeal?: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  // onAddCustomer?: (customer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
   compact?: boolean
 
 }
@@ -37,16 +37,16 @@ export function KanbanColumn({
   onDealClick,
   calculateColumnValue,
   calculateWeightedValue,
-  addNewDeal,
-  onAddCustomer,
+  // addNewDeal,
+  // onAddCustomer,
   compact = false,
 }: KanbanColumnProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  // const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <div className="flex flex-col w-80">
       <h2 className="text-xl font-semibold mb-4">  {status.charAt(0).toUpperCase() + status.slice(1)}</h2>
-      {addNewDeal && (
+      {/* {addNewDeal && (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="mb-4 w-full">
@@ -68,7 +68,7 @@ export function KanbanColumn({
             />
           </DialogContent>
         </Dialog>
-      )}
+      )} */}
       <Droppable droppableId={status} isDropDisabled={false}>
         {(provided) => (
           <div
