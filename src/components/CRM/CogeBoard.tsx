@@ -34,7 +34,8 @@ export function CRMCogeBoard({
   const getColumnDeals = (status: gecoStatus) => {
   return (initialData.deals ?? [])
     .filter((deal) => deal.gecoStatus === status)
-    .filter((deal) => deal.status !== 'Lost' && deal.status !== 'Cold')
+    .filter((deal) => deal.status !== 'Lost' )
+    .filter((deal) => deal.status !== 'Cold' )
 }
 
   const calculateColumnValue = (deals: Deal[]) => {

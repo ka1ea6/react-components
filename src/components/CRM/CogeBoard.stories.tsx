@@ -64,6 +64,227 @@ Default.args = {
   },
 };
 
+export const Test: Story = Template.bind({});
+Test.args = {
+  ...Default.args,
+  initialData: {
+  "deals": [
+    {
+      "id": 11,
+      "customer": {
+        "id": 1,
+        "name": "Customer 1",
+        "intro": null,
+        "active": true,
+        "icon": null,
+        "updatedAt": "2025-04-28T21:56:26.595Z",
+        "createdAt": "2025-04-28T21:56:26.594Z"
+      },
+      "value": 1,
+      "assignee": {
+        "id": 1,
+        "name": "Test user - do not delete",
+        "email": "test@test.com",
+        "jobRole": null,
+        "manager": null,
+        "about": null,
+        "profilePicture": null,
+        "holidaysRemaining": 25,
+        "startingHolidays": 25,
+        "dateOfBirth": null,
+        "joinDate": null,
+        "linkedIn": null,
+        "assets": [],
+        "role": "admin",
+        "updatedAt": "2025-04-28T21:23:55.792Z",
+        "createdAt": "2025-04-28T21:23:55.787Z",
+        "enableAPIKey": null,
+        "apiKey": null
+      },
+      "status": "Won",
+      "gecoStatus": "firm",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-06-17T11:54:01.228Z",
+      "createdAt": "2025-04-29T21:09:20.627Z"
+    },
+    {
+      "id": 10,
+      "value": 1,
+      "status": "Lost",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "Lost deal example",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:18.942Z",
+      "createdAt": "2025-04-29T21:09:18.940Z"
+    },
+    {
+      "id": 9,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:17.611Z",
+      "createdAt": "2025-04-29T21:09:17.601Z"
+    },
+    {
+      "id": 8,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:15.980Z",
+      "createdAt": "2025-04-29T21:09:15.979Z"
+    },
+    {
+      "id": 7,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:14.452Z",
+      "createdAt": "2025-04-29T21:09:14.442Z"
+    },
+    {
+      "id": 6,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:12.527Z",
+      "createdAt": "2025-04-29T21:09:12.526Z"
+    },
+    {
+      "id": 5,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:10.603Z",
+      "createdAt": "2025-04-29T21:09:10.592Z"
+    },
+    {
+      "id": 4,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:09.032Z",
+      "createdAt": "2025-04-29T21:09:09.031Z"
+    },
+    {
+      "id": 3,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:07.464Z",
+      "createdAt": "2025-04-29T21:09:07.463Z"
+    },
+    {
+      "id": 2,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:09:03.844Z",
+      "createdAt": "2025-04-29T21:09:03.840Z"
+    },
+    {
+      "id": 1,
+      "value": 1,
+      "status": "Cold",
+      "gecoStatus": "other",
+      "categories": [],
+      "dateLogged": "2025-04-29T21:08:45.154Z",
+      "closureDate": "2025-04-30T00:00:00.000Z",
+      "description": "wewewewewedsds",
+      "comments": [],
+      "updatedAt": "2025-04-29T21:08:45.164Z",
+      "createdAt": "2025-04-29T21:08:45.160Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "name": "Customer 1",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Customer 2",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Customer 3",
+      "active": true
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Test user - do not delete",
+      "email": "test@test.com",
+      "jobRole": null,
+      "manager": null,
+      "about": null,
+      "profilePicture": null,
+      "holidaysRemaining": 25,
+      "startingHolidays": 25,
+      "dateOfBirth": null,
+      "joinDate": null,
+      "linkedIn": null,
+      "assets": [],
+      "role": "admin",
+      "updatedAt": "2025-04-28T21:23:55.792Z",
+      "createdAt": "2025-04-28T21:23:55.787Z",
+      "enableAPIKey": null,
+      "apiKey": null
+    }
+  ],
+  "categories": []
+}
+};
+
 export const NoDeals: Story = Template.bind({});
 NoDeals.args = {
   ...Default.args,

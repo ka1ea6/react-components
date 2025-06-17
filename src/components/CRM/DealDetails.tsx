@@ -141,7 +141,7 @@ try {
     <Dialog open={true}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col [&>button:last-child]:hidden">
         <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle className="text-2xl font-bold">{customer?.name}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">{customer?.name || 'no customer'}</DialogTitle>
           <div className="flex space-x-2">
             <Button variant="outline" onClick={onClose}>
               Close
@@ -202,7 +202,7 @@ try {
                   onClick={() => setEditingField('assignee')}
                 >
                   <UserIcon className="w-4 h-4 text-gray-400" />
-                  <span>{(editedDeal.assignee as User).name}</span>
+                  <span>{(editedDeal?.assignee as User)?.name}</span>
                 </div>
               )}
             </div>
