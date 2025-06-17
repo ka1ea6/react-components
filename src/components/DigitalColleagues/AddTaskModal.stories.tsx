@@ -3,18 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { AddTaskModal } from './AddTaskModal';
 
-const mockEpics = [
-  { id: 'epic1', name: 'User Authentication', color: 'bg-blue-500', description: 'Secure login system' },
-  { id: 'epic2', name: 'Dashboard Features', color: 'bg-green-500', description: 'Dashboard functionality' },
-  { id: 'epic3', name: 'Mobile Optimization', color: 'bg-purple-500', description: 'Mobile responsive design' },
-];
-
-const mockSprints = [
-  { id: 'backlog', name: 'Backlog', description: 'Tasks not assigned', startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31'), isActive: false },
-  { id: 'sprint1', name: 'Sprint 1', description: 'Current sprint', startDate: new Date('2024-01-01'), endDate: new Date('2024-01-14'), isActive: true },
-  { id: 'sprint2', name: 'Sprint 2', description: 'Next sprint', startDate: new Date('2024-01-15'), endDate: new Date('2024-01-28'), isActive: false },
-];
-
 const meta: Meta<typeof AddTaskModal> = {
   title: 'Digital Colleagues/AddTaskModal',
   component: AddTaskModal,
@@ -40,51 +28,101 @@ const meta: Meta<typeof AddTaskModal> = {
 export default meta;
 type Story = StoryObj<typeof AddTaskModal>;
 
+const mockEpics = [
+  {
+    id: '1',
+    name: 'User Authentication',
+    color: 'bg-blue-500',
+    description: 'Implement secure user authentication system',
+    confidence: 'high' as const,
+    phase: 2,
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-02-15'),
+    progress: 75,
+    isSelected: true,
+  },
+  {
+    id: '2',
+    name: 'Dashboard Features',
+    color: 'bg-green-500',
+    description: 'Build comprehensive dashboard functionality',
+    confidence: 'medium' as const,
+    phase: 1,
+    startDate: new Date('2024-02-01'),
+    endDate: new Date('2024-03-15'),
+    progress: 30,
+    isSelected: true,
+  },
+  {
+    id: '3',
+    name: 'Mobile Optimization',
+    color: 'bg-purple-500',
+    description: 'Optimize application for mobile devices',
+    confidence: 'low' as const,
+    phase: 1,
+    startDate: new Date('2024-03-01'),
+    endDate: new Date('2024-04-15'),
+    progress: 10,
+    isSelected: true,
+  },
+];
+
+const mockSprints = [
+  {
+    id: 'backlog',
+    name: 'Backlog',
+    description: 'Tasks not yet assigned to a sprint',
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-12-31'),
+    isActive: false,
+    isSelected: false,
+  },
+  {
+    id: '1',
+    name: 'Sprint 1',
+    description: 'Initial development phase',
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-01-14'),
+    isActive: false,
+    isSelected: false,
+  },
+  {
+    id: '2',
+    name: 'Sprint 2',
+    description: 'Feature development',
+    startDate: new Date('2024-01-15'),
+    endDate: new Date('2024-01-28'),
+    isActive: true,
+    isSelected: true,
+  },
+];
+
 export const Default: Story = {
   args: {
     isOpen: true,
+    onClose: action('onClose'),
+    onAddTask: action('onAddTask'),
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onAddTask: action('onAddTask'),
-  },
-};
-
-export const WithManyEpics: Story = {
-  args: {
-    isOpen: true,
-    epics: [
-      ...mockEpics,
-      { id: 'epic4', name: 'API Integration', color: 'bg-orange-500', description: 'Third-party APIs' },
-      { id: 'epic5', name: 'Performance', color: 'bg-red-500', description: 'Speed improvements' },
-      { id: 'epic6', name: 'Security', color: 'bg-yellow-500', description: 'Security enhancements' },
-    ],
-    sprints: mockSprints,
-    onClose: action('onClose'),
-    onAddTask: action('onAddTask'),
-  },
-};
-
-export const WithManySprints: Story = {
-  args: {
-    isOpen: true,
-    epics: mockEpics,
-    sprints: [
-      ...mockSprints,
-      { id: 'sprint3', name: 'Sprint 3', description: 'Future sprint', startDate: new Date('2024-01-29'), endDate: new Date('2024-02-11'), isActive: false },
-      { id: 'sprint4', name: 'Sprint 4', description: 'Planning phase', startDate: new Date('2024-02-12'), endDate: new Date('2024-02-25'), isActive: false },
-    ],
-    onClose: action('onClose'),
-    onAddTask: action('onAddTask'),
   },
 };
 
 export const Closed: Story = {
   args: {
     isOpen: false,
-    epics: mockEpics,
-    sprints: mockSprints,
     onClose: action('onClose'),
     onAddTask: action('onAddTask'),
+    epics: mockEpics,
+    sprints: mockSprints,
+  },
+};
+
+export const NoEpics: Story = {
+  args: {
+    isOpen: true,
+    onClose: action('onClose'),
+    onAddTask: action('onAddTask'),
+    epics: [],
+    sprints: mockSprints,
   },
 };

@@ -225,7 +225,6 @@ export interface Page {
   };
   layout: (
     | CallToActionBlock
-    | CollapsibleAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -289,7 +288,6 @@ export interface Page {
 export interface Media {
   id: number;
   alt?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -394,31 +392,6 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CollapsibleAreaBlock".
- */
-export interface CollapsibleAreaBlock {
-  title?: string | null;
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'collasibleArea';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -537,7 +510,6 @@ export interface ImageBlock {
 export interface Image {
   id: number;
   alt?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -711,35 +683,20 @@ export interface User {
   manager?: (number | null) | User;
   about?: string | null;
   profilePicture?: (number | null) | MediaProfile;
-  workHistory?:
-    | {
-        company: string;
-        position: string;
-        startDate: string;
-        endDate?: string | null;
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  certifications?:
-    | {
-        name: string;
-        issuer?: string | null;
-        dateObtained?: string | null;
-        expirationDate?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  areasOfExpertise?:
-    | {
-        area: string;
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  holidaysRemaining?: number | null;
+  startingHolidays?: number | null;
   dateOfBirth?: string | null;
   joinDate?: string | null;
   linkedIn?: string | null;
+  assets?:
+    | {
+        tagNumber: string;
+        make: string;
+        Model: string;
+        assetType: 'laptop' | 'monitor' | 'phone' | 'tablet' | 'other';
+        id?: string | null;
+      }[]
+    | null;
   role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -756,7 +713,6 @@ export interface User {
 export interface MediaProfile {
   id: number;
   name?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1144,7 +1100,6 @@ export interface ReusableContent {
   };
   layout: (
     | CallToActionBlock
-    | CollapsibleAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -1255,17 +1210,7 @@ export interface Proposition {
       | null;
     media?: (number | null) | Media;
   };
-  layout?:
-    | (
-        | CallToActionBlock
-        | CollapsibleAreaBlock
-        | ContentBlock
-        | MediaBlock
-        | ImageBlock
-        | ArchiveBlock
-        | FeaturesBlock
-      )[]
-    | null;
+  layout?: (CallToActionBlock | ContentBlock | MediaBlock | ImageBlock | ArchiveBlock | FeaturesBlock)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -1307,15 +1252,35 @@ export interface Proposition {
  */
 export interface Assessment {
   id: number;
-  assessmentType: 'ai' | 'fin-ops' | 'cybersecurity' | 'data-governance';
+  'assessment-type': 'ai' | 'fin-ops' | 'cybersecurity' | 'data-governance';
+  'assessment-description'?: string | null;
   title: string;
+  'maturity-level': {
+    'maturity-level-title': string;
+    'maturity-level-description': string;
+    id?: string | null;
+  }[];
   sections: {
     'section-title': string;
     questions: {
-      text: string;
-      'answer-options': string[];
-      'free-text'?: boolean | null;
-      weighting?: ('1' | '2' | '3') | null;
+      'question-text': string;
+      'question-weighting': number;
+      'answer-options': {
+        'answer-text': string;
+        'answer-weighting': number;
+        principles: (
+          | 'valuation'
+          | 'accountability'
+          | 'transparency'
+          | 'privacy'
+          | 'fairness'
+          | 'well-architected'
+          | 'all'
+        )[];
+        id?: string | null;
+      }[];
+      'is-free-text'?: boolean | null;
+      ' multiple-choice'?: boolean | null;
       id?: string | null;
     }[];
     id?: string | null;
@@ -1329,16 +1294,31 @@ export interface Assessment {
  */
 export interface AssessmentAnswer {
   id: number;
-  assessment: number | Assessment;
+  name: string;
+  email: string;
+  phone?: string | null;
+  assessment?: (number | null) | Assessment;
   sections: {
     'section-title': string;
     questions: {
-      questionText: string;
-      answerSelected: string;
-      freeTextResponse?: string | null;
-      weighting?: ('1' | '2' | '3') | null;
+      'question-text': string;
+      'question-weighting': number;
+      'answer-options': {
+        'answer-text': string;
+        'answer-weighting': number;
+        id?: string | null;
+      }[];
+      'is-free-text': boolean;
+      'is-multiple-choice': boolean;
       id?: string | null;
     }[];
+    'total-score-percentage': number;
+    'maturity-level': string;
+    id?: string | null;
+  }[];
+  principles: {
+    'principle-name': string;
+    'maturity-level': string;
     id?: string | null;
   }[];
   updatedAt: string;
@@ -1391,7 +1371,6 @@ export interface PublishedPage {
   };
   layout: (
     | CallToActionBlock
-    | CollapsibleAreaBlock
     | ContentBlock
     | MediaBlock
     | ImageBlock
@@ -1491,7 +1470,6 @@ export interface PublishedPost {
 export interface MediaBrandImage {
   id: number;
   alt?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1671,6 +1649,7 @@ export interface Deal {
   value: number;
   assignee?: (number | null) | User;
   status: 'Cold' | 'Qualified' | 'Proposal Made' | 'SoW Submitted' | 'Won' | 'Lost';
+  gecoStatus?: ('firm' | 'forecast' | 'other') | null;
   categories?: (number | DealCategory)[] | null;
   dateLogged: string;
   closureDate?: string | null;
@@ -2116,7 +2095,6 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
-        collasibleArea?: T | CollapsibleAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -2184,16 +2162,6 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CollapsibleAreaBlock_select".
- */
-export interface CollapsibleAreaBlockSelect<T extends boolean = true> {
-  title?: T;
-  richText?: T;
   id?: T;
   blockName?: T;
 }
@@ -2368,8 +2336,16 @@ export interface ReusableContentBlockSelect<T extends boolean = true> {
  * via the `definition` "assessment_select".
  */
 export interface AssessmentSelect<T extends boolean = true> {
-  assessmentType?: T;
+  'assessment-type'?: T;
+  'assessment-description'?: T;
   title?: T;
+  'maturity-level'?:
+    | T
+    | {
+        'maturity-level-title'?: T;
+        'maturity-level-description'?: T;
+        id?: T;
+      };
   sections?:
     | T
     | {
@@ -2377,10 +2353,18 @@ export interface AssessmentSelect<T extends boolean = true> {
         questions?:
           | T
           | {
-              text?: T;
-              'answer-options'?: T;
-              'free-text'?: T;
-              weighting?: T;
+              'question-text'?: T;
+              'question-weighting'?: T;
+              'answer-options'?:
+                | T
+                | {
+                    'answer-text'?: T;
+                    'answer-weighting'?: T;
+                    principles?: T;
+                    id?: T;
+                  };
+              'is-free-text'?: T;
+              ' multiple-choice'?: T;
               id?: T;
             };
         id?: T;
@@ -2393,6 +2377,9 @@ export interface AssessmentSelect<T extends boolean = true> {
  * via the `definition` "assessment-answers_select".
  */
 export interface AssessmentAnswersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
   assessment?: T;
   sections?:
     | T
@@ -2401,12 +2388,28 @@ export interface AssessmentAnswersSelect<T extends boolean = true> {
         questions?:
           | T
           | {
-              questionText?: T;
-              answerSelected?: T;
-              freeTextResponse?: T;
-              weighting?: T;
+              'question-text'?: T;
+              'question-weighting'?: T;
+              'answer-options'?:
+                | T
+                | {
+                    'answer-text'?: T;
+                    'answer-weighting'?: T;
+                    id?: T;
+                  };
+              'is-free-text'?: T;
+              'is-multiple-choice'?: T;
               id?: T;
             };
+        'total-score-percentage'?: T;
+        'maturity-level'?: T;
+        id?: T;
+      };
+  principles?:
+    | T
+    | {
+        'principle-name'?: T;
+        'maturity-level'?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -2444,7 +2447,6 @@ export interface PublishedPagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
-        collasibleArea?: T | CollapsibleAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -2514,7 +2516,6 @@ export interface ReusableContentSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
-        collasibleArea?: T | CollapsibleAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -2617,7 +2618,6 @@ export interface PublishedPostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2700,7 +2700,6 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface MediaProfilesSelect<T extends boolean = true> {
   name?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2763,7 +2762,6 @@ export interface MediaProfilesSelect<T extends boolean = true> {
  */
 export interface MediaBrandImagesSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2846,7 +2844,6 @@ export interface MediaBrandImagesSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2952,35 +2949,20 @@ export interface UsersSelect<T extends boolean = true> {
   manager?: T;
   about?: T;
   profilePicture?: T;
-  workHistory?:
-    | T
-    | {
-        company?: T;
-        position?: T;
-        startDate?: T;
-        endDate?: T;
-        description?: T;
-        id?: T;
-      };
-  certifications?:
-    | T
-    | {
-        name?: T;
-        issuer?: T;
-        dateObtained?: T;
-        expirationDate?: T;
-        id?: T;
-      };
-  areasOfExpertise?:
-    | T
-    | {
-        area?: T;
-        description?: T;
-        id?: T;
-      };
+  holidaysRemaining?: T;
+  startingHolidays?: T;
   dateOfBirth?: T;
   joinDate?: T;
   linkedIn?: T;
+  assets?:
+    | T
+    | {
+        tagNumber?: T;
+        make?: T;
+        Model?: T;
+        assetType?: T;
+        id?: T;
+      };
   role?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3076,7 +3058,6 @@ export interface PropositionsSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
-        collasibleArea?: T | CollapsibleAreaBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         imageBlock?: T | ImageBlockSelect<T>;
@@ -3173,6 +3154,7 @@ export interface DealsSelect<T extends boolean = true> {
   value?: T;
   assignee?: T;
   status?: T;
+  gecoStatus?: T;
   categories?: T;
   dateLogged?: T;
   closureDate?: T;

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import type { BoardData, Deal, CRMStatus, Customer, EditableDeal, PartialComment , gecoStatus} from './types'
+import type { BoardData, Deal, gecoStatus, CRMStatus, Customer, EditableDeal, PartialComment } from './types'
 import { DealDetails } from './DealDetails'
 import { KanbanColumn } from './KanbanColumn'
 import {
@@ -9,37 +9,40 @@ import {
   type DropResult,
 } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration'
 
+const gcstatuses: gecoStatus[] = ['firm', 'forecast', 'other']
 const statuses: CRMStatus[] = ['Cold', 'Qualified', 'Proposal Made', 'SoW Submitted', 'Won', 'Lost']
 
-type KanbanBoardProps = {
+type CogeBoardProps = {
   initialData: BoardData
   // onDragEnd: (result: DropResult) => void
-  addNewDeal: (newDeal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  // addNewDeal: (newDeal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
   updateDeal: (updatedDeal: Partial<EditableDeal>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
   addComment: (dealId: string, comment: PartialComment) => Promise<{ success: boolean; errors?: Record<string, string> }>;
-  addNewCustomer: (newCustomer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  // addNewCustomer: (newCustomer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
 }
 
-export function CRMKanbanBoard({
+export function CRMCogeBoard({
   initialData,
-  addNewDeal,
+  // addNewDeal,
   updateDeal,
   addComment,
-  addNewCustomer,
-}: KanbanBoardProps) {
+  // addNewCustomer,
+}: CogeBoardProps) {
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   // const [boardData, setBoardData] = useState<BoardData>(initialData)
 
-  const getColumnDeals = (status: CRMStatus) => {
-    return (initialData.deals ?? []).filter((deal) => deal.status === status)
-  }
+  const getColumnDeals = (status: gecoStatus) => {
+  return (initialData.deals ?? [])
+    .filter((deal) => deal.gecoStatus === status)
+    .filter((deal) => deal.status !== 'Lost' && deal.status !== 'Cold')
+}
 
   const calculateColumnValue = (deals: Deal[]) => {
     return deals.reduce((sum, deal) => sum + (deal.value || 0), 0)
   }
 
-  const calculateWeightedValue = (deals: Deal[], status: CRMStatus | gecoStatus ) => {
-    const weightMap = {
+  const calculateWeightedValue = (deals: Deal[], status: CRMStatus | gecoStatus) => {
+    const weightMap: Record<CRMStatus, number> = {
       Cold: 0,
       Qualified: 0.2,
       'Proposal Made': 0.5,
@@ -47,7 +50,7 @@ export function CRMKanbanBoard({
       Won: 1,
       Lost: 0,
     }
-    return deals.reduce((sum, deal) => sum + (deal.value || 0) * weightMap[status as CRMStatus], 0)
+    return deals.reduce((sum, deal) => sum + (deal.value || 0) * (weightMap[deal.status] ?? 0), 0)
   }
 
   const onDragEnd = useCallback(
@@ -62,8 +65,8 @@ export function CRMKanbanBoard({
         return
       }
 
-      const sourceStatus = source.droppableId as CRMStatus
-      const destinationStatus = destination.droppableId as CRMStatus
+      const sourceStatus = source.droppableId as gecoStatus
+      const destinationStatus = destination.droppableId as gecoStatus
       // console.log('Moving from ', sourceStatus, 'to', destinationStatus)
       // find the deal with id source.index
       //
@@ -73,7 +76,7 @@ export function CRMKanbanBoard({
       const updatedDeals = [...(initialData.deals ?? [])]
       // const [movedDeal] = updatedDeals.splice(source.index, 1)
       if (movedDeal) {
-        movedDeal.status = destinationStatus
+        movedDeal.gecoStatus = destinationStatus
         // updatedDeals.splice(destination.index, 0, movedDeal)
 
         // Update the deal using the updateDeal function
@@ -88,8 +91,8 @@ export function CRMKanbanBoard({
       <div className="p-4 h-full overflow-auto">
         {/* <h1 className="text-3xl font-bold mb-8">Cortex Sales Pipeline</h1> */}
         <div className="flex space-x-4 pb-4">
-          {statuses
-            .filter((status) => status !== 'Lost')
+          {gcstatuses
+          
             .map((status) => {
               const deals = getColumnDeals(status)
               return (
@@ -103,8 +106,7 @@ export function CRMKanbanBoard({
                   onDealClick={setSelectedDeal}
                   calculateColumnValue={calculateColumnValue}
                   calculateWeightedValue={calculateWeightedValue}
-                  addNewDeal={status === 'Cold' ? addNewDeal : undefined}
-                  onAddCustomer={addNewCustomer}
+                  compact={true}
                 />
               )
             })}

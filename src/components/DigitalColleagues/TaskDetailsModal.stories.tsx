@@ -1,32 +1,6 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import { TaskDetailsModal } from './TaskDetailsModal';
-
-const mockTask = {
-  id: '1',
-  title: 'Design user authentication system',
-  description: 'Create wireframes and mockups for the login interface with multi-factor authentication support',
-  status: 'in-progress' as const,
-  priority: 'high' as const,
-  type: 'story' as const,
-  epicId: 'epic1',
-  sprintId: 'sprint1',
-  assignee: 'John Doe',
-  createdAt: new Date('2024-01-15'),
-};
-
-const mockEpics = [
-  { id: 'epic1', name: 'User Authentication', color: 'bg-blue-500', description: 'Secure login system' },
-  { id: 'epic2', name: 'Dashboard Features', color: 'bg-green-500', description: 'Dashboard functionality' },
-  { id: 'epic3', name: 'Mobile Optimization', color: 'bg-purple-500', description: 'Mobile responsive design' },
-];
-
-const mockSprints = [
-  { id: 'backlog', name: 'Backlog', description: 'Tasks not assigned', startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31'), isActive: false },
-  { id: 'sprint1', name: 'Sprint 1', description: 'Current sprint', startDate: new Date('2024-01-01'), endDate: new Date('2024-01-14'), isActive: true },
-  { id: 'sprint2', name: 'Sprint 2', description: 'Next sprint', startDate: new Date('2024-01-15'), endDate: new Date('2024-01-28'), isActive: false },
-];
 
 const meta: Meta<typeof TaskDetailsModal> = {
   title: 'Digital Colleagues/TaskDetailsModal',
@@ -34,38 +8,81 @@ const meta: Meta<typeof TaskDetailsModal> = {
   parameters: {
     layout: 'centered',
   },
-  argTypes: {
-    isOpen: {
-      control: 'boolean',
-      description: 'Whether the modal is open',
-    },
-    onClose: {
-      action: 'modal closed',
-      description: 'Function called when modal is closed',
-    },
-    onUpdateTask: {
-      action: 'task updated',
-      description: 'Function called when task is updated',
-    },
-    onDeleteTask: {
-      action: 'task deleted',
-      description: 'Function called when task is deleted',
-    },
-  },
+  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof TaskDetailsModal>;
 
-export const HighPriorityStory: Story = {
+const mockEpics = [
+  {
+    id: '1',
+    name: 'User Authentication',
+    color: 'bg-blue-500',
+    description: 'Implement secure user authentication system',
+    confidence: 'high' as const,
+    phase: 2,
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-02-15'),
+    progress: 75,
+    isSelected: true,
+  },
+  {
+    id: '2',
+    name: 'Dashboard Features',
+    color: 'bg-green-500',
+    description: 'Build comprehensive dashboard functionality',
+    confidence: 'medium' as const,
+    phase: 1,
+    startDate: new Date('2024-02-01'),
+    endDate: new Date('2024-03-15'),
+    progress: 30,
+    isSelected: true,
+  },
+];
+
+const mockSprints = [
+  {
+    id: '1',
+    name: 'Sprint 1',
+    description: 'Initial development phase',
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-01-14'),
+    isActive: false,
+    isSelected: false,
+  },
+  {
+    id: '2',
+    name: 'Sprint 2',
+    description: 'Feature development',
+    startDate: new Date('2024-01-15'),
+    endDate: new Date('2024-01-28'),
+    isActive: true,
+    isSelected: true,
+  },
+];
+
+export const Default: Story = {
   args: {
     isOpen: true,
-    task: mockTask,
+    task: {
+      id: '1',
+      title: 'Design login page',
+      description: 'Create wireframes and mockups for the login interface',
+      status: 'in-progress',
+      priority: 'high',
+      type: 'story',
+      epicId: '1',
+      sprintId: '2',
+      assignee: 'John Doe',
+      points: 8,
+      createdAt: new Date('2024-01-15'),
+    },
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onUpdateTask: action('onUpdateTask'),
-    onDeleteTask: action('onDeleteTask'),
+    onClose: () => {},
+    onUpdateTask: () => {},
+    onDeleteTask: () => {},
   },
 };
 
@@ -73,39 +90,47 @@ export const BugTask: Story = {
   args: {
     isOpen: true,
     task: {
-      ...mockTask,
       id: '2',
-      title: 'Fix critical security vulnerability',
-      description: 'Address SQL injection vulnerability in user input validation that could expose sensitive data',
+      title: 'Fix login redirect bug',
+      description: 'Users are not being redirected after successful login',
       type: 'bug',
       priority: 'high',
       status: 'todo',
+      epicId: '1',
+      sprintId: '2',
+      assignee: 'Jane Smith',
+      points: 3,
+      createdAt: new Date('2024-01-16'),
     },
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onUpdateTask: action('onUpdateTask'),
-    onDeleteTask: action('onDeleteTask'),
+    onClose: () => {},
+    onUpdateTask: () => {},
+    onDeleteTask: () => {},
   },
 };
 
-export const LowPriorityTask: Story = {
+export const CompletedTask: Story = {
   args: {
     isOpen: true,
     task: {
-      ...mockTask,
       id: '3',
-      title: 'Update documentation',
-      description: 'Refresh API documentation with latest changes and examples',
+      title: 'Set up CI/CD pipeline',
+      description: 'Configure automated testing and deployment',
       type: 'task',
       priority: 'low',
       status: 'done',
+      epicId: '2',
+      sprintId: '1',
+      assignee: 'Mike Johnson',
+      points: 5,
+      createdAt: new Date('2024-01-10'),
     },
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onUpdateTask: action('onUpdateTask'),
-    onDeleteTask: action('onDeleteTask'),
+    onClose: () => {},
+    onUpdateTask: () => {},
+    onDeleteTask: () => {},
   },
 };
 
@@ -113,30 +138,46 @@ export const SpikeTask: Story = {
   args: {
     isOpen: true,
     task: {
-      ...mockTask,
       id: '4',
-      title: 'Research authentication providers',
-      description: 'Investigate options for additional OAuth providers like Microsoft and Apple',
+      title: 'Research OAuth providers',
+      description: 'Investigate different OAuth integration options',
       type: 'spike',
       priority: 'medium',
       status: 'review',
+      epicId: '1',
+      sprintId: '2',
+      assignee: 'Alex Brown',
+      points: 2,
+      createdAt: new Date('2024-01-18'),
     },
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onUpdateTask: action('onUpdateTask'),
-    onDeleteTask: action('onDeleteTask'),
+    onClose: () => {},
+    onUpdateTask: () => {},
+    onDeleteTask: () => {},
   },
 };
 
-export const Closed: Story = {
+export const NoSprint: Story = {
   args: {
-    isOpen: false,
-    task: mockTask,
+    isOpen: true,
+    task: {
+      id: '5',
+      title: 'Update documentation',
+      description: 'Refresh API documentation with latest changes',
+      status: 'in-progress',
+      priority: 'high',
+      type: 'story',
+      epicId: '2',
+      sprintId: '1',
+      assignee: 'Sarah Wilson',
+      points: 3,
+      createdAt: new Date('2024-01-20'),
+    },
     epics: mockEpics,
     sprints: mockSprints,
-    onClose: action('onClose'),
-    onUpdateTask: action('onUpdateTask'),
-    onDeleteTask: action('onDeleteTask'),
+    onClose: () => {},
+    onUpdateTask: () => {},
+    onDeleteTask: () => {},
   },
 };

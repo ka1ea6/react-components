@@ -46,6 +46,7 @@ const mockDeal: Deal = {
   value: 100000,
   assignee: { id: 1, name: 'John Doe'},
   status: 'Qualified',
+  gecoStatus: 'firm',
   categories: mockCategories.slice(0, 3), // Pass in 3 of the mockCategories
   dateLogged: '2023-01-01T00:00:00.000Z',
   closureDate: '2023-12-31T00:00:00.000Z',

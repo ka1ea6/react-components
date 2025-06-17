@@ -7,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { BookOpen, Bug, Zap, AlertCircle } from 'lucide-react';
 import { Task, Epic, Sprint } from './KanbanBoard';
 
 interface AddTaskModalProps {
@@ -18,10 +20,16 @@ interface AddTaskModalProps {
 }
 
 const taskTypes = [
-  { value: 'story', label: 'Story', color: 'bg-blue-100 text-blue-800' },
-  { value: 'task', label: 'Task', color: 'bg-green-100 text-green-800' },
-  { value: 'bug', label: 'Bug', color: 'bg-red-100 text-red-800' },
-  { value: 'spike', label: 'Spike', color: 'bg-purple-100 text-purple-800' },
+  { value: 'story', label: 'Story', color: 'bg-blue-100 text-blue-800', icon: BookOpen },
+  { value: 'task', label: 'Task', color: 'bg-green-100 text-green-800', icon: AlertCircle },
+  { value: 'bug', label: 'Bug', color: 'bg-red-100 text-red-800', icon: Bug },
+  { value: 'spike', label: 'Spike', color: 'bg-purple-100 text-purple-800', icon: Zap },
+];
+
+const priorities = [
+  { value: 'low', label: 'Low', color: 'bg-green-100 text-green-800' },
+  { value: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800' },
+  { value: 'high', label: 'High', color: 'bg-red-100 text-red-800' },
 ];
 
 export const AddTaskModal: React.FC<AddTaskModalProps> = ({
@@ -37,6 +45,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
     status: 'todo' as Task['status'],
     priority: 'medium' as Task['priority'],
     type: 'story' as Task['type'],
+    points: 1,
     epicId: '',
     sprintId: 'none',
     assignee: '',
@@ -51,6 +60,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         status: 'todo',
         priority: formData.priority as Task['priority'],
         type: formData.type as Task['type'],
+        points: formData.points,
         epicId: formData.epicId,
         sprintId: formData.sprintId === 'none' ? undefined : formData.sprintId,
         assignee: formData.assignee.trim() || 'Unassigned',
@@ -61,6 +71,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         status: 'todo',
         priority: 'medium',
         type: 'story',
+        points: 1,
         epicId: '',
         sprintId: 'none',
         assignee: '',
@@ -69,11 +80,9 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
     }
   };
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
-
-  const selectedTaskType = taskTypes.find(type => type.value === formData.type);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -105,45 +114,55 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
             />
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Type</Label>
-              <Select value={formData.type} onValueChange={(value) => handleChange('type', value)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {taskTypes.map(type => (
-                    <SelectItem key={type.value} value={type.value}>
-                      <div className="flex items-center gap-2">
-                        <Badge className={`text-xs ${type.color}`}>
-                          {type.label}
-                        </Badge>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {selectedTaskType && (
-                <Badge className={`text-xs ${selectedTaskType.color} w-fit`}>
-                  {selectedTaskType.label}
-                </Badge>
-              )}
-            </div>
-            
-            <div className="space-y-2">
-              <Label>Priority</Label>
-              <Select value={formData.priority} onValueChange={(value) => handleChange('priority', value)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          {/* Type Selection with Button Group */}
+          <div className="space-y-2">
+            <Label>Type</Label>
+            <ToggleGroup type="single" value={formData.type} onValueChange={(value) => value && handleChange('type', value)}>
+              {taskTypes.map(type => {
+                const IconComponent = type.icon;
+                return (
+                  <ToggleGroupItem 
+                    key={type.value} 
+                    value={type.value}
+                    className="flex items-center gap-2 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                  >
+                    <IconComponent className="h-4 w-4" />
+                    {type.label}
+                  </ToggleGroupItem>
+                );
+              })}
+            </ToggleGroup>
+          </div>
+          
+          {/* Priority Selection with Button Group */}
+          <div className="space-y-2">
+            <Label>Priority</Label>
+            <ToggleGroup type="single" value={formData.priority} onValueChange={(value) => value && handleChange('priority', value)}>
+              {priorities.map(priority => (
+                <ToggleGroupItem 
+                  key={priority.value} 
+                  value={priority.value}
+                  className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                >
+                  {priority.label}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
+
+          {/* Points */}
+          <div className="space-y-2">
+            <Label htmlFor="points">Story Points</Label>
+            <Input
+              id="points"
+              type="number"
+              min="1"
+              max="100"
+              value={formData.points}
+              onChange={(e) => handleChange('points', parseInt(e.target.value) || 1)}
+              placeholder="Enter story points"
+              required
+            />
           </div>
           
           {/* Epic Selection */}

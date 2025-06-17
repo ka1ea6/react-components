@@ -60,6 +60,13 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
     }
   };
 
+  const handleSidebarUpdate = (fieldName: string, value: string) => {
+    if (value !== task[fieldName as keyof Task]) {
+      onUpdateTask(task.id, { [fieldName]: value });
+      setLastUpdated(new Date());
+    }
+  };
+
   const handleAddComment = (text: string) => {
     const comment: Comment = {
       id: Date.now().toString(),
@@ -116,7 +123,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
             epics={epics}
             sprints={sprints}
             lastUpdated={lastUpdated}
-            onUpdateTask={handleFieldUpdate}
+            onUpdateTask={handleSidebarUpdate}
             onClose={onClose}
             onDelete={handleDelete}
           />

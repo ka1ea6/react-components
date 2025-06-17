@@ -77,23 +77,17 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         onDragStart={handleDragStart}
         onClick={handleClick}
       >
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2">
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getTypeColor()}`}>
             {getTypeIcon()}
           </div>
-          <Badge className={`text-xs px-2 py-0.5 ${getPriorityColor()}`}>
-            {task.priority}
-          </Badge>
-        </div>
-        
-        <h4 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 select-none-important">
+           <h4 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 select-none-important">
           {task.title}
         </h4>
-        
-        <div className="flex items-center gap-1 text-xs text-gray-500">
-          <User className="h-3 w-3" />
-          <span className="truncate">{task.assignee}</span>
         </div>
+        
+       
+        
       </Card>
     );
   }
@@ -110,9 +104,19 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           {getTypeIcon()}
           <span className="capitalize">{task.type}</span>
         </div>
-        <Badge className={`text-xs px-2 py-1 ${getPriorityColor()}`}>
-          {task.priority}
-        </Badge>
+        <div className="flex gap-1">
+                  <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor()}`}>
+
+          {/* <Badge className={`text-xs px-2 py-1 ${getPriorityColor()}`}> */}
+            {task.priority}
+          {/* </Badge> */}
+          </div>
+          <div className={`flex items-center gap-2 px-3 py-1 border border-accent rounded-full text-xs font-medium`} >
+          {/* <Badge variant="outline" className="text-xs px-2 py-1"> */}
+            {task.points}
+          {/* </Badge> */}
+          </div>
+        </div>
       </div>
       
       <h4 className="font-semibold text-gray-900 mb-2 select-none-important">
@@ -128,10 +132,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           <User className="h-4 w-4" />
           <span>{task.assignee}</span>
         </div>
-        <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
           <Calendar className="h-4 w-4" />
           <span>{task.createdAt.toLocaleDateString()}</span>
-        </div>
+        </div> */}
       </div>
     </Card>
   );

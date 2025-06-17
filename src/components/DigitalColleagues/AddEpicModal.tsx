@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Epic } from './KanbanBoard';
 
 interface AddEpicModalProps {
@@ -22,6 +23,11 @@ export const AddEpicModal: React.FC<AddEpicModalProps> = ({
     name: '',
     description: '',
     color: 'bg-blue-500',
+    confidence: 'medium' as 'low' | 'medium' | 'high',
+    phase: 1, // planning
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: new Date().toISOString().split('T')[0],
+    progress: 0,
   });
 
   const colorOptions = [
@@ -35,6 +41,19 @@ export const AddEpicModal: React.FC<AddEpicModalProps> = ({
     'bg-indigo-500',
   ];
 
+  const confidenceOptions = [
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' },
+  ];
+
+  const phaseOptions = [
+    { value: 1, label: 'Planning' },
+    { value: 2, label: 'Development' },
+    { value: 3, label: 'Testing' },
+    { value: 4, label: 'Done' },
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name.trim()) {
@@ -42,17 +61,28 @@ export const AddEpicModal: React.FC<AddEpicModalProps> = ({
         name: formData.name.trim(),
         description: formData.description.trim(),
         color: formData.color,
+        confidence: formData.confidence,
+        phase: formData.phase,
+        startDate: new Date(formData.startDate),
+        endDate: new Date(formData.endDate),
+        progress: formData.progress,
+        isSelected: true,
       });
       setFormData({
         name: '',
         description: '',
         color: 'bg-blue-500',
+        confidence: 'medium',
+        phase: 1,
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: new Date().toISOString().split('T')[0],
+        progress: 0,
       });
       onClose();
     }
   };
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -100,6 +130,71 @@ export const AddEpicModal: React.FC<AddEpicModalProps> = ({
                 />
               ))}
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Confidence</Label>
+              <Select value={formData.confidence} onValueChange={(value: 'low' | 'medium' | 'high') => handleChange('confidence', value)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {confidenceOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Phase</Label>
+              <Select value={formData.phase.toString()} onValueChange={(value) => handleChange('phase', parseInt(value))}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {phaseOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value.toString()}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Start Date</Label>
+              <Input
+                type="date"
+                value={formData.startDate}
+                onChange={(e) => handleChange('startDate', e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>End Date</Label>
+              <Input
+                type="date"
+                value={formData.endDate}
+                onChange={(e) => handleChange('endDate', e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Progress (%)</Label>
+            <Input
+              type="number"
+              min="0"
+              max="100"
+              value={formData.progress}
+              onChange={(e) => handleChange('progress', parseInt(e.target.value) || 0)}
+            />
           </div>
           
           <DialogFooter>

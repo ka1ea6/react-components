@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -11,30 +11,38 @@ import {
   SidebarTrigger,
   useSidebar 
 } from '@/components/ui/sidebar';
-import { Epic, Sprint } from './KanbanBoard';
-import { X, Plus, Edit2, Trash2, Calendar, Kanban, FileText } from 'lucide-react';
+import { Epic, Sprint, Project } from './KanbanBoard';
+import { X, Plus, Edit2, Trash2, Calendar, Kanban, FileText, FolderOpen, Target, Layers } from 'lucide-react';
 
 interface ManagementSidebarProps {
+  projects: Project[];
   epics: Epic[];
   sprints: Sprint[];
-  currentView: 'kanban' | 'planning' | 'documentation';
+  currentView: 'kanban' | 'planning' | 'documentation' | 'epics';
+  onUpdateProject: (projectId: string, updates: Partial<Project>) => void;
+  onDeleteProject: (projectId: string) => void;
+  onAddProject: (project: Omit<Project, 'id'>) => void;
   onUpdateEpic: (epicId: string, updates: Partial<Epic>) => void;
   onDeleteEpic: (epicId: string) => void;
   onAddEpic: () => void;
   onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
   onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
   onDeleteSprint: (sprintId: string) => void;
-  onViewChange: (view: 'kanban' | 'planning' | 'documentation') => void;
+  onViewChange: (view: 'kanban' | 'planning' | 'documentation' | 'epics') => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
 
-type SectionType = 'epics' | 'sprints' | null;
+type SectionType = 'projects' | 'epics' | 'sprints' | 'documents' | null;
 
 const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
+  projects,
   epics,
   sprints,
   currentView,
+  onUpdateProject,
+  onDeleteProject,
+  onAddProject,
   onUpdateEpic,
   onDeleteEpic,
   onAddEpic,
@@ -46,9 +54,20 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   onToggleMobileMenu,
 }) => {
   const [activeSection, setActiveSection] = useState<SectionType>(null);
+  const [editingProject, setEditingProject] = useState<string | null>(null);
   const [editingEpic, setEditingEpic] = useState<string | null>(null);
   const [editingSprintId, setEditingSprintId] = useState<string | null>(null);
-  const [epicEditForm, setEpicEditForm] = useState({ name: '', description: '', color: '' });
+  const [projectEditForm, setProjectEditForm] = useState({ name: '', description: '' });
+  const [epicEditForm, setEpicEditForm] = useState({
+    name: '',
+    description: '',
+    color: '',
+    confidence: 'medium' as 'low' | 'medium' | 'high',
+    phase: 1,
+    startDate: '',
+    endDate: '',
+    progress: 0,
+  });
   const [sprintEditForm, setSprintEditForm] = useState({
     name: '',
     description: '',
@@ -56,7 +75,12 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
     endDate: '',
     isActive: false,
   });
+  const [showAddProject, setShowAddProject] = useState(false);
   const [showAddSprint, setShowAddSprint] = useState(false);
+  const [newProjectForm, setNewProjectForm] = useState({
+    name: '',
+    description: '',
+  });
   const [newSprintForm, setNewSprintForm] = useState({
     name: '',
     description: '',
@@ -76,12 +100,74 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
     'bg-indigo-500',
   ];
 
+  const confidenceOptions = [
+    { value: 'low', label: 'Low', color: 'text-red-600' },
+    { value: 'medium', label: 'Medium', color: 'text-yellow-600' },
+    { value: 'high', label: 'High', color: 'text-green-600' },
+  ];
+
+  const phaseOptions = [
+    { value: 1, label: 'Phase 1', color: 'text-blue-600' },
+    { value: 2, label: 'Phase 2', color: 'text-purple-600' },
+    { value: 3, label: 'Phase 3', color: 'text-orange-600' },
+    { value: 4, label: 'Phase 4', color: 'text-green-600' },
+    { value: 5, label: 'Phase 5', color: 'text-red-600' },
+    { value: 6, label: 'Phase 6', color: 'text-yellow-600' },
+    { value: 7, label: 'Phase 7', color: 'text-pink-600' },
+    { value: 8, label: 'Phase 8', color: 'text-indigo-600' },
+    { value: 9, label: 'Phase 9', color: 'text-gray-600' },
+  ];
+
+  const handleProjectEditStart = (project: Project) => {
+    setEditingProject(project.id);
+    setProjectEditForm({
+      name: project.name,
+      description: project.description || '',
+    });
+  };
+
+  const handleProjectEditSave = () => {
+    if (editingProject && projectEditForm.name.trim()) {
+      onUpdateProject(editingProject, {
+        name: projectEditForm.name.trim(),
+        description: projectEditForm.description.trim(),
+      });
+      setEditingProject(null);
+    }
+  };
+
+  const handleProjectEditCancel = () => {
+    setEditingProject(null);
+    setProjectEditForm({ name: '', description: '' });
+  };
+
+  const handleAddProjectSave = () => {
+    if (newProjectForm.name.trim()) {
+      onAddProject({
+        name: newProjectForm.name.trim(),
+        description: newProjectForm.description.trim(),
+        isSelected: false,
+      });
+      setNewProjectForm({ name: '', description: '' });
+      setShowAddProject(false);
+    }
+  };
+
+  const handleProjectSelect = (projectId: string) => {
+    onUpdateProject(projectId, { isSelected: true });
+  };
+
   const handleEpicEditStart = (epic: Epic) => {
     setEditingEpic(epic.id);
     setEpicEditForm({
       name: epic.name,
       description: epic.description || '',
       color: epic.color,
+      confidence: epic.confidence,
+      phase: epic.phase,
+      startDate: epic.startDate.toISOString().split('T')[0],
+      endDate: epic.endDate.toISOString().split('T')[0],
+      progress: epic.progress,
     });
   };
 
@@ -91,6 +177,11 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
         name: epicEditForm.name.trim(),
         description: epicEditForm.description.trim(),
         color: epicEditForm.color,
+        confidence: epicEditForm.confidence,
+        phase: epicEditForm.phase,
+        startDate: new Date(epicEditForm.startDate),
+        endDate: new Date(epicEditForm.endDate),
+        progress: epicEditForm.progress,
       });
       setEditingEpic(null);
     }
@@ -98,7 +189,16 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
 
   const handleEpicEditCancel = () => {
     setEditingEpic(null);
-    setEpicEditForm({ name: '', description: '', color: '' });
+    setEpicEditForm({
+      name: '',
+      description: '',
+      color: '',
+      confidence: 'medium',
+      phase: 1,
+      startDate: '',
+      endDate: '',
+      progress: 0,
+    });
   };
 
   const handleSprintEditStart = (sprint: Sprint) => {
@@ -127,7 +227,13 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
 
   const handleSprintEditCancel = () => {
     setEditingSprintId(null);
-    setSprintEditForm({ name: '', description: '', startDate: '', endDate: '', isActive: false });
+    setSprintEditForm({
+      name: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      isActive: false,
+    });
   };
 
   const handleAddSprintSave = () => {
@@ -149,6 +255,20 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
     onUpdateSprint(sprintId, { isSelected: true });
   };
 
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const getConfidenceDisplay = (confidence: string) => {
+    const option = confidenceOptions.find(opt => opt.value === confidence);
+    return option ? { label: option.label, color: option.color } : { label: 'Medium', color: 'text-yellow-600' };
+  };
+
+  const getPhaseDisplay = (phase: number) => {
+    const option = phaseOptions.find(opt => opt.value === phase);
+    return option ? { label: option.label, color: option.color } : { label: 'Phase 1', color: 'text-blue-600' };
+  };
+
   return (
     <>
       {/* Narrow Strip - Fixed positioning below header */}
@@ -156,27 +276,59 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0`}
       style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}>
+        
+        {/* View Toggle */}
+        <div className="border-b border-slate-600">
+          <button
+            onClick={() => {
+              onViewChange('kanban');
+              setActiveSection(null);
+            }}
+            className={`w-full h-12 flex items-center justify-center text-white transition-colors ${
+              currentView === 'kanban' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+            }`}
+            title="Kanban View"
+          >
+            <Kanban className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => {
+              onViewChange('planning');
+              setActiveSection(null);
+            }}
+            className={`w-full h-12 flex items-center justify-center text-white transition-colors ${
+              currentView === 'planning' ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'
+            } hidden md:flex`}
+            title="Planning View"
+          >
+            <Calendar className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Menu Sections */}
+        <button
+          onClick={() => setActiveSection(activeSection === 'projects' ? null : 'projects')}
+          className={`flex-1 flex items-center justify-center text-white transition-colors ${
+            activeSection === 'projects' ? 'bg-slate-600' : 'bg-slate-700 hover:bg-slate-600'
+          }`}
+          title="Projects"
+        >
+          <FolderOpen className="h-4 w-4" />
+        </button>
+        
         <button
           onClick={() => {
-            onViewChange('kanban');
+            onViewChange('epics');
             setActiveSection(null);
           }}
           className={`flex-1 flex items-center justify-center text-white transition-colors ${
-            currentView === 'kanban' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+            currentView === 'epics' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
           }`}
-          title="Kanban"
+          title="Epic Planning"
         >
-          <Kanban className="h-4 w-4 md:h-5 md:w-5" />
+          <Target className="h-4 w-4" />
         </button>
-        <button
-          onClick={() => setActiveSection(activeSection === 'epics' ? null : 'epics')}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
-            activeSection === 'epics' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-          title="Epics"
-        >
-          <span className="text-xs font-bold transform -rotate-90 whitespace-nowrap">EPICS</span>
-        </button>
+        
         <button
           onClick={() => setActiveSection(activeSection === 'sprints' ? null : 'sprints')}
           className={`flex-1 flex items-center justify-center text-white transition-colors ${
@@ -184,20 +336,9 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
           }`}
           title="Sprints"
         >
-          <span className="text-xs font-bold transform -rotate-90 whitespace-nowrap">SPRINTS</span>
+          <Layers className="h-4 w-4" />
         </button>
-        <button
-          onClick={() => {
-            onViewChange('planning');
-            setActiveSection(null);
-          }}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
-            currentView === 'planning' ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'
-          } hidden md:flex`}
-          title="Planning"
-        >
-          <span className="text-xs font-bold transform -rotate-90 whitespace-nowrap">PLANNING</span>
-        </button>
+        
         <button
           onClick={() => {
             onViewChange('documentation');
@@ -206,9 +347,9 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
           className={`flex-1 flex items-center justify-center text-white transition-colors ${
             currentView === 'documentation' ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'
           }`}
-          title="Documentation"
+          title="Documents"
         >
-          <FileText className="h-4 w-4 md:h-5 md:w-5" />
+          <FileText className="h-4 w-4" />
         </button>
       </div>
 
@@ -232,12 +373,14 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
           />
           
           {/* Panel */}
-          <div className="fixed left-12 md:left-16 w-72 md:w-80 bg-white shadow-lg z-50 transform transition-transform max-w-[calc(100vw-3rem)] md:max-w-none"
+          <div className="fixed left-12 md:left-16 w-80 md:w-96 bg-white shadow-lg z-50 transform transition-transform max-w-[calc(100vw-3rem)] md:max-w-none"
                style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}>
             <div className="p-3 md:p-4 border-b flex items-center justify-between">
               <h2 className="text-base md:text-lg font-semibold">
+                {activeSection === 'projects' && 'Projects'}
                 {activeSection === 'epics' && 'Manage Epics'}
                 {activeSection === 'sprints' && 'Manage Sprints'}
+                {activeSection === 'documents' && 'Documents'}
               </h2>
               <Button variant="ghost" size="sm" onClick={() => setActiveSection(null)}>
                 <X className="h-4 w-4" />
@@ -245,6 +388,105 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
             </div>
 
             <div className="p-3 md:p-4 space-y-4 h-full overflow-y-auto">
+              {/* Projects Section */}
+              {activeSection === 'projects' && (
+                <Card className="p-3">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-medium text-gray-900">Projects</h3>
+                      <Button size="sm" onClick={() => setShowAddProject(true)} className="gap-1">
+                        <Plus className="h-3 w-3" />
+                        Add Project
+                      </Button>
+                    </div>
+
+                    {/* Add Project Form */}
+                    {showAddProject && (
+                      <div className="border rounded-lg p-2 space-y-2">
+                        <Input
+                          value={newProjectForm.name}
+                          onChange={(e) => setNewProjectForm(prev => ({ ...prev, name: e.target.value }))}
+                          placeholder="Project name"
+                          className="text-sm"
+                        />
+                        <Textarea
+                          value={newProjectForm.description}
+                          onChange={(e) => setNewProjectForm(prev => ({ ...prev, description: e.target.value }))}
+                          placeholder="Project description"
+                          rows={2}
+                          className="text-sm"
+                        />
+                        <div className="flex gap-1">
+                          <Button size="sm" onClick={handleAddProjectSave} className="text-xs h-6">Save</Button>
+                          <Button size="sm" variant="outline" onClick={() => setShowAddProject(false)} className="text-xs h-6">Cancel</Button>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2">
+                      {projects.map(project => (
+                        <div key={project.id} className="border rounded p-2">
+                          {editingProject === project.id ? (
+                            <div className="space-y-2">
+                              <Input
+                                value={projectEditForm.name}
+                                onChange={(e) => setProjectEditForm(prev => ({ ...prev, name: e.target.value }))}
+                                placeholder="Project name"
+                                className="text-sm"
+                              />
+                              <Textarea
+                                value={projectEditForm.description}
+                                onChange={(e) => setProjectEditForm(prev => ({ ...prev, description: e.target.value }))}
+                                placeholder="Project description"
+                                rows={2}
+                                className="text-sm"
+                              />
+                              <div className="flex gap-1">
+                                <Button size="sm" onClick={handleProjectEditSave} className="text-xs h-6">Save</Button>
+                                <Button size="sm" variant="outline" onClick={handleProjectEditCancel} className="text-xs h-6">Cancel</Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div 
+                              className={`cursor-pointer p-1 rounded transition-colors ${
+                                project.isSelected ? 'bg-blue-50 border-blue-200 ring-2 ring-blue-300' : 'hover:bg-gray-50'
+                              }`}
+                              onClick={() => handleProjectSelect(project.id)}
+                            >
+                              <div className="flex items-center gap-2 mb-1">
+                                <FolderOpen className="h-3 w-3 text-gray-500" />
+                                <span className="font-medium text-xs">{project.name}</span>
+                              </div>
+                              {project.description && (
+                                <p className="text-xs text-gray-500 mb-1">{project.description}</p>
+                              )}
+                              <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
+                                <Button 
+                                  size="sm" 
+                                  variant="ghost" 
+                                  onClick={() => handleProjectEditStart(project)}
+                                  className="h-5 px-1"
+                                >
+                                  <Edit2 className="h-3 w-3" />
+                                </Button>
+                                <Button 
+                                  size="sm" 
+                                  variant="ghost" 
+                                  onClick={() => onDeleteProject(project.id)}
+                                  className="h-5 px-1 text-red-600 hover:text-red-700"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              )}
+
               {/* Epics Section */}
               {activeSection === 'epics' && (
                 <Card className="p-3">
@@ -257,36 +499,113 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
                       </Button>
                     </div>
                     
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {epics.map(epic => (
                         <div key={epic.id} className="border rounded-lg p-3">
                           {editingEpic === epic.id ? (
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                               <Input
                                 value={epicEditForm.name}
                                 onChange={(e) => setEpicEditForm(prev => ({ ...prev, name: e.target.value }))}
                                 placeholder="Epic name"
+                                className="text-sm"
                               />
                               <Textarea
                                 value={epicEditForm.description}
                                 onChange={(e) => setEpicEditForm(prev => ({ ...prev, description: e.target.value }))}
                                 placeholder="Epic description"
                                 rows={2}
+                                className="text-sm"
                               />
-                              <div className="flex gap-1 flex-wrap">
-                                {colorOptions.map(color => (
-                                  <button
-                                    key={color}
-                                    onClick={() => setEpicEditForm(prev => ({ ...prev, color }))}
-                                    className={`w-6 h-6 rounded-full ${color} ${
-                                      epicEditForm.color === color ? 'ring-2 ring-gray-400' : ''
-                                    }`}
-                                  />
-                                ))}
+                              
+                              {/* Color Selection */}
+                              <div className="space-y-2">
+                                <label className="text-xs font-medium">Color</label>
+                                <div className="flex gap-1 flex-wrap">
+                                  {colorOptions.map(color => (
+                                    <button
+                                      key={color}
+                                      onClick={() => setEpicEditForm(prev => ({ ...prev, color }))}
+                                      className={`w-6 h-6 rounded-full ${color} ${
+                                        epicEditForm.color === color ? 'ring-2 ring-gray-400' : ''
+                                      }`}
+                                    />
+                                  ))}
+                                </div>
                               </div>
+
+                              {/* Confidence and Phase */}
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium">Confidence</label>
+                                  <Select value={epicEditForm.confidence} onValueChange={(value: 'low' | 'medium' | 'high') => setEpicEditForm(prev => ({ ...prev, confidence: value }))}>
+                                    <SelectTrigger className="h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {confidenceOptions.map(option => (
+                                        <SelectItem key={option.value} value={option.value}>
+                                          <span className={option.color}>{option.label}</span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium">Phase</label>
+                                  <Select value={epicEditForm.phase.toString()} onValueChange={(value) => setEpicEditForm(prev => ({ ...prev, phase: parseInt(value) }))}>
+                                    <SelectTrigger className="h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {phaseOptions.map(option => (
+                                        <SelectItem key={option.value} value={option.value.toString()}>
+                                          <span className={option.color}>{option.label}</span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+
+                              {/* Dates */}
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium">Start Date</label>
+                                  <Input
+                                    type="date"
+                                    value={epicEditForm.startDate}
+                                    onChange={(e) => setEpicEditForm(prev => ({ ...prev, startDate: e.target.value }))}
+                                    className="text-xs h-8"
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium">End Date</label>
+                                  <Input
+                                    type="date"
+                                    value={epicEditForm.endDate}
+                                    onChange={(e) => setEpicEditForm(prev => ({ ...prev, endDate: e.target.value }))}
+                                    className="text-xs h-8"
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Progress */}
+                              <div className="space-y-1">
+                                <label className="text-xs font-medium">Progress (%)</label>
+                                <Input
+                                  type="number"
+                                  min="0"
+                                  max="100"
+                                  value={epicEditForm.progress}
+                                  onChange={(e) => setEpicEditForm(prev => ({ ...prev, progress: parseInt(e.target.value) || 0 }))}
+                                  className="text-xs h-8"
+                                />
+                              </div>
+
                               <div className="flex gap-2">
-                                <Button size="sm" onClick={handleEpicEditSave}>Save</Button>
-                                <Button size="sm" variant="outline" onClick={handleEpicEditCancel}>Cancel</Button>
+                                <Button size="sm" onClick={handleEpicEditSave} className="text-xs">Save</Button>
+                                <Button size="sm" variant="outline" onClick={handleEpicEditCancel} className="text-xs">Cancel</Button>
                               </div>
                             </div>
                           ) : (
@@ -296,13 +615,49 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
                               }`}
                               onClick={() => onUpdateEpic(epic.id, { isSelected: !epic.isSelected })}
                             >
-                              <div className="flex items-center gap-2 mb-1">
+                              <div className="flex items-center gap-2 mb-2">
                                 <div className={`w-3 h-3 rounded-full ${epic.color}`}></div>
                                 <span className="font-medium text-sm">{epic.name}</span>
                               </div>
+                              
                               {epic.description && (
                                 <p className="text-xs text-gray-600 mb-2">{epic.description}</p>
                               )}
+
+                              {/* Epic Details */}
+                              <div className="space-y-1 mb-2">
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="text-gray-500">Confidence:</span>
+                                  <span className={getConfidenceDisplay(epic.confidence).color}>
+                                    {getConfidenceDisplay(epic.confidence).label}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="text-gray-500">Phase:</span>
+                                  <span className={getPhaseDisplay(epic.phase).color}>
+                                    {getPhaseDisplay(epic.phase).label}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="text-gray-500">Timeline:</span>
+                                  <span className="text-gray-700">
+                                    {formatDate(epic.startDate)} - {formatDate(epic.endDate)}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="text-gray-500">Progress:</span>
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-12 h-2 bg-gray-200 rounded-full">
+                                      <div 
+                                        className="h-2 bg-blue-500 rounded-full" 
+                                        style={{ width: `${epic.progress}%` }}
+                                      ></div>
+                                    </div>
+                                    <span className="text-gray-700">{epic.progress}%</span>
+                                  </div>
+                                </div>
+                              </div>
+
                               <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
                                 <Button 
                                   size="sm" 

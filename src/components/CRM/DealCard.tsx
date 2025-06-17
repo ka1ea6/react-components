@@ -9,10 +9,38 @@ type DealCardProps = {
   customer: Partial<Customer> | undefined
   categories: DealCategory[]
   onClick: () => void
+  compact?: boolean
 }
 
-export function DealCard({ deal, customer, categories, onClick }: DealCardProps) {
+export function DealCard({ deal, customer, categories, onClick, compact = false }: DealCardProps) {
   const propositionCategory = categories.find((c) => c.type === "proposition" && (deal.categories ?? []).includes(c.id))
+
+  if  (compact) {
+    return (
+      <Card
+        className="mb-1 cursor-pointer hover:shadow-md transition-shadow border-l-4 border-l-accent"
+        onClick={onClick}
+      >
+        <CardHeader className="pb-1 pt-2">
+          <CardTitle className="text-sm font-semibold text-foreground">{customer?.name}</CardTitle>
+                  <p className="text-sm text-gray-500 mt-1">{deal.description}</p>
+
+        </CardHeader>
+        <CardContent className="text-xs text-gray-500 pb-2">
+          <div className="flex justify-between items-center mb-1">
+            {/* <div className="flex items-center">
+              <UserIcon className="w-3 h-3 mr-1" />
+              <span>{(deal.assignee as User).name}</span>
+            </div> */}
+            <div className="flex items-center text-sm font-bold text-green-600">
+            <span>£{deal.value.toLocaleString()}</span>
+          </div>
+          </div>
+          
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card

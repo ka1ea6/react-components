@@ -24,47 +24,9 @@ const mockTask: Task = {
   type: 'story',
   assignee: 'John Doe',
   epicId: '1',
+  points: 8,
   createdAt: new Date('2024-01-15'),
 };
-
-const mockSprints = [
-  {
-    id: 'backlog',
-    name: 'Backlog',
-    description: 'Tasks not yet assigned to a sprint',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-12-31'),
-    isActive: false,
-    isSelected: false,
-  },
-  {
-    id: 'all-tasks',
-    name: 'All Tasks',
-    description: 'View all tasks across all sprints',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-12-31'),
-    isActive: false,
-    isSelected: true,
-  },
-  {
-    id: '1',
-    name: 'Sprint 1',
-    description: 'Initial development phase',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-01-14'),
-    isActive: false,
-    isSelected: false,
-  },
-  {
-    id: '2',
-    name: 'Sprint 2',
-    description: 'Feature development',
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-01-28'),
-    isActive: true,
-    isSelected: false,
-  },
-];
 
 const mockEpics: Epic[] = [
   {
@@ -72,12 +34,24 @@ const mockEpics: Epic[] = [
     name: 'User Authentication',
     color: 'bg-blue-500',
     description: 'Implement secure user authentication system',
+    confidence: 'high' as const,
+    phase: 2,
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-02-15'),
+    progress: 75,
+    isSelected: true,
   },
   {
     id: '2',
     name: 'Dashboard Features',
     color: 'bg-green-500',
     description: 'Build comprehensive dashboard functionality',
+    confidence: 'medium' as const,
+    phase: 1,
+    startDate: new Date('2024-02-01'),
+    endDate: new Date('2024-03-15'),
+    progress: 30,
+    isSelected: true,
   },
 ];
 
@@ -85,7 +59,6 @@ export const Default: Story = {
   args: {
     task: mockTask,
     epics: mockEpics,
-    sprints: mockSprints,
     lastUpdated: new Date(),
     onUpdateTask: () => {},
     onClose: () => {},
@@ -103,7 +76,6 @@ export const HighPriorityBug: Story = {
       description: 'Users are not being redirected after successful login',
     },
     epics: mockEpics,
-    sprints: mockSprints,
     lastUpdated: new Date(),
     onUpdateTask: () => {},
     onClose: () => {},

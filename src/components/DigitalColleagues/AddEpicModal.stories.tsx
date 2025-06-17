@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { AddEpicModal } from './AddEpicModal';
 
 const meta: Meta<typeof AddEpicModal> = {
-  title: 'Digital Colleagues/AddEpicModal',
+  title:'Digital Colleagues/AddEpicModal',
   component: AddEpicModal,
   parameters: {
     layout: 'centered',

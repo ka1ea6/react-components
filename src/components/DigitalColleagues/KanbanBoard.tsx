@@ -16,12 +16,25 @@ import { TeamSwitcher } from './TeamSwitcher';
 import { Kanban, Plus, Menu, MessageSquare, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { EpicsView } from './EpicsView';
+
+export interface Project {
+  id: string;
+  name: string;
+  description?: string;
+  isSelected?: boolean;
+}
 
 export interface Epic {
   id: string;
   name: string;
   color: string;
   description?: string;
+  confidence: 'low' | 'medium' | 'high';
+  phase: number; // 1-9
+  startDate: Date;
+  endDate: Date;
+  progress: number; // 0-100
   isSelected?: boolean;
 }
 
@@ -42,11 +55,33 @@ export interface Task {
   status: 'todo' | 'in-progress' | 'review' | 'done';
   priority: 'low' | 'medium' | 'high';
   type: 'story' | 'task' | 'bug' | 'spike';
+  points: number; // Story points
   epicId: string;
   sprintId?: string;
   assignee: string;
   createdAt: Date;
 }
+
+const initialProjects: Project[] = [
+  {
+    id: '1',
+    name: 'E-commerce Platform',
+    description: 'Main customer-facing e-commerce application',
+    isSelected: true,
+  },
+  {
+    id: '2',
+    name: 'Admin Dashboard',
+    description: 'Internal administration and analytics dashboard',
+    isSelected: false,
+  },
+  {
+    id: '3',
+    name: 'Mobile App',
+    description: 'Native mobile application for iOS and Android',
+    isSelected: false,
+  },
+];
 
 const initialEpics: Epic[] = [
   {
@@ -54,6 +89,11 @@ const initialEpics: Epic[] = [
     name: 'User Authentication',
     color: 'bg-blue-500',
     description: 'Implement secure user authentication system',
+    confidence: 'high',
+    phase: 2, // development
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-02-15'),
+    progress: 75,
     isSelected: true,
   },
   {
@@ -61,6 +101,11 @@ const initialEpics: Epic[] = [
     name: 'Dashboard Features',
     color: 'bg-green-500',
     description: 'Build comprehensive dashboard functionality',
+    confidence: 'medium',
+    phase: 1, // planning
+    startDate: new Date('2024-02-01'),
+    endDate: new Date('2024-03-15'),
+    progress: 30,
     isSelected: true,
   },
   {
@@ -68,6 +113,11 @@ const initialEpics: Epic[] = [
     name: 'Mobile Optimization',
     color: 'bg-purple-500',
     description: 'Optimize application for mobile devices',
+    confidence: 'low',
+    phase: 1, // planning
+    startDate: new Date('2024-03-01'),
+    endDate: new Date('2024-04-15'),
+    progress: 10,
     isSelected: true,
   },
   {
@@ -75,6 +125,11 @@ const initialEpics: Epic[] = [
     name: 'Performance Improvements',
     color: 'bg-orange-500',
     description: 'Enhance application performance and speed',
+    confidence: 'high',
+    phase: 3, // testing
+    startDate: new Date('2024-01-15'),
+    endDate: new Date('2024-02-28'),
+    progress: 90,
     isSelected: true,
   },
 ];
@@ -126,6 +181,7 @@ const initialTasks: Task[] = [
     status: 'todo',
     priority: 'high',
     type: 'story',
+    points: 5,
     epicId: '1',
     sprintId: '2',
     assignee: 'John Doe',
@@ -138,6 +194,7 @@ const initialTasks: Task[] = [
     status: 'review',
     priority: 'high',
     type: 'task',
+    points: 8,
     epicId: '1',
     sprintId: '2',
     assignee: 'Jane Smith',
@@ -150,6 +207,7 @@ const initialTasks: Task[] = [
     status: 'todo',
     priority: 'medium',
     type: 'story',
+    points: 13,
     epicId: '2',
     sprintId: '2',
     assignee: 'Mike Johnson',
@@ -162,6 +220,7 @@ const initialTasks: Task[] = [
     status: 'done',
     priority: 'high',
     type: 'bug',
+    points: 3,
     epicId: '1',
     sprintId: '1',
     assignee: 'Sarah Wilson',
@@ -174,6 +233,7 @@ const initialTasks: Task[] = [
     status: 'in-progress',
     priority: 'medium',
     type: 'spike',
+    points: 5,
     epicId: '3',
     assignee: 'Alex Brown',
     createdAt: new Date('2024-01-18'),
@@ -185,6 +245,7 @@ const initialTasks: Task[] = [
     status: 'review',
     priority: 'medium',
     type: 'story',
+    points: 8,
     epicId: '2',
     sprintId: '2',
     assignee: 'Emma Davis',
@@ -197,6 +258,7 @@ const initialTasks: Task[] = [
     status: 'done',
     priority: 'high',
     type: 'task',
+    points: 13,
     epicId: '4',
     sprintId: '1',
     assignee: 'Tom Wilson',
@@ -208,11 +270,12 @@ export const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [epics, setEpics] = useState<Epic[]>(initialEpics);
   const [sprints, setSprints] = useState<Sprint[]>(initialSprints);
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isAddEpicModalOpen, setIsAddEpicModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
-  const [currentView, setCurrentView] = useState<'kanban' | 'planning' | 'documentation'>('kanban');
+  const [currentView, setCurrentView] = useState<'kanban' | 'planning' | 'documentation' | 'epics'>('kanban');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -273,6 +336,35 @@ export const KanbanBoard: React.FC = () => {
     }
   };
 
+  const handleAddProject = (newProject: Omit<Project, 'id'>) => {
+    const project: Project = { ...newProject, id: Date.now().toString(), isSelected: false };
+    setProjects(prev => [...prev, project]);
+  };
+
+  const handleUpdateProject = (projectId: string, updates: Partial<Project>) => {
+    setProjects(prev =>
+      prev.map(project => {
+        if (project.id === projectId) {
+          // If selecting this project, deselect all others and navigate
+          if (updates.isSelected) {
+            router.push(`/kanban/${projectId}`);
+            return { ...project, ...updates };
+          }
+          return { ...project, ...updates };
+        }
+        // If selecting a new project, deselect this one
+        if (updates.isSelected && projectId !== project.id) {
+          return { ...project, isSelected: false };
+        }
+        return project;
+      })
+    );
+  };
+
+  const handleDeleteProject = (projectId: string) => {
+    setProjects(prev => prev.filter(project => project.id !== projectId));
+  };
+
   const handleAddEpic = (newEpic: Omit<Epic, 'id'>) => {
     const epic: Epic = { ...newEpic, id: Date.now().toString(), isSelected: true };
     setEpics(prev => [...prev, epic]);
@@ -330,7 +422,7 @@ export const KanbanBoard: React.FC = () => {
     setSelectedTask(task);
   };
 
-  const handleViewChange = (view: 'kanban' | 'planning' | 'documentation') => {
+  const handleViewChange = (view: 'kanban' | 'planning' | 'documentation' | 'epics') => {
     // Hide planning view on mobile
     if (view === 'planning' && window.innerWidth < 768) {
       return;
@@ -356,6 +448,12 @@ export const KanbanBoard: React.FC = () => {
     // In a real app, this would update the current team context
   };
 
+  const handleAddTaskToEpic = (epicId: string) => {
+    // Set the epic in the add task modal and open it
+    setIsAddTaskModalOpen(true);
+    // You could enhance this to pre-select the epic
+  };
+
   const columns = [
     { id: 'todo', title: 'To Do', status: 'todo' as const },
     { id: 'in-progress', title: 'In Progress', status: 'in-progress' as const },
@@ -371,6 +469,8 @@ export const KanbanBoard: React.FC = () => {
         return 'Sprint Planning';
       case 'documentation':
         return 'Documentation';
+      case 'epics':
+        return 'Epic Planning';
       default:
         return 'Project Board';
     }
@@ -401,6 +501,7 @@ export const KanbanBoard: React.FC = () => {
         isRightSidebarOpen={false}
         onToggleRightSidebar={() => {}}
         onToggleLeftSidebar={handleToggleMobileMenu}
+        onToggleNotifications={() => {}}
       />
 
       {/* Top Menu - Below Header */}
@@ -459,7 +560,7 @@ export const KanbanBoard: React.FC = () => {
               )}
             </div>
 
-            {currentView !== 'documentation' && (
+            {currentView === 'kanban' && (
               <Button
                 onClick={() => setIsAddTaskModalOpen(true)}
                 className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
@@ -474,9 +575,13 @@ export const KanbanBoard: React.FC = () => {
 
       {/* Main Content Area with Sidebar */}
       <ManagementSidebar
+        projects={projects}
         epics={epics}
         sprints={sprints}
         currentView={currentView}
+        onUpdateProject={handleUpdateProject}
+        onDeleteProject={handleDeleteProject}
+        onAddProject={handleAddProject}
         onUpdateEpic={handleUpdateEpic}
         onDeleteEpic={handleDeleteEpic}
         onAddEpic={() => setIsAddEpicModalOpen(true)}
@@ -561,8 +666,20 @@ export const KanbanBoard: React.FC = () => {
                   sprints={sprints}
                   onUpdateTask={handleUpdateTask}
                   onTaskClick={handleTaskClick}
+                  onAddSprint={handleAddSprint}
                 />
               </div>
+            ) : currentView === 'epics' ? (
+              /* Epics View */
+              <EpicsView
+                tasks={tasks}
+                epics={epics}
+                sprints={sprints}
+                onUpdateTask={handleUpdateTask}
+                onTaskClick={handleTaskClick}
+                onAddTaskToEpic={handleAddTaskToEpic}
+                onAddEpic={() => setIsAddEpicModalOpen(true)}
+              />
             ) : (
               /* Documentation View */
               <DocumentationView />

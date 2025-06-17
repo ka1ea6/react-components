@@ -3,28 +3,46 @@ import React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, User, Trash2 } from 'lucide-react';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Calendar, Clock, User, Trash2, BookOpen, Bug, Zap, AlertCircle } from 'lucide-react';
 import { Task, Epic, Sprint } from './KanbanBoard';
 import { TaskSelect } from './TaskSelect';
 import { SearchableSelect } from './SearchableSelect';
-import { EditableField } from './EditableField';
 
 const taskTypes = [{
   value: 'story',
   label: 'Story',
-  color: 'bg-blue-100 text-blue-800'
+  color: 'bg-blue-100 text-blue-800',
+  icon: BookOpen
 }, {
   value: 'task',
   label: 'Task',
-  color: 'bg-gray-100 text-gray-800'
+  color: 'bg-gray-100 text-gray-800',
+  icon: AlertCircle
 }, {
   value: 'bug',
   label: 'Bug',
-  color: 'bg-red-100 text-red-800'
+  color: 'bg-red-100 text-red-800',
+  icon: Bug
 }, {
   value: 'spike',
   label: 'Spike',
-  color: 'bg-purple-100 text-purple-800'
+  color: 'bg-purple-100 text-purple-800',
+  icon: Zap
+}];
+
+const priorities = [{
+  value: 'low',
+  label: 'Low',
+  color: 'bg-green-100 text-green-800'
+}, {
+  value: 'medium',
+  label: 'Medium',
+  color: 'bg-yellow-100 text-yellow-800'
+}, {
+  value: 'high',
+  label: 'High',
+  color: 'bg-red-100 text-red-800'
 }];
 
 const teamMembers = [{
@@ -59,7 +77,6 @@ const teamMembers = [{
   label: 'Unassigned'
 }];
 
-
 interface TaskSidebarProps {
   task: Task;
   epics: Epic[];
@@ -86,10 +103,10 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* Top section with form fields */}
-      <div className="space-y-2">
+      <div className="space-y-4">
         {/* Status */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Status</Label>
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Status</Label>
           <TaskSelect 
             label="" 
             value={task.status} 
@@ -107,43 +124,70 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
           />
         </div>
 
-        {/* Type */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Type</Label>
-          <TaskSelect 
-            label="" 
+        {/* Type with Button Group */}
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Type</Label>
+          <ToggleGroup 
+            type="single" 
             value={task.type} 
-            onValueChange={value => onUpdateTask('type', value)} 
-            options={taskTypes.map(type => ({
-              value: type.value,
-              label: type.label
-            }))} 
-          />
+            onValueChange={(value) => value && onUpdateTask('type', value)}
+            className="grid grid-cols-2 gap-1"
+          >
+            {taskTypes.map(type => {
+              const IconComponent = type.icon;
+              return (
+                <ToggleGroupItem 
+                  key={type.value} 
+                  value={type.value}
+                  className="flex items-center gap-1 text-xs h-8 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                  size="sm"
+                >
+                  <IconComponent className="h-3 w-3" />
+                  {type.label}
+                </ToggleGroupItem>
+              );
+            })}
+          </ToggleGroup>
         </div>
 
-        {/* Priority */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Priority</Label>
-          <TaskSelect 
-            label="" 
+        {/* Priority with Button Group */}
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Priority</Label>
+          <ToggleGroup 
+            type="single" 
             value={task.priority} 
-            onValueChange={value => onUpdateTask('priority', value)} 
-            options={[{
-              value: 'low',
-              label: 'Low'
-            }, {
-              value: 'medium',
-              label: 'Medium'
-            }, {
-              value: 'high',
-              label: 'High'
-            }]} 
+            onValueChange={(value) => value && onUpdateTask('priority', value)}
+            className="grid grid-cols-3 gap-1"
+          >
+            {priorities.map(priority => (
+              <ToggleGroupItem 
+                key={priority.value} 
+                value={priority.value}
+                className="text-xs h-8 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                size="sm"
+              >
+                {priority.label}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        </div>
+
+        {/* Story Points */}
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Story Points</Label>
+          <input
+            type="number"
+            min="1"
+            max="100"
+            value={task.points || 1}
+            onChange={(e) => onUpdateTask('points', e.target.value)}
+            className="w-full h-8 px-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         {/* Epic */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Epic</Label>
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Epic</Label>
           <TaskSelect 
             label="" 
             value={task.epicId} 
@@ -158,8 +202,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
         </div>
 
         {/* Sprint */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Sprint</Label>
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Sprint</Label>
           <TaskSelect 
             label="" 
             value={task.sprintId || 'none'} 
@@ -175,8 +219,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
         </div>
 
         {/* Assignee */}
-        <div className="flex items-center justify-between">
-          <Label className="text-xs text-gray-600 w-16">Assignee</Label>
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-600">Assignee</Label>
           <SearchableSelect 
             label="" 
             value={task.assignee} 

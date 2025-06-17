@@ -1,6 +1,7 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { KanbanBoard } from './KanbanBoard';
 
 const meta: Meta<typeof KanbanBoard> = {

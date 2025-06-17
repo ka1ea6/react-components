@@ -3,13 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { TaskCard } from './TaskCard';
 
-const mockEpic = {
-  id: 'epic1',
-  name: 'User Authentication',
-  color: 'bg-blue-500',
-  description: 'Implement secure user authentication system',
-};
-
 const meta: Meta<typeof TaskCard> = {
   title: 'Digital Colleagues/TaskCard',
   component: TaskCard,
@@ -17,347 +10,387 @@ const meta: Meta<typeof TaskCard> = {
     layout: 'padded',
   },
   argTypes: {
-    task: {
-      control: 'object',
-      description: 'Task data object',
-    },
-    epic: {
-      control: 'object',
-      description: 'Epic data object',
-    },
-    isCompact: {
-      control: 'boolean',
-      description: 'Whether to show compact version',
-    },
-    onDragStart: {
-      action: 'drag started',
-      description: 'Function called when drag starts',
-    },
-    onTaskClick: {
-      action: 'task clicked',
-      description: 'Function called when task is clicked',
-    },
+    onDragStart: { action: 'drag started' },
+    onTaskClick: { action: 'task clicked' },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof TaskCard>;
 
-const baseTask = {
+const mockEpic = {
   id: '1',
-  epicId: 'epic1',
-  createdAt: new Date('2024-01-15T10:00:00Z'),
+  name: 'User Authentication',
+  color: 'bg-blue-500',
+  description: 'Implement secure user authentication system',
+  confidence: 'high' as const,
+  phase: 2,
+  startDate: new Date('2024-01-01'),
+  endDate: new Date('2024-02-15'),
+  progress: 75,
+  isSelected: true,
 };
 
 export const HighPriorityStory: Story = {
   args: {
     task: {
-      ...baseTask,
-      title: 'Implement user authentication system',
-      description: 'Create a secure login system with JWT tokens and multi-factor authentication',
+      id: '1',
+      title: 'Design user authentication system',
+      description: 'Create wireframes and mockups for the login interface with multi-factor authentication support',
       status: 'in-progress',
       priority: 'high',
       type: 'story',
       assignee: 'John Doe',
+      epicId: '1',
+      points: 8,
+      createdAt: new Date('2024-01-15'),
     },
     epic: mockEpic,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
 export const MediumPriorityTask: Story = {
   args: {
     task: {
-      ...baseTask,
       id: '2',
-      title: 'Design user dashboard layout',
-      description: 'Create wireframes and mockups for the main dashboard interface',
+      title: 'Implement user registration',
+      description: 'Build the registration form with validation',
       status: 'todo',
       priority: 'medium',
       type: 'task',
       assignee: 'Jane Smith',
+      epicId: '1',
+      points: 5,
+      createdAt: new Date('2024-01-16'),
     },
     epic: mockEpic,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
 export const LowPriorityBug: Story = {
   args: {
     task: {
-      ...baseTask,
       id: '3',
-      title: 'Fix minor UI glitch in header',
-      description: 'Navigation menu sometimes flickers on mobile devices',
+      title: 'Fix login button alignment',
+      description: 'Button is slightly off-center on mobile devices',
       status: 'done',
       priority: 'low',
       type: 'bug',
-      assignee: 'Bob Wilson',
+      assignee: 'Mike Johnson',
+      epicId: '1',
+      points: 2,
+      createdAt: new Date('2024-01-17'),
     },
     epic: mockEpic,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
 export const SpikeTask: Story = {
   args: {
     task: {
-      ...baseTask,
       id: '4',
-      title: 'Research new authentication providers',
-      description: 'Investigate options for additional OAuth providers like Microsoft and Apple',
+      title: 'Research OAuth providers',
+      description: 'Investigate different OAuth integration options',
       status: 'review',
       priority: 'medium',
       type: 'spike',
-      assignee: 'Alice Johnson',
+      assignee: 'Alex Brown',
+      epicId: '1',
+      points: 3,
+      createdAt: new Date('2024-01-18'),
     },
     epic: mockEpic,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
-export const LongTitleAndDescription: Story = {
+export const CompactView: Story = {
   args: {
     task: {
-      ...baseTask,
       id: '5',
-      title: 'Implement comprehensive user authentication system with multi-factor authentication, password recovery, and social login integration across multiple platforms',
-      description: 'This is a very detailed and comprehensive task that involves creating a complete authentication system with multiple security features including email verification, SMS codes, biometric authentication, password recovery options, and integration with various social media platforms like Google, Facebook, GitHub, Microsoft, and Apple. The system should also include advanced security features like rate limiting, IP blocking, and suspicious activity detection.',
+      title: 'Update user profile page',
+      description: 'Add new fields and improve layout',
       status: 'in-progress',
       priority: 'high',
       type: 'story',
-      assignee: 'Alexander Johnson-Williams-Brown',
+      assignee: 'Sarah Wilson',
+      epicId: '1',
+      points: 8,
+      createdAt: new Date('2024-01-19'),
     },
     epic: mockEpic,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: true,
   },
 };
 
-export const CompactHighPriority: Story = {
+export const CompletedBug: Story = {
   args: {
     task: {
-      ...baseTask,
-      title: 'Critical security patch',
-      description: 'Fix SQL injection vulnerability in user input validation',
+      id: '6',
+      title: 'Fix security vulnerability',
+      description: 'Patch critical security issue in authentication',
       status: 'done',
       priority: 'high',
       type: 'bug',
-      assignee: 'Security Team',
+      assignee: 'Emma Davis',
+      epicId: '1',
+      points: 5,
+      createdAt: new Date('2024-01-20'),
     },
     epic: mockEpic,
-    isCompact: true,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
-export const CompactMediumPriority: Story = {
+export const CompletedTask: Story = {
   args: {
     task: {
-      ...baseTask,
-      id: '6',
-      title: 'Update documentation',
-      description: 'Refresh API documentation with latest changes',
+      id: '7',
+      title: 'Set up monitoring',
+      description: 'Configure application monitoring and alerts',
       status: 'done',
       priority: 'medium',
       type: 'task',
-      assignee: 'Tech Writer',
+      assignee: 'Tom Wilson',
+      epicId: '1',
+      points: 4,
+      createdAt: new Date('2024-01-21'),
     },
     epic: mockEpic,
-    isCompact: true,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
-export const CompactLowPriority: Story = {
+export const CompletedStory: Story = {
   args: {
     task: {
-      ...baseTask,
-      id: '7',
-      title: 'Optimize images',
-      description: 'Compress and optimize images for better performance',
+      id: '8',
+      title: 'Create user dashboard',
+      description: 'Build main dashboard interface for users',
       status: 'done',
       priority: 'low',
       type: 'task',
-      assignee: 'Designer',
+      assignee: 'Lisa Chen',
+      epicId: '1',
+      points: 13,
+      createdAt: new Date('2024-01-22'),
     },
     epic: mockEpic,
-    isCompact: true,
     onDragStart: action('onDragStart'),
     onTaskClick: action('onTaskClick'),
+    isCompact: false,
   },
 };
 
-export const AllTaskTypes: Story = {
+// Multiple tasks example
+export const MultipleTasksInColumn: Story = {
   render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <div className="space-y-3 w-80">
       <TaskCard
         task={{
-          ...baseTask,
-          title: 'User Story',
-          description: 'As a user, I want to be able to log in',
+          id: '1',
+          title: 'Design login interface',
+          description: 'Create wireframes and mockups',
           status: 'todo',
           priority: 'high',
           type: 'story',
-          assignee: 'Product Owner',
+          assignee: 'John Doe',
+          epicId: '1',
+          points: 8,
+          createdAt: new Date('2024-01-15'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={false}
       />
       <TaskCard
         task={{
-          ...baseTask,
           id: '2',
-          title: 'Development Task',
-          description: 'Implement login API endpoint',
+          title: 'Implement authentication',
+          description: 'Build backend authentication system',
           status: 'in-progress',
           priority: 'medium',
           type: 'task',
-          assignee: 'Developer',
+          assignee: 'Jane Smith',
+          epicId: '1',
+          points: 13,
+          createdAt: new Date('2024-01-16'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={false}
       />
       <TaskCard
         task={{
-          ...baseTask,
           id: '3',
-          title: 'Bug Fix',
-          description: 'Login button not working on mobile',
+          title: 'Fix login redirect bug',
+          description: 'Users not redirected after successful login',
           status: 'review',
           priority: 'high',
           type: 'bug',
-          assignee: 'QA Engineer',
+          assignee: 'Mike Johnson',
+          epicId: '1',
+          points: 3,
+          createdAt: new Date('2024-01-17'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={false}
       />
       <TaskCard
         task={{
-          ...baseTask,
           id: '4',
-          title: 'Research Spike',
-          description: 'Investigate best authentication practices',
+          title: 'Research OAuth options',
+          description: 'Investigate third-party OAuth providers',
           status: 'done',
           priority: 'low',
           type: 'spike',
-          assignee: 'Architect',
+          assignee: 'Alex Brown',
+          epicId: '1',
+          points: 2,
+          createdAt: new Date('2024-01-18'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={false}
       />
     </div>
   ),
-  parameters: {
-    layout: 'fullscreen',
-  },
 };
 
-export const AllPriorities: Story = {
+// Compact view showcase
+export const CompactViewShowcase: Story = {
   render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+    <div className="space-y-2 w-80">
       <TaskCard
         task={{
-          ...baseTask,
-          title: 'High Priority Task',
-          description: 'Critical security vulnerability that needs immediate attention',
+          id: '1',
+          title: 'Critical security patch',
+          description: 'Emergency fix for authentication vulnerability',
           status: 'in-progress',
           priority: 'high',
           type: 'bug',
-          assignee: 'Security Team',
+          assignee: 'John Doe',
+          epicId: '1',
+          points: 5,
+          createdAt: new Date('2024-01-15'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={true}
       />
       <TaskCard
         task={{
-          ...baseTask,
           id: '2',
-          title: 'Medium Priority Task',
-          description: 'Feature enhancement for better user experience',
+          title: 'Update documentation',
+          description: 'Refresh API documentation with latest changes',
           status: 'todo',
           priority: 'medium',
           type: 'story',
-          assignee: 'Product Team',
+          assignee: 'Jane Smith',
+          epicId: '1',
+          points: 3,
+          createdAt: new Date('2024-01-16'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={true}
       />
       <TaskCard
         task={{
-          ...baseTask,
           id: '3',
-          title: 'Low Priority Task',
-          description: 'Documentation update that can be done later',
+          title: 'Performance optimization',
+          description: 'Improve page load times',
           status: 'done',
           priority: 'low',
           type: 'task',
-          assignee: 'Tech Writer',
+          assignee: 'Mike Johnson',
+          epicId: '1',
+          points: 8,
+          createdAt: new Date('2024-01-17'),
         }}
         epic={mockEpic}
         onDragStart={action('onDragStart')}
         onTaskClick={action('onTaskClick')}
+        isCompact={true}
       />
     </div>
   ),
-  parameters: {
-    layout: 'fullscreen',
-  },
 };
 
-export const CompactVsRegular: Story = {
+// Different epic colors
+export const DifferentEpicColors: Story = {
   render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Regular Size</h3>
-        <TaskCard
-          task={{
-            ...baseTask,
-            title: 'Implement user authentication',
-            description: 'Create a secure login system with JWT tokens and session management',
-            status: 'in-progress',
-            priority: 'high',
-            type: 'story',
-            assignee: 'John Doe',
-          }}
-          epic={mockEpic}
-          onDragStart={action('onDragStart')}
-          onTaskClick={action('onTaskClick')}
-        />
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Compact Size</h3>
-        <TaskCard
-          task={{
-            ...baseTask,
-            title: 'Implement user authentication',
-            description: 'Create a secure login system with JWT tokens and session management',
-            status: 'done',
-            priority: 'high',
-            type: 'story',
-            assignee: 'John Doe',
-          }}
-          epic={mockEpic}
-          isCompact={true}
-          onDragStart={action('onDragStart')}
-          onTaskClick={action('onTaskClick')}
-        />
-      </div>
+    <div className="space-y-3 w-80">
+      <TaskCard
+        task={{
+          id: '1',
+          title: 'Blue epic task',
+          description: 'Task from blue colored epic',
+          status: 'in-progress',
+          priority: 'high',
+          type: 'story',
+          assignee: 'John Doe',
+          epicId: '1',
+          points: 5,
+          createdAt: new Date('2024-01-15'),
+        }}
+        epic={{
+          ...mockEpic,
+          id: '1',
+          name: 'Blue Epic',
+          color: 'bg-blue-500',
+        }}
+        onDragStart={action('onDragStart')}
+        onTaskClick={action('onTaskClick')}
+        isCompact={false}
+      />
+      <TaskCard
+        task={{
+          id: '2',
+          title: 'Green epic task',
+          description: 'Task from green colored epic',
+          status: 'done',
+          priority: 'high',
+          type: 'story',
+          assignee: 'Jane Smith',
+          epicId: '2',
+          points: 8,
+          createdAt: new Date('2024-01-16'),
+        }}
+        epic={{
+          ...mockEpic,
+          id: '2',
+          name: 'Green Epic',
+          color: 'bg-green-500',
+        }}
+        onDragStart={action('onDragStart')}
+        onTaskClick={action('onTaskClick')}
+        isCompact={false}
+      />
     </div>
   ),
-  parameters: {
-    layout: 'fullscreen',
-  },
 };
