@@ -22,6 +22,13 @@ export const Default: Story = {
   },
 }
 
+export const Compact: Story = {
+  args: {
+    ...Default.args,
+  compact: true,
+  },
+  }
+
 export const LargeDeal: Story = {
   args: {
     ...Default.args,

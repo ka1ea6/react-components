@@ -8,6 +8,7 @@ import { Page as PageType, ReusableContent } from '@/payload-types'
 import { getTableOfContents } from '../utils'
 import { Observer } from 'tailwindcss-intersect'
 import { useEffect } from 'react'
+import { RelatedPagesMenu } from '@/components/HeaderFooter/RelatedPagesMenu'
 
 interface WebsiteSectionProps {
   hero: any
@@ -32,12 +33,27 @@ export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
   }, [])
   return (
     <div className="relative overflow-none scroll-smooth snap-y snap-mandatory overscroll-contain">
-
+      
     {/* <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain"> */}
-      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} wide/>
+      {/* { args.hero && args.hero.type != 'lowImpact' && args.related && (
+        <div className='fixed top-16 z-50'>
+        <RelatedPagesMenu
+          menuItems={args.related}
+          wide />
+                </div>
+
+        )} */}
+      
       <div>
       <RenderHero {...args.hero} />
       </div>
+      { args.hero && args.related && (
+        <RelatedPagesMenu
+          menuItems={args.related}
+          dark={args.hero.type === 'highImpact' ? false : true}
+          wide />
+        )}
 {/* 
       <MainPageSection
         edit={args.edit}

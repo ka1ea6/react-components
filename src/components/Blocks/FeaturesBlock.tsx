@@ -25,7 +25,7 @@ export const FeaturesBlock: React.FC<Props> = ({ title, description, features, i
   // return null
 
   return (
-    <section className={cn(!nested ? 'container' : 'w-full', '')}>
+    <section className={cn(!nested ? '' : 'w-full', '')}>
       <div className='prose prose:max-w-none'>
       {title && (
         <h2 className="mb-6 mt-0 text-primary" id={id || ''}>

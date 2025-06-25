@@ -8,22 +8,24 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { PlusCircle } from 'lucide-react'
-import type { Deal, CRMStatus, DealCategory, Customer, User } from './types'
+import type { Deal, CRMStatus, gecoStatus, DealCategory, Customer, User } from './types'
 import { DealCard } from './DealCard'
 import { Droppable, Draggable } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration'
 import { NewDealForm } from './NewDealForm'
 
 type KanbanColumnProps = {
-  status: CRMStatus
+  status: CRMStatus | gecoStatus
   deals: Deal[]
   users?: User[]
   customers: Customer[]
   categories: DealCategory[]
   onDealClick: (deal: Deal) => void
   calculateColumnValue: (deals: Deal[]) => number
-  calculateWeightedValue: (deals: Deal[], status: CRMStatus) => number
-  addNewDeal?: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
-  onAddCustomer: (customer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  calculateWeightedValue: (deals: Deal[], status: CRMStatus | gecoStatus ) => number
+  // addNewDeal?: (deal: Deal) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  // onAddCustomer?: (customer: Partial<Customer>) => Promise<{ success: boolean; errors?: Record<string, string> }>;
+  compact?: boolean
+
 }
 
 export function KanbanColumn({
@@ -35,15 +37,16 @@ export function KanbanColumn({
   onDealClick,
   calculateColumnValue,
   calculateWeightedValue,
-  addNewDeal,
-  onAddCustomer,
+  // addNewDeal,
+  // onAddCustomer,
+  compact = false,
 }: KanbanColumnProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  // const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <div className="flex flex-col w-80">
-      <h2 className="text-xl font-semibold mb-4">{status}</h2>
-      {addNewDeal && (
+      <h2 className="text-xl font-semibold mb-4">  {status.charAt(0).toUpperCase() + status.slice(1)}</h2>
+      {/* {addNewDeal && (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="mb-4 w-full">
@@ -60,12 +63,12 @@ export function KanbanColumn({
               users={users}
               categories={categories}
               onSubmit={addNewDeal}
-              onAddCustomer={onAddCustomer}
+              onAddCustomer={onAddCustomer ?? (async () => Promise.resolve({ success: false }))}
               onClose={() => setIsDialogOpen(false)} // Pass the onClose prop to NewDealForm
             />
           </DialogContent>
         </Dialog>
-      )}
+      )} */}
       <Droppable droppableId={status} isDropDisabled={false}>
         {(provided) => (
           <div
@@ -86,6 +89,7 @@ export function KanbanColumn({
                       customer={deal.customer as Customer}
                       categories={categories}
                       onClick={() => onDealClick(deal)}
+                      compact={compact}
                     />
                   </div>
                 )}

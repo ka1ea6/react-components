@@ -141,7 +141,7 @@ try {
     <Dialog open={true}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col [&>button:last-child]:hidden">
         <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle className="text-2xl font-bold">{customer?.name}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">{customer?.name || 'no customer'}</DialogTitle>
           <div className="flex space-x-2">
             <Button variant="outline" onClick={onClose}>
               Close
@@ -202,7 +202,7 @@ try {
                   onClick={() => setEditingField('assignee')}
                 >
                   <UserIcon className="w-4 h-4 text-gray-400" />
-                  <span>{(editedDeal.assignee as User).name}</span>
+                  <span>{(editedDeal?.assignee as User)?.name}</span>
                 </div>
               )}
             </div>
@@ -322,6 +322,38 @@ try {
                       </Badge>
                     ) : null
                   })}
+                </div>
+              )}
+            </div>
+                  <div className="grid gap-2 m-1">
+              <Label className="text-sm font-medium text-accent">COGE Status</Label>
+              {editingField === 'gecoStatus' ? (
+                <Select
+                  value={editedDeal.gecoStatus ?? undefined}
+                  onValueChange={(value) => {
+                    handleChange('gecoStatus', value)
+                    setEditingField(null)
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {['firm', 'forecast', 'other'].map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <div
+                  className="cursor-pointer p-1 border border-background hover:border-accent rounded"
+                  onClick={() => setEditingField('gecoStatus')}
+                >
+                  {editedDeal.gecoStatus
+                    ? editedDeal.gecoStatus.charAt(0).toUpperCase() + editedDeal.gecoStatus.slice(1)
+                    : 'N/A'}
                 </div>
               )}
             </div>
