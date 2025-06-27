@@ -7,7 +7,8 @@ export * from "./Blocks";
 export * from "./Menus";
 export * from "./Heros";
 export * from "./HeaderFooter";
-export * from "./Other";
-export * from "./Holidays";
-export * from "./CRM";
-export * from "./Chat";
+export * from './Other'
+export * from './Holidays'
+export * from './CRM'
+export * from './Chat'
+export * from './DeliveryLead'

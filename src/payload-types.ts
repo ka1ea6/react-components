@@ -87,6 +87,7 @@ export interface Config {
     deals: Deal;
     'deal-categories': DealCategory;
     proposals: Proposal;
+    'delivery-lead-submissions': DeliveryLeadSubmission;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -119,6 +120,7 @@ export interface Config {
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-categories': DealCategoriesSelect<false> | DealCategoriesSelect<true>;
     proposals: ProposalsSelect<false> | ProposalsSelect<true>;
+    'delivery-lead-submissions': DeliveryLeadSubmissionsSelect<false> | DeliveryLeadSubmissionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1746,6 +1748,33 @@ export interface Proposal {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delivery-lead-submissions".
+ */
+export interface DeliveryLeadSubmission {
+  id: number;
+  user: number | User;
+  clientName: string;
+  projectName: string;
+  deliveryLead: string;
+  projectSummary: string;
+  milestones?:
+    | {
+        name: string;
+        commentary?: string | null;
+        dueDate?: string | null;
+        rag: 'On-Track' | 'Off-Track' | 'At Risk' | 'Complete';
+        id?: string | null;
+      }[]
+    | null;
+  projectUpdate: string;
+  projectConcerns?: string | null;
+  commercialOpportunities?: string | null;
+  commercialRisks?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2000,6 +2029,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'proposals';
         value: number | Proposal;
+      } | null)
+    | ({
+        relationTo: 'delivery-lead-submissions';
+        value: number | DeliveryLeadSubmission;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3232,6 +3265,32 @@ export interface ProposalsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delivery-lead-submissions_select".
+ */
+export interface DeliveryLeadSubmissionsSelect<T extends boolean = true> {
+  user?: T;
+  clientName?: T;
+  projectName?: T;
+  deliveryLead?: T;
+  projectSummary?: T;
+  milestones?:
+    | T
+    | {
+        name?: T;
+        commentary?: T;
+        dueDate?: T;
+        rag?: T;
+        id?: T;
+      };
+  projectUpdate?: T;
+  projectConcerns?: T;
+  commercialOpportunities?: T;
+  commercialRisks?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
