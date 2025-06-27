@@ -1,20 +1,19 @@
+import { DeliveryLeadSubmission as PayloadDeliveryLeadSubmission } from '../../payload-types'
+
 export interface DeliveryLeadSubmissionProps {
-  onSubmit: (formData: DeliveryLeadSubmissionData) => Promise<{ success: boolean; message: string }>
+  onSubmit: (
+    formData: Omit<PayloadDeliveryLeadSubmission, 'id' | 'user' | 'updatedAt' | 'createdAt'>,
+  ) => Promise<{ success: boolean; message: string }>
   isSubmitting?: boolean
 }
 
-export interface DeliveryLeadSubmissionData {
-  clientName: string
-  projectName: string
-  deliveryLead: string
-  projectSummary: string
-  milestones: Milestone[]
-  projectUpdate: string
-  projectConcerns?: string
-  commercialOpportunities?: string
-  commercialRisks?: string
-}
+// Re-export the payload type for convenience
+export type DeliveryLeadSubmissionData = Omit<
+  PayloadDeliveryLeadSubmission,
+  'id' | 'user' | 'updatedAt' | 'createdAt'
+>
 
+// Keep the Milestone type for backward compatibility
 export interface Milestone {
   name: string
   commentary?: string

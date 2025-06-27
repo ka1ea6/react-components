@@ -1,10 +1,10 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { DeliveryLeadSubmission } from './DeliveryLeadSubmission'
+import { DeliveryLeadSubmissionComponent } from './DeliveryLeadSubmission'
 
-const meta: Meta<typeof DeliveryLeadSubmission> = {
+const meta: Meta<typeof DeliveryLeadSubmissionComponent> = {
   title: 'DeliveryLead/DeliveryLeadSubmission',
-  component: DeliveryLeadSubmission,
+  component: DeliveryLeadSubmissionComponent,
   parameters: {
     layout: 'fullscreen',
   },
@@ -19,7 +19,7 @@ const meta: Meta<typeof DeliveryLeadSubmission> = {
 
 export default meta
 
-type Story = StoryObj<typeof DeliveryLeadSubmission>
+type Story = StoryObj<typeof DeliveryLeadSubmissionComponent>
 
 export const Default: Story = {
   args: {},

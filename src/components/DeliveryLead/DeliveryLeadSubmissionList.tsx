@@ -14,10 +14,10 @@ import {
   Building,
   X,
 } from 'lucide-react'
-import { DeliveryLeadSubmissionData } from './types'
+import { DeliveryLeadSubmission } from '@/payload-types'
 
 export interface DeliveryLeadSubmissionListProps {
-  submissions: (DeliveryLeadSubmissionData & { id: string; submittedAt: string })[]
+  submissions: DeliveryLeadSubmission[]
   isLoading?: boolean
 }
 
@@ -56,7 +56,7 @@ export function DeliveryLeadSubmissionList({
     })
   }
 
-  const selectedSubmissionData = submissions.find((s) => s.id === selectedSubmission)
+  const selectedSubmissionData = submissions.find((s) => s.id.toString() === selectedSubmission)
 
   if (isLoading) {
     return (
@@ -106,9 +106,9 @@ export function DeliveryLeadSubmissionList({
             </p>
           </div>
 
-          <div className="overflow-hidden">
+          <div className="overflow-y-auto max-h-96">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
-              <thead className="bg-gray-50 dark:bg-zinc-800">
+              <thead className="bg-gray-50 dark:bg-zinc-800 sticky top-0 z-10">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
                     Project Details
@@ -149,7 +149,7 @@ export function DeliveryLeadSubmissionList({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-wrap gap-1">
-                        {submission.milestones.slice(0, 3).map((milestone, idx) => (
+                        {submission.milestones?.slice(0, 3).map((milestone, idx) => (
                           <span
                             key={idx}
                             className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${ragColorMap[milestone.rag]}`}
@@ -157,9 +157,14 @@ export function DeliveryLeadSubmissionList({
                             {milestone.rag}
                           </span>
                         ))}
-                        {submission.milestones.length > 3 && (
+                        {submission.milestones && submission.milestones.length > 3 && (
                           <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
                             +{submission.milestones.length - 3} more
+                          </span>
+                        )}
+                        {!submission.milestones && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
+                            No milestones
                           </span>
                         )}
                       </div>
@@ -167,14 +172,14 @@ export function DeliveryLeadSubmissionList({
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-500 dark:text-zinc-400 flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
-                        {formatDate(submission.submittedAt)}
+                        {formatDate(submission.createdAt)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setSelectedSubmission(submission.id)}
+                        onClick={() => setSelectedSubmission(submission.id.toString())}
                         className="text-accent hover:text-accent/80"
                       >
                         View Details
@@ -200,7 +205,7 @@ export function DeliveryLeadSubmissionList({
                 </h2>
                 <p className="text-sm text-gray-500 dark:text-zinc-400">
                   {selectedSubmissionData.clientName} •{' '}
-                  {formatDate(selectedSubmissionData.submittedAt)}
+                  {formatDate(selectedSubmissionData.createdAt)}
                 </p>
               </div>
               <button
@@ -282,48 +287,55 @@ export function DeliveryLeadSubmissionList({
                   <ListChecks className="h-4 w-4" />
                   Milestones
                 </Label>
-                <div className="bg-gray-50 dark:bg-zinc-800 rounded-lg border overflow-hidden">
-                  <table className="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
-                    <thead className="bg-gray-100 dark:bg-zinc-700">
-                      <tr>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
-                          Name
-                        </th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
-                          Commentary
-                        </th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
-                          Due Date
-                        </th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
-                          Status
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 dark:divide-zinc-700">
-                      {selectedSubmissionData.milestones.map((milestone, idx) => (
-                        <tr key={idx}>
-                          <td className="px-4 py-2 text-sm text-gray-900 dark:text-zinc-100">
-                            {milestone.name}
-                          </td>
-                          <td className="px-4 py-2 text-sm text-gray-600 dark:text-zinc-400">
-                            {milestone.commentary || '-'}
-                          </td>
-                          <td className="px-4 py-2 text-sm text-gray-600 dark:text-zinc-400">
-                            {milestone.dueDate ? formatDate(milestone.dueDate) : '-'}
-                          </td>
-                          <td className="px-4 py-2">
-                            <span
-                              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${ragColorMap[milestone.rag]}`}
-                            >
-                              {milestone.rag}
-                            </span>
-                          </td>
+                {selectedSubmissionData.milestones &&
+                selectedSubmissionData.milestones.length > 0 ? (
+                  <div className="bg-gray-50 dark:bg-zinc-800 rounded-lg border overflow-hidden">
+                    <table className="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
+                      <thead className="bg-gray-100 dark:bg-zinc-700">
+                        <tr>
+                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
+                            Name
+                          </th>
+                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
+                            Commentary
+                          </th>
+                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
+                            Due Date
+                          </th>
+                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-zinc-400">
+                            Status
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200 dark:divide-zinc-700">
+                        {selectedSubmissionData.milestones.map((milestone, idx) => (
+                          <tr key={idx}>
+                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-zinc-100">
+                              {milestone.name}
+                            </td>
+                            <td className="px-4 py-2 text-sm text-gray-600 dark:text-zinc-400">
+                              {milestone.commentary || '-'}
+                            </td>
+                            <td className="px-4 py-2 text-sm text-gray-600 dark:text-zinc-400">
+                              {milestone.dueDate ? formatDate(milestone.dueDate) : '-'}
+                            </td>
+                            <td className="px-4 py-2">
+                              <span
+                                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${ragColorMap[milestone.rag]}`}
+                              >
+                                {milestone.rag}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-600 dark:text-zinc-400 bg-gray-50 dark:bg-zinc-800 p-3 rounded-lg border">
+                    No milestones defined for this project.
+                  </p>
+                )}
               </div>
             </div>
 

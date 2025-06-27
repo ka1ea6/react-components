@@ -33,7 +33,7 @@ export interface DeliveryLeadSubmissionProps {
   ) => Promise<{ success: boolean; message: string }>
 }
 
-export function DeliveryLeadSubmission({ onSubmit }: DeliveryLeadSubmissionProps) {
+export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmissionProps) {
   const [currentTab, setCurrentTab] = useState(tabConfig[0].name)
   const [clientName, setClientName] = useState('')
   const [projectName, setProjectName] = useState('')
@@ -71,11 +71,11 @@ export function DeliveryLeadSubmission({ onSubmit }: DeliveryLeadSubmissionProps
       projectName,
       deliveryLead,
       projectSummary,
-      milestones,
+      milestones: milestones.length > 0 ? milestones : null,
       projectUpdate,
-      projectConcerns,
-      commercialOpportunities,
-      commercialRisks,
+      projectConcerns: projectConcerns || null,
+      commercialOpportunities: commercialOpportunities || null,
+      commercialRisks: commercialRisks || null,
     }
 
     if (onSubmit) {

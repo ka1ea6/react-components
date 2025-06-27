@@ -1,13 +1,14 @@
 'use client'
 import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { DeliveryLeadSubmission } from './DeliveryLeadSubmission'
+
 import { DeliveryLeadSubmissionList } from './DeliveryLeadSubmissionList'
 import { DeliveryLeadSubmissionData } from './types'
-import { ChevronDown, ChevronUp, FileText, List } from 'lucide-react'
+import { ChevronDown, ChevronUp, List } from 'lucide-react'
+import { DeliveryLeadSubmission } from '@/payload-types'
+import { DeliveryLeadSubmissionComponent } from './DeliveryLeadSubmission'
 
 export interface DeliveryLeadSubmissionWithListProps {
-  submissions: (DeliveryLeadSubmissionData & { id: string; submittedAt: string })[]
+  submissions: DeliveryLeadSubmission[]
   onSubmit?: (
     formData: DeliveryLeadSubmissionData,
   ) => Promise<{ success: boolean; message: string }>
@@ -36,7 +37,7 @@ export function DeliveryLeadSubmissionWithList({
 
         {/* Submission Form */}
         <div className="mb-8">
-          <DeliveryLeadSubmission onSubmit={onSubmit} />
+          <DeliveryLeadSubmissionComponent onSubmit={onSubmit} />
         </div>
 
         {/* Previous Submissions Section */}
