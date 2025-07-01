@@ -14,10 +14,10 @@ import {
   Building,
   X,
 } from 'lucide-react'
-import { DeliveryLeadSubmission } from '@/payload-types'
+import { DeliveryReport } from '@/payload-types'
 
 export interface DeliveryLeadSubmissionListProps {
-  submissions: DeliveryLeadSubmission[]
+  submissions: DeliveryReport[]
   isLoading?: boolean
 }
 
@@ -57,6 +57,21 @@ export function DeliveryLeadSubmissionList({
   }
 
   const selectedSubmissionData = submissions.find((s) => s.id.toString() === selectedSubmission)
+
+  // Helper functions to get project and customer names
+  function getProjectName(project: number | { projectName: string; id: number }) {
+    if (typeof project === 'object' && project !== null && 'projectName' in project) {
+      return project.projectName
+    }
+    return `Project #${project}`
+  }
+
+  function getCustomerName(customer: number | { name: string; id: number }) {
+    if (typeof customer === 'object' && customer !== null && 'name' in customer) {
+      return customer.name
+    }
+    return `Customer #${customer}`
+  }
 
   if (isLoading) {
     return (
@@ -133,18 +148,21 @@ export function DeliveryLeadSubmissionList({
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
                         <div className="text-sm font-medium text-gray-900 dark:text-zinc-100">
-                          {submission.projectName}
+                          {getProjectName(submission.project)}
                         </div>
                         <div className="text-sm text-gray-500 dark:text-zinc-400 flex items-center gap-1">
                           <Building className="h-3 w-3" />
-                          {submission.clientName}
+                          {getCustomerName(submission.customer)}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900 dark:text-zinc-100 flex items-center gap-1">
                         <User className="h-3 w-3" />
-                        {submission.deliveryLead}
+                        {/* Show delivery lead name if available on project object, else fallback */}
+                        {typeof submission.project === 'object' && submission.project !== null && 'deliveryLead' in submission.project && typeof submission.project.deliveryLead === 'object' && submission.project.deliveryLead !== null && 'name' in submission.project.deliveryLead
+                          ? submission.project.deliveryLead.name
+                          : '—'}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -200,10 +218,10 @@ export function DeliveryLeadSubmissionList({
             <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-zinc-700">
               <div>
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-zinc-100">
-                  {selectedSubmissionData.projectName}
+                  {getProjectName(selectedSubmissionData.project)}
                 </h2>
                 <p className="text-sm text-gray-500 dark:text-zinc-400">
-                  {selectedSubmissionData.clientName} •{' '}
+                  {getCustomerName(selectedSubmissionData.customer)} •{' '}
                   {formatDate(selectedSubmissionData.createdAt)}
                 </p>
               </div>
