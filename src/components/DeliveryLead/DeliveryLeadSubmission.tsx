@@ -54,10 +54,10 @@ export function DeliveryLeadSubmissionComponent({ onSubmit, customerProjectPairs
 
   // Derive unique customers
   const customers = Array.from(
-    new Map(customerProjectPairs.map(cp => [cp.customer.id, cp.customer])).values()
+    new Map((customerProjectPairs ?? []).map(cp => [cp.customer.id, cp.customer])).values()
   )
   // Filter projects by selected customer
-  const filteredProjects = customerProjectPairs
+  const filteredProjects = (customerProjectPairs ?? [])
     .filter(cp => cp.customer.id === clientId)
     .map(cp => cp.project)
 

@@ -21,7 +21,7 @@ export default meta
 
 type Story = StoryObj<typeof DeliveryLeadSubmissionComponent>
 
-export const exampleCustomerProjectPairs = [
+const exampleCustomerProjectPairs = [
   { customer: { id: 1, name: 'Acme Corp' }, project: { id: 101, name: 'Website Redesign' } },
   { customer: { id: 1, name: 'Acme Corp' }, project: { id: 102, name: 'Mobile App' } },
   { customer: { id: 2, name: 'Globex' }, project: { id: 201, name: 'ERP Migration' } },
@@ -32,5 +32,12 @@ export const exampleCustomerProjectPairs = [
 export const Default: Story = {
   args: {
     customerProjectPairs: exampleCustomerProjectPairs,
+  },
+}
+
+
+export const NoCustomers: Story = {
+  args: {
+    // customerProjectPairs: exampleCustomerProjectPairs,
   },
 }
