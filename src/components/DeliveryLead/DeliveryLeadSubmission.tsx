@@ -37,7 +37,7 @@ export interface DeliveryLeadSubmissionProps {
   onSubmit?: (
     formData: DeliveryLeadSubmissionData,
   ) => Promise<{ success: boolean; message: string }>
-  customerProjectPairs: CustomerProjectPair[]
+  customerProjectPairs?: CustomerProjectPair[]
 }
 
 export function DeliveryLeadSubmissionComponent({ onSubmit, customerProjectPairs }: DeliveryLeadSubmissionProps) {
