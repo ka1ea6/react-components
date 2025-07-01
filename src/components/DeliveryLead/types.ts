@@ -1,4 +1,4 @@
-import { DeliveryLeadSubmission as PayloadDeliveryLeadSubmission } from '../../payload-types'
+import { DeliveryReport as PayloadDeliveryLeadSubmission } from '../../payload-types'
 
 export interface DeliveryLeadSubmissionProps {
   onSubmit: (

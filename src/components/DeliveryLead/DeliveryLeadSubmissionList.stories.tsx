@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { DeliveryLeadSubmissionList } from './DeliveryLeadSubmissionList'
 
 const meta: Meta<typeof DeliveryLeadSubmissionList> = {
-  title: 'Components/DeliveryLead/DeliveryLeadSubmissionList',
+  title: 'DeliveryReport/DeliveryLeadSubmissionList',
   component: DeliveryLeadSubmissionList,
   parameters: {
     layout: 'fullscreen',

@@ -13,6 +13,7 @@ import {
   Trash2,
 } from 'lucide-react'
 import { DeliveryLeadSubmissionData, Milestone } from './types'
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
 
 const initialMilestones: Milestone[] = [{ name: '', commentary: '', dueDate: '', rag: 'On-Track' }]
 
@@ -23,20 +24,26 @@ const tabConfig = [
   { name: 'Milestones', icon: ListChecks },
   { name: 'Project Update', icon: Users },
   { name: 'Project Concerns', icon: AlertTriangle },
-  { name: 'Commercial Opportunities', icon: Briefcase },
-  { name: 'Commercial Risks', icon: ShieldAlert },
+  { name: 'Opportunities', icon: Briefcase },
+  { name: 'Risks', icon: ShieldAlert },
 ]
+
+export interface CustomerProjectPair {
+  customer: { id: number; name: string }
+  project: { id: number; name: string }
+}
 
 export interface DeliveryLeadSubmissionProps {
   onSubmit?: (
     formData: DeliveryLeadSubmissionData,
   ) => Promise<{ success: boolean; message: string }>
+  customerProjectPairs: CustomerProjectPair[]
 }
 
-export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmissionProps) {
+export function DeliveryLeadSubmissionComponent({ onSubmit, customerProjectPairs }: DeliveryLeadSubmissionProps) {
   const [currentTab, setCurrentTab] = useState(tabConfig[0].name)
-  const [clientName, setClientName] = useState('')
-  const [projectName, setProjectName] = useState('')
+  const [clientId, setClientId] = useState<number | null>(null)
+  const [projectId, setProjectId] = useState<number | null>(null)
   const [deliveryLead, setDeliveryLead] = useState('')
   const [projectSummary, setProjectSummary] = useState('')
   const [milestones, setMilestones] = useState(initialMilestones)
@@ -44,6 +51,15 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
   const [projectConcerns, setProjectConcerns] = useState('')
   const [commercialOpportunities, setCommercialOpportunities] = useState('')
   const [commercialRisks, setCommercialRisks] = useState('')
+
+  // Derive unique customers
+  const customers = Array.from(
+    new Map(customerProjectPairs.map(cp => [cp.customer.id, cp.customer])).values()
+  )
+  // Filter projects by selected customer
+  const filteredProjects = customerProjectPairs
+    .filter(cp => cp.customer.id === clientId)
+    .map(cp => cp.project)
 
   const handleMilestoneChange = (idx: number, field: string, value: string) => {
     setMilestones((prev) => {
@@ -67,9 +83,8 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data: DeliveryLeadSubmissionData = {
-      clientName,
-      projectName,
-      deliveryLead,
+      customer: clientId as number, // must be number
+      project: projectId as number, // must be number
       projectSummary,
       milestones: milestones.length > 0 ? milestones : null,
       projectUpdate,
@@ -130,25 +145,31 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
             <div className="space-y-6">
               <div>
                 <Label>Client Name</Label>
-                <input
-                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-2 focus:ring-2 focus:ring-accent/40 focus:outline-none placeholder-zinc-400 dark:placeholder-zinc-500"
-                  value={clientName}
-                  onChange={(e) => setClientName(e.target.value)}
-                  required
-                  placeholder="Enter client name"
-                />
+                <Select value={clientId?.toString() ?? ''} onValueChange={v => setClientId(Number(v))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select client" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {customers.map((customer) => (
+                      <SelectItem key={customer.id} value={customer.id.toString()}>{customer.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label>Project Name</Label>
-                <input
-                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-2 focus:ring-2 focus:ring-accent/40 focus:outline-none placeholder-zinc-400 dark:placeholder-zinc-500"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  required
-                  placeholder="Enter project name"
-                />
+                <Select value={projectId?.toString() ?? ''} onValueChange={v => setProjectId(Number(v))} disabled={!clientId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={clientId ? "Select project" : "Select client first"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filteredProjects.map((project) => (
+                      <SelectItem key={project.id} value={project.id.toString()}>{project.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div>
+              {/* <div>
                 <Label>Delivery Lead</Label>
                 <input
                   className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-2 focus:ring-2 focus:ring-accent/40 focus:outline-none placeholder-zinc-400 dark:placeholder-zinc-500"
@@ -157,7 +178,7 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
                   required
                   placeholder="Enter delivery lead name"
                 />
-              </div>
+              </div> */}
               <div>
                 <Label>Project Summary</Label>
                 <textarea
@@ -271,7 +292,7 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
               />
             </div>
           )}
-          {currentTab === 'Commercial Opportunities' && (
+          {currentTab === 'Opportunities' && (
             <div>
               <Label>Commercial Opportunities</Label>
               <textarea
@@ -282,7 +303,7 @@ export function DeliveryLeadSubmissionComponent({ onSubmit }: DeliveryLeadSubmis
               />
             </div>
           )}
-          {currentTab === 'Commercial Risks' && (
+          {currentTab === 'Risks' && (
             <div>
               <Label>Commercial Risk/Issue Details</Label>
               <textarea
