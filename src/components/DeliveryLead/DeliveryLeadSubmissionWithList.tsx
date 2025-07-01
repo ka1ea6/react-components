@@ -4,21 +4,24 @@ import React, { useState } from 'react'
 import { DeliveryLeadSubmissionList } from './DeliveryLeadSubmissionList'
 import { DeliveryLeadSubmissionData } from './types'
 import { ChevronDown, ChevronUp, List } from 'lucide-react'
-import { DeliveryLeadSubmission } from '@/payload-types'
+import { DeliveryReport } from '@/payload-types'
 import { DeliveryLeadSubmissionComponent } from './DeliveryLeadSubmission'
+import type { CustomerProjectPair } from './DeliveryLeadSubmission'
 
 export interface DeliveryLeadSubmissionWithListProps {
-  submissions: DeliveryLeadSubmission[]
+  submissions: DeliveryReport[]
   onSubmit?: (
     formData: DeliveryLeadSubmissionData,
   ) => Promise<{ success: boolean; message: string }>
   isLoading?: boolean
+  customerProjectPairs: CustomerProjectPair[]
 }
 
 export function DeliveryLeadSubmissionWithList({
   submissions,
   onSubmit,
   isLoading = false,
+  customerProjectPairs,
 }: DeliveryLeadSubmissionWithListProps) {
   const [isListExpanded, setIsListExpanded] = useState(false)
 
@@ -37,7 +40,7 @@ export function DeliveryLeadSubmissionWithList({
 
         {/* Submission Form */}
         <div className="mb-8">
-          <DeliveryLeadSubmissionComponent onSubmit={onSubmit} />
+          <DeliveryLeadSubmissionComponent onSubmit={onSubmit} customerProjectPairs={customerProjectPairs} />
         </div>
 
         {/* Previous Submissions Section */}
