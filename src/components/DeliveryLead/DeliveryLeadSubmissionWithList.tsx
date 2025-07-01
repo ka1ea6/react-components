@@ -26,15 +26,15 @@ export function DeliveryLeadSubmissionWithList({
   const [isListExpanded, setIsListExpanded] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900">
+    <div className="min-h-screen ">
       <div className="container mx-auto p-4 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-zinc-100 mb-2">
-            Delivery Lead Management
+            Delivery Report Management
           </h1>
           <p className="text-gray-600 dark:text-zinc-400">
-            Submit new delivery lead reports and view your previous submissions
+            Submit new delivery reports and view your previous submissions
           </p>
         </div>
 
