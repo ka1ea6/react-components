@@ -14,7 +14,7 @@ export interface DeliveryLeadSubmissionWithListProps {
     formData: DeliveryLeadSubmissionData,
   ) => Promise<{ success: boolean; message: string }>
   isLoading?: boolean
-  customerProjectPairs: CustomerProjectPair[]
+  customerProjectPairs?: CustomerProjectPair[]
 }
 
 export function DeliveryLeadSubmissionWithList({
