@@ -87,6 +87,8 @@ export interface Config {
     deals: Deal;
     'deal-categories': DealCategory;
     proposals: Proposal;
+    'delivery-reports': DeliveryReport;
+    projects: Project;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -119,6 +121,8 @@ export interface Config {
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-categories': DealCategoriesSelect<false> | DealCategoriesSelect<true>;
     proposals: ProposalsSelect<false> | ProposalsSelect<true>;
+    'delivery-reports': DeliveryReportsSelect<false> | DeliveryReportsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -288,6 +292,7 @@ export interface Page {
 export interface Media {
   id: number;
   alt?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -510,6 +515,7 @@ export interface ImageBlock {
 export interface Image {
   id: number;
   alt?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -713,6 +719,7 @@ export interface User {
 export interface MediaProfile {
   id: number;
   name?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1470,6 +1477,7 @@ export interface PublishedPost {
 export interface MediaBrandImage {
   id: number;
   alt?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1746,6 +1754,45 @@ export interface Proposal {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delivery-reports".
+ */
+export interface DeliveryReport {
+  id: number;
+  user: number | User;
+  customer: number | Customer;
+  project: number | Project;
+  projectSummary: string;
+  milestones?:
+    | {
+        name: string;
+        commentary?: string | null;
+        dueDate?: string | null;
+        rag: 'On-Track' | 'Off-Track' | 'At Risk' | 'Complete';
+        id?: string | null;
+      }[]
+    | null;
+  projectUpdate: string;
+  projectConcerns?: string | null;
+  commercialOpportunities?: string | null;
+  commercialRisks?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  customer: number | Customer;
+  projectName: string;
+  deliveryLead: number | User;
+  projectSummary: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2000,6 +2047,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'proposals';
         value: number | Proposal;
+      } | null)
+    | ({
+        relationTo: 'delivery-reports';
+        value: number | DeliveryReport;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2618,6 +2673,7 @@ export interface PublishedPostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2700,6 +2756,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface MediaProfilesSelect<T extends boolean = true> {
   name?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2762,6 +2819,7 @@ export interface MediaProfilesSelect<T extends boolean = true> {
  */
 export interface MediaBrandImagesSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2844,6 +2902,7 @@ export interface MediaBrandImagesSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -3232,6 +3291,43 @@ export interface ProposalsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delivery-reports_select".
+ */
+export interface DeliveryReportsSelect<T extends boolean = true> {
+  user?: T;
+  customer?: T;
+  project?: T;
+  projectSummary?: T;
+  milestones?:
+    | T
+    | {
+        name?: T;
+        commentary?: T;
+        dueDate?: T;
+        rag?: T;
+        id?: T;
+      };
+  projectUpdate?: T;
+  projectConcerns?: T;
+  commercialOpportunities?: T;
+  commercialRisks?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  customer?: T;
+  projectName?: T;
+  deliveryLead?: T;
+  projectSummary?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4007,6 +4103,7 @@ export interface CodeBlock {
 export interface Auth {
   [k: string]: unknown;
 }
+
 
 export interface CollapsibleAreaBlock {
   title?: string | null;
