@@ -19,6 +19,9 @@ interface CreativeLayoutProps {
   currentBusinessUnit?: BusinessUnit
   onBusinessUnitChange?: (unit: BusinessUnit) => void
   businessUnits?: typeof businessUnits
+  activeTab?: string
+  onTabChange?: (tab: string) => void
+  showTabs?: boolean
 }
 
 export function CreativeLayout({
@@ -29,6 +32,9 @@ export function CreativeLayout({
   currentBusinessUnit = businessUnits[0], // Default to Design unit
   onBusinessUnitChange,
   businessUnits: businessUnitsProp = businessUnits,
+  activeTab,
+  onTabChange,
+  showTabs = false,
 }: CreativeLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -91,7 +97,9 @@ export function CreativeLayout({
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
           onToggleMobileMenu={() => setMobileMenuOpen(true)}
           sidebarOpen={sidebarOpen}
-          businessUnits={businessUnitsProp}
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+          showTabs={showTabs}
         />
 
         <main className="flex-1 p-4 md:p-6">{children}</main>

@@ -96,7 +96,7 @@ export function Sidebar({
               <img src="/headerlogo.png" alt="Header Logo" className="h-14 w-14 object-contain" />
             </div>
           <div>
-            <h2 className="font-semibold">Colleagues<br /></h2>
+            <h2 className="font-semibold">Nuvia<br /></h2>
             <p className="text-xs text-muted-foreground">Collaboration Platform<br /></p>
           </div>
         </div>
@@ -115,14 +115,14 @@ export function Sidebar({
       </div>
 
       {/* Chat Button */}
-      <div className="px-3 pb-2">
+      {/* <div className="px-3 pb-2">
         <Link href="/ai-assistant" onClick={isMobile ? onClose : undefined}>
           <Button className="w-full rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
             <Wand2 className="mr-2 h-4 w-4" />
             Chat
           </Button>
         </Link>
-      </div>
+      </div> */}
 
       {/* Business Unit Switcher */}
       <div className="px-3 pb-2">
@@ -165,7 +165,7 @@ export function Sidebar({
             <Settings className="h-5 w-5" />
             <span>Settings</span>
           </button>
-          <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
+          {/* <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
             <div className="flex items-center gap-3">
               <Avatar className="h-6 w-6">
                 <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
@@ -176,7 +176,7 @@ export function Sidebar({
             <Badge variant="outline" className="ml-auto">
               Pro
             </Badge>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

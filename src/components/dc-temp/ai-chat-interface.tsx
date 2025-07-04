@@ -60,9 +60,9 @@ export function AIChatInterface({
   }, [messages])
 
   return (
-    <Card className={`h-[700px] flex flex-col shadow-sm ${className || ""}`}>
+    <Card className={`h-full flex flex-col shadow-sm ${className || ""}`}>
       {/* Chat Header */}
-      <div className="border-b p-4">
+      {/* <div className="border-b p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8 bg-gradient-to-br from-purple-600 to-blue-600">
@@ -82,7 +82,7 @@ export function AIChatInterface({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Chat Messages */}
       <ScrollArea className="flex-1 p-4">
@@ -109,7 +109,7 @@ export function AIChatInterface({
                 <div
                   className={cn(
                     "max-w-[80%] rounded-2xl px-4 py-3 shadow-sm",
-                    message.type === "user" ? "bg-primary text-primary-foreground" : "bg-muted border border-border/50",
+                    message.type === "user" ? "bg-primary text-primary-foreground" : "bg-muted",
                   )}
                 >
                   <p className="text-sm leading-relaxed">{message.content}</p>
@@ -131,7 +131,7 @@ export function AIChatInterface({
                   <Bot className="h-4 w-4" />
                 </AvatarFallback>
               </Avatar>
-              <div className="bg-muted border border-border/50 rounded-2xl px-4 py-3 shadow-sm">
+              <div className="bg-muted rounded-2xl px-4 py-3 shadow-sm">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"></div>
                   <div
@@ -158,7 +158,7 @@ export function AIChatInterface({
             onChange={(e) => onInputChange(e.target.value)}
             onKeyPress={onKeyPress}
             placeholder={`Ask me about ${selectedTeam.name.toLowerCase()}...`}
-            className="flex-1 rounded-2xl border-border/50 bg-background shadow-sm"
+            className="flex-1 rounded-2xl bg-background shadow-sm"
             disabled={isTyping}
           />
           <Button

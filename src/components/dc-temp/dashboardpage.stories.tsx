@@ -15,5 +15,13 @@ export default meta;
 type Story = StoryObj<typeof Home>;
 
 export const Default: Story = {
-  render: () => <Home businessUnits={businessUnits} />,
+  render: () => <Home title="Nuvia" businessUnits={businessUnits} />,
+};
+
+export const CustomTitle: Story = {
+  render: () => <Home title="Creative Workspace" businessUnits={businessUnits} />,
+};
+
+export const MinimalBusinessUnits: Story = {
+  render: () => <Home title="Design Hub" businessUnits={businessUnits.slice(0, 2)} />,
 };

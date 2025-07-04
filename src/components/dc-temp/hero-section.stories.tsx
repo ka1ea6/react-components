@@ -96,3 +96,15 @@ export const Minimized: Story = {
     },
   },
 }
+
+
+export const OnlyAction: Story = {
+  args: {
+    title: "Your Creative Files",
+    gradient: "bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600",
+    primaryAction: {
+      label: "Upload Files",
+      onClick: () => console.log("Upload files clicked"),
+    },
+  },
+}

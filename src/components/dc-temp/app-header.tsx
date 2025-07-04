@@ -1,15 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { Bell, Cloud, Menu, MessageSquare, PanelLeft, Star } from "lucide-react"
+import { motion } from "framer-motion"
+import { Bell, Menu, PanelLeft, Bot, Plus, ChevronDown } from "lucide-react"
+import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { ThemeToggle } from "./theme-toggle"
 import { NotificationsPanel } from "./notifications-panel"
 import type { Notification } from "./notifications-panel"
-import { useLocalStorage } from "@/hooks/use-local-storage"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface AppHeaderProps {
   title: string
@@ -18,7 +25,9 @@ interface AppHeaderProps {
   onToggleMobileMenu?: () => void
   sidebarOpen?: boolean
   className?: string
-  businessUnits?: Array<{ id: string; name: string } & Record<string, any>>
+  activeTab?: string
+  onTabChange?: (tab: string) => void
+  showTabs?: boolean
 }
 
 export function AppHeader({
@@ -28,35 +37,25 @@ export function AppHeader({
   onToggleMobileMenu,
   sidebarOpen = true,
   className,
-  businessUnits,
+  activeTab = "assistant",
+  onTabChange,
+  showTabs = true,
 }: AppHeaderProps) {
   const [notificationsPanelOpen, setNotificationsPanelOpen] = useState(false)
   const [notificationsData, setNotificationsData] = useState<Notification[]>(notifications)
 
-  // Team switching state
-  const [favoriteTeams, setFavoriteTeams] = useLocalStorage<string[]>("favoriteTeams", ["design", "engineering", "marketing"])
-  const [selectedTeam, setSelectedTeam] = useState<string>(favoriteTeams[0])
-
-  const favoriteUnits = businessUnits?.filter(unit => favoriteTeams.includes(unit.id)).slice(0, 3)
-  const otherUnits = (businessUnits ?? [])
-    .filter(unit => !favoriteTeams.includes(unit.id))
-    .sort((a, b) => a.name.localeCompare(b.name))
-
-  // Show all teams in the dropdown, with a solid star for favorites
-  const allUnits = (businessUnits ?? []).slice().sort((a, b) => a.name.localeCompare(b.name))
-
-  const toggleFavorite = (id: string) => {
-    // setFavoriteTeams expects a value, not an updater function
-    let updated: string[]
-    if (favoriteTeams.includes(id)) {
-      updated = favoriteTeams.filter((fid: string) => fid !== id)
-    } else {
-      updated = [id, ...favoriteTeams.filter((fid: string) => fid !== id)].slice(0, 3)
-    }
-    setFavoriteTeams(updated)
-  }
-
   const unreadCount = notificationsData.filter((notification) => !notification.read).length
+
+  const tabOptions = [
+    { value: "home", label: "Home" },
+    { value: "chat", label: "Chat" },
+    { value: "projects", label: "Projects" },
+    { value: "colleagues", label: "Colleagues" },
+    { value: "knowledge", label: "Knowledge" },
+    { value: "files", label: "Files" },
+  ]
+
+  const currentTab = tabOptions.find(tab => tab.value === activeTab)
 
   const handleMarkAllAsRead = () => {
     setNotificationsData(
@@ -83,55 +82,93 @@ export function AppHeader({
           <PanelLeft className="h-5 w-5" />
         </Button>
         <div className="flex flex-1 items-center">
-          <div className="flex items-center gap-3">
-            {/* Team Switcher Buttons */}
-            <div className="flex items-center gap-2">
-              {favoriteUnits?.map(unit => (
-                <Button
-                  key={unit.id}
-                  variant={selectedTeam === unit.id ? "default" : "outline"}
-                  className={`group gap-2 px-4 py-2 rounded-full border border-accent transition-colors duration-200 font-semibold text-base ${selectedTeam === unit.id ? 'bg-accent text-accent-foreground' : 'bg-card text-card-foreground hover:text-accent hover:border '}`}
-                  style={{ boxShadow: selectedTeam === unit.id ? '0 2px 8px 0 rgba(0,0,0,0.08)' : undefined }}
-                  onClick={() => setSelectedTeam(unit.id)}
-                >
-                  <span className="ml-1">{unit.name}</span>
-                  {selectedTeam === unit.id && <span className="ml-2 w-2 h-2 rounded-full bg-accent-foreground inline-block group-hover:bg-accent" />}
-                </Button>
-              ))}
-              { businessUnits && (<DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="rounded-full px-4 py-2 font-semibold hover:text-accent hover:border-accent">More</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {allUnits.map(unit => (
-                    <DropdownMenuItem key={unit.id} onClick={() => setSelectedTeam(unit.id)} className="flex items-center justify-between gap-2">
-                      <span className={`inline-flex items-center gap-2 rounded-full px-2 py-1 font-medium ${selectedTeam === unit.id ? 'bg-accent text-accent-foreground' : ''}`}>{unit.name}
-                        {/* {favoriteTeams.includes(unit.id) && <Star fill="#facc15" stroke="#facc15" className="ml-1 w-4 h-4 text-yellow-400" />} */}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="ml-auto"
-                        tabIndex={-1}
-                        onClick={e => {
-                          e.stopPropagation()
-                          toggleFavorite(unit.id)
-                        }}
+          {/* Desktop Tabs / Mobile Dropdown */}
+          {showTabs && (
+            <motion.div 
+              className="flex-1 flex justify-center"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              {/* Desktop Tabs */}
+              <div className="hidden md:block">
+                <Tabs value={activeTab} onValueChange={onTabChange}>
+                  <TabsList className="grid w-full max-w-[700px] grid-cols-6 rounded-2xl p-0 h-10">
+                    {tabOptions.map((tab) => (
+                      <motion.div
+                        key={tab.value}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        className="flex-1 px-2"
                       >
-                        <Star
-                          fill={favoriteTeams.includes(unit.id) ? "#facc15" : "none"}
-                          stroke={favoriteTeams.includes(unit.id) ? "#facc15" : "currentColor"}
-                          className={favoriteTeams.includes(unit.id) ? "text-yellow-400" : "text-gray-400"}
-                        />
-                      </Button>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>) 
-}
-            </div>
-          </div>
+                        <TabsTrigger 
+                          value={tab.value}
+                          className="w-full h-8 rounded-xl data-[state=active]:rounded-xl transition-all duration-200 hover:border hover:border-accent hover:bg-accent/10 px-4 py-2 text-sm font-medium"
+                        >
+                          {tab.label}
+                        </TabsTrigger>
+                      </motion.div>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
+
+              {/* Mobile Dropdown */}
+              <div className="md:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="rounded-2xl min-w-[140px] justify-between">
+                      {currentTab?.label || "Select"}
+                      <ChevronDown className="h-4 w-4 ml-2" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="w-[180px]">
+                    {tabOptions.map((tab) => (
+                      <DropdownMenuItem
+                        key={tab.value}
+                        onClick={() => onTabChange?.(tab.value)}
+                        className={`cursor-pointer ${activeTab === tab.value ? 'bg-accent' : ''}`}
+                      >
+                        {tab.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </motion.div>
+          )}
+          
           <div className="flex items-center gap-3 ml-auto">
+              <motion.div 
+                className="hidden md:flex gap-2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Link href="/ai-assistant">
+                    <Button className="rounded-2xl transition-all duration-200 hover:shadow-md">
+                      <Bot className="mr-2 h-4 w-4" />
+                      Copilot
+                    </Button>
+                  </Link>
+                </motion.div>
+                {/* <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Button className="rounded-2xl transition-all duration-200 hover:shadow-md">
+                    <Plus className="mr-2 h-4 w-4" />
+                    New Project
+                  </Button>
+                </motion.div> */}
+              </motion.div> 
             <ThemeToggle />
             {/* <TooltipProvider>
               <Tooltip>
@@ -158,28 +195,50 @@ export function AppHeader({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-2xl relative"
-                    onClick={() => setNotificationsPanelOpen(true)}
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <Bell className="h-5 w-5" />
-                    {unreadCount > 0 && (
-                      <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                        {unreadCount}
-                      </span>
-                    )}
-                  </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-2xl relative transition-all duration-200"
+                      onClick={() => setNotificationsPanelOpen(true)}
+                    >
+                      <motion.div
+                        animate={unreadCount > 0 ? { rotate: [0, -10, 10, -10, 0] } : {}}
+                        transition={{ duration: 0.5, repeat: unreadCount > 0 ? Infinity : 0, repeatDelay: 3 }}
+                      >
+                        <Bell className="h-5 w-5" />
+                      </motion.div>
+                      {unreadCount > 0 && (
+                        <motion.span 
+                          className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                        >
+                          {unreadCount}
+                        </motion.span>
+                      )}
+                    </Button>
+                  </motion.div>
                 </TooltipTrigger>
                 <TooltipContent>Notifications</TooltipContent>
               </Tooltip>
             </TooltipProvider>
 
-            <Avatar className="h-9 w-9 border-2 border-primary">
-              <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-              <AvatarFallback></AvatarFallback>
-            </Avatar>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <Avatar className="h-9 w-9 border-2 border-primary transition-all duration-200 hover:shadow-md cursor-pointer">
+                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
+                <AvatarFallback></AvatarFallback>
+              </Avatar>
+            </motion.div>
           </div>
         </div>
       </header>

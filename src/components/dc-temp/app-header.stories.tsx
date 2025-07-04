@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AppHeader } from "./app-header"
-import {  mockNotifications } from "./mock-data"
-import { businessUnits } from "./business-units"
+import { mockNotifications } from "./mock-data"
 
 const meta: Meta<typeof AppHeader> = {
   title: "DC/AppHeader",
@@ -29,7 +28,6 @@ export const Default: Story = {
     sidebarOpen: true,
     onToggleSidebar: () => console.log("Toggle sidebar"),
     onToggleMobileMenu: () => console.log("Toggle mobile menu"),
-    businessUnits,
   },
 }
 
@@ -40,16 +38,28 @@ export const NoNotifications: Story = {
     sidebarOpen: true,
     onToggleSidebar: () => console.log("Toggle sidebar"),
     onToggleMobileMenu: () => console.log("Toggle mobile menu"),
-    businessUnits,
   },
 }
 
 export const NoBusinessUnits: Story = {
   args: {
     title: "Digital Colleagues",
-notifications: mockNotifications,
+    notifications: mockNotifications,
     sidebarOpen: false,
     onToggleSidebar: () => console.log("Toggle sidebar"),
     onToggleMobileMenu: () => console.log("Toggle mobile menu"),
+  },
+}
+
+export const WithTabs: Story = {
+  args: {
+    title: "Digital Colleagues",
+    notifications: mockNotifications,
+    sidebarOpen: true,
+    onToggleSidebar: () => console.log("Toggle sidebar"),
+    onToggleMobileMenu: () => console.log("Toggle mobile menu"),
+    showTabs: true,
+    activeTab: "chat",
+    onTabChange: (tab: string) => console.log("Tab changed to:", tab),
   },
 }

@@ -12,7 +12,6 @@ export interface ChatSession {
   title: string
   lastMessage: string
   timestamp: Date
-  teamId: string
 }
 
 interface ChatSessionSidebarProps {
@@ -48,19 +47,20 @@ export function ChatSessionSidebar({
 
   return (
     <div className={`space-y-4 ${className || ""}`}>
-      {/* New Chat Button */}
-      <Button onClick={onNewChat} className="w-full gap-2 h-12 rounded-2xl shadow-sm">
-        <Plus className="h-4 w-4" />
-        New Chat
-      </Button>
-
       {/* Recent Chats */}
       <Card className="shadow-sm">
         <div className="p-4 border-b">
-          <h3 className="font-semibold text-sm flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            Recent Chats
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-sm flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              Recent Chats
+            </h3>
+            {/* New Chat Button */}
+            <Button onClick={onNewChat} size="sm" className="gap-1 h-7 px-2 rounded-lg shadow-sm">
+              <Plus className="h-3 w-3" />
+              New
+            </Button>
+          </div>
         </div>
         <ScrollArea className="h-[600px]">
           <div className="p-2">
@@ -79,7 +79,7 @@ export function ChatSessionSidebar({
                     onClick={() => onSessionSelect(session)}
                   >
                     <div className="flex items-start gap-3">
-                      {team && (
+                      {/* {team && (
                         <div
                           className={cn(
                             "flex h-6 w-6 items-center justify-center rounded text-white text-xs flex-shrink-0 mt-0.5",
@@ -88,46 +88,47 @@ export function ChatSessionSidebar({
                         >
                           {team.icon}
                         </div>
-                      )}
+                      )} */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-sm truncate">{session.title}</h4>
-                          <span className="text-xs text-muted-foreground flex-shrink-0">
-                            {formatRelativeTime(session.timestamp)}
-                          </span>
+                          <div className="flex items-center gap-1">
+                            <span className="text-xs text-muted-foreground flex-shrink-0">
+                              {formatRelativeTime(session.timestamp)}
+                            </span>
+                            {/* Action Buttons */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                              {onSessionEdit && (
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-5 w-5 rounded"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    onSessionEdit(session.id)
+                                  }}
+                                >
+                                  <Edit3 className="h-3 w-3" />
+                                </Button>
+                              )}
+                              {onSessionDelete && (
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-5 w-5 rounded text-destructive hover:text-destructive"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    onSessionDelete(session.id)
+                                  }}
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
                         </div>
                         <p className="text-xs text-muted-foreground line-clamp-2">{session.lastMessage}</p>
                       </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                      {onSessionEdit && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 rounded-lg"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onSessionEdit(session.id)
-                          }}
-                        >
-                          <Edit3 className="h-3 w-3" />
-                        </Button>
-                      )}
-                      {onSessionDelete && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 rounded-lg text-destructive hover:text-destructive"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onSessionDelete(session.id)
-                          }}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
                     </div>
                   </div>
                 )
