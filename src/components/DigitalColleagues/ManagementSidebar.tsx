@@ -272,10 +272,11 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   return (
     <>
       {/* Narrow Strip - Fixed positioning below header */}
-      <div className={`fixed left-0 w-12 bg-slate-800 flex flex-col z-30 flex-shrink-0 transition-transform duration-300 ${
+      <div className={`fixed h-full left-0 w-12 bg-slate-800 flex flex-col z-30 flex-shrink-0 transition-transform duration-300 group ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0`}
-      style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}>
+      // style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}
+      >
         
         {/* View Toggle */}
         <div className="border-b border-slate-600">
@@ -284,36 +285,45 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
               onViewChange('kanban');
               setActiveSection(null);
             }}
-            className={`w-full h-12 flex items-center justify-center text-white transition-colors ${
+            className={`w-12 h-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
               currentView === 'kanban' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-            }`}
+            } hover:w-28 hover:justify-start hover:pl-3`}
             title="Kanban View"
           >
-            <Kanban className="h-4 w-4" />
+            <Kanban className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Kanban
+            </span>
           </button>
           <button
             onClick={() => {
               onViewChange('planning');
               setActiveSection(null);
             }}
-            className={`w-full h-12 flex items-center justify-center text-white transition-colors ${
+            className={`w-12 h-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
               currentView === 'planning' ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'
-            } hidden md:flex`}
+            } hidden md:flex hover:w-28 hover:justify-start hover:pl-3`}
             title="Planning View"
           >
-            <Calendar className="h-4 w-4" />
+            <Calendar className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Planning
+            </span>
           </button>
         </div>
 
         {/* Menu Sections */}
         <button
           onClick={() => setActiveSection(activeSection === 'projects' ? null : 'projects')}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
+          className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
             activeSection === 'projects' ? 'bg-slate-600' : 'bg-slate-700 hover:bg-slate-600'
-          }`}
+          } hover:w-28 hover:justify-start hover:pl-3`}
           title="Projects"
         >
-          <FolderOpen className="h-4 w-4" />
+          <FolderOpen className="h-4 w-4 flex-shrink-0" />
+          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+            Projects
+          </span>
         </button>
         
         <button
@@ -321,22 +331,28 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
             onViewChange('epics');
             setActiveSection(null);
           }}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
+          className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
             currentView === 'epics' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-          }`}
+          } hover:w-28 hover:justify-start hover:pl-3`}
           title="Epic Planning"
         >
-          <Target className="h-4 w-4" />
+          <Target className="h-4 w-4 flex-shrink-0" />
+          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+            Epics
+          </span>
         </button>
         
         <button
           onClick={() => setActiveSection(activeSection === 'sprints' ? null : 'sprints')}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
+          className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
             activeSection === 'sprints' ? 'bg-green-600' : 'bg-green-500 hover:bg-green-600'
-          }`}
+          } hover:w-28 hover:justify-start hover:pl-3`}
           title="Sprints"
         >
-          <Layers className="h-4 w-4" />
+          <Layers className="h-4 w-4 flex-shrink-0" />
+          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+            Sprints
+          </span>
         </button>
         
         <button
@@ -344,12 +360,15 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
             onViewChange('documentation');
             setActiveSection(null);
           }}
-          className={`flex-1 flex items-center justify-center text-white transition-colors ${
+          className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
             currentView === 'documentation' ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'
-          }`}
+          } hover:w-28 hover:justify-start hover:pl-3`}
           title="Documents"
         >
-          <FileText className="h-4 w-4" />
+          <FileText className="h-4 w-4 flex-shrink-0" />
+          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+            Documents
+          </span>
         </button>
       </div>
 

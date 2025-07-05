@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AIChatInterface, type ChatMessage } from "./ai-chat-interface"
 import { businessUnits } from "./business-units"
+import { capabilities } from "./capabilities"
 
 const mockMessages: ChatMessage[] = [
   {
@@ -22,18 +23,6 @@ const mockMessages: ChatMessage[] = [
     type: "ai",
     timestamp: new Date(Date.now() - 1000 * 60 * 3),
   },
-]
-
-const designSuggestions = [
-  { label: "Create logo", action: () => console.log("Create logo clicked") },
-  { label: "Review mockups", action: () => console.log("Review mockups clicked") },
-  { label: "Color palette", action: () => console.log("Color palette clicked") },
-]
-
-const engineeringSuggestions = [
-  { label: "Code review", action: () => console.log("Code review clicked") },
-  { label: "Debug help", action: () => console.log("Debug help clicked") },
-  { label: "Performance", action: () => console.log("Performance clicked") },
 ]
 
 const meta: Meta<typeof AIChatInterface> = {
@@ -58,7 +47,7 @@ export const Default: Story = {
     input: "",
     isTyping: false,
     selectedTeam: businessUnits[0], // Design team
-    quickSuggestions: designSuggestions,
+    capabilities: capabilities,
   },
 }
 
@@ -76,7 +65,7 @@ export const WithTyping: Story = {
     input: "",
     isTyping: true,
     selectedTeam: businessUnits[0],
-    quickSuggestions: designSuggestions,
+    capabilities: capabilities,
   },
 }
 
@@ -93,7 +82,7 @@ export const EngineeringTeam: Story = {
     input: "Help me optimize this React component",
     isTyping: false,
     selectedTeam: businessUnits[1], // Engineering team
-    quickSuggestions: engineeringSuggestions,
+    capabilities: capabilities,
   },
 }
 
@@ -104,7 +93,7 @@ export const WithSessionTitle: Story = {
     isTyping: false,
     selectedTeam: businessUnits[0],
     currentSessionTitle: "Logo Design Review",
-    quickSuggestions: designSuggestions,
+    capabilities: capabilities,
   },
 }
 
@@ -121,11 +110,7 @@ export const EmptyChat: Story = {
     input: "",
     isTyping: false,
     selectedTeam: businessUnits[2], // Marketing team
-    quickSuggestions: [
-      { label: "Campaign ideas", action: () => console.log("Campaign ideas clicked") },
-      { label: "Social content", action: () => console.log("Social content clicked") },
-      { label: "Analytics", action: () => console.log("Analytics clicked") },
-    ],
+    capabilities: capabilities,
   },
 }
 
@@ -135,6 +120,98 @@ export const NoSuggestions: Story = {
     input: "",
     isTyping: false,
     selectedTeam: businessUnits[0],
-    quickSuggestions: [],
+    capabilities: [], // Empty capabilities array
+  },
+}
+
+export const WithoutTeam: Story = {
+  args: {
+    messages: [
+      {
+        id: "1",
+        content: "Hi! I'm your AI assistant. How can I help you today?",
+        type: "ai",
+        timestamp: new Date(),
+      },
+    ],
+    input: "",
+    isTyping: false,
+    // No selectedTeam provided
+    capabilities: capabilities,
+  },
+}
+
+export const CustomCapabilities: Story = {
+  args: {
+    messages: [
+      {
+        id: "1",
+        content: "Hi! I'm your custom AI assistant with specialized capabilities.",
+        type: "ai",
+        timestamp: new Date(),
+      },
+    ],
+    input: "",
+    isTyping: false,
+    selectedTeam: businessUnits[0],
+    capabilities: [
+      {
+        id: "design",
+        name: "Design Tools",
+        description: "Creative design assistance",
+        type: "category",
+        actions: [
+          {
+            id: "create-wireframe",
+            label: "Create Wireframe",
+            action: (context) => console.log("Create wireframe", context)
+          }
+        ],
+        children: [
+          {
+            id: "templates",
+            name: "Templates",
+            description: "Design templates",
+            type: "list",
+            actions: [
+              {
+                id: "browse-templates",
+                label: "Browse Templates",
+                action: (context) => console.log("Browse templates", context)
+              }
+            ],
+            data: [
+              {
+                id: "template-1",
+                title: "Modern Landing Page",
+                subtitle: "Responsive design",
+                value: "Free",
+                metadata: { category: "landing", style: "modern" }
+              },
+              {
+                id: "template-2",
+                title: "E-commerce Template",
+                subtitle: "Product showcase",
+                value: "Premium",
+                metadata: { category: "ecommerce", style: "clean" }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "development",
+        name: "Development",
+        description: "Code assistance",
+        type: "category",
+        actions: [
+          {
+            id: "review-code",
+            label: "Review Code",
+            action: (context) => console.log("Review code", context)
+          }
+        ]
+      }
+    ],
   },
 }

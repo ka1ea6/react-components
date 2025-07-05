@@ -495,104 +495,7 @@ export const KanbanBoard: React.FC = () => {
   const additionalTeams = mockTeams.slice(3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col">
-      {/* Header */}
-      <DashboardHeader
-        isRightSidebarOpen={false}
-        onToggleRightSidebar={() => {}}
-        onToggleLeftSidebar={handleToggleMobileMenu}
-        onToggleNotifications={() => {}}
-      />
-
-      {/* Top Menu - Below Header */}
-      <div className="border-b bg-white px-6 py-3">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {/* Copilot Button */}
-              <Button
-                variant="outline"
-                onClick={handleCopilotClick}
-                className="gap-2 h-9"
-              >
-                <MessageSquare className="h-4 w-4" />
-                Copilot
-              </Button>
-
-              {/* Recent Teams */}
-              {recentTeams.map((team) => (
-                <Button
-                  key={team.id}
-                  variant="default"
-                  onClick={() => handleTeamClick(team.id)}
-                  className="gap-2 h-9 bg-blue-600 hover:bg-blue-700"
-                >
-                  <div className="w-5 h-5 rounded bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-medium">
-                    {team.avatar}
-                  </div>
-                  {team.name}
-                </Button>
-              ))}
-
-              {/* More Teams Dropdown */}
-              {hasMoreTeams && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="h-9 w-9 p-0">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    {additionalTeams.map((team) => (
-                      <DropdownMenuItem
-                        key={team.id}
-                        onClick={() => handleTeamClick(team.id)}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
-                        <div className="w-5 h-5 rounded bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-medium">
-                          {team.avatar}
-                        </div>
-                        {team.name}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </div>
-
-            {currentView === 'kanban' && (
-              <Button
-                onClick={() => setIsAddTaskModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
-              >
-                <Plus className="h-4 w-4" />
-                Add Task
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Area with Sidebar */}
-      <ManagementSidebar
-        projects={projects}
-        epics={epics}
-        sprints={sprints}
-        currentView={currentView}
-        onUpdateProject={handleUpdateProject}
-        onDeleteProject={handleDeleteProject}
-        onAddProject={handleAddProject}
-        onUpdateEpic={handleUpdateEpic}
-        onDeleteEpic={handleDeleteEpic}
-        onAddEpic={() => setIsAddEpicModalOpen(true)}
-        onAddSprint={handleAddSprint}
-        onUpdateSprint={handleUpdateSprint}
-        onDeleteSprint={handleDeleteSprint}
-        onViewChange={handleViewChange}
-        mobileMenuOpen={mobileMenuOpen}
-        onToggleMobileMenu={handleToggleMobileMenu}
-      >
-        {/* Main Content */}
+        
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto">
             {/* Page Title */}
@@ -714,7 +617,5 @@ export const KanbanBoard: React.FC = () => {
             </>
           </div>
         </div>
-      </ManagementSidebar>
-    </div>
   );
 };
