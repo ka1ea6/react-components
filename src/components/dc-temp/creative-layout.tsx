@@ -47,7 +47,7 @@ export function CreativeLayout({
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-background w-[]">
-      {/* Animated gradient background */}
+      {/* Animated gradient background
       <motion.div
         className="flex h-full flex-col overflow-hidden rounded-xl border bg-background w-3"
         animate={{
@@ -59,7 +59,7 @@ export function CreativeLayout({
           ],
         }}
         transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-      />
+      /> */}
 
       {/* Mobile menu overlay */}
       {mobileMenuOpen && (
@@ -90,7 +90,7 @@ export function CreativeLayout({
       </div>
 
       {/* Main Content */}
-      <div className={cn("min-h-screen transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
+      <div className={cn("min-h-screen w-full transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
         <AppHeader
           title={title}
           notifications={notifications}
@@ -102,7 +102,7 @@ export function CreativeLayout({
           showTabs={showTabs}
         />
 
-        <main className="flex-1 p-4 md:p-6">{children}</main>
+        <main className="flex-1 p-0 flex flex-col h-[calc(100vh-4rem)] overflow-auto">{children}</main>
       </div>
     </div>
   )

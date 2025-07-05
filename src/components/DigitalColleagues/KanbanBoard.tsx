@@ -62,211 +62,19 @@ export interface Task {
   createdAt: Date;
 }
 
-const initialProjects: Project[] = [
-  {
-    id: '1',
-    name: 'E-commerce Platform',
-    description: 'Main customer-facing e-commerce application',
-    isSelected: true,
-  },
-  {
-    id: '2',
-    name: 'Admin Dashboard',
-    description: 'Internal administration and analytics dashboard',
-    isSelected: false,
-  },
-  {
-    id: '3',
-    name: 'Mobile App',
-    description: 'Native mobile application for iOS and Android',
-    isSelected: false,
-  },
-];
+export interface KanbanBoardProps {
+  initialTasks?: Task[];
+  initialEpics?: Epic[];
+  initialSprints?: Sprint[];
+  initialProjects?: Project[];
+}
 
-const initialEpics: Epic[] = [
-  {
-    id: '1',
-    name: 'User Authentication',
-    color: 'bg-blue-500',
-    description: 'Implement secure user authentication system',
-    confidence: 'high',
-    phase: 2, // development
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-02-15'),
-    progress: 75,
-    isSelected: true,
-  },
-  {
-    id: '2',
-    name: 'Dashboard Features',
-    color: 'bg-green-500',
-    description: 'Build comprehensive dashboard functionality',
-    confidence: 'medium',
-    phase: 1, // planning
-    startDate: new Date('2024-02-01'),
-    endDate: new Date('2024-03-15'),
-    progress: 30,
-    isSelected: true,
-  },
-  {
-    id: '3',
-    name: 'Mobile Optimization',
-    color: 'bg-purple-500',
-    description: 'Optimize application for mobile devices',
-    confidence: 'low',
-    phase: 1, // planning
-    startDate: new Date('2024-03-01'),
-    endDate: new Date('2024-04-15'),
-    progress: 10,
-    isSelected: true,
-  },
-  {
-    id: '4',
-    name: 'Performance Improvements',
-    color: 'bg-orange-500',
-    description: 'Enhance application performance and speed',
-    confidence: 'high',
-    phase: 3, // testing
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-02-28'),
-    progress: 90,
-    isSelected: true,
-  },
-];
-
-const initialSprints: Sprint[] = [
-  {
-    id: 'backlog',
-    name: 'Backlog',
-    description: 'Tasks not yet assigned to a sprint',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-12-31'),
-    isActive: false,
-    isSelected: false,
-  },
-  {
-    id: 'all-tasks',
-    name: 'All Tasks',
-    description: 'View all tasks across all sprints',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-12-31'),
-    isActive: false,
-    isSelected: true,
-  },
-  {
-    id: '1',
-    name: 'Sprint 1',
-    description: 'Initial development phase',
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-01-14'),
-    isActive: false,
-    isSelected: false,
-  },
-  {
-    id: '2',
-    name: 'Sprint 2',
-    description: 'Feature development',
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-01-28'),
-    isActive: true,
-    isSelected: false,
-  },
-];
-
-const initialTasks: Task[] = [
-  {
-    id: '1',
-    title: 'Design login page',
-    description: 'Create wireframes and mockups for the login interface',
-    status: 'todo',
-    priority: 'high',
-    type: 'story',
-    points: 5,
-    epicId: '1',
-    sprintId: '2',
-    assignee: 'John Doe',
-    createdAt: new Date('2024-01-15'),
-  },
-  {
-    id: '2',
-    title: 'Implement OAuth integration',
-    description: 'Add Google and GitHub OAuth authentication',
-    status: 'review',
-    priority: 'high',
-    type: 'task',
-    points: 8,
-    epicId: '1',
-    sprintId: '2',
-    assignee: 'Jane Smith',
-    createdAt: new Date('2024-01-16'),
-  },
-  {
-    id: '3',
-    title: 'Create dashboard widgets',
-    description: 'Build analytics and metrics widgets for the main dashboard',
-    status: 'todo',
-    priority: 'medium',
-    type: 'story',
-    points: 13,
-    epicId: '2',
-    sprintId: '2',
-    assignee: 'Mike Johnson',
-    createdAt: new Date('2024-01-17'),
-  },
-  {
-    id: '4',
-    title: 'Fix login redirect bug',
-    description: 'Resolve issue where users are not redirected after login',
-    status: 'done',
-    priority: 'high',
-    type: 'bug',
-    points: 3,
-    epicId: '1',
-    sprintId: '1',
-    assignee: 'Sarah Wilson',
-    createdAt: new Date('2024-01-14'),
-  },
-  {
-    id: '5',
-    title: 'Research mobile frameworks',
-    description: 'Investigate best practices for mobile responsive design',
-    status: 'in-progress',
-    priority: 'medium',
-    type: 'spike',
-    points: 5,
-    epicId: '3',
-    assignee: 'Alex Brown',
-    createdAt: new Date('2024-01-18'),
-  },
-  {
-    id: '6',
-    title: 'Update user profile page',
-    description: 'Enhance user profile with new settings and preferences',
-    status: 'review',
-    priority: 'medium',
-    type: 'story',
-    points: 8,
-    epicId: '2',
-    sprintId: '2',
-    assignee: 'Emma Davis',
-    createdAt: new Date('2024-01-19'),
-  },
-  {
-    id: '7',
-    title: 'Performance optimization',
-    description: 'Optimize database queries and improve page load times',
-    status: 'done',
-    priority: 'high',
-    type: 'task',
-    points: 13,
-    epicId: '4',
-    sprintId: '1',
-    assignee: 'Tom Wilson',
-    createdAt: new Date('2024-01-13'),
-  },
-];
-
-export const KanbanBoard: React.FC = () => {
+export const KanbanBoard: React.FC<KanbanBoardProps> = ({
+  initialTasks = [],
+  initialEpics = [],
+  initialSprints = [],
+  initialProjects = [],
+}) => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [epics, setEpics] = useState<Epic[]>(initialEpics);
   const [sprints, setSprints] = useState<Sprint[]>(initialSprints);
@@ -495,18 +303,17 @@ export const KanbanBoard: React.FC = () => {
   const additionalTeams = mockTeams.slice(3);
 
   return (
-        
-        <div className="flex-1 p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Page Title */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Kanban className="h-8 w-8 text-blue-600" />
-                <h1 className="text-3xl font-bold text-gray-900 select-none-important">
-                  {getViewTitle()}
-                </h1>
-              </div>
-            </div>
+    <div className="flex-1 py-6">
+      <div className="w-full">
+        {/* Page Title */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Kanban className="h-8 w-8 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900 static">
+              {getViewTitle()}
+            </h1>
+          </div>
+        </div>
 
             {/* Content based on current view */}
             {currentView === 'kanban' ? (
@@ -615,7 +422,7 @@ export const KanbanBoard: React.FC = () => {
                 />
               )}
             </>
-          </div>
         </div>
+      </div>
   );
 };

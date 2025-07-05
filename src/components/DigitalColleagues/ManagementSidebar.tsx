@@ -18,7 +18,7 @@ interface ManagementSidebarProps {
   projects: Project[];
   epics: Epic[];
   sprints: Sprint[];
-  currentView: 'kanban' | 'planning' | 'documentation' | 'epics';
+  currentView: 'kanban' | 'planning' | 'files' | 'epics';
   onUpdateProject: (projectId: string, updates: Partial<Project>) => void;
   onDeleteProject: (projectId: string) => void;
   onAddProject: (project: Omit<Project, 'id'>) => void;
@@ -28,12 +28,12 @@ interface ManagementSidebarProps {
   onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
   onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
   onDeleteSprint: (sprintId: string) => void;
-  onViewChange: (view: 'kanban' | 'planning' | 'documentation' | 'epics') => void;
+  onViewChange: (view: 'kanban' | 'planning' | 'files' | 'epics') => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
 
-type SectionType = 'projects' | 'epics' | 'sprints' | 'documents' | null;
+type SectionType = 'projects' | 'epics' | 'sprints' | 'files' | null;
 
 const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   projects,
@@ -271,12 +271,10 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
 
   return (
     <>
-      {/* Narrow Strip - Fixed positioning below header */}
-      <div className={`fixed h-full left-0 w-12 bg-slate-800 flex flex-col z-30 flex-shrink-0 transition-transform duration-300 group ${
+      {/* Narrow Strip - Positioned relative to current layout */}
+      <div className={`absolute h-full w-12 bg-slate-800 flex flex-col z-50 flex-shrink-0 transition-transform duration-300 group ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-      } md:translate-x-0`}
-      // style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}
-      >
+      } md:translate-x-0`}>
         
         {/* View Toggle */}
         <div className="border-b border-slate-600">
@@ -287,7 +285,7 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
             }}
             className={`w-12 h-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
               currentView === 'kanban' ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-            } hover:w-28 hover:justify-start hover:pl-3`}
+            } hover:w-28 hover:justify-start hover:pl-3 z-50`}
             title="Kanban View"
           >
             <Kanban className="h-4 w-4 flex-shrink-0" />
@@ -312,7 +310,7 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
           </button>
         </div>
 
-        {/* Menu Sections */}
+        {/* ...existing code... */}
         <button
           onClick={() => setActiveSection(activeSection === 'projects' ? null : 'projects')}
           className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
@@ -357,49 +355,47 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
         
         <button
           onClick={() => {
-            onViewChange('documentation');
+            onViewChange('files');
             setActiveSection(null);
           }}
           className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
-            currentView === 'documentation' ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'
+            currentView === 'files' ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'
           } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Documents"
+          title="Files"
         >
           <FileText className="h-4 w-4 flex-shrink-0" />
           <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Documents
+            Files
           </span>
         </button>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - Truly full screen */}
       {mobileMenuOpen && (
         <div 
           className="md:hidden fixed inset-0 bg-black/50 z-20" 
-          style={{ top: '8.5rem' }}
           onClick={onToggleMobileMenu}
         />
       )}
 
-      {/* Popup Panels */}
+      {/* Popup Panels - Positioned relative to the management sidebar */}
       {activeSection && (
         <>
-          {/* Overlay */}
+          {/* Overlay - Truly full screen, covers everything */}
           <div 
-            className="fixed inset-0 bg-black/50 z-40" 
-            style={{ top: '8.5rem' }}
+            className="fixed inset-0 bg-black/70 z-40" 
             onClick={() => setActiveSection(null)}
           />
           
-          {/* Panel */}
-          <div className="fixed left-12 md:left-16 w-80 md:w-96 bg-white shadow-lg z-50 transform transition-transform max-w-[calc(100vw-3rem)] md:max-w-none"
-               style={{ top: '8.5rem', height: 'calc(100vh - 8.5rem)' }}>
+          {/* Panel - Positioned relative to the management sidebar */}
+          <div className="absolute left-12 w-80 md:w-96 bg-card shadow-lg z-40 transform transition-transform max-w-[calc(100vw-3rem)] md:max-w-none top-0 h-full">
+            {/* ...existing code... */}
             <div className="p-3 md:p-4 border-b flex items-center justify-between">
               <h2 className="text-base md:text-lg font-semibold">
                 {activeSection === 'projects' && 'Projects'}
                 {activeSection === 'epics' && 'Manage Epics'}
                 {activeSection === 'sprints' && 'Manage Sprints'}
-                {activeSection === 'documents' && 'Documents'}
+                {activeSection === 'files' && 'Files'}
               </h2>
               <Button variant="ghost" size="sm" onClick={() => setActiveSection(null)}>
                 <X className="h-4 w-4" />
@@ -860,20 +856,23 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
 export const ManagementSidebar: React.FC<ManagementSidebarProps & { children?: React.ReactNode }> = (props) => {
   return (
     <SidebarProvider>
-      <div className="flex h-full w-full">
+      {/* <div className="flex w-full  h-[calc(100vh-4rem)]"> */}
+        <div className="flex w-full">
         {/* Desktop sidebar - always visible */}
-        <div className="hidden md:block w-16">
+        <div className="hidden md:block w-12 fixed h-full">
           <ManagementSidebarContent {...props} />
         </div>
         
-        {/* Mobile sidebar - use overlay approach */}
+        {/* Mobile sidebar - overlay approach */}
         <div className="md:hidden">
           <ManagementSidebarContent {...props} />
         </div>
         
-        {/* Main content with proper margin */}
-        <div className="flex-1 md:ml-0">
-          {props.children}
+        {/* Main content area - takes remaining space */}
+        <div className="flex-1 min-w-0 ml-16 px-4 md:px-6">
+          <div className="w-full">
+            {props.children}
+          </div>
         </div>
       </div>
     </SidebarProvider>
