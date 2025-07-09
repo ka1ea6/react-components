@@ -1,10 +1,10 @@
 import React from "react";
 import Home from "./dashboardpage";
-import { businessUnits } from "./business-units";
+import { businessUnits } from "../business-units";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Home> = {
-  title: "DC/DashboardPage",
+  title: "DC/Pages/DashboardPage",
   component: Home,
   parameters: {
     layout: "fullscreen",

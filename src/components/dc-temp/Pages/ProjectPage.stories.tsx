@@ -28,10 +28,10 @@ type Story = StoryObj<typeof ProjectPage>;
 
 export const Default: Story = {
   args: {
-    projects: mockProjects,
-    epics: mockEpics,
-    sprints: mockSprints,
-    tasks: mockTasks,
+    initialProjects: mockProjects,
+    initialEpics: mockEpics,
+    initialSprints: mockSprints,
+    initialTasks: mockTasks,
     businessUnits: businessUnits,
     currentView: 'kanban',
     mobileMenuOpen: false,

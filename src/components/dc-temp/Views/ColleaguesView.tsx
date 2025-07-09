@@ -1,55 +1,69 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Search, Users, Bot, User, Filter, Download, Upload } from "lucide-react"
+import { Plus, Search, Users, Bot, User, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ColleagueCard } from "./colleague-card"
-import { ColleagueForm } from "./colleague-form"
-import { mockColleagues, type Colleague } from "./colleagues"
-
-interface ColleaguesManagementProps {
+import { NavigationTabs, type TabOption } from "../../AdvancedComponents/navigation-tabs"
+import { ColleagueCard } from "./../colleague-card"
+import { ColleagueForm } from "./../colleague-form"
+import { UserSelection, type User as UserType } from "./../user-selection"
+import { DigitalColleagueClone } from "./../digital-colleague-clone"
+import { ColleagueTypeSelection } from "./../colleague-type-selection"
+import { DigitalColleagueOptions } from "./../digital-colleague-options"
+import { type Colleague, type HumanColleague, type DigitalColleague, type KnowledgeDocument } from "../../DigitalColleagues/types"
+import { motion, AnimatePresence } from "framer-motion"
+import { HeroSection } from "../hero-section"
+interface ColleaguesViewProps {
   initialColleagues?: Colleague[]
   onColleagueAdd?: (colleague: Colleague) => void
   onColleagueEdit?: (colleague: Colleague) => void
   onColleagueDelete?: (colleagueId: string) => void
-  onImport?: () => void
-  onExport?: () => void
-  showImportExport?: boolean
   compactView?: boolean
   departments?: string[]
   className?: string
+  // New props for user and colleague selection
+  availableUsers?: UserType[]
+  existingDigitalColleagues?: DigitalColleague[]
 }
 
-export function ColleaguesManagement({
-  initialColleagues = mockColleagues,
+
+
+export default function ColleaguesView({
+  initialColleagues,
   onColleagueAdd,
   onColleagueEdit,
   onColleagueDelete,
-  onImport,
-  onExport,
-  showImportExport = true,
   compactView = false,
   departments = ["Design", "Engineering", "Marketing", "Product", "Sales", "Operations"],
   className,
-}: ColleaguesManagementProps) {
-  const [colleagues, setColleagues] = useState<Colleague[]>(initialColleagues)
+  availableUsers = [],
+  existingDigitalColleagues = [],
+}: ColleaguesViewProps) {
+  const [colleagues, setColleagues] = useState<Colleague[]>(initialColleagues || [])
   const [searchTerm, setSearchTerm] = useState("")
   const [departmentFilter, setDepartmentFilter] = useState<string>("all")
   const [statusFilter, setStatusFilter] = useState<string>("all")
-  const [showForm, setShowForm] = useState(false)
-  const [editingColleague, setEditingColleague] = useState<Colleague | null>(null)
+  const [activeTab, setActiveTab] = useState("all")
+  const [editingColleague, setEditingColleague] = useState<DigitalColleague | null>(null)
+  const [viewingColleague, setViewingColleague] = useState<DigitalColleague | null>(null)
+  
+  // New state for selection flows
+  const [currentView, setCurrentView] = useState<"main" | "typeSelection" | "userSelection" | "digitalOptions" | "digitalClone" | "form" | "view">("main")
 
   const filteredColleagues = colleagues.filter((colleague) => {
     const matchesSearch =
       colleague.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      colleague.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      colleague.role.toLowerCase().includes(searchTerm.toLowerCase())
+      (colleague.type === "human" && 
+        (colleague.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         colleague.role.toLowerCase().includes(searchTerm.toLowerCase()))) ||
+      (colleague.type === "digital" && 
+        colleague.jobDescription.toLowerCase().includes(searchTerm.toLowerCase()))
 
-    const matchesDepartment = departmentFilter === "all" || colleague.department === departmentFilter
+    const matchesDepartment = departmentFilter === "all" || 
+      (colleague.type === "human" && colleague.department === departmentFilter)
     const matchesStatus = statusFilter === "all" || colleague.status === statusFilter
 
     return matchesSearch && matchesDepartment && matchesStatus
@@ -59,16 +73,62 @@ export function ColleaguesManagement({
   const digitalColleagues = filteredColleagues.filter((c) => c.type === "digital")
 
   const handleAddColleague = () => {
-    setEditingColleague(null)
-    setShowForm(true)
+    setCurrentView("typeSelection")
   }
 
   const handleEditColleague = (colleague: Colleague) => {
-    setEditingColleague(colleague)
-    setShowForm(true)
+    if (colleague.type === "digital") {
+      setEditingColleague(colleague as DigitalColleague)
+      setCurrentView("form")
+    }
+    // For now, only digital colleagues can be edited through the form
   }
 
-  const handleSaveColleague = (colleague: Colleague) => {
+  const handleViewDetails = (colleague: Colleague) => {
+    if (colleague.type === "digital") {
+      setViewingColleague(colleague as DigitalColleague)
+      setCurrentView("view")
+    }
+    // For human colleagues, you could implement a different detail view
+  }
+
+  // New handler functions
+  const handleUserSelect = (user: UserType) => {
+    // Convert User to HumanColleague
+    const humanColleague: HumanColleague = {
+      id: `human-${Date.now()}`,
+      type: "human",
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      department: user.department,
+      phone: user.phone,
+      location: user.location,
+      timezone: user.timezone,
+      skills: user.skills,
+      bio: user.bio,
+      status: "active",
+      joinedDate: new Date(),
+      lastActive: new Date(),
+    }
+    
+    setColleagues((prev) => [...prev, humanColleague])
+    onColleagueAdd?.(humanColleague)
+    setCurrentView("main")
+  }
+
+  const handleDigitalColleagueClone = (clonedColleague: DigitalColleague) => {
+    setColleagues((prev) => [...prev, clonedColleague])
+    onColleagueAdd?.(clonedColleague)
+    setCurrentView("main")
+  }
+
+  const handleCreateNewDigital = () => {
+    setEditingColleague(null)
+    setCurrentView("form")
+  }
+
+  const handleSaveColleague = (colleague: DigitalColleague) => {
     if (editingColleague) {
       // Update existing colleague
       setColleagues((prev) => prev.map((c) => (c.id === colleague.id ? colleague : c)))
@@ -78,18 +138,32 @@ export function ColleaguesManagement({
       setColleagues((prev) => [...prev, colleague])
       onColleagueAdd?.(colleague)
     }
-    setShowForm(false)
+    setCurrentView("main")
     setEditingColleague(null)
+  }
+
+  const handleCancelForm = () => {
+    setCurrentView("main")
+    setEditingColleague(null)
+    setViewingColleague(null)
+  }
+
+  const handleCancelView = () => {
+    setCurrentView("main")
+    setViewingColleague(null)
+  }
+
+  const handleEditFromView = () => {
+    if (viewingColleague) {
+      setEditingColleague(viewingColleague)
+      setViewingColleague(null)
+      setCurrentView("form")
+    }
   }
 
   const handleDeleteColleague = (colleagueId: string) => {
     setColleagues((prev) => prev.filter((c) => c.id !== colleagueId))
     onColleagueDelete?.(colleagueId)
-  }
-
-  const handleCancelForm = () => {
-    setShowForm(false)
-    setEditingColleague(null)
   }
 
   const clearFilters = () => {
@@ -98,44 +172,131 @@ export function ColleaguesManagement({
     setStatusFilter("all")
   }
 
-  if (showForm) {
+  // Extract all unique knowledge documents from existing digital colleagues
+  const getAllAvailableKnowledgeDocuments = (): KnowledgeDocument[] => {
+    const allDocuments: KnowledgeDocument[] = []
+    
+    // Get documents from existing digital colleagues
+    existingDigitalColleagues.forEach(colleague => {
+      allDocuments.push(...colleague.knowledge, ...colleague.coreKnowledge)
+    })
+    
+    // Get documents from current colleagues in state
+    colleagues.forEach(colleague => {
+      if (colleague.type === "digital") {
+        allDocuments.push(...colleague.knowledge, ...colleague.coreKnowledge)
+      }
+    })
+    
+    // Remove duplicates based on document ID
+    const uniqueDocuments = allDocuments.filter((doc, index, self) => 
+      index === self.findIndex(d => d.id === doc.id)
+    )
+    
+    return uniqueDocuments
+  }
+
+  // Handle different views
+  if (currentView === "typeSelection") {
+    return (
+      <ColleagueTypeSelection
+        onSelectHuman={() => setCurrentView("userSelection")}
+        onSelectDigital={() => setCurrentView("digitalOptions")}
+        onCancel={() => setCurrentView("main")}
+      />
+    )
+  }
+
+  if (currentView === "userSelection") {
+    return (
+      <UserSelection
+        users={availableUsers}
+        onUserSelect={handleUserSelect}
+        onCancel={() => setCurrentView("typeSelection")}
+      />
+    )
+  }
+
+  if (currentView === "digitalOptions") {
+    return (
+      <DigitalColleagueOptions
+        onCloneExisting={() => setCurrentView("digitalClone")}
+        onCreateNew={handleCreateNewDigital}
+        onCancel={() => setCurrentView("typeSelection")}
+      />
+    )
+  }
+
+  if (currentView === "digitalClone") {
+    return (
+      <DigitalColleagueClone
+        digitalColleagues={existingDigitalColleagues}
+        onColleagueClone={handleDigitalColleagueClone}
+        onCancel={() => setCurrentView("digitalOptions")}
+      />
+    )
+  }
+
+  if (currentView === "form") {
     return (
       <ColleagueForm
         colleague={editingColleague || undefined}
         onSave={handleSaveColleague}
         onCancel={handleCancelForm}
-        departments={departments}
+        availableKnowledgeDocuments={getAllAvailableKnowledgeDocuments()}
+      />
+    )
+  }
+
+  if (currentView === "view") {
+    return (
+      <ColleagueForm
+        colleague={viewingColleague || undefined}
+        onSave={handleSaveColleague}
+        onCancel={handleCancelView}
+        readOnly={true}
+        availableKnowledgeDocuments={getAllAvailableKnowledgeDocuments()}
       />
     )
   }
 
   return (
+     <div className="px-2 md:px-4 py-4 space-y-8">
+    
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="projects-index-view"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
     <div className={`space-y-6 ${className || ""}`}>
+
+<HeroSection
+              title="Colleagues"
+              description="Manage your team members and digital colleagues."
+              gradient="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600"
+              primaryAction={{
+                label: "Add colleague",
+                onClick: handleAddColleague,
+              }}
+            />
+
+
       {/* Header */}
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Colleagues</h1>
           <p className="text-muted-foreground">Manage your team members and digital assistants</p>
         </div>
         <div className="flex gap-2">
-          {showImportExport && (
-            <>
-              <Button variant="outline" onClick={onImport} className="gap-2">
-                <Upload className="h-4 w-4" />
-                Import
-              </Button>
-              <Button variant="outline" onClick={onExport} className="gap-2">
-                <Download className="h-4 w-4" />
-                Export
-              </Button>
-            </>
-          )}
           <Button onClick={handleAddColleague} className="gap-2">
             <Plus className="h-4 w-4" />
             Add Colleague
           </Button>
         </div>
-      </div>
+      </div> */}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -165,7 +326,7 @@ export function ColleaguesManagement({
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Digital Assistants</CardTitle>
+            <CardTitle className="text-sm font-medium">Digital Colleagues</CardTitle>
             <Bot className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -212,7 +373,6 @@ export function ColleaguesManagement({
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="away">Away</SelectItem>
                 <SelectItem value="inactive">Inactive</SelectItem>
               </SelectContent>
             </Select>
@@ -227,14 +387,20 @@ export function ColleaguesManagement({
       </Card>
 
       {/* Colleagues List */}
-      <Tabs defaultValue="all" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="all">All ({filteredColleagues.length})</TabsTrigger>
-          <TabsTrigger value="human">Human ({humanColleagues.length})</TabsTrigger>
-          <TabsTrigger value="digital">Digital ({digitalColleagues.length})</TabsTrigger>
-        </TabsList>
+      <div className="space-y-4">
+        <NavigationTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          tabOptions={[
+            { value: "all", label: `All (${filteredColleagues.length})` },
+            { value: "human", label: `Human (${humanColleagues.length})` },
+            { value: "digital", label: `Digital (${digitalColleagues.length})` },
+          ]}
+          maxWidth="400px"
+          gridCols={3}
+        />
 
-        <TabsContent value="all" className="space-y-4">
+        {activeTab === "all" && (
           <div
             className={`grid gap-4 ${compactView ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}
           >
@@ -244,14 +410,14 @@ export function ColleaguesManagement({
                 colleague={colleague}
                 onEdit={handleEditColleague}
                 onDelete={handleDeleteColleague}
-                onViewDetails={(colleague) => console.log("View details:", colleague)}
+                onViewDetails={handleViewDetails}
                 compact={compactView}
               />
             ))}
           </div>
-        </TabsContent>
+        )}
 
-        <TabsContent value="human" className="space-y-4">
+        {activeTab === "human" && (
           <div
             className={`grid gap-4 ${compactView ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}
           >
@@ -261,14 +427,14 @@ export function ColleaguesManagement({
                 colleague={colleague}
                 onEdit={handleEditColleague}
                 onDelete={handleDeleteColleague}
-                onViewDetails={(colleague) => console.log("View details:", colleague)}
+                onViewDetails={handleViewDetails}
                 compact={compactView}
               />
             ))}
           </div>
-        </TabsContent>
+        )}
 
-        <TabsContent value="digital" className="space-y-4">
+        {activeTab === "digital" && (
           <div
             className={`grid gap-4 ${compactView ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}
           >
@@ -278,13 +444,13 @@ export function ColleaguesManagement({
                 colleague={colleague}
                 onEdit={handleEditColleague}
                 onDelete={handleDeleteColleague}
-                onViewDetails={(colleague) => console.log("View details:", colleague)}
+                onViewDetails={handleViewDetails}
                 compact={compactView}
               />
             ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        )}
+      </div>
 
       {filteredColleagues.length === 0 && (
         <Card>
@@ -306,5 +472,10 @@ export function ColleaguesManagement({
         </Card>
       )}
     </div>
+    </motion.div>
+      </AnimatePresence>
+      </div>
   )
 }
+
+

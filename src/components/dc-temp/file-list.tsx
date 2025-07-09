@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { MoreHorizontal, Share2, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { RecentFile } from "./types"
+import type { RecentFile } from "../DigitalColleagues/types"
 
 interface FileListProps {
   files: RecentFile[]

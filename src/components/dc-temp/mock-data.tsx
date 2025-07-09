@@ -18,7 +18,7 @@ import {
   Video,
   Bot,
 } from "lucide-react"
-import type { App, RecentFile, Project, Tutorial, CommunityPost, SidebarItem, Notification } from "./types"
+import type { App, RecentFile, Project, Tutorial, CommunityPost, SidebarItem, Notification, Colleague } from "../DigitalColleagues/types"
 
 export const mockApps: App[] = [
   {

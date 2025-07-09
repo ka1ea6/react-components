@@ -18,49 +18,8 @@ import { useRouter } from 'next/navigation';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { EpicsView } from './EpicsView';
 
-export interface Project {
-  id: string;
-  name: string;
-  description?: string;
-  isSelected?: boolean;
-}
+import { Project, Epic, Sprint, Task } from './types';
 
-export interface Epic {
-  id: string;
-  name: string;
-  color: string;
-  description?: string;
-  confidence: 'low' | 'medium' | 'high';
-  phase: number; // 1-9
-  startDate: Date;
-  endDate: Date;
-  progress: number; // 0-100
-  isSelected?: boolean;
-}
-
-export interface Sprint {
-  id: string;
-  name: string;
-  description?: string;
-  startDate: Date;
-  endDate: Date;
-  isActive: boolean;
-  isSelected?: boolean;
-}
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: 'todo' | 'in-progress' | 'review' | 'done';
-  priority: 'low' | 'medium' | 'high';
-  type: 'story' | 'task' | 'bug' | 'spike';
-  points: number; // Story points
-  epicId: string;
-  sprintId?: string;
-  assignee: string;
-  createdAt: Date;
-}
 
 export interface KanbanBoardProps {
   initialTasks?: Task[];

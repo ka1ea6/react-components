@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { CreativeLayout } from "./creative-layout"
-import { HeroSection } from "./hero-section"
-import { AppCard } from "./app-card"
-import { FileList } from "./file-list"
-import { ProjectCard } from "./project-card"
-import { type BusinessUnit } from "./business-units"
+import { motion, AnimatePresence, color } from "framer-motion"
+import { CreativeLayout } from "../creative-layout"
+import { HeroSection } from "../hero-section"
+import { AppCard } from "../app-card"
+import { FileList } from "../file-list"
+import { ProjectCard } from "../project-card"
+import { type BusinessUnit } from "../business-units"
 import {
   mockSidebarItems,
   mockApps,
@@ -15,10 +15,11 @@ import {
   mockProjects,
   mockTutorials,
   mockNotifications,
-} from "./mock-data"
-import type { App, RecentFile, Project } from "./types"
-import { ColleaguesManagement } from "./colleagues-management"
-
+} from "../mock-data"
+import type { App, RecentFile, Project } from "../../DigitalColleagues/types"
+// import { ColleaguesManagement } from "../colleagues-management"
+import  ColleaguesView  from "./../Views/ColleaguesView"
+import KnowledgeView from "../Views/KnowledgeView"
 const AnimatedCircles = () => (
   <motion.div
     animate={{ rotate: 360 }}
@@ -76,12 +77,12 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
     switch (activeTab) {
       case "home":
         return (
-          <div className="space-y-8">
+          <div className="px-2 md:px-4 py-4 space-y-8">
             {/* Hero Section */}
             <section className="text-center py-12">
-              <h1 className="text-4xl font-bold mb-4">Welcome to {title}</h1>
+              <h1 className="text-4xl font-bold mb-4">Welcome to the {currentBusinessUnit.name} team</h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Your collaborative workspace for creativity and productivity
+                This is your collaborative workspace for productivity and knowledge sharing.
               </p>
             </section>
 
@@ -100,22 +101,22 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
               <div className="bg-card p-6 rounded-lg border">
                 <h3 className="text-lg font-semibold mb-2">Files</h3>
                 <p className="text-3xl font-bold text-primary">156</p>
-                <p className="text-sm text-muted-foreground">Shared files</p>
+                <p className="text-sm text-muted-foreground">Project files</p>
               </div>
             </section>
             <HeroSection
-              title={`Chat with ${title}`}
+              title={`Chat with your team`}
               // description={`Chat with ${title}.`}
               gradient="bg-gradient-to-r from-pink-600 via-red-600 to-orange-600"
               primaryAction={{
                 label: "Go",
-                onClick: () => setActiveTab('assistant'),
+                onClick: () => setActiveTab('chat'),
               }}
             />
           </div>
         )
       case "colleagues":
-        return <ColleaguesManagement />
+        return <ColleaguesView />
       case "apps":
         return (
           <div className="space-y-8">
@@ -156,9 +157,11 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
             </section>
           </div>
         )
+      case "knowledge":
+        return <KnowledgeView />
       case "files":
         return (
-          <div className="space-y-8">
+          <div className="px-2 md:px-4 py-4 space-y-8">
             <HeroSection
               title="Your Creative Files"
               description="Access, manage, and share all your design files in one place."
@@ -180,7 +183,7 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
         )
       case "projects":
         return (
-          <div className="space-y-8">
+          <div className="px-2 md:px-4 py-4 space-y-8">
             <HeroSection
               title="Project Management"
               description="Organize your creative work into projects and collaborate with your team."
@@ -255,6 +258,7 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
     >
       <AnimatePresence mode="wait">
         <motion.div
+          className="flex-1 h-full"
           key={activeTab}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

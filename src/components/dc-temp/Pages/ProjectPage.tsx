@@ -16,7 +16,7 @@ import {
   mockTutorials,
   mockNotifications,
 } from "../mock-data"
-import type { App, RecentFile } from "../types"
+import type { App, RecentFile } from "../../DigitalColleagues/types"
 import type { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
 
 import { ColleaguesManagement } from "../colleagues-management"
@@ -117,11 +117,11 @@ export default function ProjectPage({ title = "",
       case "projects":
         return (
           <ProjectView 
-          projects={projects}
-  epics={epics}
-  sprints={sprints}
-  tasks={tasks}
-  currentView={currentView}
+          initialProjects={projects}
+  initialEpics={epics}
+  initialSprints={sprints}
+  initialTasks={tasks}
+  // currentView={currentView}
   onUpdateProject={onUpdateProject}
   onDeleteProject= {onDeleteProject}
   onAddProject= {onAddProject}
@@ -131,8 +131,8 @@ export default function ProjectPage({ title = "",
   onAddSprint= {onAddSprint}
   onUpdateSprint= {onUpdateSprint}
   onDeleteSprint= {onDeleteSprint}
-  onViewChange= {onViewChange}
-  mobileMenuOpen={mobileMenuOpen}
+  // onViewChange= {onViewChange}
+  // mobileMenuOpen={mobileMenuOpen}
   onToggleMobileMenu={onToggleMobileMenu}
           />
         )

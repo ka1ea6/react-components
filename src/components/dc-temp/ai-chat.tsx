@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-import type { AIAssistantType } from "./types"
+import type { AIAssistantType } from "../DigitalColleagues/types"
 
 export type MessageType = "user" | "ai" | "system"
 

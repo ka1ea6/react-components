@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { BusinessUnitSwitcher } from "./business-unit-switcher"
 import { cn } from "@/lib/utils"
 import { businessUnits, type BusinessUnit } from "./business-units"
-import type { SidebarItem } from "./types"
+import type { SidebarItem } from "../DigitalColleagues/types"
 
 interface SidebarProps {
   items: SidebarItem[]

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { ColleagueForm } from "./colleague-form"
-import { mockColleagues } from "./colleagues"
+import { mockColleagues } from "./../DigitalColleagues/test-data"
 
 const meta: Meta<typeof ColleagueForm> = {
   title: "DC/ColleagueForm",
@@ -27,10 +27,6 @@ const meta: Meta<typeof ColleagueForm> = {
       description: "Callback when form is cancelled",
       action: "cancel",
     },
-    departments: {
-      description: "Available departments for selection",
-      control: "object",
-    },
     isLoading: {
       description: "Whether the form is in loading state",
       control: "boolean",
@@ -51,7 +47,7 @@ const meta: Meta<typeof ColleagueForm> = {
   args: {
     onSave: action("save"),
     onCancel: action("cancel"),
-    departments: ["Design", "Engineering", "Marketing", "Product", "Sales", "Operations"],
+    // departments: ["Design", "Engineering", "Marketing", "Product", "Sales", "Operations"],
     isLoading: false,
     cancelLabel: "Cancel",
   },
@@ -70,26 +66,31 @@ export const NewDigitalColleague: Story = {
       id: "",
       type: "digital",
       name: "",
-      email: "",
-      role: "",
-      department: "",
-      status: "active",
+      description: "",
       joinedDate: new Date(),
       jobDescription: "",
-      workInstructions: [],
+      workInstructions: "",
       capabilities: [],
       knowledge: [],
       coreKnowledge: [],
       version: "1.0.0",
       lastUpdated: new Date(),
-      isActive: true,
-    },
+      status: "active",},
   },
 }
 
 export const EditHumanColleague: Story = {
   args: {
     colleague: mockColleagues[0], // Sarah Johnson
+    title: "Edit Team Member",
+    submitLabel: "Update Member",
+  },
+}
+
+export const ReadOnly: Story = {
+  args: {
+    colleague: mockColleagues[0], // Sarah Johnson
+    readOnly: true,
     title: "Edit Team Member",
     submitLabel: "Update Member",
   },

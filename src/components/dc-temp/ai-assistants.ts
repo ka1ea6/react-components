@@ -1,4 +1,4 @@
-import type { AIAssistantType } from "./types"
+import type { AIAssistantType } from "../DigitalColleagues/types"
 
 export const aiAssistants: AIAssistantType[] = [
   {

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-import type { Colleague } from "./colleagues"
+import type { Colleague } from "../DigitalColleagues/types"
 
 interface ColleagueCardProps {
   colleague: Colleague
@@ -35,8 +35,6 @@ export function ColleagueCard({
     switch (status) {
       case "active":
         return "bg-green-500"
-      case "away":
-        return "bg-yellow-500"
       case "inactive":
         return "bg-gray-500"
       default:
@@ -48,8 +46,6 @@ export function ColleagueCard({
     switch (status) {
       case "active":
         return "Active"
-      case "away":
-        return "Away"
       case "inactive":
         return "Inactive"
       default:
@@ -75,7 +71,7 @@ export function ColleagueCard({
           <div className="flex items-center gap-3">
             <div className="relative">
               <Avatar className={cn("h-12 w-12", compact && "h-8 w-8")}>
-                <AvatarImage src={colleague.avatar || "/placeholder.svg"} alt={colleague.name} />
+                <AvatarImage src="/placeholder.svg" alt={colleague.name} />
                 <AvatarFallback>
                   {colleague.name
                     .split(" ")
@@ -83,13 +79,13 @@ export function ColleagueCard({
                     .join("")}
                 </AvatarFallback>
               </Avatar>
-              <div
+              {/* <div
                 className={cn(
                   "absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-background",
                   compact && "h-3 w-3",
                   getStatusColor(colleague.status),
                 )}
-              />
+              /> */}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
@@ -100,12 +96,21 @@ export function ColleagueCard({
                   <User className={cn("h-4 w-4 text-green-500", compact && "h-3 w-3")} />
                 )}
               </div>
-              <p className={cn("text-sm text-muted-foreground truncate", compact && "text-xs")}>{colleague.role}</p>
+              <p className={cn("text-sm text-muted-foreground truncate", compact && "text-xs")}>
+                {colleague.type === "human" ? colleague.role : colleague.description}
+              </p>
               {!compact && (
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" className="text-xs">
-                    {colleague.department}
-                  </Badge>
+                  {colleague.type === "human" && (
+                    <Badge variant="secondary" className="text-xs">
+                      {colleague.department}
+                    </Badge>
+                  )}
+                  {colleague.type === "digital" && (
+                    <Badge variant="secondary" className="text-xs">
+                      v{colleague.version}
+                    </Badge>
+                  )}
                   <Badge variant="outline" className="text-xs">
                     {getStatusText(colleague.status)}
                   </Badge>
@@ -146,10 +151,12 @@ export function ColleagueCard({
       {!compact && (
         <CardContent className="pt-0">
           <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Mail className="h-3 w-3" />
-              <span className="truncate">{colleague.email}</span>
-            </div>
+            {colleague.type === "human" && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Mail className="h-3 w-3" />
+                <span className="truncate">{colleague.email}</span>
+              </div>
+            )}
 
             {colleague.type === "human" && (
               <>

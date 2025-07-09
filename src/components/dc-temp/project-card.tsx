@@ -6,12 +6,12 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import type { Project } from "./types"
+import type { ProjectSummary } from "../DigitalColleagues/types"
 
 interface ProjectCardProps {
-  project: Project
-  onOpen?: (project: Project) => void
-  onShare?: (project: Project) => void
+  project: ProjectSummary
+  onOpen?: (project: ProjectSummary) => void
+  onShare?: (project: ProjectSummary) => void
   className?: string
 }
 

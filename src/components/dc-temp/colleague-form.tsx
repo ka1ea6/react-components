@@ -3,54 +3,57 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { User, Bot, Plus, X } from "lucide-react"
+import { Bot, Plus, X, Edit } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
-import type { Colleague, HumanColleague, DigitalColleague } from "./colleagues"
+import type { Colleague, DigitalColleague, KnowledgeDocument } from "../DigitalColleagues/types"
+import { KnowledgeSearch } from "./knowledge-search"
 
 interface ColleagueFormProps {
-  colleague?: Colleague
-  onSave: (colleague: Colleague) => void
+  colleague?: DigitalColleague
+  onSave: (colleague: DigitalColleague) => void
   onCancel: () => void
-  departments?: string[]
   isLoading?: boolean
   title?: string
   submitLabel?: string
   cancelLabel?: string
+  readOnly?: boolean
+  availableKnowledgeDocuments?: KnowledgeDocument[]
 }
 
 export function ColleagueForm({
   colleague,
   onSave,
   onCancel,
-  departments = ["Design", "Engineering", "Marketing", "Product", "Sales", "Operations"],
   isLoading = false,
   title,
   submitLabel,
   cancelLabel = "Cancel",
+  readOnly = false,
+  availableKnowledgeDocuments = [],
 }: ColleagueFormProps) {
-  const [formData, setFormData] = useState<Partial<Colleague>>({
-    type: "human",
+  const [formData, setFormData] = useState<Partial<DigitalColleague>>({
+    type: "digital",
     name: "",
-    email: "",
-    role: "",
-    department: "",
-    status: "active",
+    description: "",
+    jobDescription: "",
+    workInstructions: "",
+    capabilities: [],
+    knowledge: [],
+    coreKnowledge: [],
+    version: "1",
     ...colleague,
   })
 
   const [newSkill, setNewSkill] = useState("")
   const [newCapability, setNewCapability] = useState("")
-  const [newKnowledge, setNewKnowledge] = useState("")
-  const [newCoreKnowledge, setNewCoreKnowledge] = useState("")
-  const [newWorkInstruction, setNewWorkInstruction] = useState("")
+  const [editMode, setEditMode] = useState(!readOnly)
+
 
   useEffect(() => {
     if (colleague) {
@@ -61,45 +64,28 @@ export function ColleagueForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const baseData = {
+    // Auto-increment version for updates, start at 1 for new colleagues
+    const currentVersion = formData.version ? parseInt(formData.version) : 0
+    const nextVersion = colleague ? (currentVersion + 1).toString() : "1"
+
+    const digitalData: DigitalColleague = {
       id: formData.id || Date.now().toString(),
       name: formData.name!,
-      email: formData.email!,
-      role: formData.role!,
-      department: formData.department!,
-      status: formData.status as "active" | "inactive" | "away",
+      type: "digital",
+      status: "active",
       joinedDate: formData.joinedDate || new Date(),
       lastActive: formData.lastActive || new Date(),
+      description: formData.description,
+      jobDescription: formData.jobDescription || "",
+      workInstructions: formData.workInstructions || "",
+      capabilities: formData.capabilities || [],
+      knowledge: formData.knowledge || [],
+      coreKnowledge: formData.coreKnowledge || [],
+      version: nextVersion,
+      lastUpdated: formData.lastUpdated || new Date(),
+      isActive: true,
     }
-
-    if (formData.type === "human") {
-      const humanData: HumanColleague = {
-        ...baseData,
-        type: "human",
-        phone: (formData as HumanColleague).phone,
-        location: (formData as HumanColleague).location,
-        timezone: (formData as HumanColleague).timezone,
-        skills: (formData as HumanColleague).skills || [],
-        bio: (formData as HumanColleague).bio,
-        avatar: formData.avatar,
-      }
-      onSave(humanData)
-    } else {
-      const digitalData: DigitalColleague = {
-        ...baseData,
-        type: "digital",
-        jobDescription: (formData as DigitalColleague).jobDescription || "",
-        workInstructions: (formData as DigitalColleague).workInstructions || [],
-        capabilities: (formData as DigitalColleague).capabilities || [],
-        knowledge: (formData as DigitalColleague).knowledge || [],
-        coreKnowledge: (formData as DigitalColleague).coreKnowledge || [],
-        version: (formData as DigitalColleague).version || "1.0.0",
-        lastUpdated: (formData as DigitalColleague).lastUpdated || new Date(),
-        isActive: (formData as DigitalColleague).isActive ?? true,
-        avatar: formData.avatar,
-      }
-      onSave(digitalData)
-    }
+    onSave(digitalData)
   }
 
   const addArrayItem = (field: string, value: string, setter: (value: string) => void) => {
@@ -121,6 +107,12 @@ export function ColleagueForm({
     })
   }
 
+  const handleEditToggle = (e: React.FormEvent) => {
+        e.preventDefault()
+
+    setEditMode(!editMode)
+  }
+
   const renderArrayField = (
     field: string,
     label: string,
@@ -133,43 +125,47 @@ export function ColleagueForm({
     return (
       <div className="space-y-2">
         <Label>{label}</Label>
-        <div className="flex gap-2">
-          <Input
-            value={newValue}
-            onChange={(e) => setNewValue(e.target.value)}
-            placeholder={placeholder}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault()
-                addArrayItem(field, newValue, setNewValue)
-              }
-            }}
-            disabled={isLoading}
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={() => addArrayItem(field, newValue, setNewValue)}
-            disabled={isLoading}
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
+        {editMode && (
+          <div className="flex gap-2">
+            <Input
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+              placeholder={placeholder}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault()
+                  addArrayItem(field, newValue, setNewValue)
+                }
+              }}
+              disabled={isLoading}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={() => addArrayItem(field, newValue, setNewValue)}
+              disabled={isLoading}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
         <div className="flex flex-wrap gap-2">
           {items.map((item: string, index: number) => (
-            <Badge key={index} variant="secondary" className="gap-1">
+            <Badge key={`${field}-${index}-${item}`} className="gap-1">
               {item}
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-4 w-4 p-0 hover:bg-transparent"
-                onClick={() => removeArrayItem(field, index)}
-                disabled={isLoading}
-              >
-                <X className="h-3 w-3" />
-              </Button>
+              {editMode && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-4 w-4 p-0 hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => removeArrayItem(field, index)}
+                  disabled={isLoading}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
             </Badge>
           ))}
         </div>
@@ -177,41 +173,21 @@ export function ColleagueForm({
     )
   }
 
-  const formTitle = title || (colleague ? "Edit Colleague" : "Add New Colleague")
+  const formTitle = title || (!editMode ? "View Colleague" : (colleague ? "Edit Colleague" : "Add New Colleague"))
   const buttonLabel = submitLabel || (colleague ? "Update Colleague" : "Add Colleague")
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="m-8 w-full max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          {formData.type === "digital" ? <Bot className="h-5 w-5" /> : <User className="h-5 w-5" />}
+          <Bot className="h-5 w-5" />
           {formTitle}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Type Selection */}
-          <div className="space-y-2">
-            <Label>Colleague Type</Label>
-            <Tabs
-              value={formData.type}
-              onValueChange={(value) => setFormData({ ...formData, type: value as "human" | "digital" })}
-            >
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="human" className="flex items-center gap-2" disabled={isLoading}>
-                  <User className="h-4 w-4" />
-                  Human
-                </TabsTrigger>
-                <TabsTrigger value="digital" className="flex items-center gap-2" disabled={isLoading}>
-                  <Bot className="h-4 w-4" />
-                  Digital
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
           {/* Basic Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name *</Label>
               <Input
@@ -219,148 +195,25 @@ export function ColleagueForm({
                 value={formData.name || ""}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !editMode}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email || ""}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="role">Role *</Label>
-              <Input
-                id="role"
-                value={formData.role || ""}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="department">Department *</Label>
-              <Select
-                value={formData.department || ""}
-                onValueChange={(value) => setFormData({ ...formData, department: value })}
-                disabled={isLoading}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select department" />
-                </SelectTrigger>
-                <SelectContent>
-                  {departments.map((dept) => (
-                    <SelectItem key={dept} value={dept}>
-                      {dept}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select
-                value={formData.status || "active"}
-                onValueChange={(value) => setFormData({ ...formData, status: value as "active" | "inactive" | "away" })}
-                disabled={isLoading}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="away">Away</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="avatar">Avatar URL</Label>
-              <Input
-                id="avatar"
-                value={formData.avatar || ""}
-                onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                placeholder="https://example.com/avatar.jpg"
-                disabled={isLoading}
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={formData.description || ""}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                rows={3}
+                placeholder="Brief description of this digital colleague..."
+                disabled={isLoading || !editMode}
               />
             </div>
           </div>
 
-          {/* Type-specific fields */}
-          {formData.type === "human" ? (
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Human Colleague Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    value={(formData as HumanColleague).phone || ""}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
-                  <Input
-                    id="location"
-                    value={(formData as HumanColleague).location || ""}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="timezone">Timezone</Label>
-                  <Input
-                    id="timezone"
-                    value={(formData as HumanColleague).timezone || ""}
-                    onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
-                    placeholder="PST, EST, UTC, etc."
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  value={(formData as HumanColleague).bio || ""}
-                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                  rows={3}
-                  disabled={isLoading}
-                />
-              </div>
-              {renderArrayField("skills", "Skills", newSkill, setNewSkill, "Add a skill")}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Digital Colleague Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="version">Version</Label>
-                  <Input
-                    id="version"
-                    value={(formData as DigitalColleague).version || ""}
-                    onChange={(e) => setFormData({ ...formData, version: e.target.value })}
-                    placeholder="1.0.0"
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2 flex items-center gap-2">
-                  <Switch
-                    id="isActive"
-                    checked={(formData as DigitalColleague).isActive ?? true}
-                    onCheckedChange={(checked) => setFormData({ ...formData, isActive: checked })}
-                    disabled={isLoading}
-                  />
-                  <Label htmlFor="isActive">Is Active</Label>
-                </div>
-              </div>
+          {/* Digital Colleague Details */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Digital Colleague Details</h3>
               <div className="space-y-2">
                 <Label htmlFor="jobDescription">Job Description *</Label>
                 <Textarea
@@ -369,36 +222,59 @@ export function ColleagueForm({
                   onChange={(e) => setFormData({ ...formData, jobDescription: e.target.value })}
                   rows={4}
                   required={formData.type === "digital"}
-                  disabled={isLoading}
+                  disabled={isLoading || !editMode}
                 />
               </div>
-              {renderArrayField(
-                "workInstructions",
-                "Work Instructions",
-                newWorkInstruction,
-                setNewWorkInstruction,
-                "Add work instruction",
-              )}
+              <div className="space-y-2">
+                <Label htmlFor="workInstructions">Work Instructions</Label>
+                <Textarea
+                  id="workInstructions"
+                  value={(formData as Partial<DigitalColleague>).workInstructions || ""}
+                  onChange={(e) => setFormData({ ...formData, workInstructions: e.target.value })}
+                  rows={4}
+                  placeholder="Enter detailed work instructions for this digital colleague..."
+                  disabled={isLoading || !editMode}
+                />
+              </div>
               {renderArrayField("capabilities", "Capabilities", newCapability, setNewCapability, "Add capability")}
-              {renderArrayField("knowledge", "Knowledge", newKnowledge, setNewKnowledge, "Add knowledge item")}
-              {renderArrayField(
-                "coreKnowledge",
-                "Core Knowledge",
-                newCoreKnowledge,
-                setNewCoreKnowledge,
-                "Add core knowledge item",
-              )}
+              
+              <KnowledgeSearch
+                selectedDocuments={(formData as Partial<DigitalColleague>).knowledge || []}
+                onDocumentsChange={(documents) => setFormData({ ...formData, knowledge: documents })}
+                label="Knowledge"
+                placeholder="Search for knowledge documents to add..."
+                disabled={isLoading || !editMode}
+                availableDocuments={availableKnowledgeDocuments}
+              />
+              
+              <KnowledgeSearch
+                selectedDocuments={(formData as Partial<DigitalColleague>).coreKnowledge || []}
+                onDocumentsChange={(documents) => setFormData({ ...formData, coreKnowledge: documents })}
+                label="Core Knowledge"
+                placeholder="Search for core knowledge documents..."
+                maxSelections={5}
+                disabled={isLoading || !editMode}
+                availableDocuments={availableKnowledgeDocuments}
+              />
             </div>
-          )}
 
           {/* Form Actions */}
           <div className="flex justify-end gap-2 pt-4 border-t">
             <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
-              {cancelLabel}
+              {!editMode ? "Close" : cancelLabel}
             </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Saving..." : buttonLabel}
-            </Button>
+            {!editMode ? (
+              
+                <Button type="button" onClick={handleEditToggle} disabled={isLoading} className="gap-2">
+                  <Edit className="h-4 w-4" />
+                  Edit
+                </Button>
+              
+            ) : (
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Saving..." : buttonLabel}
+              </Button>
+            )}
           </div>
         </form>
       </CardContent>

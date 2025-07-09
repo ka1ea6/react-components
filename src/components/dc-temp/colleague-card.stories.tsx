@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { ColleagueCard } from "./colleague-card"
-import { mockColleagues } from "./colleagues"
+import { mockColleagues } from "./../DigitalColleagues/test-data"
 
 const meta: Meta<typeof ColleagueCard> = {
   title: "DC/ColleagueCard",

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { Sidebar } from "./sidebar"
 import { AppHeader } from "./app-header"
 import { businessUnits, type BusinessUnit } from "./business-units"
-import type { SidebarItem } from "./types"
+import type { SidebarItem } from "../DigitalColleagues/types"
 import type { Notification } from "./notifications-panel"
 
 interface CreativeLayoutProps {
