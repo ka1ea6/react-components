@@ -1,4 +1,4 @@
-import { Project, Epic, Sprint, Task } from './KanbanBoard';
+import { Project, Epic, Sprint, Task } from '../dc-temp/Views/KanbanBoard';
 import { ProjectSummary, TeamSummary, Colleague } from './types';
 // Mock data for testing and stories
 export const mockProjects: Project[] = [

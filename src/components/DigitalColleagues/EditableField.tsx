@@ -75,14 +75,14 @@ export const EditableField: React.FC<EditableFieldProps> = ({
       ) : (
         <div
           onClick={handleFieldClick}
-          className={`cursor-pointer hover:bg-gray-50 p-2 rounded border border-transparent hover:border-gray-200 transition-colors group ${
+          className={`cursor-pointer hover:bg-muted/50 p-2 rounded border border-transparent hover:border-border transition-colors group ${
             multiline ? "min-h-[100px]" : "min-h-[40px]"
           } flex items-start gap-2`}
         >
-          <span className={multiline ? "text-sm text-gray-700" : "text-lg font-medium text-gray-900"}>
+          <span className={multiline ? "text-sm text-muted-foreground" : "text-lg font-medium text-foreground"}>
             {value || "Click to edit..."}
           </span>
-          <Edit className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <Edit className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
       )}
     </div>

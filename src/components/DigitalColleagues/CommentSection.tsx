@@ -44,20 +44,20 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ comments, onAddC
       {/* Comments List */}
       <div className="space-y-4 max-h-60 overflow-y-auto">
         {comments.map((comment) => (
-          <div key={comment.id} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
+          <div key={comment.id} className="flex gap-3 p-3 bg-muted/50 rounded-lg">
             <Avatar className="h-8 w-8 mt-1">
-              <AvatarFallback className="text-xs bg-gray-200 text-gray-700">
+              <AvatarFallback className="text-xs bg-muted text-muted-foreground">
                 {getInitials(comment.author)}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-medium text-sm">{comment.author}</span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-muted-foreground">
                   {comment.createdAt.toLocaleDateString()} at {comment.createdAt.toLocaleTimeString()}
                 </span>
               </div>
-              <p className="text-sm text-gray-700">{comment.text}</p>
+              <p className="text-sm text-muted-foreground">{comment.text}</p>
             </div>
           </div>
         ))}

@@ -5,6 +5,8 @@ import { action } from '@storybook/addon-actions';
 import { businessUnits } from "./../business-units";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Reminder, DigitalColleague } from '../../DigitalColleagues/TasksView';
+import type { RecentFile } from '../../DigitalColleagues/types';
+import { FileText, FileImage, FileVideo, Music, File } from 'lucide-react';
 import { 
   mockProjects, 
   mockEpics, 
@@ -76,6 +78,55 @@ const mockReminders: Reminder[] = [
   },
 ];
 
+// Mock files for files view
+const mockFiles: RecentFile[] = [
+  {
+    name: "Project_Requirements.docx",
+    app: "Word",
+    modified: "2 hours ago",
+    icon: <FileText className="h-5 w-5 text-blue-500" />,
+    shared: true,
+    size: "1.2 MB",
+    collaborators: 4,
+  },
+  {
+    name: "Sprint_Planning_Notes.pdf",
+    app: "PDF Reader",
+    modified: "1 day ago",
+    icon: <File className="h-5 w-5 text-red-500" />,
+    shared: false,
+    size: "245 KB",
+    collaborators: 0,
+  },
+  {
+    name: "UI_Mockups.fig",
+    app: "Figma",
+    modified: "3 days ago",
+    icon: <FileImage className="h-5 w-5 text-purple-500" />,
+    shared: true,
+    size: "5.7 MB",
+    collaborators: 6,
+  },
+  {
+    name: "Demo_Video.mp4",
+    app: "Video Player",
+    modified: "1 week ago",
+    icon: <FileVideo className="h-5 w-5 text-green-500" />,
+    shared: false,
+    size: "89 MB",
+    collaborators: 0,
+  },
+  {
+    name: "Meeting_Recording.m4a",
+    app: "Audio Player",
+    modified: "2 weeks ago",
+    icon: <Music className="h-5 w-5 text-orange-500" />,
+    shared: true,
+    size: "12 MB",
+    collaborators: 2,
+  },
+];
+
 const meta: Meta<typeof ProjectView> = {
   title: "DC/Views/ProjectView",
   component: ProjectView,
@@ -95,22 +146,40 @@ export const Default: Story = {
     initialTasks: mockTasks,
     initialReminders: mockReminders,
     initialColleagues: mockColleagues,
-    // currentView: 'kanban',
-    // mobileMenuOpen: false,
-    onUpdateProject: action('onUpdateProject'),
-    onDeleteProject: action('onDeleteProject'),
-    onAddProject: action('onAddProject'),
-    onUpdateEpic: action('onUpdateEpic'),
+    initialFiles: mockFiles,
+    // Task handlers (used by KanbanBoard)
+    onAddTask: action('onAddTask'),
     onUpdateTask: action('onUpdateTask'),
-    onDeleteEpic: action('onDeleteEpic'),
+    onDeleteTask: action('onDeleteTask'),
+    onTaskClick: action('onTaskClick'),
+    // Epic handlers (used by KanbanBoard and EpicsView)
     onAddEpic: action('onAddEpic'),
+    onUpdateEpic: action('onUpdateEpic'),
+    onDeleteEpic: action('onDeleteEpic'),
+    onAddTaskToEpic: action('onAddTaskToEpic'),
+    // Sprint handlers (used by PlanningView)
     onAddSprint: action('onAddSprint'),
     onUpdateSprint: action('onUpdateSprint'),
     onDeleteSprint: action('onDeleteSprint'),
+    // Project handlers (used by ManagementSidebar)
+    onAddProject: action('onAddProject'),
+    onUpdateProject: action('onUpdateProject'),
+    onDeleteProject: action('onDeleteProject'),
+    // File handlers (used by FileView)
+    onFileAdd: action('onFileAdd'),
+    onFileEdit: action('onFileEdit'),
+    onFileDelete: action('onFileDelete'),
+    onFileClick: action('onFileClick'),
+    // Reminder handlers (used by TasksView)
     onAddReminder: action('onAddReminder'),
     onUpdateReminder: action('onUpdateReminder'),
     onDeleteReminder: action('onDeleteReminder'),
-    // onViewChange: action('onViewChange'),
+    // View handlers (used by ManagementSidebar)
+    onViewChange: action('onViewChange'),
     onToggleMobileMenu: action('onToggleMobileMenu'),
+    // Team handlers (used by ProjectView)
+    onTeamClick: action('onTeamClick'),
+    onTeamChange: action('onTeamChange'),
+    onCopilotClick: action('onCopilotClick'),
   },
 };

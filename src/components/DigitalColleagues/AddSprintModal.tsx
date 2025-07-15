@@ -10,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { Sprint } from './KanbanBoard';
+import { Sprint } from '../dc-temp/Views/KanbanBoard';
 
 interface AddSprintModalProps {
   isOpen: boolean;

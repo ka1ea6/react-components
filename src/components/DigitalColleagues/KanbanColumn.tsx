@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Task } from './KanbanBoard';
+import { Task } from './types';
 
 interface KanbanColumnProps {
   title: string;
@@ -47,19 +47,19 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
 
   return (
     <Card 
-      className={`p-4 bg-white border-l-4 ${getColumnColor()} shadow-sm hover:shadow-md transition-shadow duration-200 ${
+      className={`p-4 bg-card border-l-4 ${getColumnColor()} shadow-sm hover:shadow-md transition-shadow duration-200 ${
         isCompact ? 'lg:max-w-xs' : ''
       }`}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className={`font-semibold text-gray-900 select-none-important ${
+        <h3 className={`font-semibold text-foreground select-none-important ${
           isCompact ? 'text-base' : 'text-lg'
         }`}>
           {title}
         </h3>
-        <Badge variant="secondary" className="bg-gray-100 text-gray-600">
+        <Badge variant="secondary" className="bg-muted text-muted-foreground">
           {taskCount}
         </Badge>
       </div>

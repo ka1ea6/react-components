@@ -3,7 +3,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User, AlertCircle, Bug, Zap, BookOpen } from 'lucide-react';
-import { Task, Epic } from './KanbanBoard';
+import { Task, Epic } from './types';
 
 interface TaskCardProps {
   task: Task;
@@ -31,13 +31,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   const getPriorityColor = () => {
     switch (task.priority) {
       case 'high':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-destructive/20 text-destructive border-destructive/20';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-warning/20 text-warning border-warning/20';
       case 'low':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-success/20 text-success border-success/20';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
 
@@ -58,21 +58,21 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   const getTypeColor = () => {
     switch (task.type) {
       case 'story':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-primary/20 text-primary';
       case 'bug':
-        return 'bg-red-100 text-red-800';
+        return 'bg-destructive/20 text-destructive';
       case 'spike':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-accent/20 text-accent';
       case 'task':
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   if (isCompact) {
     return (
       <Card
-        className="p-3 bg-white border border-gray-200 hover:border-gray-300 cursor-pointer transition-all duration-200 hover:shadow-sm"
+        className="p-3 bg-card border border-border hover:border-accent cursor-pointer transition-all duration-200 hover:shadow-sm"
         draggable
         onDragStart={handleDragStart}
         onClick={handleClick}
@@ -81,7 +81,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getTypeColor()}`}>
             {getTypeIcon()}
           </div>
-           <h4 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 select-none-important">
+           <h4 className="font-medium text-foreground text-sm mb-1 line-clamp-2 select-none-important">
           {task.title}
         </h4>
         </div>
@@ -94,7 +94,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
 
   return (
     <Card
-      className="p-4 bg-white border border-gray-200 hover:border-gray-300 cursor-pointer transition-all duration-200 hover:shadow-md"
+      className="p-4 bg-card border border-border hover:border-accent cursor-pointer transition-all duration-200 hover:shadow-md"
       draggable
       onDragStart={handleDragStart}
       onClick={handleClick}
@@ -119,15 +119,15 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         </div>
       </div>
       
-      <h4 className="font-semibold text-gray-900 mb-2 select-none-important">
+      <h4 className="font-semibold text-foreground mb-2 select-none-important">
         {task.title}
       </h4>
       
-      <p className="text-sm text-gray-600 mb-3 line-clamp-2 select-none-important">
+      <p className="text-sm text-muted-foreground mb-3 line-clamp-2 select-none-important">
         {task.description}
       </p>
       
-      <div className="flex items-center justify-between text-sm text-gray-500">
+      <div className="flex items-center justify-between text-sm text-muted-foreground">
         <div className="flex items-center gap-1">
           <User className="h-4 w-4" />
           <span>{task.assignee}</span>

@@ -28,24 +28,37 @@ type Story = StoryObj<typeof ProjectPage>;
 
 export const Default: Story = {
   args: {
-    initialProjects: mockProjects,
-    initialEpics: mockEpics,
-    initialSprints: mockSprints,
-    initialTasks: mockTasks,
+    projects: mockProjects,
+    epics: mockEpics,
+    sprints: mockSprints,
+    tasks: mockTasks,
     businessUnits: businessUnits,
     currentView: 'kanban',
     mobileMenuOpen: false,
-    onUpdateProject: action('onUpdateProject'),
-    onDeleteProject: action('onDeleteProject'),
-    onAddProject: action('onAddProject'),
+    // Task handlers
+    onAddTask: action('onAddTask'),
+    onUpdateTask: action('onUpdateTask'),
+    onDeleteTask: action('onDeleteTask'),
+    onTaskClick: action('onTaskClick'),
+    // Epic handlers
+    onAddEpic: action('onAddEpic'),
     onUpdateEpic: action('onUpdateEpic'),
     onDeleteEpic: action('onDeleteEpic'),
-    onAddEpic: action('onAddEpic'),
+    onAddTaskToEpic: action('onAddTaskToEpic'),
+    // Sprint handlers
     onAddSprint: action('onAddSprint'),
     onUpdateSprint: action('onUpdateSprint'),
     onDeleteSprint: action('onDeleteSprint'),
+    // Project handlers
+    onAddProject: action('onAddProject'),
+    onUpdateProject: action('onUpdateProject'),
+    onDeleteProject: action('onDeleteProject'),
+    // View handlers
     onViewChange: action('onViewChange'),
     onToggleMobileMenu: action('onToggleMobileMenu'),
-    children: <div className="p-8 bg-gray-50 h-full">Main content area</div>,
+    // Team handlers
+    onTeamClick: action('onTeamClick'),
+    onTeamChange: action('onTeamChange'),
+    onCopilotClick: action('onCopilotClick'),
   },
 };

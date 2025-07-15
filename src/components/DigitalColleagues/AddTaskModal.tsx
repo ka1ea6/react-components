@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { BookOpen, Bug, Zap, AlertCircle } from 'lucide-react';
-import { Task, Epic, Sprint } from './KanbanBoard';
+import { Task, Epic, Sprint } from './types';
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -20,16 +20,16 @@ interface AddTaskModalProps {
 }
 
 const taskTypes = [
-  { value: 'story', label: 'Story', color: 'bg-blue-100 text-blue-800', icon: BookOpen },
-  { value: 'task', label: 'Task', color: 'bg-green-100 text-green-800', icon: AlertCircle },
-  { value: 'bug', label: 'Bug', color: 'bg-red-100 text-red-800', icon: Bug },
-  { value: 'spike', label: 'Spike', color: 'bg-purple-100 text-purple-800', icon: Zap },
+  { value: 'story', label: 'Story', color: 'bg-primary/20 text-primary', icon: BookOpen },
+  { value: 'task', label: 'Task', color: 'bg-secondary/20 text-secondary-foreground', icon: AlertCircle },
+  { value: 'bug', label: 'Bug', color: 'bg-destructive/20 text-destructive', icon: Bug },
+  { value: 'spike', label: 'Spike', color: 'bg-accent/20 text-accent', icon: Zap },
 ];
 
 const priorities = [
-  { value: 'low', label: 'Low', color: 'bg-green-100 text-green-800' },
-  { value: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800' },
-  { value: 'high', label: 'High', color: 'bg-red-100 text-red-800' },
+  { value: 'low', label: 'Low', color: 'bg-success/20 text-success' },
+  { value: 'medium', label: 'Medium', color: 'bg-warning/20 text-warning' },
+  { value: 'high', label: 'High', color: 'bg-destructive/20 text-destructive' },
 ];
 
 export const AddTaskModal: React.FC<AddTaskModalProps> = ({

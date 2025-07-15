@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Task, Epic, Sprint } from './KanbanBoard';
+import { Task, Epic, Sprint } from '../DigitalColleagues/types';
 import { EditableField } from './EditableField';
 import { CommentSection } from './CommentSection';
 import { TaskSidebar } from './TaskSidebar';
@@ -98,7 +98,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
               value={task.title}
               label=""
               onSave={handleFieldUpdate}
-              className="border-b pb-3"
+              className="border-b border-border pb-3"
             />
 
             {/* Description */}

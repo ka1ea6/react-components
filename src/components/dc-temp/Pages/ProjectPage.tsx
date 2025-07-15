@@ -10,16 +10,14 @@ import { ProjectCard } from "../project-card"
 import { type BusinessUnit } from "../business-units"
 import {
   mockSidebarItems,
-  mockApps,
   mockRecentFiles,
   mockProjects,
   mockTutorials,
   mockNotifications,
 } from "../mock-data"
 import type { App, RecentFile } from "../../DigitalColleagues/types"
-import type { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
+import type { Epic, Sprint, Project, Task } from "@/components/dc-temp/Views/ProjectView"
 
-import { ColleaguesManagement } from "../colleagues-management"
 import ProjectView from "../Views/ProjectView"
 const AnimatedCircles = () => (
   <motion.div
@@ -44,18 +42,32 @@ interface HomeProps {
       sprints: Sprint[];
       tasks: Task[];
       currentView: 'kanban' | 'planning' | 'documentation' | 'epics';
-      onUpdateProject: (projectId: string, updates: Partial<Project>) => void;
-      onDeleteProject: (projectId: string) => void;
-      onAddProject: (project: Omit<Project, 'id'>) => void;
-      onUpdateEpic: (epicId: string, updates: Partial<Epic>) => void;
-      onDeleteEpic: (epicId: string) => void;
-      onAddEpic: () => void;
-      onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
-      onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
-      onDeleteSprint: (sprintId: string) => void;
-      onViewChange: (view: 'kanban' | 'planning' | 'documentation' | 'epics') => void;
-      mobileMenuOpen: boolean;
-      onToggleMobileMenu: () => void;
+      // Task handlers
+      onAddTask?: (newTask: Omit<Task, 'id' | 'createdAt'>) => void;
+      onUpdateTask?: (taskId: string, updates: Partial<Task>) => void;
+      onDeleteTask?: (taskId: string) => void;
+      onTaskClick?: (task: Task) => void;
+      // Epic handlers
+      onAddEpic?: () => void;
+      onUpdateEpic?: (epicId: string, updates: Partial<Epic>) => void;
+      onDeleteEpic?: (epicId: string) => void;
+      onAddTaskToEpic?: (epicId: string) => void;
+      // Sprint handlers
+      onAddSprint?: (sprint: Omit<Sprint, 'id'>) => void;
+      onUpdateSprint?: (sprintId: string, updates: Partial<Sprint>) => void;
+      onDeleteSprint?: (sprintId: string) => void;
+      // Project handlers
+      onAddProject?: (project: Omit<Project, 'id'>) => void;
+      onUpdateProject?: (projectId: string, updates: Partial<Project>) => void;
+      onDeleteProject?: (projectId: string) => void;
+      // View handlers
+      onViewChange?: (view: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics') => void;
+      mobileMenuOpen?: boolean;
+      onToggleMobileMenu?: () => void;
+      // Team handlers
+      onTeamClick?: (teamId: string) => void;
+      onTeamChange?: (team: any) => void;
+      onCopilotClick?: () => void;
 }
 
 export default function ProjectPage({ title = "", 
@@ -65,18 +77,32 @@ export default function ProjectPage({ title = "",
   sprints,
   tasks,
   currentView,
-  onUpdateProject,
-  onDeleteProject,
-  onAddProject,
+  // Task handlers
+  onAddTask,
+  onUpdateTask,
+  onDeleteTask,
+  onTaskClick,
+  // Epic handlers
+  onAddEpic,
   onUpdateEpic,
   onDeleteEpic,
-  onAddEpic,
+  onAddTaskToEpic,
+  // Sprint handlers
   onAddSprint,
   onUpdateSprint,
   onDeleteSprint,
+  // Project handlers
+  onAddProject,
+  onUpdateProject,
+  onDeleteProject,
+  // View handlers
   onViewChange,
   mobileMenuOpen,
   onToggleMobileMenu,
+  // Team handlers
+  onTeamClick,
+  onTeamChange,
+  onCopilotClick,
  }: HomeProps) {
   const [activeTab, setActiveTab] = useState("projects")
   const [currentBusinessUnit, setCurrentBusinessUnit] = useState<BusinessUnit>(businessUnits[0]) // Default to Design
@@ -121,19 +147,31 @@ export default function ProjectPage({ title = "",
   initialEpics={epics}
   initialSprints={sprints}
   initialTasks={tasks}
-  // currentView={currentView}
-  onUpdateProject={onUpdateProject}
-  onDeleteProject= {onDeleteProject}
-  onAddProject= {onAddProject}
-  onUpdateEpic= {onUpdateEpic}
-  onDeleteEpic= {onDeleteEpic}
+  // Task handlers
+  onAddTask={onAddTask}
+  onUpdateTask={onUpdateTask}
+  onDeleteTask={onDeleteTask}
+  onTaskClick={onTaskClick}
+  // Epic handlers
   onAddEpic={onAddEpic}
-  onAddSprint= {onAddSprint}
-  onUpdateSprint= {onUpdateSprint}
-  onDeleteSprint= {onDeleteSprint}
-  // onViewChange= {onViewChange}
-  // mobileMenuOpen={mobileMenuOpen}
+  onUpdateEpic={onUpdateEpic}
+  onDeleteEpic={onDeleteEpic}
+  onAddTaskToEpic={onAddTaskToEpic}
+  // Sprint handlers
+  onAddSprint={onAddSprint}
+  onUpdateSprint={onUpdateSprint}
+  onDeleteSprint={onDeleteSprint}
+  // Project handlers
+  onAddProject={onAddProject}
+  onUpdateProject={onUpdateProject}
+  onDeleteProject={onDeleteProject}
+  // View handlers
+  onViewChange={onViewChange}
   onToggleMobileMenu={onToggleMobileMenu}
+  // Team handlers
+  onTeamClick={onTeamClick}
+  onTeamChange={onTeamChange}
+  onCopilotClick={onCopilotClick}
           />
         )
       default:

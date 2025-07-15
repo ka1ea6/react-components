@@ -57,12 +57,12 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
   
   return (
     <div className="space-y-1">
-      <Label className="text-xs text-gray-600">{label}</Label>
+      <Label className="text-xs text-muted-foreground">{label}</Label>
       <Select value={value} onValueChange={handleSelect} open={isOpen} onOpenChange={setIsOpen}>
-        <SelectTrigger className="h-auto p-0 border-none bg-transparent hover:bg-gray-50 rounded-md">
+        <SelectTrigger className="h-auto p-0 border-none bg-transparent hover:bg-muted/50 rounded-md">
           <Badge 
             variant="secondary" 
-            className="cursor-pointer hover:bg-gray-200 transition-colors"
+            className="cursor-pointer hover:bg-muted transition-colors"
             onClick={() => setIsOpen(!isOpen)}
           >
             {selectedOption?.label || value || 'Select...'}

@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { HeroSection } from '../dc-temp/hero-section';
 import { 
   Plus, 
   Clock, 
@@ -296,7 +297,7 @@ const AddReminderModal: React.FC<{
                 id="isRecurring"
                 checked={formData.isRecurring}
                 onChange={(e) => setFormData({ ...formData, isRecurring: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
               />
               <Label htmlFor="isRecurring">Make this a recurring reminder</Label>
             </div>
@@ -343,7 +344,7 @@ const AddReminderModal: React.FC<{
                 id="reminderEnabled"
                 checked={formData.reminderEnabled}
                 onChange={(e) => setFormData({ ...formData, reminderEnabled: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
               />
               <Label htmlFor="reminderEnabled">Enable reminder notifications</Label>
             </div>
@@ -536,7 +537,7 @@ const EditReminderModal: React.FC<{
                 id="edit-isRecurring"
                 checked={formData.isRecurring}
                 onChange={(e) => setFormData({ ...formData, isRecurring: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
               />
               <Label htmlFor="edit-isRecurring">Make this a recurring reminder</Label>
             </div>
@@ -583,7 +584,7 @@ const EditReminderModal: React.FC<{
                 id="edit-reminderEnabled"
                 checked={formData.reminderEnabled}
                 onChange={(e) => setFormData({ ...formData, reminderEnabled: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
               />
               <Label htmlFor="edit-reminderEnabled">Enable reminder notifications</Label>
             </div>
@@ -845,38 +846,63 @@ export const TasksView: React.FC<TasksViewProps> = ({
   };
 
   return (
-    <div className="h-full bg-background">
-      <div className="p-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Task Reminders</h1>
-            <p className="text-muted-foreground">Manage your digital colleague task reminders</p>
+    <div className="px-2 md:px-4 py-4 space-y-8">
+      <HeroSection
+        title="Task Reminders"
+        description="Manage reminders and stay on top of important tasks and deadlines."
+        gradient="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600"
+        primaryAction={{
+          label: "Add reminder",
+          onClick: () => {
+            const newReminder = {
+              title: "New Reminder",
+              description: "Don't forget to complete this task",
+              dueDate: new Date(),
+              dueTime: "09:00",
+              colleague: colleagues[0] || { id: '1', name: 'Default Colleague', department: 'General', role: 'Team Member' },
+              isCompleted: false,
+              isRecurring: false,
+              priority: 'medium' as const,
+              reminderEnabled: true,
+              reminderMinutes: 15,
+              tags: ['reminder'],
+            };
+            handleAddReminder(newReminder);
+          },
+        }}
+      />
+      <div className="h-full bg-background">
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Task Reminders</h1>
+              <p className="text-muted-foreground">Manage your digital colleague task reminders</p>
+            </div>
+            <AddReminderModal
+              colleagues={colleagues}
+              onAddReminder={handleAddReminder}
+              trigger={
+                <Button className="flex items-center space-x-2">
+                  <Plus className="h-4 w-4" />
+                  <span>Add Reminder</span>
+                </Button>
+              }
+            />
           </div>
-          <AddReminderModal
-            colleagues={colleagues}
-            onAddReminder={handleAddReminder}
-            trigger={
-              <Button className="flex items-center space-x-2">
-                <Plus className="h-4 w-4" />
-                <span>Add Reminder</span>
-              </Button>
-            }
-          />
-        </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          <Card className="p-4">
-            <div className="text-2xl font-bold text-foreground">{stats.total}</div>
-            <div className="text-sm text-muted-foreground">Total</div>
-          </Card>
-          <Card className="p-4">
-            <div className="text-2xl font-bold text-primary">{stats.pending}</div>
-            <div className="text-sm text-muted-foreground">Pending</div>
-          </Card>
-          <Card className="p-4">
-            <div className="text-2xl font-bold text-success">{stats.completed}</div>
+          {/* Stats */}
+          <div className="grid grid-cols-5 gap-4 mb-6">
+            <Card className="p-4">
+              <div className="text-2xl font-bold text-foreground">{stats.total}</div>
+              <div className="text-sm text-muted-foreground">Total</div>
+            </Card>
+            <Card className="p-4">
+              <div className="text-2xl font-bold text-primary">{stats.pending}</div>
+              <div className="text-sm text-muted-foreground">Pending</div>
+            </Card>
+            <Card className="p-4">
+              <div className="text-2xl font-bold text-success">{stats.completed}</div>
             <div className="text-sm text-muted-foreground">Completed</div>
           </Card>
           <Card className="p-4">
@@ -937,6 +963,7 @@ export const TasksView: React.FC<TasksViewProps> = ({
               />
             ))
           )}
+        </div>
         </div>
       </div>
     </div>

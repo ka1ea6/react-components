@@ -1,6 +1,7 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { KanbanBoard } from './KanbanBoard';
 import { 
@@ -13,7 +14,7 @@ import {
   emptyStateData,
   singleEpicData,
   testScenarios
-} from './test-data';
+} from '../../DigitalColleagues/test-data';
 
 const meta: Meta<typeof KanbanBoard> = {
   title: 'Digital Colleagues/KanbanBoard',
@@ -28,6 +29,13 @@ const meta: Meta<typeof KanbanBoard> = {
   },
   args: {
     ...testScenarios.default,
+    // Task handlers
+    onAddTask: action('onAddTask'),
+    onUpdateTask: action('onUpdateTask'),
+    onDeleteTask: action('onDeleteTask'),
+    onTaskClick: action('onTaskClick'),
+    // Epic handlers
+    onAddEpic: action('onAddEpic'),
   },
 };
 

@@ -128,16 +128,16 @@ export const DocumentationView: React.FC = () => {
           {doc.isFolder ? (
             <>
               {expandedFolders.has(doc.id) ? (
-                <ChevronDown className="h-4 w-4 text-gray-500" />
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
               ) : (
-                <ChevronRight className="h-4 w-4 text-gray-500" />
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
               )}
-              <Folder className="h-4 w-4 text-blue-500" />
+              <Folder className="h-4 w-4 text-primary" />
             </>
           ) : (
             <>
               <div className="w-4" />
-              <FileText className="h-4 w-4 text-gray-500" />
+              <FileText className="h-4 w-4 text-muted-foreground" />
             </>
           )}
           <span className="text-sm font-medium text-gray-700">{doc.title}</span>

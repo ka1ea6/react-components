@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
 import { ManagementSidebar } from "@/components/DigitalColleagues/ManagementSidebar"
-import { KanbanBoard } from"@/components/DigitalColleagues/KanbanBoard"
+import { KanbanBoard } from"@/components/dc-temp/Views/KanbanBoard"
 import { EpicsView } from "@/components/DigitalColleagues/EpicsView"
 import { PlanningView } from "@/components/DigitalColleagues/PlanningView"
 import { TasksView } from "@/components/DigitalColleagues/TasksView"
+import FileView from "./FileView"
+import { HeroSection } from "../hero-section"
 import type { Reminder, DigitalColleague } from "@/components/DigitalColleagues/TasksView"
+import type { RecentFile } from "@/components/DigitalColleagues/types"
 // import { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
 import { useRouter } from 'next/navigation';
 
@@ -53,13 +56,6 @@ export interface Task {
   createdAt: Date;
 }
 
-export interface KanbanBoardProps {
-  initialTasks?: Task[];
-  initialEpics?: Epic[];
-  initialSprints?: Sprint[];
-  initialProjects?: Project[];
-}
-
 
 interface Props {
   title?: string
@@ -69,23 +65,41 @@ interface Props {
       initialProjects?: Project[];
       initialReminders?: Reminder[];
       initialColleagues?: DigitalColleague[];
-    // currentView: 'kanban' | 'planning' | 'files' | 'epics';
-    onUpdateProject: (projectId: string, updates: Partial<Project>) => void;
-    onDeleteProject: (projectId: string) => void;
-    onAddProject: (project: Omit<Project, 'id'>) => void;
-    onUpdateEpic: (epicId: string, updates: Partial<Epic>) => void;
-      onUpdateTask: (taskId: string, updates: Partial<Task>) => void;
-    onDeleteEpic: (epicId: string) => void;
-    onAddEpic: () => void;
-    onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
-    onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
-    onDeleteSprint: (sprintId: string) => void;
+      initialFiles?: RecentFile[];
+    // Task handlers
+    onAddTask?: (newTask: Omit<Task, 'id' | 'createdAt'>) => void;
+    onUpdateTask?: (taskId: string, updates: Partial<Task>) => void;
+    onDeleteTask?: (taskId: string) => void;
+    onTaskClick?: (task: Task) => void;
+    // Epic handlers
+    onAddEpic?: () => void;
+    onUpdateEpic?: (epicId: string, updates: Partial<Epic>) => void;
+    onDeleteEpic?: (epicId: string) => void;
+    onAddTaskToEpic?: (epicId: string) => void;
+    // Sprint handlers
+    onAddSprint?: (sprint: Omit<Sprint, 'id'>) => void;
+    onUpdateSprint?: (sprintId: string, updates: Partial<Sprint>) => void;
+    onDeleteSprint?: (sprintId: string) => void;
+    // Project handlers
+    onAddProject?: (project: Omit<Project, 'id'>) => void;
+    onUpdateProject?: (projectId: string, updates: Partial<Project>) => void;
+    onDeleteProject?: (projectId: string) => void;
+    // File handlers
+    onFileAdd?: (file: RecentFile) => void;
+    onFileEdit?: (file: RecentFile) => void;
+    onFileDelete?: (fileId: string) => void;
+    onFileClick?: (file: RecentFile) => void;
+    // Reminder handlers
     onAddReminder?: (reminder: Omit<Reminder, 'id' | 'createdAt'>) => void;
     onUpdateReminder?: (reminderId: string, updates: Partial<Reminder>) => void;
     onDeleteReminder?: (reminderId: string) => void;
-    // onViewChange: (view: 'kanban' | 'planning' | 'files' | 'epics') => void;
-    // mobileMenuOpen: boolean;
-    onToggleMobileMenu: () => void;
+    // View handlers
+    onViewChange?: (view: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics') => void;
+    onToggleMobileMenu?: () => void;
+    // Team handlers
+    onTeamClick?: (teamId: string) => void;
+    onTeamChange?: (team: any) => void;
+    onCopilotClick?: () => void;
 //   businessUnits: BusinessUnit[]
 }
 
@@ -96,23 +110,41 @@ export default function ProjectView({ title = "" ,
   initialProjects = [],
   initialReminders = [],
   initialColleagues = [],
-  // currentView,
-  onUpdateProject,
-  onDeleteProject,
-  onAddProject,
+  initialFiles = [],
+  // Task handlers
+  onAddTask,
+  onUpdateTask,
+  onDeleteTask,
+  onTaskClick,
+  // Epic handlers
+  onAddEpic,
   onUpdateEpic,
   onDeleteEpic,
-  onAddEpic,
-  onUpdateTask,
+  onAddTaskToEpic,
+  // Sprint handlers
   onAddSprint,
   onUpdateSprint,
   onDeleteSprint,
+  // Project handlers
+  onAddProject,
+  onUpdateProject,
+  onDeleteProject,
+  // File handlers
+  onFileAdd,
+  onFileEdit,
+  onFileDelete,
+  onFileClick,
+  // Reminder handlers
   onAddReminder,
   onUpdateReminder,
   onDeleteReminder,
-  // onViewChange,
-  // mobileMenuOpen,
+  // View handlers
+  onViewChange,
   onToggleMobileMenu,
+  // Team handlers
+  onTeamClick,
+  onTeamChange,
+  onCopilotClick,
 }: Props) {
 
 
@@ -122,6 +154,7 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [reminders, setReminders] = useState<Reminder[]>(initialReminders);
   const [colleagues, setColleagues] = useState<DigitalColleague[]>(initialColleagues);
+  const [files, setFiles] = useState<RecentFile[]>(initialFiles);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isAddEpicModalOpen, setIsAddEpicModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -172,6 +205,7 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdAt'>) => {
     const task: Task = { ...newTask, id: Date.now().toString(), createdAt: new Date() };
     setTasks(prev => [...prev, task]);
+    onUpdateTask?.(task.id, task);
   };
 
   const handleUpdateTask = (taskId: string, updates: Partial<Task>) => {
@@ -230,7 +264,7 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
     // For now, let's create a default epic
     const defaultEpic: Omit<Epic, 'id'> = {
       name: 'New Epic',
-      color: '#3B82F6',
+      color: 'rgb(var(--primary))',
       description: 'Epic description',
       confidence: 'medium',
       phase: 1,
@@ -310,6 +344,7 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const handleToggleMobileMenu = () => {
     setMobileMenuOpen(prev => !prev);
+    onToggleMobileMenu?.();
   };
 
   const handleCopilotClick = () => {
@@ -356,6 +391,25 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
     onDeleteReminder?.(reminderId);
   };
 
+  // File management handlers
+  const handleFileAdd = (newFile: RecentFile) => {
+    setFiles(prev => [...prev, newFile]);
+    onFileAdd?.(newFile);
+  };
+
+  const handleFileEdit = (file: RecentFile) => {
+    onFileEdit?.(file);
+  };
+
+  const handleFileDelete = (fileId: string) => {
+    setFiles(prev => prev.filter(file => file.name !== fileId));
+    onFileDelete?.(fileId);
+  };
+
+  const handleFileClick = (file: RecentFile) => {
+    onFileClick?.(file);
+  };
+
   const columns = [
     { id: 'todo', title: 'To Do', status: 'todo' as const },
     { id: 'in-progress', title: 'In Progress', status: 'in-progress' as const },
@@ -400,14 +454,6 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   // const [ currentView, setCurrentView ] = useState<'kanban' | 'planning' | 'files' | 'epics'>('kanban');
 
-  const onViewChange = (view: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics') => {
-    // Hide planning view on mobile
-    if (view === 'planning' && window.innerWidth < 768) {
-      return;
-    }
-    setCurrentView(view);
-  };
-
 return (
 
 
@@ -425,36 +471,41 @@ return (
   onAddSprint={handleAddSprint}
   onUpdateSprint={handleUpdateSprint}
   onDeleteSprint={handleDeleteSprint}
-  onViewChange={onViewChange}
+  onViewChange={handleViewChange}
   mobileMenuOpen={mobileMenuOpen}
-  onToggleMobileMenu={onToggleMobileMenu}
+  onToggleMobileMenu={handleToggleMobileMenu}
     >
 
 
       
       { currentView === 'kanban' && (
-      <div className="p-0">
-        <KanbanBoard 
-        initialProjects={projects}
+        <div className="h-full">
+          <KanbanBoard 
+            initialProjects={projects}
             initialEpics={epics}
             initialSprints={sprints}
             initialTasks={tasks}
-            />
-      </div>
+            // Task handlers
+            onAddTask={handleAddTask}
+            onUpdateTask={handleUpdateTask}
+            onDeleteTask={handleDeleteTask}
+            onTaskClick={handleTaskClick}
+            // Epic handlers
+            onAddEpic={handleAddEpicClick}
+          />
+        </div>
       )}
       { currentView === 'planning' && (
-                      /* Planning View - Hidden on mobile */
-                      <div className="hidden md:block">
-                        <PlanningView
-                          tasks={tasks}
-                          epics={epics}
-                          sprints={sprints}
-                          onUpdateTask={handleUpdateTask}
-                          onTaskClick={handleTaskClick}
-                          onAddSprint={handleAddSprint}
-                        />
-                      </div>
-                    
+        <div className="hidden md:block h-full">
+          <PlanningView
+            tasks={tasks}
+            epics={epics}
+            sprints={sprints}
+            onUpdateTask={handleUpdateTask}
+            onTaskClick={handleTaskClick}
+            onAddSprint={handleAddSprint}
+          />
+        </div>
       )}
       { currentView === 'tasks' && (
         <div className="h-full">
@@ -468,24 +519,30 @@ return (
         </div>
       )}
       { currentView === 'files' && (
-        <div className="p-8 bg-gray-50 h-full">
-          {/* Files view content goes here */}
-          <h2 className="text-xl font-semibold mb-4">Files View</h2>
-          <p>Content for the files view will be implemented here.</p>
+        <div className="h-full">
+          <FileView
+            initialFiles={files}
+            onFileAdd={handleFileAdd}
+            onFileEdit={handleFileEdit}
+            onFileDelete={handleFileDelete}
+            onFileClick={handleFileClick}
+            compactView={false}
+          />
         </div>
       )}
       { currentView === 'epics' && (
-        <div className="p-0 bg-gray-50 h-full">
-          {/* Epics view content goes here */}
+        <div className="h-full">
           <EpicsView
-                          tasks={tasks}
-                          epics={epics}
-                          sprints={sprints}
-                          onUpdateTask={handleUpdateTask}
-                          onTaskClick={handleTaskClick}
-                          onAddTaskToEpic={handleAddTaskToEpic}
-                          onAddEpic={() => setIsAddEpicModalOpen(true)}
-                        />
+            tasks={tasks}
+            epics={epics}
+            sprints={sprints}
+            onUpdateTask={handleUpdateTask}
+            onTaskClick={handleTaskClick}
+            onAddTaskToEpic={handleAddTaskToEpic}
+            onAddEpic={() => setIsAddEpicModalOpen(true)}
+            onUpdateEpic={handleUpdateEpic}
+            onDeleteEpic={handleDeleteEpic}
+          />
         </div>
       )}
     </ManagementSidebar>
