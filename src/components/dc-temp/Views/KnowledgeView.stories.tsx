@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import KnowledgeView from './KnowledgeView'
-import type { KnowledgeDocument, KnowledgeMenuConfig } from '../../DigitalColleagues/types'
+import type { KnowledgeDocument, KnowledgeContext } from '../../DigitalColleagues/types'
+import { Server, Code, Users, BookOpen, Database, Shield } from 'lucide-react'
 
 const meta: Meta<typeof KnowledgeView> = {
   title: 'DC/Views/KnowledgeView',
@@ -25,7 +26,11 @@ const sampleDocuments: KnowledgeDocument[] = [
       type: 'Guide',
       team: 'Backend',
       difficulty: 'Intermediate',
-      version: '2.1'
+      version: '2.1',
+      service: 'Authentication Service',
+      component: 'Auth Module',
+      layer: 'API Layer',
+      project: 'Security Framework'
     },
     content: `# API Authentication Guide
 
@@ -55,7 +60,11 @@ This guide covers the implementation of secure API authentication...
       type: 'Documentation',
       team: 'Frontend',
       difficulty: 'Beginner',
-      version: '1.5'
+      version: '1.5',
+      service: 'UI Service',
+      component: 'Component Library',
+      layer: 'Presentation Layer',
+      project: 'Design System'
     },
     content: `# UI Component Library
 
@@ -234,68 +243,109 @@ Our Q1 campaigns showed a 25% increase in engagement...
   },
 ]
 
-// Default configuration
-const defaultMenuConfig: KnowledgeMenuConfig = {
-  groupBy: ['category', 'type'],
-  sortBy: 'title',
-  sortOrder: 'asc',
-  showDocumentCount: true,
-}
+// Sample contexts for different documentation views
+const sampleContexts: KnowledgeContext[] = [
+  {
+    id: 'all',
+    label: 'All Documentation',
+    description: 'Browse all documentation organized by category and type',
+    icon: <BookOpen className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['category', 'type'],
+      sortBy: 'title',
+      sortOrder: 'asc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'services',
+    label: 'Services',
+    description: 'Documentation organized by service and team',
+    icon: <Server className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['service', 'team'],
+      sortBy: 'updatedAt',
+      sortOrder: 'desc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'architecture',
+    label: 'Architecture',
+    description: 'System architecture documentation by component and layer',
+    icon: <Code className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['component', 'layer'],
+      sortBy: 'title',
+      sortOrder: 'asc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'teams',
+    label: 'Teams',
+    description: 'Documentation organized by team and project',
+    icon: <Users className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['team', 'project'],
+      sortBy: 'updatedAt',
+      sortOrder: 'desc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'security',
+    label: 'Security',
+    description: 'Security documentation and compliance guides',
+    icon: <Shield className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['category', 'difficulty'],
+      sortBy: 'updatedAt',
+      sortOrder: 'desc',
+      showDocumentCount: true
+    }
+  }
+]
 
 export const Default: Story = {
   args: {
     documents: sampleDocuments,
-    menuConfig: defaultMenuConfig,
+    contexts: sampleContexts,
   },
 }
 
-export const GroupByTeam: Story = {
+export const ServicesView: Story = {
   args: {
     documents: sampleDocuments,
-    menuConfig: {
-      groupBy: ['team', 'difficulty'],
-      sortBy: 'updatedAt',
-      sortOrder: 'desc',
-      showDocumentCount: true,
-    },
+    contexts: sampleContexts.filter(c => c.id === 'services'),
   },
 }
 
-export const GroupByDifficulty: Story = {
+export const ArchitectureView: Story = {
   args: {
     documents: sampleDocuments,
-    menuConfig: {
-      groupBy: ['difficulty', 'category'],
-      sortBy: 'title',
-      sortOrder: 'asc',
-      showDocumentCount: false,
-    },
+    contexts: sampleContexts.filter(c => c.id === 'architecture'),
   },
 }
 
-export const SingleLevel: Story = {
+export const TeamsView: Story = {
   args: {
     documents: sampleDocuments,
-    menuConfig: {
-      groupBy: ['category'],
-      sortBy: 'createdAt',
-      sortOrder: 'desc',
-      showDocumentCount: true,
-    },
+    contexts: sampleContexts.filter(c => c.id === 'teams'),
   },
 }
 
 export const EmptyState: Story = {
   args: {
     documents: [],
-    menuConfig: defaultMenuConfig,
+    contexts: sampleContexts,
   },
 }
 
 export const WithSelection: Story = {
   args: {
     documents: sampleDocuments,
-    menuConfig: defaultMenuConfig,
+    contexts: sampleContexts,
     selectedDocumentId: '2',
   },
 }

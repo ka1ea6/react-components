@@ -1,5 +1,5 @@
 import { Project, Epic, Sprint, Task } from './KanbanBoard';
-import { ProjectSummary } from './types';
+import { ProjectSummary, TeamSummary, Colleague } from './types';
 // Mock data for testing and stories
 export const mockProjects: Project[] = [
   {
@@ -54,6 +54,57 @@ export const mockProjectSummary: ProjectSummary[] = [
     dueDate: "August 10, 2025",
     members: 5,
     files: 31,
+  },
+]
+
+export const mockTeamSummary: TeamSummary[] = [
+  {
+    id: "1",
+    name: "Product Development",
+    description: "Core product development team responsible for building and maintaining our main platform",
+    humanColleagues: 8,
+    digitalColleagues: 3,
+    projects: 5,
+  },
+  {
+    id: "2",
+    name: "Design & UX",
+    description: "Creative team focused on user experience design and visual identity",
+    humanColleagues: 5,
+    digitalColleagues: 2,
+    projects: 3,
+  },
+  {
+    id: "3",
+    name: "Marketing",
+    description: "Growth and marketing team driving customer acquisition and retention",
+    humanColleagues: 6,
+    digitalColleagues: 4,
+    projects: 7,
+  },
+  {
+    id: "4",
+    name: "Data Science",
+    description: "Analytics and machine learning team providing insights and intelligent features",
+    humanColleagues: 4,
+    digitalColleagues: 6,
+    projects: 2,
+  },
+  {
+    id: "5",
+    name: "Customer Success",
+    description: "Support and success team ensuring customer satisfaction and retention",
+    humanColleagues: 7,
+    digitalColleagues: 2,
+    projects: 4,
+  },
+  {
+    id: "6",
+    name: "Operations",
+    description: "Infrastructure and operations team maintaining system reliability and performance",
+    humanColleagues: 3,
+    digitalColleagues: 5,
+    projects: 3,
   },
 ]
 

@@ -12,6 +12,21 @@ make all components responsive by default. Use CSS media queries or utility clas
 Use CSS Grid or Flexbox for layout. Avoid using fixed widths or heights unless absolutely necessary.
 All components should be composable with all props and actions being passed down to child components. This allows for greater flexibility and reusability. Do not hardcode test data within the components. where sensible, put test data within a "tests" folder in the root of the project.
 
+Testing is vitest and should be done using the Vitest framework. Write unit tests for all components, focusing on functionality, rendering, and interactions. Use the `@testing-library/react` library for testing React components.
+Use the `@testing-library/jest-dom` library for custom matchers like `toBeInTheDocument`, `toHaveClass`, and `toHaveStyle`. This helps make tests more readable and expressive.
+Use the `@testing-library/user-event` library for simulating user interactions in tests. This allows for more realistic testing of component behavior.
+Use the `@testing-library/react-hooks` library for testing custom hooks. This allows for isolated testing of hook logic without the need for a full component render.
+Use the `@testing-library/react` library's `render` function to render components in tests. This provides a clean and isolated environment for testing component behavior.
+Use the `@testing-library/react` library's `screen` object to query elements in tests. This provides a consistent and readable way to access elements in the rendered component.
+Use the `@testing-library/react` library's `fireEvent` function for simulating events in tests. This allows for testing of user interactions and component behavior in response to those interactions.
+Use the `@testing-library/react` library's `waitFor` function for asynchronous tests. This allows for waiting for elements to appear or change state before making assertions.
+Use the `@testing-library/react` library's `act` function for wrapping state updates in tests. This ensures that all updates are processed before making assertions.
+Use the `@testing-library/react` library's `cleanup` function to unmount components after each test. This helps prevent memory leaks and ensures a clean testing environment.
+Use the `@testing-library/react` library's `debug` function to log the current state of the component in tests.
+This can be useful for debugging test failures and understanding the component's state at the time of the failure.
+
+Don't try and guess command line tests to run. pnpm run build pnpm run typecheck and pnpm run test will run the tests we need.
+Dont run storybook as i have it running in a docker container. If you need to test components, use the Storybook instance running in the container.
 
 Use Framer Motion for animations and transitions. Ensure that animations are smooth and enhance the user experience without being distracting.
 Use Shadcn UI components where possible for consistency in design and behavior. If a component does not exist in Shadcn UI, create a custom component that adheres to the design system.

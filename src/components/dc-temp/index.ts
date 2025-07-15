@@ -1,3 +1,4 @@
 export { default as KnowledgeView } from './Views/KnowledgeView'
+export { default as TeamsIndexView } from './Views/TeamsIndexView'
 export { KnowledgeBrowser } from './knowledge-browser'
-export * from './Views/KnowledgeView.stories'
+export { TeamCard } from './team-card'

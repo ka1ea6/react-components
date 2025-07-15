@@ -8,6 +8,7 @@ import { TeamSwitcherBar } from "./team-switcher-bar"
 import { ChatSessionSidebar, type ChatSession } from "./chat-session-sidebar"
 import { AIChatInterface, type ChatMessage } from "./ai-chat-interface"
 import { businessUnits } from "./business-units"
+import { capabilities } from "./capabilities"
 
 const mockChatSessions: ChatSession[] = [
   {
@@ -163,6 +164,17 @@ export default function AssistantInterface() {
     return suggestions[selectedTeam.id as keyof typeof suggestions] || []
   }
 
+  const getTeamCapabilities = () => {
+    // Filter capabilities based on selected team
+    // For now, return all capabilities as a fallback
+    return capabilities.filter(cap => 
+      cap.id === selectedTeam.id || 
+      cap.id === "sales" || 
+      cap.id === "marketing" || 
+      cap.id === "product"
+    )
+  }
+
   return (
     
 
@@ -187,7 +199,7 @@ export default function AssistantInterface() {
               isTyping={isTyping}
               selectedTeam={selectedTeam}
               currentSessionTitle={currentSession?.title}
-              quickSuggestions={getQuickSuggestions()}
+              capabilities={getTeamCapabilities()}
               onInputChange={setInput}
               onSendMessage={handleSendMessage}
               onKeyPress={handleKeyPress}

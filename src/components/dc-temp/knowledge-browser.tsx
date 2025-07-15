@@ -45,20 +45,20 @@ function MenuItem({
     switch (format) {
       case 'markdown':
       case 'mdx':
-        return <FileText className="h-3.5 w-3.5 text-slate-600" />
+        return <FileText className="h-3.5 w-3.5 text-muted-foreground" />
       case 'richtext':
-        return <File className="h-3.5 w-3.5 text-slate-600" />
+        return <File className="h-3.5 w-3.5 text-muted-foreground" />
       default:
-        return <File className="h-3.5 w-3.5 text-slate-600" />
+        return <File className="h-3.5 w-3.5 text-muted-foreground" />
     }
   }
 
   const getCategoryColor = (level: number) => {
     const colors = [
-      'bg-gradient-to-r from-blue-500 to-cyan-500',
-      'bg-gradient-to-r from-purple-500 to-pink-500', 
-      'bg-gradient-to-r from-green-500 to-teal-500',
-      'bg-gradient-to-r from-orange-500 to-red-500'
+      'bg-primary',
+      'bg-secondary', 
+      'bg-accent',
+      'bg-chart-1'
     ]
     return colors[level % colors.length]
   }
@@ -70,8 +70,8 @@ function MenuItem({
         <motion.div 
           className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 ${
             isExpanded 
-              ? 'bg-white shadow-sm border border-slate-200/80' 
-              : 'hover:bg-white/70 hover:shadow-sm'
+              ? 'bg-card shadow-sm border border-border' 
+              : 'hover:bg-muted/50 hover:shadow-sm'
           }`}
           style={{ marginLeft: `${level * 20}px` }}
           onClick={() => setIsExpanded(!isExpanded)}
@@ -87,18 +87,18 @@ function MenuItem({
             transition={{ duration: 0.2 }}
             className="flex-shrink-0"
           >
-            <ChevronRight className="h-4 w-4 text-slate-400" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </motion.div>
           
           {/* Category info */}
           <div className="flex-1 flex items-center justify-between min-w-0">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="font-medium text-slate-900 truncate">{label}</span>
+              <span className="font-medium text-foreground truncate">{label}</span>
             </div>
             
             {showDocumentCount && totalDocuments > 0 && (
               <div className="flex-shrink-0 ml-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-medium bg-slate-100 text-slate-600 rounded-full">
+                <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-medium bg-muted text-muted-foreground rounded-full">
                   {totalDocuments}
                 </span>
               </div>
@@ -127,8 +127,8 @@ function MenuItem({
               transition={{ delay: index * 0.05, duration: 0.2 }}
               className={`group flex items-center gap-3 p-2.5 mx-2 rounded-lg cursor-pointer transition-all duration-150 ${
                 selectedDocumentId === doc.id 
-                  ? 'bg-gradient-to-r from-blue-50 to-cyan-50 border-l-2 border-blue-400 shadow-sm' 
-                  : 'hover:bg-slate-50 hover:translate-x-1'
+                  ? 'bg-primary/10 border-l-2 border-primary shadow-sm' 
+                  : 'hover:bg-muted/50 hover:translate-x-1'
               }`}
               style={{ marginLeft: `${level * 20 + 20}px` }}
               onClick={() => onDocumentClick?.(doc)}
@@ -142,13 +142,13 @@ function MenuItem({
               <div className="flex-1 min-w-0">
                 <p className={`text-sm truncate transition-colors ${
                   selectedDocumentId === doc.id 
-                    ? 'text-blue-900 font-medium' 
-                    : 'text-slate-700 group-hover:text-slate-900'
+                    ? 'text-primary font-medium' 
+                    : 'text-foreground group-hover:text-foreground'
                 }`}>
                   {doc.title}
                 </p>
                 {doc.description && (
-                  <p className="text-xs text-slate-500 truncate mt-0.5">
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">
                     {doc.description}
                   </p>
                 )}
@@ -156,7 +156,7 @@ function MenuItem({
               
               {doc.tags && doc.tags.length > 0 && (
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 group-hover:bg-slate-200 transition-colors">
+                  <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground group-hover:bg-muted/80 transition-colors">
                     {doc.tags[0]}
                   </span>
                 </div>
@@ -188,24 +188,24 @@ function DocumentPreview({ document }: { document: KnowledgeDocument }) {
     switch (format) {
       case 'markdown':
       case 'mdx':
-        return <FileText className="h-6 w-6 text-blue-500" />
+        return <FileText className="h-6 w-6 text-primary" />
       case 'richtext':
-        return <File className="h-6 w-6 text-green-500" />
+        return <File className="h-6 w-6 text-success" />
       default:
-        return <File className="h-6 w-6 text-slate-500" />
+        return <File className="h-6 w-6 text-muted-foreground" />
     }
   }
 
   const formatBadgeColor = (format: string) => {
     switch (format) {
       case 'markdown':
-        return 'bg-blue-100 text-blue-700 border-blue-200'
+        return 'bg-primary/10 text-primary border-primary/20'
       case 'mdx':
-        return 'bg-purple-100 text-purple-700 border-purple-200'
+        return 'bg-secondary/10 text-secondary border-secondary/20'
       case 'richtext':
-        return 'bg-green-100 text-green-700 border-green-200'
+        return 'bg-success/10 text-success border-success/20'
       default:
-        return 'bg-slate-100 text-slate-700 border-slate-200'
+        return 'bg-muted text-muted-foreground border-border'
     }
   }
 
@@ -217,19 +217,19 @@ function DocumentPreview({ document }: { document: KnowledgeDocument }) {
       className="h-full flex flex-col"
     >
       {/* Header */}
-      <div className="border-b border-slate-200 bg-white p-8">
+      <div className="border-b border-border bg-card p-8">
         <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="flex-shrink-0 p-3 rounded-xl bg-muted border border-border">
             {formatIcon(document.format)}
           </div>
           
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold text-slate-900 mb-2 leading-tight">
+            <h1 className="text-2xl font-bold text-foreground mb-2 leading-tight">
               {document.title}
             </h1>
             
             {document.description && (
-              <p className="text-slate-600 text-lg leading-relaxed mb-4">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-4">
                 {document.description}
               </p>
             )}
@@ -240,7 +240,7 @@ function DocumentPreview({ document }: { document: KnowledgeDocument }) {
               </span>
               
               {document.tags?.map((tag) => (
-                <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-slate-100 text-slate-700 border border-slate-200">
+                <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-muted text-muted-foreground border border-border">
                   #{tag}
                 </span>
               ))}
@@ -254,49 +254,50 @@ function DocumentPreview({ document }: { document: KnowledgeDocument }) {
         <div className="p-8">
           {/* Metadata Section */}
           {document.metadata && Object.keys(document.metadata).length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4">Document Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(document.metadata).map(([key, value]) => (
-                  <div key={key} className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-                    <dt className="text-sm font-medium text-slate-500 uppercase tracking-wide">
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
-                    </dt>
-                    <dd className="mt-1 text-slate-900 font-medium">
-                      {String(value)}
-                    </dd>
-                  </div>
-                ))}
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-foreground mb-2">Metadata</h3>
+              <div className="bg-muted rounded-lg p-3 border border-border">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-1 text-xs">
+                  {Object.entries(document.metadata).map(([key, value]) => (
+                    <div key={key} className="flex gap-1">
+                      <span className="text-muted-foreground font-medium">
+                        {key.replace(/([A-Z])/g, ' $1').trim()}:
+                      </span>
+                      <span className="text-foreground truncate">
+                        {String(value)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           {/* Content Preview */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-900">Content Preview</h3>
             
             {document.content ? (
               <div className="relative">
-                <div className="bg-slate-900 rounded-xl p-6 overflow-hidden">
-                  <pre className="text-slate-100 text-sm leading-relaxed whitespace-pre-wrap font-mono">
+                <div className="bg-card border border-border rounded-xl p-6 overflow-hidden">
+                  <pre className="text-card-foreground text-sm leading-relaxed whitespace-pre-wrap font-mono">
                     {document.content.substring(0, 1500)}
                     {document.content.length > 1500 && '...'}
                   </pre>
                 </div>
                 
                 {document.content.length > 1500 && (
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-900 to-transparent rounded-b-xl flex items-end justify-center pb-2">
-                    <span className="text-slate-300 text-xs">Content truncated</span>
+                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card to-transparent rounded-b-xl flex items-end justify-center pb-2">
+                    <span className="text-muted-foreground text-xs">Content truncated</span>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="text-center py-12 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
-                  <FileText className="h-8 w-8 text-slate-400" />
+              <div className="text-center py-12 bg-muted rounded-xl border-2 border-dashed border-border">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-background flex items-center justify-center">
+                  <FileText className="h-8 w-8 text-muted-foreground" />
                 </div>
-                <h4 className="text-slate-900 font-medium mb-1">No content available</h4>
-                <p className="text-slate-500 text-sm">This document doesn't have preview content</p>
+                <h4 className="text-foreground font-medium mb-1">No content available</h4>
+                <p className="text-muted-foreground text-sm">This document doesn't have preview content</p>
               </div>
             )}
           </div>
@@ -379,18 +380,18 @@ export function KnowledgeBrowser({
   return (
     <div className={`flex h-full ${className || ""}`}>
       {/* Left Sidebar - Menu */}
-      <div className="w-1/3 border-r border-slate-200 bg-gradient-to-b from-slate-50 to-white">
+      <div className="w-1/3 border-r border-border bg-muted/20">
         {/* Search Header */}
-        <div className="p-6 border-b border-slate-200/60">
+        <div className="p-6 border-b border-border">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-slate-400" />
+              <Search className="h-4 w-4 text-muted-foreground" />
             </div>
             <Input
               placeholder="Search knowledge base..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white/80 border-slate-200 focus:border-blue-300 focus:ring-blue-100 rounded-xl h-11 text-sm placeholder:text-slate-400"
+              className="pl-10 bg-background/80 border-border focus:border-primary/50 focus:ring-primary/20 rounded-xl h-11 text-sm placeholder:text-muted-foreground"
             />
           </div>
         </div>
@@ -415,10 +416,10 @@ export function KnowledgeBrowser({
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center text-slate-400 py-12"
+                className="text-center text-muted-foreground py-12"
               >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
-                  <FileText className="h-8 w-8 text-slate-300" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                  <FileText className="h-8 w-8 text-muted-foreground" />
                 </div>
                 <p className="text-sm font-medium">No documents found</p>
                 <p className="text-xs mt-1">Try adjusting your search terms</p>
@@ -429,7 +430,7 @@ export function KnowledgeBrowser({
       </div>
 
       {/* Right Content - Document Preview */}
-      <div className="flex-1 bg-white">
+      <div className="flex-1 bg-background">
         {selectedDocument ? (
           <DocumentPreview document={selectedDocument} />
         ) : (
@@ -440,11 +441,11 @@ export function KnowledgeBrowser({
               transition={{ duration: 0.4 }}
               className="max-w-sm"
             >
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
-                <FileText className="h-10 w-10 text-blue-500" />
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
+                <FileText className="h-10 w-10 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">Select a document</h3>
-              <p className="text-slate-500 leading-relaxed">Choose any document from the knowledge base to view its content and details</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Select a document</h3>
+              <p className="text-muted-foreground leading-relaxed">Choose any document from the knowledge base to view its content and details</p>
             </motion.div>
           </div>
         )}

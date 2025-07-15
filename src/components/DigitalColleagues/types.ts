@@ -187,6 +187,14 @@ export interface KnowledgeMenuConfig {
   showDocumentCount?: boolean
 }
 
+export interface KnowledgeContext {
+  id: string
+  label: string
+  description?: string
+  menuConfig: KnowledgeMenuConfig
+  icon?: React.ReactNode
+}
+
 export interface DigitalColleague extends BaseColleague {
   type: "digital"
   description?: string
@@ -201,3 +209,39 @@ export interface DigitalColleague extends BaseColleague {
 }
 
 export type Colleague = HumanColleague | DigitalColleague
+
+export interface TeamSummary {
+  id: string
+  name: string
+  description: string
+  humanColleagues: number
+  digitalColleagues: number
+  projects: number
+}
+
+export interface TeamMember {
+  id: string
+  name: string
+  email: string
+  role: string
+  type: 'human' | 'digital'
+  avatar?: string
+  joinedAt: Date
+}
+
+export interface Team {
+  id: string
+  name: string
+  description: string
+  members: TeamMember[]
+  projects: Project[]
+  createdAt: Date
+  updatedAt: Date
+  isActive: boolean
+}
+
+export interface TeamFormData {
+  name: string
+  description: string
+  members: string[]
+}

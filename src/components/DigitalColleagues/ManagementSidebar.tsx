@@ -18,7 +18,7 @@ interface ManagementSidebarProps {
   projects: Project[];
   epics: Epic[];
   sprints: Sprint[];
-  currentView: 'kanban' | 'planning' | 'files' | 'epics';
+  currentView: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics';
   onUpdateProject: (projectId: string, updates: Partial<Project>) => void;
   onDeleteProject: (projectId: string) => void;
   onAddProject: (project: Omit<Project, 'id'>) => void;
@@ -28,7 +28,7 @@ interface ManagementSidebarProps {
   onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
   onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
   onDeleteSprint: (sprintId: string) => void;
-  onViewChange: (view: 'kanban' | 'planning' | 'files' | 'epics') => void;
+  onViewChange: (view: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics') => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
@@ -366,6 +366,22 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
           <FileText className="h-4 w-4 flex-shrink-0" />
           <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
             Files
+          </span>
+        </button>
+        
+        <button
+          onClick={() => {
+            onViewChange('tasks');
+            setActiveSection(null);
+          }}
+          className={`flex-1 w-12 flex items-center justify-center text-white transition-all duration-200 relative overflow-hidden group/btn ${
+            currentView === 'tasks' ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'
+          } hover:w-28 hover:justify-start hover:pl-3`}
+          title="Tasks"
+        >
+          <Calendar className="h-4 w-4 flex-shrink-0" />
+          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+            Tasks
           </span>
         </button>
       </div>
