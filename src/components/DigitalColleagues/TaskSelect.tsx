@@ -22,6 +22,7 @@ interface TaskSelectProps {
   onValueChange: (value: string) => void;
   options: TaskSelectOption[];
   showColor?: boolean;
+  disabled?: boolean;
 }
 
 export const TaskSelect: React.FC<TaskSelectProps> = ({
@@ -29,21 +30,28 @@ export const TaskSelect: React.FC<TaskSelectProps> = ({
   value,
   onValueChange,
   options,
-  showColor = false
+  showColor = false,
+  disabled = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   
   const selectedOption = options.find(option => option.value === value);
+
+  const handleOpenChange = (open: boolean) => {
+    if (!disabled) {
+      setIsOpen(open);
+    }
+  };
   
   return (
     <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
-      <Select value={value} onValueChange={onValueChange} open={isOpen} onOpenChange={setIsOpen}>
+      <Select value={value} onValueChange={onValueChange} open={isOpen} onOpenChange={handleOpenChange} disabled={disabled}>
         <SelectTrigger className="h-auto p-0 border-none bg-transparent hover:bg-muted/50 rounded-md">
           <Badge 
             variant="secondary" 
-            className="cursor-pointer hover:bg-muted transition-colors"
-            onClick={() => setIsOpen(!isOpen)}
+            className={`${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} hover:bg-muted transition-colors`}
+            onClick={() => !disabled && setIsOpen(!isOpen)}
           >
             {showColor && selectedOption?.color && (
               <div className={`w-2 h-2 rounded-full ${selectedOption.color} mr-1`}></div>

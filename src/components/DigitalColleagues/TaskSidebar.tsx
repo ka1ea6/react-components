@@ -4,10 +4,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Calendar, Clock, User, Trash2, BookOpen, Bug, Zap, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, User, Trash2, BookOpen, Bug, Zap, AlertCircle, Loader2, Check, X } from 'lucide-react';
 import { Task, Epic, Sprint } from './types';
 import { TaskSelect } from './TaskSelect';
 import { SearchableSelect } from './SearchableSelect';
+
+type UpdateState = 'idle' | 'loading' | 'success' | 'error';
 
 const taskTypes = [{
   value: 'story',
@@ -82,9 +84,12 @@ interface TaskSidebarProps {
   epics: Epic[];
   sprints: Sprint[];
   lastUpdated: Date;
-  onUpdateTask: (fieldName: string, value: string) => void;
+  onUpdateTask: (fieldName: string, value: string) => void | Promise<void>;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: () => void | Promise<void>;
+  isUpdating?: boolean;
+  isDeleting?: boolean;
+  deleteState?: UpdateState;
 }
 
 export const TaskSidebar: React.FC<TaskSidebarProps> = ({
@@ -94,16 +99,60 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
   lastUpdated,
   onUpdateTask,
   onClose,
-  onDelete
+  onDelete,
+  isUpdating = false,
+  isDeleting = false,
+  deleteState = 'idle'
 }) => {
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
+  const renderDeleteButton = () => {
+    if (deleteState === 'loading') {
+      return (
+        <Button disabled variant="destructive" className="w-full h-8 text-xs gap-1">
+          <Loader2 className="h-3 w-3 animate-spin" />
+          Deleting...
+        </Button>
+      );
+    }
+    
+    if (deleteState === 'success') {
+      return (
+        <Button disabled variant="destructive" className="w-full h-8 text-xs gap-1">
+          <Check className="h-3 w-3" />
+          Deleted
+        </Button>
+      );
+    }
+    
+    if (deleteState === 'error') {
+      return (
+        <Button disabled variant="destructive" className="w-full h-8 text-xs gap-1">
+          <X className="h-3 w-3" />
+          Delete failed
+        </Button>
+      );
+    }
+    
+    return (
+      <Button 
+        onClick={onDelete} 
+        variant="destructive" 
+        className="w-full h-8 text-xs gap-1"
+        disabled={isUpdating || isDeleting}
+      >
+        <Trash2 className="h-3 w-3" />
+        Delete Task
+      </Button>
+    );
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Top section with form fields */}
-      <div className="space-y-4">
+      <div className="space-y-4" style={{ opacity: isUpdating ? 0.6 : 1 }}>
         {/* Status */}
         <div className="space-y-2">
           <Label className="text-xs text-muted-foreground">Status</Label>
@@ -120,7 +169,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
             }, {
               value: 'done',
               label: 'Done'
-            }]} 
+            }]}
+            disabled={isUpdating}
           />
         </div>
 
@@ -132,6 +182,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
             value={task.type} 
             onValueChange={(value) => value && onUpdateTask('type', value)}
             className="grid grid-cols-2 gap-1"
+            disabled={isUpdating}
           >
             {taskTypes.map(type => {
               const IconComponent = type.icon;
@@ -141,6 +192,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
                   value={type.value}
                   className="flex items-center gap-1 text-xs h-8 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
                   size="sm"
+                  disabled={isUpdating}
                 >
                   <IconComponent className="h-3 w-3" />
                   {type.label}
@@ -158,6 +210,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
             value={task.priority} 
             onValueChange={(value) => value && onUpdateTask('priority', value)}
             className="grid grid-cols-3 gap-1"
+            disabled={isUpdating}
           >
             {priorities.map(priority => (
               <ToggleGroupItem 
@@ -165,6 +218,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
                 value={priority.value}
                 className="text-xs h-8 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
                 size="sm"
+                disabled={isUpdating}
               >
                 {priority.label}
               </ToggleGroupItem>
@@ -181,7 +235,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
             max="100"
             value={task.points || 1}
             onChange={(e) => onUpdateTask('points', e.target.value)}
-            className="w-full h-8 px-2 text-xs border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground"
+            className="w-full h-8 px-2 text-xs border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isUpdating}
           />
         </div>
 
@@ -198,6 +253,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
               color: epic.color
             }))} 
             showColor 
+            disabled={isUpdating} 
           />
         </div>
 
@@ -215,6 +271,7 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
               value: sprint.id,
               label: `${sprint.name}${sprint.isActive ? ' (Active)' : ''}`
             }))]} 
+            disabled={isUpdating}
           />
         </div>
 
@@ -227,7 +284,8 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
             onValueChange={value => onUpdateTask('assignee', value)} 
             options={teamMembers} 
             placeholder="Search team members..." 
-            allowCustomValue={true} 
+            allowCustomValue={true}
+            disabled={isUpdating} 
           />
         </div>
       </div>
@@ -236,13 +294,15 @@ export const TaskSidebar: React.FC<TaskSidebarProps> = ({
       <div className="mt-auto pt-4 space-y-4">
         {/* Action Buttons */}
         <div className="space-y-2">
-          <Button onClick={onClose} variant="outline" className="w-full h-8 text-xs">
+          <Button 
+            onClick={onClose} 
+            variant="outline" 
+            className="w-full h-8 text-xs"
+            disabled={isUpdating || isDeleting}
+          >
             Close
           </Button>
-          <Button onClick={onDelete} variant="destructive" className="w-full h-8 text-xs gap-1">
-            <Trash2 className="h-3 w-3" />
-            Delete Task
-          </Button>
+          {renderDeleteButton()}
         </div>
 
         {/* Informational Fields */}

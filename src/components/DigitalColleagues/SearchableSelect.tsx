@@ -23,6 +23,7 @@ interface SearchableSelectProps {
   options: SearchableSelectOption[];
   placeholder?: string;
   allowCustomValue?: boolean;
+  disabled?: boolean;
 }
 
 export const SearchableSelect: React.FC<SearchableSelectProps> = ({
@@ -31,7 +32,8 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
   onValueChange,
   options,
   placeholder = 'Search...',
-  allowCustomValue = false
+  allowCustomValue = false,
+  disabled = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,15 +57,21 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
     }
   };
   
+  const handleOpenChange = (open: boolean) => {
+    if (!disabled) {
+      setIsOpen(open);
+    }
+  };
+  
   return (
     <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
-      <Select value={value} onValueChange={handleSelect} open={isOpen} onOpenChange={setIsOpen}>
+      <Select value={value} onValueChange={handleSelect} open={isOpen} onOpenChange={handleOpenChange} disabled={disabled}>
         <SelectTrigger className="h-auto p-0 border-none bg-transparent hover:bg-muted/50 rounded-md">
           <Badge 
             variant="secondary" 
-            className="cursor-pointer hover:bg-muted transition-colors"
-            onClick={() => setIsOpen(!isOpen)}
+            className={`${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} hover:bg-muted transition-colors`}
+            onClick={() => !disabled && setIsOpen(!isOpen)}
           >
             {selectedOption?.label || value || 'Select...'}
           </Badge>

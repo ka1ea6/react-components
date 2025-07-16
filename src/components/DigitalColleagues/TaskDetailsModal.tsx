@@ -10,6 +10,7 @@ import { Task, Epic, Sprint } from '../DigitalColleagues/types';
 import { EditableField } from './EditableField';
 import { CommentSection } from './CommentSection';
 import { TaskSidebar } from './TaskSidebar';
+import { Loader2, Check, X } from 'lucide-react';
 
 interface Comment {
   id: string;
@@ -18,14 +19,16 @@ interface Comment {
   createdAt: Date;
 }
 
+type UpdateState = 'idle' | 'loading' | 'success' | 'error';
+
 interface TaskDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   task: Task;
   epics: Epic[];
   sprints: Sprint[];
-  onUpdateTask: (taskId: string, updates: Partial<Task>) => void;
-  onDeleteTask: (taskId: string) => void;
+  onUpdateTask: (taskId: string, updates: Partial<Task>) => Promise<void>;
+  onDeleteTask: (taskId: string) => Promise<void>;
 }
 
 export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
@@ -38,6 +41,8 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
   onDeleteTask,
 }) => {
   const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [updateState, setUpdateState] = useState<UpdateState>('idle');
+  const [deleteState, setDeleteState] = useState<UpdateState>('idle');
   const [comments, setComments] = useState<Comment[]>([
     {
       id: '1',
@@ -53,17 +58,37 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
     },
   ]);
 
-  const handleFieldUpdate = (fieldName: string, value: string) => {
+  const handleFieldUpdate = async (fieldName: string, value: string) => {
     if (value !== task[fieldName as keyof Task]) {
-      onUpdateTask(task.id, { [fieldName]: value });
-      setLastUpdated(new Date());
+      setUpdateState('loading');
+      try {
+        await onUpdateTask(task.id, { [fieldName]: value });
+        setLastUpdated(new Date());
+        setUpdateState('success');
+        // Reset to idle after showing success
+        setTimeout(() => setUpdateState('idle'), 1500);
+      } catch (error) {
+        setUpdateState('error');
+        // Reset to idle after showing error
+        setTimeout(() => setUpdateState('idle'), 3000);
+      }
     }
   };
 
-  const handleSidebarUpdate = (fieldName: string, value: string) => {
+  const handleSidebarUpdate = async (fieldName: string, value: string) => {
     if (value !== task[fieldName as keyof Task]) {
-      onUpdateTask(task.id, { [fieldName]: value });
-      setLastUpdated(new Date());
+      setUpdateState('loading');
+      try {
+        await onUpdateTask(task.id, { [fieldName]: value });
+        setLastUpdated(new Date());
+        setUpdateState('success');
+        // Reset to idle after showing success
+        setTimeout(() => setUpdateState('idle'), 1500);
+      } catch (error) {
+        setUpdateState('error');
+        // Reset to idle after showing error
+        setTimeout(() => setUpdateState('idle'), 3000);
+      }
     }
   };
 
@@ -77,16 +102,78 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
     setComments([...comments, comment]);
   };
 
-  const handleDelete = () => {
-    onDeleteTask(task.id);
-    onClose();
+  const handleDelete = async () => {
+    setDeleteState('loading');
+    try {
+      await onDeleteTask(task.id);
+      setDeleteState('success');
+      // Close modal after successful deletion
+      setTimeout(() => {
+        onClose();
+        setDeleteState('idle');
+      }, 1000);
+    } catch (error) {
+      setDeleteState('error');
+      // Reset to idle after showing error
+      setTimeout(() => setDeleteState('idle'), 3000);
+    }
+  };
+
+  // Prevent closing when operations are in progress
+  const canClose = updateState !== 'loading' && deleteState !== 'loading';
+
+  const handleClose = () => {
+    if (canClose) {
+      onClose();
+    }
+  };
+
+  const renderStatusIndicator = () => {
+    if (updateState === 'loading') {
+      return (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span>Updating...</span>
+        </div>
+      );
+    }
+    
+    if (updateState === 'success') {
+      return (
+        <div className="flex items-center gap-2 text-sm text-success">
+          <Check className="h-4 w-4" />
+          <span>Updated successfully</span>
+        </div>
+      );
+    }
+    
+    if (updateState === 'error') {
+      return (
+        <div className="flex items-center gap-2 text-sm text-destructive">
+          <X className="h-4 w-4" />
+          <span>Update failed</span>
+        </div>
+      );
+    }
+    
+    return null;
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto p-4">
         <DialogHeader>
           <DialogTitle className="sr-only">{task.title}</DialogTitle>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              {renderStatusIndicator()}
+            </div>
+            {!canClose && (
+              <div className="text-xs text-muted-foreground">
+                Please wait...
+              </div>
+            )}
+          </div>
         </DialogHeader>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -99,6 +186,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
               label=""
               onSave={handleFieldUpdate}
               className="border-b border-border pb-3"
+              disabled={updateState === 'loading'}
             />
 
             {/* Description */}
@@ -108,6 +196,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
               label="Description"
               multiline
               onSave={handleFieldUpdate}
+              disabled={updateState === 'loading'}
             />
 
             {/* Comments Section */}
@@ -124,8 +213,11 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({
             sprints={sprints}
             lastUpdated={lastUpdated}
             onUpdateTask={handleSidebarUpdate}
-            onClose={onClose}
+            onClose={handleClose}
             onDelete={handleDelete}
+            isUpdating={updateState === 'loading'}
+            isDeleting={deleteState === 'loading'}
+            deleteState={deleteState}
           />
         </div>
       </DialogContent>
