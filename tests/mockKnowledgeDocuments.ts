@@ -1,0 +1,59 @@
+import type { KnowledgeDocument } from "../src/components/DigitalColleagues/types"
+
+// Mock knowledge documents - in a real app, this would come from an API
+export const mockKnowledgeDocuments: KnowledgeDocument[] = [
+  {
+    id: "1",
+    title: "React Development Best Practices",
+    description: "Comprehensive guide to React development patterns and practices",
+    metadata: { category: "Development", difficulty: "Intermediate" },
+    tags: ["react", "javascript", "frontend"],
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-06-20"),
+  },
+  {
+    id: "2",
+    title: "TypeScript Advanced Types",
+    description: "Deep dive into TypeScript's advanced type system",
+    metadata: { category: "Development", difficulty: "Advanced" },
+    tags: ["typescript", "types", "programming"],
+    createdAt: new Date("2024-02-10"),
+    updatedAt: new Date("2024-05-15"),
+  },
+  {
+    id: "3",
+    title: "UI/UX Design Principles",
+    description: "Fundamental principles of user interface and experience design",
+    metadata: { category: "Design", difficulty: "Beginner" },
+    tags: ["design", "ui", "ux", "principles"],
+    createdAt: new Date("2024-03-05"),
+    updatedAt: new Date("2024-04-20"),
+  },
+  {
+    id: "4",
+    title: "API Integration Patterns",
+    description: "Common patterns for integrating with REST and GraphQL APIs",
+    metadata: { category: "Development", difficulty: "Intermediate" },
+    tags: ["api", "rest", "graphql", "integration"],
+    createdAt: new Date("2024-01-20"),
+    updatedAt: new Date("2024-03-10"),
+  },
+  {
+    id: "5",
+    title: "Database Design Fundamentals",
+    description: "Essential concepts for designing efficient database schemas",
+    metadata: { category: "Backend", difficulty: "Intermediate" },
+    tags: ["database", "sql", "schema", "design"],
+    createdAt: new Date("2024-02-25"),
+    updatedAt: new Date("2024-06-01"),
+  },
+  {
+    id: "6",
+    title: "Agile Project Management",
+    description: "Agile methodologies and project management best practices",
+    metadata: { category: "Management", difficulty: "Beginner" },
+    tags: ["agile", "scrum", "project-management"],
+    createdAt: new Date("2024-01-10"),
+    updatedAt: new Date("2024-05-20"),
+  },
+]

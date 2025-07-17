@@ -1,0 +1,6 @@
+export { default as KnowledgeView } from './Views/KnowledgeView'
+export { default as TeamsIndexView } from './Views/TeamsIndexView'
+export { default as FileView } from './Views/FileView'
+export { KnowledgeBrowser } from './knowledge-browser'
+export { TeamCard } from './team-card'
+export { FileList } from './file-list'

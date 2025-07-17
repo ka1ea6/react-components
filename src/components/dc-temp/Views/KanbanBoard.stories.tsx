@@ -1,8 +1,20 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { KanbanBoard } from './KanbanBoard';
+import { 
+  mockProjects, 
+  mockEpics, 
+  mockSprints, 
+  mockTasks, 
+  highDensityTasks,
+  extendedProjects,
+  emptyStateData,
+  singleEpicData,
+  testScenarios
+} from '../../DigitalColleagues/test-data';
 
 const meta: Meta<typeof KanbanBoard> = {
   title: 'Digital Colleagues/KanbanBoard',
@@ -14,6 +26,16 @@ const meta: Meta<typeof KanbanBoard> = {
         component: 'Complete Kanban board view with task management, epics, and sprints.',
       },
     },
+  },
+  args: {
+    ...testScenarios.default,
+    // Task handlers
+    onAddTask: action('onAddTask'),
+    onUpdateTask: action('onUpdateTask'),
+    onDeleteTask: action('onDeleteTask'),
+    onTaskClick: action('onTaskClick'),
+    // Epic handlers
+    onAddEpic: action('onAddEpic'),
   },
 };
 
@@ -101,24 +123,24 @@ export const WithTaskFlow: Story = {
 };
 
 export const ResponsiveBreakpoints: Story = {
-  render: () => (
+  render: (args) => (
     <div className="space-y-8">
       <div>
         <h3 className="text-lg font-semibold mb-4">Mobile (360px)</h3>
         <div className="w-[360px] h-[600px] border border-gray-300 overflow-hidden">
-          <KanbanBoard />
+          <KanbanBoard {...args} />
         </div>
       </div>
       <div>
         <h3 className="text-lg font-semibold mb-4">Tablet (768px)</h3>
         <div className="w-[768px] h-[600px] border border-gray-300 overflow-hidden">
-          <KanbanBoard />
+          <KanbanBoard {...args} />
         </div>
       </div>
       <div>
         <h3 className="text-lg font-semibold mb-4">Desktop (1024px)</h3>
         <div className="w-[1024px] h-[600px] border border-gray-300 overflow-hidden">
-          <KanbanBoard />
+          <KanbanBoard {...args} />
         </div>
       </div>
     </div>
@@ -134,20 +156,18 @@ export const ResponsiveBreakpoints: Story = {
 };
 
 export const EmptyState: Story = {
-  render: () => {
-    // This would require props to simulate empty state
-    return <KanbanBoard />;
-  },
+  args: testScenarios.empty,
   parameters: {
     docs: {
       description: {
-        story: 'Kanban board in empty state (would need props to properly simulate).',
+        story: 'Kanban board in empty state with no tasks or epics.',
       },
     },
   },
 };
 
 export const HighDensity: Story = {
+  args: testScenarios.highDensity,
   parameters: {
     docs: {
       description: {
@@ -157,39 +177,25 @@ export const HighDensity: Story = {
   },
 };
 
-export const InteractionStates: Story = {
+// ...existing code...
+
+export const SingleEpicFocus: Story = {
+  args: testScenarios.singleEpic,
   parameters: {
     docs: {
       description: {
-        story: 'Various interaction states including drag and drop, modals, and selections.',
+        story: 'Kanban board focused on a single epic with related tasks.',
       },
     },
-  },
-  play: async ({ canvasElement }) => {
-    // This can be enhanced with user interactions for testing
-    console.log('Testing interaction states');
   },
 };
 
-export const AccessibilityTest: Story = {
+export const MultipleProjects: Story = {
+  args: testScenarios.multipleProjects,
   parameters: {
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: 'color-contrast',
-            enabled: true,
-          },
-          {
-            id: 'keyboard-navigation',
-            enabled: true,
-          },
-        ],
-      },
-    },
     docs: {
       description: {
-        story: 'Kanban board tested for accessibility compliance.',
+        story: 'Kanban board with multiple project options available.',
       },
     },
   },

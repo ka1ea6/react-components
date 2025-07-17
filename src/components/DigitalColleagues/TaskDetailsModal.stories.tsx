@@ -9,10 +9,52 @@ const meta: Meta<typeof TaskDetailsModal> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    onUpdateTask: { action: 'update task' },
+    onDeleteTask: { action: 'delete task' },
+    onClose: { action: 'close' },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof TaskDetailsModal>;
+
+// Mock async functions
+const mockUpdateTask = (taskId: string, updates: any) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      console.log('Task updated:', taskId, updates);
+      resolve();
+    }, 2000); // 2 second delay to show loading state
+  });
+};
+
+const mockDeleteTask = (taskId: string) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      console.log('Task deleted:', taskId);
+      resolve();
+    }, 1500); // 1.5 second delay to show loading state
+  });
+};
+
+const mockUpdateTaskFail = (taskId: string, updates: any) => {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Task update failed:', taskId, updates);
+      reject(new Error('Update failed'));
+    }, 2000);
+  });
+};
+
+const mockDeleteTaskFail = (taskId: string) => {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Task delete failed:', taskId);
+      reject(new Error('Delete failed'));
+    }, 1500);
+  });
+};
 
 const mockEpics = [
   {
@@ -81,8 +123,56 @@ export const Default: Story = {
     epics: mockEpics,
     sprints: mockSprints,
     onClose: () => {},
-    onUpdateTask: () => {},
-    onDeleteTask: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
+  },
+};
+
+export const WithLoadingStates: Story = {
+  args: {
+    isOpen: true,
+    task: {
+      id: '1',
+      title: 'Design login page',
+      description: 'Create wireframes and mockups for the login interface',
+      status: 'in-progress',
+      priority: 'high',
+      type: 'story',
+      epicId: '1',
+      sprintId: '2',
+      assignee: 'John Doe',
+      points: 8,
+      createdAt: new Date('2024-01-15'),
+    },
+    epics: mockEpics,
+    sprints: mockSprints,
+    onClose: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
+  },
+};
+
+export const WithErrorStates: Story = {
+  args: {
+    isOpen: true,
+    task: {
+      id: '1',
+      title: 'Design login page',
+      description: 'Create wireframes and mockups for the login interface',
+      status: 'in-progress',
+      priority: 'high',
+      type: 'story',
+      epicId: '1',
+      sprintId: '2',
+      assignee: 'John Doe',
+      points: 8,
+      createdAt: new Date('2024-01-15'),
+    },
+    epics: mockEpics,
+    sprints: mockSprints,
+    onClose: () => {},
+    onUpdateTask: mockUpdateTaskFail,
+    onDeleteTask: mockDeleteTaskFail,
   },
 };
 
@@ -105,8 +195,8 @@ export const BugTask: Story = {
     epics: mockEpics,
     sprints: mockSprints,
     onClose: () => {},
-    onUpdateTask: () => {},
-    onDeleteTask: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
   },
 };
 
@@ -129,8 +219,8 @@ export const CompletedTask: Story = {
     epics: mockEpics,
     sprints: mockSprints,
     onClose: () => {},
-    onUpdateTask: () => {},
-    onDeleteTask: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
   },
 };
 
@@ -153,8 +243,8 @@ export const SpikeTask: Story = {
     epics: mockEpics,
     sprints: mockSprints,
     onClose: () => {},
-    onUpdateTask: () => {},
-    onDeleteTask: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
   },
 };
 
@@ -177,7 +267,7 @@ export const NoSprint: Story = {
     epics: mockEpics,
     sprints: mockSprints,
     onClose: () => {},
-    onUpdateTask: () => {},
-    onDeleteTask: () => {},
+    onUpdateTask: mockUpdateTask,
+    onDeleteTask: mockDeleteTask,
   },
 };

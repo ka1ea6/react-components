@@ -1,6 +1,8 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { KanbanColumn } from './KanbanColumn';
+import { TaskCard } from './TaskCard';
+import { mockEpics, mockTasks } from './test-data';
 
 const meta: Meta<typeof KanbanColumn> = {
   title: 'Digital Colleagues/KanbanColumn',
@@ -13,32 +15,6 @@ const meta: Meta<typeof KanbanColumn> = {
 
 export default meta;
 type Story = StoryObj<typeof KanbanColumn>;
-
-const mockEpic = {
-  id: '1',
-  name: 'User Authentication',
-  color: 'bg-blue-500',
-  description: 'Implement secure user authentication system',
-  confidence: 'high' as const,
-  phase: 2,
-  startDate: new Date('2024-01-01'),
-  endDate: new Date('2024-02-15'),
-  progress: 75,
-  isSelected: true,
-};
-
-const mockTask = {
-  id: '1',
-  title: 'Design login page',
-  description: 'Create wireframes and mockups for the login interface',
-  status: 'todo' as const,
-  priority: 'high' as const,
-  type: 'story' as const,
-  assignee: 'John Doe',
-  epicId: '1',
-  createdAt: new Date('2024-01-15'),
-  points: 5,
-};
 
 export const Default: Story = {
   args: {
@@ -56,7 +32,51 @@ export const WithTasks: Story = {
     status: 'in-progress',
     taskCount: 2,
     onDrop: () => {},
-    children: null,
+    children: (
+      <div className="space-y-3">
+        {mockTasks
+          .filter(task => task.status === 'in-progress')
+          .map(task => {
+            const epic = mockEpics.find(e => e.id === task.epicId);
+            return (
+              <TaskCard
+                key={task.id}
+                task={task}
+                epic={epic!}
+                onDragStart={() => {}}
+                onTaskClick={() => {}}
+              />
+            );
+          })}
+      </div>
+    ),
+  },
+};
+
+export const WithMultipleTasks: Story = {
+  args: {
+    title: 'To Do',
+    status: 'todo',
+    taskCount: 3,
+    onDrop: () => {},
+    children: (
+      <div className="space-y-3">
+        {mockTasks
+          .filter(task => task.status === 'todo')
+          .map(task => {
+            const epic = mockEpics.find(e => e.id === task.epicId);
+            return (
+              <TaskCard
+                key={task.id}
+                task={task}
+                epic={epic!}
+                onDragStart={() => {}}
+                onTaskClick={() => {}}
+              />
+            );
+          })}
+      </div>
+    ),
   },
 };
 

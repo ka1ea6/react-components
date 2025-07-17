@@ -1,56 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { ManagementSidebar } from './ManagementSidebar';
+import { mockEpics, mockSprints, mockProjects } from './test-data';
 
-const mockEpics = [
-  {
-    id: '1',
-    name: 'User Authentication',
-    color: 'bg-blue-500',
-    description: 'Implement secure user authentication system',
-    confidence: 'high' as const,
-    phase: 2,
-    startDate: new Date('2024-01-01'),
-    endDate: new Date('2024-02-15'),
-    progress: 75,
-    isSelected: true,
-  },
-  {
-    id: '2',
-    name: 'Dashboard Features', 
-    color: 'bg-green-500',
-    description: 'Build comprehensive dashboard functionality',
-    confidence: 'medium' as const,
-    phase: 1,
-    startDate: new Date('2024-02-01'),
-    endDate: new Date('2024-03-15'),
-    progress: 30,
-    isSelected: false,
-  },
-  {
-    id: '3',
-    name: 'Mobile Optimization',
-    color: 'bg-purple-500', 
-    description: 'Optimize application for mobile devices',
-    confidence: 'low' as const,
-    phase: 3,
-    startDate: new Date('2024-03-01'),
-    endDate: new Date('2024-04-15'),
-    progress: 10,
-    isSelected: true,
-  },
-  {
-    id: '4',
-    name: 'Performance Improvements',
-    color: 'bg-orange-500',
-    description: 'Enhance application performance and speed', 
-    confidence: 'high' as const,
-    phase: 2,
-    startDate: new Date('2024-01-15'),
-    endDate: new Date('2024-02-28'),
-    progress: 90,
-    isSelected: false,
-  },
+// Additional epics for more variety in ManagementSidebar
+const extendedEpics = [
+  ...mockEpics,
   {
     id: '5',
     name: 'Security Enhancements',
@@ -77,18 +32,6 @@ const mockEpics = [
   },
 ];
 
-const mockSprints = [
-  { id: 'backlog', name: 'Backlog', description: 'Tasks not assigned', startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31'), isActive: false, isSelected: false },
-  { id: 'all-tasks', name: 'All Tasks', description: 'View all tasks', startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31'), isActive: false, isSelected: true },
-  { id: 'sprint1', name: 'Sprint 1', description: 'Initial development', startDate: new Date('2024-01-01'), endDate: new Date('2024-01-14'), isActive: false, isSelected: false },
-  { id: 'sprint2', name: 'Sprint 2', description: 'Feature development', startDate: new Date('2024-01-15'), endDate: new Date('2024-01-28'), isActive: true, isSelected: false },
-];
-
-const mockProjects = [
-  { id: 'project1', name: 'Main Application', description: 'Core application development', isSelected: true },
-  { id: 'project2', name: 'Mobile App', description: 'Mobile application project', isSelected: false },
-];
-
 const meta: Meta<typeof ManagementSidebar> = {
   title: 'Digital Colleagues/ManagementSidebar',
   component: ManagementSidebar,
@@ -112,7 +55,7 @@ type Story = StoryObj<typeof ManagementSidebar>;
 export const KanbanView: Story = {
   args: {
     projects: mockProjects,
-    epics: mockEpics,
+    epics: extendedEpics,
     sprints: mockSprints,
     currentView: 'kanban',
     mobileMenuOpen: false,
@@ -134,7 +77,7 @@ export const KanbanView: Story = {
 export const PlanningView: Story = {
   args: {
     projects: mockProjects,
-    epics: mockEpics,
+    epics: extendedEpics,
     sprints: mockSprints,
     currentView: 'planning',
     mobileMenuOpen: false,
@@ -228,31 +171,7 @@ export const ManyEpicsAndSprints: Story = {
   args: {
     projects: mockProjects,
     epics: [
-      ...mockEpics,
-      { 
-        id: 'epic5', 
-        name: 'API Integration', 
-        color: 'bg-red-500', 
-        description: 'Third-party APIs', 
-        isSelected: false,
-        confidence: 'medium' as const,
-        phase: 1,
-        startDate: new Date('2024-02-15'),
-        endDate: new Date('2024-03-30'),
-        progress: 40
-      },
-      { 
-        id: 'epic6', 
-        name: 'Security Enhancements', 
-        color: 'bg-yellow-500', 
-        description: 'Security improvements', 
-        isSelected: true,
-        confidence: 'high' as const,
-        phase: 4,
-        startDate: new Date('2024-01-01'),
-        endDate: new Date('2024-01-31'),
-        progress: 100
-      },
+      ...extendedEpics,
       { 
         id: 'epic7', 
         name: 'User Experience', 
@@ -268,8 +187,8 @@ export const ManyEpicsAndSprints: Story = {
     ],
     sprints: [
       ...mockSprints,
-      { id: 'sprint3', name: 'Sprint 3', description: 'Future development', startDate: new Date('2024-01-29'), endDate: new Date('2024-02-11'), isActive: false, isSelected: false },
-      { id: 'sprint4', name: 'Sprint 4', description: 'Planning phase', startDate: new Date('2024-02-12'), endDate: new Date('2024-02-25'), isActive: false, isSelected: false },
+      { id: '3', name: 'Sprint 3', description: 'Future development', startDate: new Date('2024-01-29'), endDate: new Date('2024-02-11'), isActive: false, isSelected: false },
+      { id: '4', name: 'Sprint 4', description: 'Planning phase', startDate: new Date('2024-02-12'), endDate: new Date('2024-02-25'), isActive: false, isSelected: false },
     ],
     currentView: 'kanban',
     mobileMenuOpen: false,

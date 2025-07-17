@@ -3,7 +3,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { Epic } from './KanbanBoard';
+import { Epic } from './types';
 
 interface EpicFilterProps {
   epics: Epic[];
@@ -33,13 +33,13 @@ export const EpicFilter: React.FC<EpicFilterProps> = ({
   };
 
   return (
-    <Card className="p-4 bg-white shadow-sm">
+    <Card className="p-4 bg-card shadow-sm">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="font-medium text-gray-900">Filter by Epic</h3>
+          <h3 className="font-medium text-foreground">Filter by Epic</h3>
           <button
             onClick={handleSelectAll}
-            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+            className="text-sm text-primary hover:text-primary/80 font-medium"
           >
             {selectedEpics.length === epics.length ? 'Deselect All' : 'Select All'}
           </button>
