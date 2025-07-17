@@ -23,10 +23,7 @@ export const teamsCase = () => {
         // setActiveTab('team-detail')
         // setSelectedTeam(team)
       }}
-      onTeamManage={(team) => {
-        console.log('Manage team:', team.name)
-        // Future: Open team management dialog
-      }}
+      // onTeamManage prop removed because it is not defined in TeamsIndexViewProps
     />
   )
 }

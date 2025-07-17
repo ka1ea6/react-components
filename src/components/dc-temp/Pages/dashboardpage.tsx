@@ -12,11 +12,11 @@ import {
   mockSidebarItems,
   mockApps,
   mockRecentFiles,
-  mockProjects,
   mockTutorials,
   mockNotifications,
 } from "../mock-data"
-import type { App, RecentFile, Project } from "../../DigitalColleagues/types"
+import { mockProjectSummary } from "../../DigitalColleagues/test-data"
+import type { App, RecentFile, ProjectSummary } from "../../DigitalColleagues/types"
 // import { ColleaguesManagement } from "../colleagues-management"
 import  ColleaguesView  from "./../Views/ColleaguesView"
 import KnowledgeView from "../Views/KnowledgeView"
@@ -60,11 +60,11 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
     console.log("Sharing file:", file.name)
   }
 
-  const handleProjectOpen = (project: Project) => {
+  const handleProjectOpen = (project: ProjectSummary) => {
     console.log("Opening project:", project.name)
   }
 
-  const handleProjectShare = (project: Project) => {
+  const handleProjectShare = (project: ProjectSummary) => {
     console.log("Sharing project:", project.name)
   }
 
@@ -177,7 +177,7 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
                 <h2 className="text-2xl font-semibold">All Files</h2>
               </div>
 
-              <FileList files={mockRecentFiles} onFileClick={handleFileClick} onShare={handleFileShare} />
+              <FileList files={mockRecentFiles} onFileClick={handleFileClick} />
             </section>
           </div>
         )
@@ -197,7 +197,7 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold">Active Projects</h2>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-                {mockProjects.map((project) => (
+                {mockProjectSummary.map((project) => (
                   <ProjectCard
                     key={project.name}
                     project={project}

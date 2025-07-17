@@ -8,6 +8,7 @@ import { TeamSwitcherBar } from "./team-switcher-bar"
 import { ChatSessionSidebar, type ChatSession } from "./chat-session-sidebar"
 import { AIChatInterface, type ChatMessage } from "./ai-chat-interface"
 import { businessUnits } from "./business-units"
+import { capabilities } from "./capabilities-data"
 
 const mockChatSessions: ChatSession[] = [
   {
@@ -40,20 +41,36 @@ const mockChatSessions: ChatSession[] = [
   },
 ]
 
-export default function LandingPage() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "1",
-      content: "Hi! I'm your AI assistant. What would you like to work on today?",
-      type: "ai",
-      timestamp: new Date(),
-    },
-  ])
+interface LandingPageProps {
+  initialTeam?: string
+  initialMessages?: ChatMessage[]
+  initialSessions?: ChatSession[]
+  showCapabilities?: boolean
+}
+
+export default function LandingPage({
+  initialTeam = "design",
+  initialMessages,
+  initialSessions,
+  showCapabilities = true,
+}: LandingPageProps = {}) {
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    initialMessages || [
+      {
+        id: "1",
+        content: "Hi! I'm your AI assistant with advanced capabilities. I can help with various tasks, access data, and provide contextual actions. What would you like to work on today?",
+        type: "ai",
+        timestamp: new Date(),
+      },
+    ]
+  )
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [selectedTeam, setSelectedTeam] = useState(businessUnits[0])
+  const [selectedTeam, setSelectedTeam] = useState(
+    businessUnits.find(unit => unit.id === initialTeam) || businessUnits[0]
+  )
   const [currentSession, setCurrentSession] = useState<ChatSession | null>(null)
-  const [chatSessions, setChatSessions] = useState<ChatSession[]>(mockChatSessions)
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>(initialSessions || mockChatSessions)
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -69,13 +86,18 @@ export default function LandingPage() {
     setInput("")
     setIsTyping(true)
 
-    // Simulate AI response
+    // Generate capability-aware responses
     setTimeout(() => {
+      const teamCapabilities = capabilities.filter(cap => 
+        cap.name.toLowerCase().includes(selectedTeam.name.toLowerCase()) ||
+        selectedTeam.name.toLowerCase().includes(cap.name.toLowerCase())
+      )
+      
       const responses = [
-        `Great! I can help you with ${selectedTeam.name.toLowerCase()} tasks. What specific area would you like to focus on?`,
-        `As your ${selectedTeam.name} assistant, I'm here to help. Let me provide some suggestions for your project.`,
-        `Perfect! I understand you're working on ${selectedTeam.name.toLowerCase()}. Here are some recommendations...`,
-        `I can definitely assist with that ${selectedTeam.name.toLowerCase()} task. Let me break it down for you.`,
+        `I can help you with ${selectedTeam.name.toLowerCase()} tasks. Here are some capabilities I have: ${teamCapabilities.map(c => c.name).join(', ')}`,
+        `As your ${selectedTeam.name} assistant, I can assist with ${teamCapabilities.length > 0 ? teamCapabilities[0].description : 'various tasks'}. What specific area would you like to focus on?`,
+        `Perfect! I understand you're working on ${selectedTeam.name.toLowerCase()}. I have access to capabilities like ${teamCapabilities.slice(0, 2).map(c => c.name).join(' and ')}. How can I help?`,
+        `I can definitely assist with that ${selectedTeam.name.toLowerCase()} task. Let me leverage my capabilities to help you with this.`,
       ]
 
       const aiMessage: ChatMessage = {
@@ -102,7 +124,7 @@ export default function LandingPage() {
     setMessages([
       {
         id: "1",
-        content: `Hi! I'm your ${selectedTeam.name} AI assistant. What would you like to work on today?`,
+        content: `Hi! I'm your ${selectedTeam.name} AI assistant with advanced capabilities. I can help with ${selectedTeam.name.toLowerCase()} tasks, access relevant data, and provide contextual actions. What would you like to work on today?`,
         type: "ai",
         timestamp: new Date(),
       },
@@ -134,33 +156,6 @@ export default function LandingPage() {
   const editChatSession = (sessionId: string) => {
     console.log("Edit session:", sessionId)
     // Implement edit functionality
-  }
-
-  const getQuickSuggestions = () => {
-    const suggestions = {
-      design: [
-        { label: "Create logo", action: () => setInput("Help me create a logo design") },
-        { label: "Review mockups", action: () => setInput("Review my design mockups") },
-        { label: "Color palette", action: () => setInput("Color palette suggestions") },
-      ],
-      engineering: [
-        { label: "Code review", action: () => setInput("Review my code") },
-        { label: "Debug help", action: () => setInput("Help debug this issue") },
-        { label: "Performance", action: () => setInput("Optimize performance") },
-      ],
-      marketing: [
-        { label: "Campaign ideas", action: () => setInput("Create campaign ideas") },
-        { label: "Social content", action: () => setInput("Write social media content") },
-        { label: "Analytics", action: () => setInput("Analyze metrics") },
-      ],
-      product: [
-        { label: "User feedback", action: () => setInput("Analyze user feedback") },
-        { label: "Roadmap", action: () => setInput("Create product roadmap") },
-        { label: "Features", action: () => setInput("Prioritize features") },
-      ],
-    }
-
-    return suggestions[selectedTeam.id as keyof typeof suggestions] || []
   }
 
   return (
@@ -200,7 +195,7 @@ export default function LandingPage() {
               isTyping={isTyping}
               selectedTeam={selectedTeam}
               currentSessionTitle={currentSession?.title}
-              quickSuggestions={getQuickSuggestions()}
+              capabilities={capabilities}
               onInputChange={setInput}
               onSendMessage={handleSendMessage}
               onKeyPress={handleKeyPress}

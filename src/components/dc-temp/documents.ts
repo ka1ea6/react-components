@@ -729,7 +729,12 @@ export function getBreadcrumbPath(slug: string): { title: string; slug: string }
   while (current) {
     path.unshift({ title: current.title, slug: current.slug })
     if (current.parentId) {
-      current = findDocumentBySlug(current.parentId)
+      const parentDoc = findDocumentBySlug(current.parentId)
+      if (parentDoc) {
+        current = parentDoc
+      } else {
+        break
+      }
     } else {
       break
     }

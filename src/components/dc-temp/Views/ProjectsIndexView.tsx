@@ -26,7 +26,7 @@ import {
   mockNotifications,
 } from "../mock-data"
 import type { App, RecentFile, ProjectSummary, Project, ProjectFormData } from "../../DigitalColleagues/types"
-import { ColleaguesManagement } from "../colleagues-management"
+// import { ColleaguesManagement } from "../colleagues-management"
 
 const AnimatedCircles = () => (
   <motion.div

@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import type { BusinessUnit } from "./business-units"
 import { CapabilityMenu } from "./capability-menu"
-import { getContextualActions } from "./capabilities"
+import { getContextualActions } from "./capabilities-data"
 import type { CapabilityContext, Capability } from "./capabilities"
 
 export interface ChatMessage {

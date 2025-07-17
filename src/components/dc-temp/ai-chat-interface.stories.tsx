@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AIChatInterface, type ChatMessage } from "./ai-chat-interface"
 import { businessUnits } from "./business-units"
-import { capabilities } from "./capabilities"
+import { capabilities } from "./capabilities-data"
 
 const mockMessages: ChatMessage[] = [
   {

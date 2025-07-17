@@ -88,8 +88,9 @@ export default function WebsiteSection({ ...args }) {
 
     <div>
 
+      <Header isMenuOpen={true} logoLight={logoLight as any} logoDark={logoDark as any} />
 
-              <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} />
+              {/* <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} /> */}
               {/* <HeaderMobile isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} {...args.header}/> */}
 
 

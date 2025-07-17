@@ -1,5 +1,14 @@
-import { Project, Epic, Sprint, Task } from '../dc-temp/Views/KanbanBoard';
+import { Project, Epic, Sprint, Task } from './types';
 import { ProjectSummary, TeamSummary, Colleague } from './types';
+
+// Helper function to convert strings to KnowledgeDocument objects
+const createKnowledgeDocument = (title: string): import('./types').KnowledgeDocument => ({
+  id: Math.random().toString(36).substr(2, 9),
+  title,
+  format: 'markdown' as const,
+  createdAt: new Date(),
+});
+
 // Mock data for testing and stories
 export const mockProjects: Project[] = [
   {
@@ -496,32 +505,22 @@ export const mockColleagues: Colleague[] = [
     timezone: "PST",
     skills: ["UI/UX Design", "Figma", "Adobe Creative Suite", "Prototyping", "User Research"],
     bio: "Passionate designer with 8+ years of experience creating user-centered digital experiences.",
-    avatar: "/placeholder.svg?height=100&width=100&text=SJ",
   },
   {
     id: "2",
     type: "digital",
     name: "CodeAssist Pro",
-    email: "codeassist@company.com",
-    role: "Development Assistant",
-    department: "Engineering",
     status: "active",
     joinedDate: new Date("2024-01-01"),
     lastActive: new Date(),
     jobDescription: "AI-powered coding assistant that helps with code review, debugging, and documentation generation.",
-    workInstructions: [
-      "Review pull requests for code quality and best practices",
-      "Generate comprehensive documentation for new features",
-      "Assist with debugging complex issues",
-      "Provide code suggestions and optimizations",
-    ],
+    workInstructions: "Review pull requests for code quality and best practices. Generate comprehensive documentation for new features. Assist with debugging complex issues. Provide code suggestions and optimizations.",
     capabilities: ["Code Review", "Documentation Generation", "Debugging", "Code Optimization", "Testing"],
-    knowledge: ["JavaScript", "TypeScript", "React", "Node.js", "Python", "Git"],
-    coreKnowledge: ["Company coding standards", "Architecture patterns", "Security guidelines"],
+    knowledge: ["JavaScript", "TypeScript", "React", "Node.js", "Python", "Git"].map(createKnowledgeDocument),
+    coreKnowledge: ["Company coding standards", "Architecture patterns", "Security guidelines"].map(createKnowledgeDocument),
     version: "2",
     lastUpdated: new Date("2024-01-15"),
     isActive: true,
-    avatar: "/placeholder.svg?height=100&width=100&text=CA",
   },
   {
     id: "3",
@@ -530,7 +529,7 @@ export const mockColleagues: Colleague[] = [
     email: "michael.chen@company.com",
     role: "Product Manager",
     department: "Product",
-    status: "away",
+    status: "inactive",
     joinedDate: new Date("2022-08-20"),
     lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
     phone: "+1 (555) 987-6543",
@@ -538,25 +537,16 @@ export const mockColleagues: Colleague[] = [
     timezone: "EST",
     skills: ["Product Strategy", "Agile", "Data Analysis", "User Stories", "Roadmapping"],
     bio: "Strategic product manager focused on driving user engagement and business growth.",
-    avatar: "/placeholder.svg?height=100&width=100&text=MC",
   },
   {
     id: "4",
     type: "digital",
     name: "MarketingBot",
-    email: "marketingbot@company.com",
-    role: "Marketing Assistant",
-    department: "Marketing",
     status: "active",
     joinedDate: new Date("2024-02-01"),
     lastActive: new Date(),
     jobDescription: "Specialized AI assistant for marketing campaigns, content creation, and social media management.",
-    workInstructions: [
-      "Create engaging social media content",
-      "Analyze campaign performance metrics",
-      "Generate marketing copy and headlines",
-      "Schedule and manage social media posts",
-    ],
+    workInstructions: "Create engaging social media content. Analyze campaign performance metrics. Generate marketing copy and headlines. Schedule and manage social media posts.",
     capabilities: [
       "Content Creation",
       "Social Media Management",
@@ -564,12 +554,11 @@ export const mockColleagues: Colleague[] = [
       "SEO Optimization",
       "Campaign Management",
     ],
-    knowledge: ["Digital Marketing", "Social Media Platforms", "Content Strategy", "Analytics Tools"],
-    coreKnowledge: ["Brand guidelines", "Target audience personas", "Marketing objectives"],
+    knowledge: ["Digital Marketing", "Social Media Platforms", "Content Strategy", "Analytics Tools"].map(createKnowledgeDocument),
+    coreKnowledge: ["Brand guidelines", "Target audience personas", "Marketing objectives"].map(createKnowledgeDocument),
     version: "52",
     lastUpdated: new Date("2024-02-10"),
     isActive: true,
-    avatar: "/placeholder.svg?height=100&width=100&text=MB",
   },
   {
     id: "5",
@@ -586,6 +575,5 @@ export const mockColleagues: Colleague[] = [
     timezone: "CST",
     skills: ["User Research", "Usability Testing", "Data Analysis", "Survey Design", "Interview Techniques"],
     bio: "User researcher dedicated to understanding user needs and improving product experiences.",
-    avatar: "/placeholder.svg?height=100&width=100&text=ER",
   },
 ]

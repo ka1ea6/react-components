@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { ProjectCard } from "./project-card"
 
 const meta: Meta<typeof ProjectCard> = {
@@ -6,6 +7,10 @@ const meta: Meta<typeof ProjectCard> = {
   component: ProjectCard,
   parameters: {
     layout: "padded",
+  },
+  argTypes: {
+    onOpen: { action: "project-open" },
+    onShare: { action: "project-share" },
   },
 }
 

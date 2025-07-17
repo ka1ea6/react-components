@@ -3,6 +3,9 @@ import { RenderHero } from '@/components/Heros/RenderHero'
 import { RenderBlocks, RenderBlocksWithShapes } from '@/components/Blocks/RenderBlocks'
 import logoLight from '../images/cortex-reply-light.png'
 import logoDark from '../images/cortex-reply-dark.png'
+// If using Next.js, these imports will be of type StaticImageData.
+
+// If using Next.js, these imports will be of type StaticImageData.
 import { MainPageSection } from '../sections/MainPageSection'
 import { Page as PageType, ReusableContent } from '@/payload-types'
 import { getTableOfContents } from '../utils'
@@ -34,8 +37,8 @@ export default function WebsiteSection({ ...args }: WebsiteSectionProps) {
   return (
     <div className="relative overflow-none scroll-smooth snap-y snap-mandatory overscroll-contain">
       
-    {/* <div className="flex fixed flex-col w-screen h-screen max-h-screen overflow-auto overscroll-contain"> */}
-      <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} wide/>
+      <Header isMenuOpen={true} logoLight={logoLight as any} logoDark={logoDark as any} wide/>
+      {/* <Header isMenuOpen={true} logoLight={logoLight} logoDark={logoDark} wide/> */}
       {/* { args.hero && args.hero.type != 'lowImpact' && args.related && (
         <div className='fixed top-16 z-50'>
         <RelatedPagesMenu

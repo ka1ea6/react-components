@@ -10,7 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import type { Capability, CapabilityContext, CapabilityData, CapabilityColorScheme } from "./capabilities"
-import { defaultColorScheme } from "./capabilities"
+import { defaultColorScheme } from "./capabilities.ts"
 
 interface CapabilityMenuProps {
   capabilities: Capability[]

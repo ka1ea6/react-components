@@ -17,42 +17,7 @@ import {
   Archive
 } from "lucide-react"
 import type React from "react"
-
-export interface CapabilityAction {
-  id: string
-  label: string
-  description?: string
-  icon?: React.ReactNode
-  action: (context: CapabilityContext) => void
-}
-
-export interface CapabilityContext {
-  path: Capability[]
-  selectedItems: any[]
-  filters: Record<string, any>
-}
-
-export interface CapabilityData {
-  id: string
-  title: string
-  subtitle?: string
-  value?: string | number
-  metadata?: Record<string, any>
-}
-
-export interface Capability {
-  id: string
-  name: string
-  description?: string
-  icon: React.ReactNode
-  color: string
-  type: "category" | "list" | "item"
-  children?: Capability[]
-  data?: CapabilityData[]
-  actions?: CapabilityAction[]
-  // Function to fetch data dynamically
-  fetchData?: (context: CapabilityContext) => Promise<CapabilityData[]>
-}
+import type { Capability, CapabilityContext, CapabilityData, CapabilityAction } from "./capabilities"
 
 // Sample capabilities structure
 export const capabilities: Capability[] = [

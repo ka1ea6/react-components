@@ -95,19 +95,23 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
     onAddTask?.(newTask);
   };
 
-  const handleUpdateTask = (taskId: string, updates: Partial<Task>) => {
+  const handleUpdateTask = async (taskId: string, updates: Partial<Task>): Promise<void> => {
     setTasks(prev =>
       prev.map(task => (task.id === taskId ? { ...task, ...updates } : task))
     );
-    onUpdateTask?.(taskId, updates);
+    if (onUpdateTask) {
+      await onUpdateTask(taskId, updates);
+    }
   };
 
-  const handleDeleteTask = (taskId: string) => {
+  const handleDeleteTask = async (taskId: string): Promise<void> => {
     setTasks(prev => prev.filter(task => task.id !== taskId));
     if (selectedTask?.id === taskId) {
       setSelectedTask(null);
     }
-    onDeleteTask?.(taskId);
+    if (onDeleteTask) {
+      await onDeleteTask(taskId);
+    }
   };
 
   const handleAddEpic = (newEpic: Omit<Epic, 'id'>) => {

@@ -13,6 +13,7 @@ export interface CapabilityAction {
   id: string
   label: string
   description?: string
+  icon?: React.ReactNode
   action: (context: CapabilityContext) => void
 }
 
@@ -34,6 +35,8 @@ export interface Capability {
   id: string
   name: string
   description?: string
+  icon?: React.ReactNode
+  color?: string
   type: "category" | "list" | "item"
   children?: Capability[]
   data?: CapabilityData[]
