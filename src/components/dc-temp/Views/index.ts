@@ -1,6 +1,0 @@
-export { default as ColleaguesView } from './ColleaguesView'
-export { default as FileView } from './FileView'
-export { default as KnowledgeView } from './KnowledgeView'
-export { default as ProjectView } from './ProjectView'
-export { default as ProjectsIndexView } from './ProjectsIndexView'
-export { default as TeamsIndexView } from './TeamsIndexView'

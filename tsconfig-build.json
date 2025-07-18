@@ -19,5 +19,5 @@
     }
   },
   "include": ["src"],
-  "exclude": ["dist", "node_modules", "**/*.test.*", "**/*.spec.*", "**/*.mdx", "**/*.stories.*"]
+  "exclude": ["dist", "node_modules", "**/*.test.*", "**/*.spec.*", "**/*.mdx", "**/*.stories.*", "**/*.test.tsx"]
 }

@@ -2,7 +2,7 @@
 import { Bell, Search, Settings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "./theme-toggle"
+import { ThemeToggle } from "../AdvancedComponents/theme-toggle"
 
 interface EnhancedHeaderProps {
   title?: string
