@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AppHeader } from "./app-header"
-import { mockNotifications } from "../dc-temp/mock-data"
+import { mockNotifications } from "../DigitalColleagues/test-data"
 
 const meta: Meta<typeof AppHeader> = {
   title: "Advanced Components/AppHeader",
