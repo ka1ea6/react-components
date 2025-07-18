@@ -1,0 +1,12 @@
+{
+  "main": "./dist/sections/form/server/index.js",
+  "module": "./dist/sections/form/server/index.mjs",
+  "types": "./dist/sections/form/server/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/sections/form/server/index.mjs",
+      "require": "./dist/sections/form/server/index.js",
+      "types": "./dist/sections/form/server/index.d.ts"
+    }
+  }
+}

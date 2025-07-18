@@ -10,3 +10,4 @@ export * from './BlogList';
 export * from './ServiceDetailSection';
 export * from './PageSections';
 export * from './ServiceDetail';
+export * from './form';

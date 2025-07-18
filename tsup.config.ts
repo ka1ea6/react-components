@@ -9,7 +9,7 @@ export default defineConfig(
     ({
       format: ["cjs", "esm"],
       target: "esnext",
-      entry: ["./src/**"],
+      entry: ["./src/**", "!./src/**/*.stories.*", "!./src/**/*.test.*", "!./src/**/*.spec.*"],
       treeshake: false,
       sourcemap: false,
       clean: !options.watch,

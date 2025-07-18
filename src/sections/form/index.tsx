@@ -8,7 +8,7 @@ import { Formik } from 'formik'
 import { FaUser, FaSpeakap } from 'react-icons/fa6'
 
 import * as Yup from 'yup'
-import { contactUsFormSubmit } from './server/contact-us-form-submit'
+import { ServerActionResponse } from '@/common-types'
 import { toast } from 'sonner'
 
 const validationMessages = {
@@ -40,7 +40,11 @@ const fieldCommonClasses = cn('!pr-[44px] text-foreground')
 const errorClasses = cn('!border-red-600 border')
 const errorMessageClasses = cn('sr-only')
 
-export function Form() {
+interface FormProps {
+  onSubmit?: (values: ContactUsSchemaType) => Promise<ServerActionResponse<boolean>>
+}
+
+export function Form({ onSubmit }: FormProps = {}) {
   return (
     <Formik
       initialValues={{
@@ -51,7 +55,12 @@ export function Form() {
       }}
       validationSchema={ContactUsSchema}
       onSubmit={async (values, { resetForm }) => {
-        const result = await contactUsFormSubmit(values)
+        if (!onSubmit) {
+          toast.error('Form submission not configured')
+          return
+        }
+        
+        const result = await onSubmit(values)
 
         if (result.data === null) {
           toast.error(result.message)
