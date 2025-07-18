@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Sidebar } from "./sidebar"
-import { mockSidebarItems } from "./mock-data"
+import { mockSidebarItems } from "../DigitalColleagues/test-data"
 
 const meta: Meta<typeof Sidebar> = {
   title: "DC/Sidebar",

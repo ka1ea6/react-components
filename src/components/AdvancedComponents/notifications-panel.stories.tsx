@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { NotificationsPanel } from "./notifications-panel"
-import { mockNotifications } from "../dc-temp/mock-data"
+import { mockNotifications } from "../DigitalColleagues/test-data"
 
 const meta: Meta<typeof NotificationsPanel> = {
   title: "Advanced Components/NotificationsPanel",
