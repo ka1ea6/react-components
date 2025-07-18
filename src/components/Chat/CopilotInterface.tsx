@@ -3,12 +3,15 @@
 import type React from "react"
 
 import { useState } from "react"
-import { EnhancedHeader } from "../dc-temp/enhanced-header"
-import { TeamSwitcherBar } from "../Projects/team-switcher-bar"
+import { motion, AnimatePresence } from "framer-motion"
+import { Users } from "lucide-react"
+import { CreativeLayout } from "../dc-temp/creative-layout"
 import { ChatSessionSidebar, type ChatSession } from "./chat-session-sidebar"
 import { AIChatInterface, type ChatMessage } from "../.archive/ai-chat-interface"
 import { businessUnits } from "../DigitalColleagues/test-data"
 import { capabilities } from "./capabilities-data"
+import { mockSidebarItems, mockNotifications } from "../dc-temp/mock-data"
+import type { BusinessUnit } from "../DigitalColleagues/types"
 
 const mockChatSessions: ChatSession[] = [
   {
@@ -41,11 +44,13 @@ const mockChatSessions: ChatSession[] = [
   },
 ]
 
-interface LandingPageProps {
+interface CopilotInterfaceProps {
   initialTeam?: string
   initialMessages?: ChatMessage[]
   initialSessions?: ChatSession[]
   showCapabilities?: boolean
+  title?: string
+  businessUnits?: BusinessUnit[]
 }
 
 export default function CopilotInterface({
@@ -53,7 +58,9 @@ export default function CopilotInterface({
   initialMessages,
   initialSessions,
   showCapabilities = true,
-}: LandingPageProps = {}) {
+  title = "Digital Colleagues",
+  businessUnits: businessUnitsProp = businessUnits,
+}: CopilotInterfaceProps = {}) {
   const [messages, setMessages] = useState<ChatMessage[]>(
     initialMessages || [
       {
@@ -67,10 +74,14 @@ export default function CopilotInterface({
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [selectedTeam, setSelectedTeam] = useState(
-    businessUnits.find(unit => unit.id === initialTeam) || businessUnits[0]
+    businessUnitsProp.find(unit => unit.id === initialTeam) || businessUnitsProp[0]
   )
   const [currentSession, setCurrentSession] = useState<ChatSession | null>(null)
   const [chatSessions, setChatSessions] = useState<ChatSession[]>(initialSessions || mockChatSessions)
+  // const [activeTab, setActiveTab] = useState("chat")
+  const [currentBusinessUnit, setCurrentBusinessUnit] = useState<BusinessUnit>(
+    businessUnitsProp.find(unit => unit.id === initialTeam) || businessUnitsProp[0]
+  )
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -133,8 +144,9 @@ export default function CopilotInterface({
 
   const loadChatSession = (session: ChatSession) => {
     setCurrentSession(session)
-    const team = businessUnits.find((unit) => unit.id === session.teamId) || businessUnits[0]
+    const team = businessUnitsProp.find((unit) => unit.id === session.teamId) || businessUnitsProp[0]
     setSelectedTeam(team)
+    setCurrentBusinessUnit(team)
     // In a real app, you'd load the actual messages from the session
     setMessages([
       {
@@ -158,51 +170,83 @@ export default function CopilotInterface({
     // Implement edit functionality
   }
 
+  const handleBusinessUnitChange = (unit: BusinessUnit) => {
+    setCurrentBusinessUnit(unit)
+    setSelectedTeam(unit)
+    console.log("Business unit changed to:", unit.name)
+  }
+
+  const handleCopilotClick = () => {
+    console.log("Copilot clicked from header")
+    // Could navigate to copilot or perform some action
+  }
+
+  const handleNotificationRemove = (id: string) => {
+    console.log("Notification removed:", id)
+    // Handle notification removal logic
+  }
+
+  const handleRemoveAll = () => {
+    console.log("All notifications removed")
+    // Handle remove all logic
+  }
+
+
   return (
-    <div className="min-h-screen bg-background">
-      <EnhancedHeader
-        onSearchClick={() => console.log("Search clicked")}
-        onNotificationClick={() => console.log("Notifications clicked")}
-        onSettingsClick={() => console.log("Settings clicked")}
-        hasNotifications={true}
-      />
-
-      <TeamSwitcherBar
-        teams={businessUnits}
-        selectedTeam={selectedTeam}
-        onTeamChange={setSelectedTeam}
-        onDashboardClick={() => console.log("Dashboard clicked")}
-      />
-
-      <div className="container mx-auto px-6 py-6">
-        <div className="grid gap-6 lg:grid-cols-4">
-          <div className="lg:col-span-1">
-            <ChatSessionSidebar
-              sessions={chatSessions}
-              currentSession={currentSession}
-              teams={businessUnits}
-              onNewChat={startNewChat}
-              onSessionSelect={loadChatSession}
-              onSessionEdit={editChatSession}
-              onSessionDelete={deleteChatSession}
-            />
+    <CreativeLayout
+      sidebarItems={mockSidebarItems}
+      title={title}
+      notifications={mockNotifications}
+      businessUnits={businessUnitsProp}
+      currentBusinessUnit={currentBusinessUnit}
+      onBusinessUnitChange={handleBusinessUnitChange}
+      showTabs={false}
+      onActionClick={handleCopilotClick}
+      actionIcon={<Users className="mr-2 h-4 w-4" />}
+      actionText="Collaborate"
+      onNotificationRemove={handleNotificationRemove}
+      onRemoveAll={handleRemoveAll}
+      logo="/headerlogo.png"
+      appName="Nuvia"
+      tagline="AI-Powered Workspace"
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          className="flex-1 h-full"
+          key="chat-interface"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+ <div className="h-full flex">
+            <div className="w-80 bg-muted/50 flex-shrink-0 h-full p-2">
+              <ChatSessionSidebar
+                sessions={chatSessions}
+                currentSession={currentSession}
+                teams={businessUnitsProp}
+                onNewChat={startNewChat}
+                onSessionSelect={loadChatSession}
+                onSessionEdit={editChatSession}
+                onSessionDelete={deleteChatSession}
+              />
+            </div>
+            <div className="flex-1 h-full p-2">
+              <AIChatInterface
+                messages={messages}
+                input={input}
+                isTyping={isTyping}
+                selectedTeam={selectedTeam}
+                currentSessionTitle={currentSession?.title}
+                capabilities={capabilities}
+                onInputChange={setInput}
+                onSendMessage={handleSendMessage}
+                onKeyPress={handleKeyPress}
+              />
+            </div>
           </div>
-
-          <div className="lg:col-span-3">
-            <AIChatInterface
-              messages={messages}
-              input={input}
-              isTyping={isTyping}
-              selectedTeam={selectedTeam}
-              currentSessionTitle={currentSession?.title}
-              capabilities={capabilities}
-              onInputChange={setInput}
-              onSendMessage={handleSendMessage}
-              onKeyPress={handleKeyPress}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+                  </motion.div>
+      </AnimatePresence>
+    </CreativeLayout>
   )
 }

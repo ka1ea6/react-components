@@ -23,6 +23,15 @@ interface AppHeaderProps {
   onTabChange?: (tab: string) => void
   showTabs?: boolean
   tabOptions?: TabOption[]
+  // New props for enhanced functionality
+  onActionClick?: () => void
+  actionIcon?: React.ReactNode
+  actionText?: string
+  onNotificationRemove?: (id: string) => void
+  onRemoveAll?: () => void
+  logo?: string
+  appName?: string
+  tagline?: string
 }
 
 export function AppHeader({
@@ -43,23 +52,28 @@ export function AppHeader({
     { value: "knowledge", label: "Knowledge" },
     // { value: "files", label: "Files" },
   ],
+  onActionClick,
+  actionIcon = <Bot className="mr-2 h-4 w-4" />,
+  actionText = "Action",
+  onNotificationRemove,
+  onRemoveAll,
+  logo = "/headerlogo.png",
+  appName = "Nuvia",
+  tagline = "Collaboration Platform",
 }: AppHeaderProps) {
   const [notificationsPanelOpen, setNotificationsPanelOpen] = useState(false)
   const [notificationsData, setNotificationsData] = useState<Notification[]>(notifications)
 
   const unreadCount = notificationsData.filter((notification) => !notification.read).length
 
-  const handleMarkAllAsRead = () => {
-    setNotificationsData(
-      notificationsData.map((notification) => ({
-        ...notification,
-        read: true,
-      })),
-    )
+  const handleNotificationRemove = (id: string) => {
+    setNotificationsData(prev => prev.filter(notification => notification.id !== id))
+    onNotificationRemove?.(id)
   }
 
-  const handleClearAll = () => {
-    setNotificationsData([])
+  const handleRemoveAll = () => {
+    setNotificationsData(prev => prev.filter(notification => notification.read))
+    onRemoveAll?.()
   }
 
   return (
@@ -73,6 +87,25 @@ export function AppHeader({
         <Button variant="ghost" size="icon" className="hidden md:flex" onClick={onToggleSidebar}>
           <PanelLeft className="h-5 w-5" />
         </Button>
+        
+        {/* Logo and Title - shown when sidebar is closed */}
+        {!sidebarOpen && (
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex h-10 w-10 items-center justify-center">
+              <img src={logo} alt="Logo" className="h-10 w-10 object-contain" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-sm">{appName}</h2>
+              <p className="text-xs text-muted-foreground">{tagline}</p>
+            </div>
+          </motion.div>
+        )}
+        
         <div className="flex flex-1 items-center">
           {/* Navigation Tabs */}
           {showTabs && (
@@ -95,12 +128,13 @@ export function AppHeader({
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <Link href="/ai-assistant">
-                    <Button className="rounded-2xl transition-all duration-200 hover:shadow-md">
-                      <Bot className="mr-2 h-4 w-4" />
-                      Copilot
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="rounded-2xl transition-all duration-200 hover:shadow-md"
+                    onClick={onActionClick}
+                  >
+                    {actionIcon}
+                    {actionText}
+                  </Button>
                 </motion.div>
                 {/* <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -191,8 +225,8 @@ export function AppHeader({
         notifications={notificationsData}
         open={notificationsPanelOpen}
         onClose={() => setNotificationsPanelOpen(false)}
-        onMarkAllAsRead={handleMarkAllAsRead}
-        onClearAll={handleClearAll}
+        onNotificationRemove={handleNotificationRemove}
+        onRemoveAll={handleRemoveAll}
       />
     </>
   )

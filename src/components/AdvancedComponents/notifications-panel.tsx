@@ -21,8 +21,8 @@ interface NotificationsPanelProps {
   notifications: Notification[]
   open: boolean
   onClose: () => void
-  onMarkAllAsRead: () => void
-  onClearAll: () => void
+  onNotificationRemove?: (id: string) => void
+  onRemoveAll?: () => void
   className?: string
 }
 
@@ -30,11 +30,13 @@ export function NotificationsPanel({
   notifications,
   open,
   onClose,
-  onMarkAllAsRead,
-  onClearAll,
+  onNotificationRemove,
+  onRemoveAll,
   className,
 }: NotificationsPanelProps) {
-  const unreadCount = notifications.filter((notification) => !notification.read).length
+  // Only show unread notifications
+  const unreadNotifications = notifications.filter((notification) => !notification.read)
+  const unreadCount = unreadNotifications.length
 
   const getNotificationIcon = (type: Notification["type"]) => {
     switch (type) {
@@ -92,23 +94,25 @@ export function NotificationsPanel({
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-between border-b p-2">
-                <Button variant="ghost" size="sm" onClick={onMarkAllAsRead} className="text-sm">
-                  Mark all as read
-                </Button>
-                <Button variant="ghost" size="sm" onClick={onClearAll} className="text-sm">
-                  Clear all
-                </Button>
-              </div>
-
+              {unreadCount > 0 && (
+                <div className="flex items-center justify-between border-b p-2">
+                  <span className="text-sm text-muted-foreground">
+                    {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
+                  </span>
+                  <Button variant="ghost" size="sm" onClick={onRemoveAll} className="text-sm">
+                    Dismiss all
+                  </Button>
+                </div>
+              )}
+              
               {/* Notifications List */}
-              {notifications.length > 0 ? (
+              {unreadNotifications.length > 0 ? (
                 <ScrollArea className="flex-1">
                   <div className="divide-y">
-                    {notifications.map((notification) => (
+                    {unreadNotifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={cn("flex gap-3 p-4 transition-colors", !notification.read && "bg-muted/50")}
+                        className={cn("flex gap-3 p-4 transition-colors bg-muted/50")}
                       >
                         <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-muted">
                           {getNotificationIcon(notification.type)}
@@ -116,7 +120,19 @@ export function NotificationsPanel({
                         <div className="flex-1 space-y-1">
                           <div className="flex items-center justify-between">
                             <p className="font-medium">{notification.title}</p>
-                            <p className="text-xs text-muted-foreground">{notification.time}</p>
+                            <div className="flex items-center gap-2">
+                              <p className="text-xs text-muted-foreground">{notification.time}</p>
+                              {/* Dismiss button */}
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => onNotificationRemove?.(notification.id)}
+                                title="Dismiss"
+                              >
+                                <Check className="h-3 w-3" />
+                              </Button>
+                            </div>
                           </div>
                           <p className="text-sm text-muted-foreground">{notification.description}</p>
                           {notification.actionLabel && (

@@ -7,9 +7,9 @@ import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Sidebar } from "./sidebar"
 import { AppHeader } from "../AdvancedComponents/app-header"
-import { businessUnits, type BusinessUnit } from "../Projects/business-units"
-import type { SidebarItem } from "../DigitalColleagues/types"
+import type { SidebarItem, BusinessUnit } from "../DigitalColleagues/types"
 import type { Notification } from "../AdvancedComponents/notifications-panel"
+import { User } from "lucide-react"
 
 interface CreativeLayoutProps {
   sidebarItems: SidebarItem[]
@@ -18,11 +18,32 @@ interface CreativeLayoutProps {
   notifications?: Notification[]
   currentBusinessUnit?: BusinessUnit
   onBusinessUnitChange?: (unit: BusinessUnit) => void
-  businessUnits?: typeof businessUnits
+  businessUnits?: BusinessUnit[]
   activeTab?: string
   onTabChange?: (tab: string) => void
   showTabs?: boolean
+  // New props for enhanced functionality
+  onActionClick?: () => void
+  actionIcon?: React.ReactNode
+  actionText?: string
+  onNotificationRemove?: (id: string) => void
+  onRemoveAll?: () => void
+  logo?: string
+  appName?: string
+  tagline?: string
 }
+
+const businessUnits: BusinessUnit[] = [
+  {
+    id: "copilot",
+    name: "Peronal Copilot",
+    description: "Your personal AI assistant for all tasks",
+    icon: <User className="h-4 w-4" />,
+    color: "bg-orange-600",
+    accentColor: "text-orange-600",
+  },
+]
+
 
 export function CreativeLayout({
   sidebarItems,
@@ -35,6 +56,14 @@ export function CreativeLayout({
   activeTab,
   onTabChange,
   showTabs = false,
+  onActionClick,
+  actionIcon,
+  actionText = "Action",
+  onNotificationRemove,
+  onRemoveAll,
+  logo = "/headerlogo.png",
+  appName = "Nuvia",
+  tagline = "Collaboration Platform",
 }: CreativeLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -75,6 +104,9 @@ export function CreativeLayout({
           onClose={() => setMobileMenuOpen(false)}
           currentBusinessUnit={localBusinessUnit}
           onBusinessUnitChange={handleBusinessUnitChange}
+          logo={logo}
+          appName={appName}
+          tagline={tagline}
         />
       </div>
 
@@ -86,11 +118,14 @@ export function CreativeLayout({
           isMobile={false}
           currentBusinessUnit={localBusinessUnit}
           onBusinessUnitChange={handleBusinessUnitChange}
+          logo={logo}
+          appName={appName}
+          tagline={tagline}
         />
       </div>
 
       {/* Main Content */}
-      <div className={cn("min-h-screen w-full transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
+      <div className={cn("min-h-screen fixed w-full transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
         <AppHeader
           title={title}
           notifications={notifications}
@@ -100,6 +135,14 @@ export function CreativeLayout({
           activeTab={activeTab}
           onTabChange={onTabChange}
           showTabs={showTabs}
+          onActionClick={onActionClick}
+          actionIcon={actionIcon}
+          actionText={actionText}
+          onNotificationRemove={onNotificationRemove}
+          onRemoveAll={onRemoveAll}
+          logo={logo}
+          appName={appName}
+          tagline={tagline}
         />
 
         <main className="flex-1 p-0 flex flex-col h-[calc(100vh-4rem)] overflow-auto">{children}</main>

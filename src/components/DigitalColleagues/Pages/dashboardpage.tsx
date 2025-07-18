@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence, color } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { Bot } from "lucide-react"
 import { CreativeLayout } from "../../dc-temp/creative-layout"
 import { DashboardHero } from "../../Heros/DashboardHero"
 import { AppCard } from "../../.archive/app-card"
@@ -73,6 +74,19 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
     console.log("Business unit changed to:", unit.name)
   }
 
+  const handleCopilotClick = () => {
+    console.log("Copilot clicked - navigating to chat")
+    setActiveTab('chat')
+  }
+
+  const handleNotificationRemove = (id: string) => {
+    console.log("Notification removed:", id)
+  }
+
+  const handleRemoveAll = () => {
+    console.log("All notifications removed")
+  }
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "home":
@@ -117,6 +131,26 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
         )
       case "colleagues":
         return <ColleaguesView />
+      case "chat":
+        return (
+          <div className="px-2 md:px-4 py-4 space-y-8">
+            <section className="text-center py-12">
+              <h1 className="text-4xl font-bold mb-4">Team Chat</h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Connect with your {currentBusinessUnit.name} team members and collaborate in real-time.
+              </p>
+            </section>
+            <DashboardHero
+              title={`Launch Full Chat Interface`}
+              description={`Access the complete chat experience with AI assistance.`}
+              gradient="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
+              primaryAction={{
+                label: "Open Chat",
+                onClick: () => console.log("Open full chat interface"),
+              }}
+            />
+          </div>
+        )
       case "apps":
         return (
           <div className="space-y-8">
@@ -255,6 +289,11 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
       activeTab={activeTab}
       onTabChange={setActiveTab}
       showTabs={true}
+      onActionClick={handleCopilotClick}
+      actionIcon={<Bot className="mr-2 h-4 w-4" />}
+      actionText="Start Chat"
+      onNotificationRemove={handleNotificationRemove}
+      onRemoveAll={handleRemoveAll}
     >
       <AnimatePresence mode="wait">
         <motion.div

@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { BusinessUnitSwitcher } from "../Projects/business-unit-switcher"
 import { cn } from "@/lib/utils"
-import { businessUnits, type BusinessUnit } from "../Projects/business-units"
-import type { SidebarItem } from "../DigitalColleagues/types"
+import { businessUnits } from "../DigitalColleagues/test-data"
+import type { BusinessUnit, SidebarItem } from "../DigitalColleagues/types"
 
 interface SidebarProps {
   items: SidebarItem[]
@@ -21,6 +21,9 @@ interface SidebarProps {
   currentBusinessUnit?: BusinessUnit
   onBusinessUnitChange?: (unit: BusinessUnit) => void
   className?: string
+  logo?: string
+  appName?: string
+  tagline?: string
 }
 
 export function Sidebar({
@@ -31,6 +34,9 @@ export function Sidebar({
   currentBusinessUnit = businessUnits[0], // Default to Design unit
   onBusinessUnitChange,
   className,
+  logo = "/headerlogo.png",
+  appName = "Nuvia",
+  tagline = "Collaboration Platform",
 }: SidebarProps) {
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
 
@@ -93,11 +99,11 @@ export function Sidebar({
             <Wand2 className="size-5" />
           </div> */}
           <div className="flex h-14 w-14 items-center justify-center ">
-              <img src="/headerlogo.png" alt="Header Logo" className="h-14 w-14 object-contain" />
+              <img src={logo} alt="Header Logo" className="h-14 w-14 object-contain" />
             </div>
           <div>
-            <h2 className="font-semibold">Nuvia<br /></h2>
-            <p className="text-xs text-muted-foreground">Collaboration Platform<br /></p>
+            <h2 className="font-semibold">{appName}<br /></h2>
+            <p className="text-xs text-muted-foreground">{tagline}<br /></p>
           </div>
         </div>
         {isMobile && (
