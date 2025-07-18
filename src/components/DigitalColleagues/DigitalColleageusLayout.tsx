@@ -5,13 +5,13 @@ import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Sidebar } from "./sidebar"
+import { Sidebar } from "../AdvancedComponents/sidebar"
 import { AppHeader } from "../AdvancedComponents/app-header"
-import type { SidebarItem, BusinessUnit } from "../DigitalColleagues/types"
+import type { SidebarItem, BusinessUnit } from "./types"
 import type { Notification } from "../AdvancedComponents/notifications-panel"
 import { User } from "lucide-react"
 
-interface CreativeLayoutProps {
+interface DigitalColleageusLayoutProps {
   sidebarItems: SidebarItem[]
   children: React.ReactNode
   title?: string
@@ -45,7 +45,7 @@ const businessUnits: BusinessUnit[] = [
 ]
 
 
-export function CreativeLayout({
+export function DigitalColleageusLayout({
   sidebarItems,
   children,
   title = "Digital Colleagues",
@@ -64,7 +64,7 @@ export function CreativeLayout({
   logo = "/headerlogo.png",
   appName = "Nuvia",
   tagline = "Collaboration Platform",
-}: CreativeLayoutProps) {
+}: DigitalColleageusLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [localBusinessUnit, setLocalBusinessUnit] = useState(currentBusinessUnit)

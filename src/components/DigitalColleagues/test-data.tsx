@@ -1,6 +1,7 @@
 import { Project, Epic, Sprint, Task } from './types';
-import { ProjectSummary, TeamSummary, Colleague, BusinessUnit, Reminder, RecentFile, DigitalColleague } from './types';
-import { Building2, Code, Palette, TrendingUp, Users, Wrench, DollarSign, Scale, Package, Zap, FileText, FileImage, FileVideo, Music, File } from "lucide-react"
+import { ProjectSummary, TeamSummary, Colleague, BusinessUnit, Reminder, RecentFile, DigitalColleague, SidebarItem, Notification } from './types';
+import { Home, Layers, Bot,  Building2, Code, Palette, TrendingUp, Users, Wrench, DollarSign, Scale, Package, Zap, FileText, FileImage, FileVideo, Music, File } from "lucide-react"
+
 
 // Helper function to convert strings to KnowledgeDocument objects
 const createKnowledgeDocument = (title: string): import('./types').KnowledgeDocument => ({
@@ -9,6 +10,169 @@ const createKnowledgeDocument = (title: string): import('./types').KnowledgeDocu
   format: 'markdown' as const,
   createdAt: new Date(),
 });
+
+export const mockSidebarItems: SidebarItem[] = [
+  {
+    title: "Home",
+    icon: <Home />,
+    isActive: true,
+  },
+  // {
+  //   title: "Apps",
+  //   icon: <Grid />,
+  //   badge: "2",
+  //   items: [
+  //     { title: "All Apps", url: "#" },
+  //     { title: "Recent", url: "#" },
+  //     { title: "Updates", url: "#", badge: "2" },
+  //     { title: "Installed", url: "#" },
+  //   ],
+  // },
+  // {
+  //   title: "Files",
+  //   icon: <FileText />,
+  //   items: [
+  //     { title: "Recent", url: "#" },
+  //     { title: "Shared with me", url: "#", badge: "3" },
+  //     { title: "Favorites", url: "#" },
+  //     { title: "Trash", url: "#" },
+  //   ],
+  // },
+    {
+    title: "Teams",
+    icon: <Users />,
+    url: "/teams",
+    items: [
+      { title: "Design", url: "#" },
+      { title: "Marketing", url: "#" },
+      { title: "Finance", url: "#" },
+    ],
+  },
+  {
+    title: "Projects",
+    icon: <Layers />,
+    badge: "4",
+    items: [
+      { title: "Active Projects", url: "#", badge: "4" },
+      { title: "Archived", url: "#" },
+      { title: "Templates", url: "#" },
+    ],
+  },
+  {
+    title: "Copilot",
+    icon: <Bot />,
+    url: "/copilot",
+  },
+
+  // {
+  //   title: "Learn",
+  //   icon: <BookOpen />,
+  //   items: [
+  //     { title: "Tutorials", url: "#" },
+  //     { title: "Courses", url: "#" },
+  //     { title: "Webinars", url: "#" },
+  //     { title: "Resources", url: "#" },
+  //   ],
+  // },
+  // {
+  //   title: "Community",
+  //   icon: <Users />,
+  //   items: [
+  //     { title: "Explore", url: "#" },
+  //     { title: "Following", url: "#" },
+  //     { title: "Challenges", url: "#" },
+  //     { title: "Events", url: "#" },
+  //   ],
+  // },
+  // {
+  //   title: "Resources",
+  //   icon: <Bookmark />,
+  //   items: [
+  //     { title: "Stock Photos", url: "#" },
+  //     { title: "Fonts", url: "#" },
+  //     { title: "Icons", url: "#" },
+  //     { title: "Templates", url: "#" },
+  //   ],
+  // },
+  {
+    title: "Knowledge",
+    icon: <FileText />,
+    url: "/knowledge",
+  },
+]
+
+export const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    title: "New comment on your post",
+    description: "Alex Morgan commented on your 'Minimalist Logo Design' post.",
+    time: "Just now",
+    read: false,
+    type: "info",
+    actionLabel: "View comment",
+    onAction: () => console.log("View comment clicked"),
+  },
+  {
+    id: "2",
+    title: "Project deadline approaching",
+    description: "The 'Website Redesign' project is due in 2 days.",
+    time: "5 minutes ago",
+    read: false,
+    type: "warning",
+    actionLabel: "View project",
+    onAction: () => console.log("View project clicked"),
+  },
+  {
+    id: "3",
+    title: "File shared with you",
+    description: "Emma Thompson shared 'Brand Guidelines.pdf' with you.",
+    time: "1 hour ago",
+    read: false,
+    type: "info",
+    actionLabel: "Open file",
+    onAction: () => console.log("Open file clicked"),
+  },
+  {
+    id: "4",
+    title: "Update successful",
+    description: "PixelMaster has been updated to version 2.4.0.",
+    time: "3 hours ago",
+    read: true,
+    type: "success",
+    actionLabel: "See what's new",
+    onAction: () => console.log("See what's new clicked"),
+  },
+  {
+    id: "5",
+    title: "Storage limit reached",
+    description: "You've used 95% of your storage. Consider upgrading your plan.",
+    time: "Yesterday",
+    read: true,
+    type: "error",
+    actionLabel: "Upgrade plan",
+    onAction: () => console.log("Upgrade plan clicked"),
+  },
+  {
+    id: "6",
+    title: "Weekly summary",
+    description: "Check out your activity summary for the past week.",
+    time: "2 days ago",
+    read: true,
+    type: "info",
+    actionLabel: "View summary",
+    onAction: () => console.log("View summary clicked"),
+  },
+  {
+    id: "7",
+    title: "New tutorial available",
+    description: "A new tutorial on 'Advanced Animation Techniques' is now available.",
+    time: "3 days ago",
+    read: true,
+    type: "info",
+    actionLabel: "Start learning",
+    onAction: () => console.log("Start learning clicked"),
+  },
+]
 
 
 export const businessUnits: BusinessUnit[] = [

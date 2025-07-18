@@ -22,7 +22,7 @@ A flexible and extensible capability system for AI chat interfaces that allows u
 
 ### Configuration
 
-- **`capabilities-config.ts`**: Data structure and sample capabilities
+- **`../../test-data/capabilities.ts`**: Global test data structure and sample capabilities
 - **`icon-mapper.tsx`**: Icon mapping utility for consistent iconography
 
 ## Usage
@@ -31,7 +31,7 @@ A flexible and extensible capability system for AI chat interfaces that allows u
 
 ```tsx
 import { AIChatInterface } from "./ai-chat-interface"
-import { capabilities } from "./capabilities-config"
+import { testCapabilities as capabilities } from "../../test-data/capabilities"
 
 function MyChat() {
   return (
@@ -115,7 +115,7 @@ interface CapabilityContext {
 
 ### Adding New Capability Types
 
-1. Extend the `Capability` interface in `capabilities-config.ts`
+1. Extend the `Capability` interface in `../../test-data/capabilities.ts`
 2. Add new type to the `type` union
 3. Update the `CapabilityMenu` component to handle the new type
 4. Create specific components for the new type if needed

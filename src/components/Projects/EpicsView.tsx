@@ -131,19 +131,7 @@ export const EpicsView: React.FC<EpicsViewProps> = ({
       />
       <div className="flex-1">
         <div className="w-full">
-          {/* Header */}
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <p className="text-muted-foreground">Manage and organize your project epics</p>
-            </div>
-          <Button
-            onClick={onAddEpic}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
-          >
-            <Plus className="h-4 w-4" />
-            Add Epic
-          </Button>
-        </div>
+          
 
         {/* Epics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

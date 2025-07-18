@@ -9,8 +9,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import type { Capability, CapabilityContext, CapabilityData, CapabilityColorScheme } from "./capabilities"
-import { defaultColorScheme } from "./capabilities.ts"
+import type { Capability, CapabilityContext, CapabilityData } from "../../test-data/capabilities"
+import type { CapabilityColorScheme } from "../../test-data/capabilities"
+import { defaultColorScheme } from "../../test-data/capabilities"
 
 interface CapabilityMenuProps {
   capabilities: Capability[]

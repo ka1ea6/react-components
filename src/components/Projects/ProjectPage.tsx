@@ -2,15 +2,13 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CreativeLayout } from "../dc-temp/creative-layout"
+import { DigitalColleageusLayout } from "../DigitalColleagues/DigitalColleageusLayout"
 import { type BusinessUnit } from "../DigitalColleagues/types"
 import {
   mockSidebarItems,
-  mockRecentFiles,
-  mockProjects,
-  mockTutorials,
   mockNotifications,
-} from "../dc-temp/mock-data"
+} from "../DigitalColleagues/test-data"
+
 import type { App, RecentFile } from "../DigitalColleagues/types"
 import type { Epic, Sprint, Project, Task } from "@/components/Projects/ProjectView"
 
@@ -176,7 +174,7 @@ export default function ProjectPage({ title = "",
   }
 
   return (
-    <CreativeLayout
+    <DigitalColleageusLayout
       sidebarItems={mockSidebarItems}
       title={title}
       notifications={mockNotifications}
@@ -198,6 +196,6 @@ export default function ProjectPage({ title = "",
           {renderTabContent()}
         </motion.div>
       </AnimatePresence>
-    </CreativeLayout>
+    </DigitalColleageusLayout>
   )
 }

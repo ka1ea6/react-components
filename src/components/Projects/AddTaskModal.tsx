@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +16,7 @@ interface AddTaskModalProps {
   onAddTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
   epics: Epic[];
   sprints: Sprint[];
+  defaultEpicId?: string;
 }
 
 const taskTypes = [
@@ -38,6 +38,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
   onAddTask,
   epics,
   sprints,
+  defaultEpicId,
 }) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -50,6 +51,30 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
     sprintId: 'none',
     assignee: '',
   });
+
+  // Effect to set the default epic when modal opens
+  useEffect(() => {
+    if (isOpen && defaultEpicId) {
+      setFormData(prev => ({ ...prev, epicId: defaultEpicId }));
+    }
+  }, [isOpen, defaultEpicId]);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Set default values or reset the form when the modal opens
+      setFormData({
+        title: '',
+        description: '',
+        status: 'todo',
+        priority: 'medium',
+        type: 'story',
+        points: 1,
+        epicId: '',
+        sprintId: 'none',
+        assignee: '',
+      });
+    }
+  }, [isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ import { TeamSwitcherBar } from "../Projects/team-switcher-bar"
 import { ChatSessionSidebar, type ChatSession } from "../Chat/chat-session-sidebar"
 import { AIChatInterface, type ChatMessage } from "./ai-chat-interface"
 import { businessUnits } from "../DigitalColleagues/test-data"
-import { capabilities } from "../Chat/capabilities-data"
+import { testCapabilities as capabilities } from "../../test-data/capabilities"
 
 const mockChatSessions: ChatSession[] = [
   {

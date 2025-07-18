@@ -1,6 +1,6 @@
 
 import { useState } from "react"
-import { HeroSection } from "../../Heros/DashboardHero/DashboardHero"
+import { DashboardHero } from "../../Heros/DashboardHero/DashboardHero"
 import type { KnowledgeDocument, KnowledgeContext } from "../types"
 import { KnowledgeBrowser } from "../../dc-temp/knowledge-browser"
 import { Button } from "@/components/ui/button"
@@ -77,7 +77,7 @@ export default function KnowledgeView({
 return (
     <div className="flex flex-col h-full max-h-[calc(100vh-8rem)]">
                 <div className="px-2 md:px-4 py-4 flex-shrink-0">
-                  <HeroSection
+                  <DashboardHero
                     title="Knowledge"
                     description="Access, manage, and share all your team knowledge in one place."
                     gradient="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600"

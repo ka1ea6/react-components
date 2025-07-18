@@ -16,7 +16,8 @@ import {
   DropdownMenuSeparator, // Make sure this is imported
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
+import { businessUnits } from "../DigitalColleagues/test-data"
+import { cn } from "../../utils"
 import type { AIAssistantType } from "../DigitalColleagues/types"
 
 export type MessageType = "user" | "ai" | "system"
@@ -54,19 +55,6 @@ export function AIChat({
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [favoriteUnits, setFavoriteUnits] = useState<string[]>(["copilot"])
-
-  const businessUnits = [
-    { id: "copilot", name: "Copilot", color: "bg-blue-600" },
-    { id: "design", name: "Design", color: "bg-purple-600" },
-    { id: "marketing", name: "Marketing", color: "bg-pink-600" },
-    { id: "sales", name: "Sales", color: "bg-green-600" },
-    { id: "hr", name: "HR", color: "bg-orange-600" },
-    { id: "it", name: "IT", color: "bg-cyan-600" },
-    { id: "finance", name: "Finance", color: "bg-emerald-600" },
-    { id: "operations", name: "Operations", color: "bg-indigo-600" },
-    { id: "legal", name: "Legal", color: "bg-slate-600" },
-    { id: "product", name: "Product", color: "bg-violet-600" },
-  ]
 
   const maxVisibleContextButtons = 4 // Copilot + 3 others (excluding the "More" button itself)
   const copilotUnit = businessUnits.find((unit) => unit.id === "copilot")!

@@ -146,6 +146,9 @@ export const Default: Story = {
     onUpdateTask: action('onUpdateTask'),
     onTaskClick: action('onTaskClick'),
     onAddTaskToEpic: action('onAddTaskToEpic'),
+    onAddEpic: action('onAddEpic'),
+    onUpdateEpic: action('onUpdateEpic'),
+    onDeleteEpic: action('onDeleteEpic'),
   },
 };
 
@@ -157,6 +160,9 @@ export const EmptyEpics: Story = {
     onUpdateTask: action('onUpdateTask'),
     onTaskClick: action('onTaskClick'),
     onAddTaskToEpic: action('onAddTaskToEpic'),
+    onAddEpic: action('onAddEpic'),
+    onUpdateEpic: action('onUpdateEpic'),
+    onDeleteEpic: action('onDeleteEpic'),
   },
 };
 
@@ -175,5 +181,8 @@ export const ManyTasks: Story = {
     onUpdateTask: action('onUpdateTask'),
     onTaskClick: action('onTaskClick'),
     onAddTaskToEpic: action('onAddTaskToEpic'),
+    onAddEpic: action('onAddEpic'),
+    onUpdateEpic: action('onUpdateEpic'),
+    onDeleteEpic: action('onDeleteEpic'),
   },
 };

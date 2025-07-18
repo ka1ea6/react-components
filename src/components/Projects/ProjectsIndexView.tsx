@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CreativeLayout } from "../dc-temp/creative-layout"
+import { DigitalColleageusLayout } from "../DigitalColleagues/DigitalColleageusLayout"
 import { DashboardHero } from "../Heros/DashboardHero/DashboardHero"
 import { AppCard } from "../.archive/app-card"
 import { FileList } from "./file-list"
@@ -16,14 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  mockSidebarItems,
-  mockApps,
-  mockRecentFiles,
-  mockProjects,
-  mockTutorials,
-  mockNotifications,
-} from "../dc-temp/mock-data"
+
 import type { App, RecentFile, ProjectSummary, Project, ProjectFormData } from "../DigitalColleagues/types"
 // import { ColleaguesManagement } from "../colleagues-management"
 

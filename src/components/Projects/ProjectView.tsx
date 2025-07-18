@@ -7,6 +7,9 @@ import { PlanningView } from "@/components/Projects/PlanningView"
 import { TasksView } from "@/components/Projects/TasksView"
 import FileView from "./FileView"
 import { DashboardHero } from "../Heros/DashboardHero/DashboardHero"
+import { AddTaskModal } from './AddTaskModal'
+import { AddEpicModal } from './AddEpicModal'
+import { TaskDetailsModal } from './TaskDetailsModal'
 import type { Reminder, DigitalColleague } from "../DigitalColleagues/types"
 import type { RecentFile } from "@/components/DigitalColleagues/types"
 // import { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
@@ -158,6 +161,7 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isAddEpicModalOpen, setIsAddEpicModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedEpicForTask, setSelectedEpicForTask] = useState<string | null>(null);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [currentView, setCurrentView] = useState<'kanban' | 'planning' | 'tasks' | 'files' | 'epics'>('kanban');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -215,11 +219,19 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
     onUpdateTask?.(taskId, updates);
   };
 
+  const handleUpdateTaskAsync = async (taskId: string, updates: Partial<Task>) => {
+    handleUpdateTask(taskId, updates);
+  };
+
   const handleDeleteTask = (taskId: string) => {
     setTasks(prev => prev.filter(task => task.id !== taskId));
     if (selectedTask?.id === taskId) {
       setSelectedTask(null);
     }
+  };
+
+  const handleDeleteTaskAsync = async (taskId: string) => {
+    handleDeleteTask(taskId);
   };
 
   const handleAddProject = (newProject: Omit<Project, 'id'>) => {
@@ -260,21 +272,8 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
   };
 
   const handleAddEpicClick = () => {
-    // This would typically open a modal or trigger some UI for adding an epic
-    // For now, let's create a default epic
-    const defaultEpic: Omit<Epic, 'id'> = {
-      name: 'New Epic',
-      color: 'rgb(var(--primary))',
-      description: 'Epic description',
-      confidence: 'medium',
-      phase: 1,
-      startDate: new Date(),
-      endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-      progress: 0,
-      isSelected: true
-    };
-    handleAddEpic(defaultEpic);
-    onAddEpic?.();
+    // Open the add epic modal
+    setIsAddEpicModalOpen(true);
   };
 
   const handleUpdateEpic = (epicId: string, updates: Partial<Epic>) => {
@@ -363,8 +362,13 @@ const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const handleAddTaskToEpic = (epicId: string) => {
     // Set the epic in the add task modal and open it
+    setSelectedEpicForTask(epicId);
     setIsAddTaskModalOpen(true);
-    // You could enhance this to pre-select the epic
+  };
+
+  const handleCloseAddTaskModal = () => {
+    setIsAddTaskModalOpen(false);
+    setSelectedEpicForTask(null);
   };
 
   const handleAddReminder = (newReminder: Omit<Reminder, 'id' | 'createdAt'>) => {
@@ -539,11 +543,39 @@ return (
             onUpdateTask={handleUpdateTask}
             onTaskClick={handleTaskClick}
             onAddTaskToEpic={handleAddTaskToEpic}
-            onAddEpic={() => setIsAddEpicModalOpen(true)}
+            onAddEpic={handleAddEpicClick}
             onUpdateEpic={handleUpdateEpic}
             onDeleteEpic={handleDeleteEpic}
           />
         </div>
+      )}
+
+      {/* Modals */}
+      <AddTaskModal
+        isOpen={isAddTaskModalOpen}
+        onClose={handleCloseAddTaskModal}
+        onAddTask={handleAddTask}
+        epics={epics}
+        sprints={sprints}
+        defaultEpicId={selectedEpicForTask || undefined}
+      />
+
+      <AddEpicModal
+        isOpen={isAddEpicModalOpen}
+        onClose={() => setIsAddEpicModalOpen(false)}
+        onAddEpic={handleAddEpic}
+      />
+
+      {selectedTask && (
+        <TaskDetailsModal
+          isOpen={!!selectedTask}
+          onClose={() => setSelectedTask(null)}
+          task={selectedTask}
+          onUpdateTask={handleUpdateTaskAsync}
+          onDeleteTask={handleDeleteTaskAsync}
+          epics={epics}
+          sprints={sprints}
+        />
       )}
     </ManagementSidebar>
 )

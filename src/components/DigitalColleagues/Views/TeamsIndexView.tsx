@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { HeroSection } from "../../Heros/DashboardHero/DashboardHero"
+import { DashboardHero } from "../../Heros/DashboardHero/DashboardHero"
 import { TeamCard } from "../../Projects/team-card"
 import { type TeamSummary } from "../types"
 import {
@@ -45,7 +45,7 @@ export default function TeamsIndexView({
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          <HeroSection
+          <DashboardHero
             title="My Teams"
             description="Collaborate with your human and digital colleagues across different teams and projects."
             gradient="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600"

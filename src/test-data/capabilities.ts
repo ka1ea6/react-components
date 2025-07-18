@@ -1,9 +1,11 @@
 import type React from "react"
 
+// Core capability types
 export interface CapabilityAction {
   id: string
   label: string
   description?: string
+  icon?: React.ReactNode
   iconName?: string
   action: (context: CapabilityContext) => void
 }
@@ -26,8 +28,9 @@ export interface Capability {
   id: string
   name: string
   description?: string
-  iconName: string
-  color: string
+  icon?: React.ReactNode
+  iconName?: string
+  color?: string
   type: "category" | "list" | "item"
   children?: Capability[]
   data?: CapabilityData[]
@@ -36,8 +39,49 @@ export interface Capability {
   fetchData?: (context: CapabilityContext) => Promise<CapabilityData[]>
 }
 
-// Sample capabilities structure
-export const capabilities: Capability[] = [
+// Color scheme for capabilities
+export interface CapabilityColorScheme {
+  primary: string
+  secondary: string
+  accent: string
+  categories: string[]
+  lists: string[]
+  items: string[]
+}
+
+// Default color scheme
+export const defaultColorScheme: CapabilityColorScheme = {
+  primary: "bg-blue-500",
+  secondary: "bg-gray-500",
+  accent: "bg-purple-500",
+  categories: [
+    "bg-green-500",
+    "bg-blue-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-indigo-500",
+    "bg-orange-500",
+  ],
+  lists: [
+    "bg-green-400",
+    "bg-blue-400",
+    "bg-purple-400",
+    "bg-pink-400",
+    "bg-indigo-400",
+    "bg-orange-400",
+  ],
+  items: [
+    "bg-green-300",
+    "bg-blue-300",
+    "bg-purple-300",
+    "bg-pink-300",
+    "bg-indigo-300",
+    "bg-orange-300",
+  ],
+}
+
+// Test capabilities data
+export const testCapabilities: Capability[] = [
   {
     id: "sales",
     name: "Sales",
@@ -98,49 +142,49 @@ export const capabilities: Capability[] = [
             metadata: { industry: "Healthcare", employees: 150, lastContact: "2024-01-10" }
           },
           {
-            id: "gamma-ltd",
-            title: "Gamma Ltd",
-            subtitle: "Small business",
-            value: "$12K ARR",
-            metadata: { industry: "Retail", employees: 25, lastContact: "2024-01-08" }
+            id: "gamma-llc",
+            title: "Gamma LLC",
+            subtitle: "Small Business",
+            value: "$15K ARR",
+            metadata: { industry: "Manufacturing", employees: 50, lastContact: "2024-01-08" }
           }
         ]
       },
       {
         id: "opportunities",
         name: "Opportunities",
-        description: "Sales pipeline and deals",
+        description: "Sales opportunities and deals",
         iconName: "Target",
-        color: "bg-orange-500",
+        color: "bg-yellow-500",
         type: "list",
         actions: [
           {
-            id: "list-won-deals",
-            label: "List Won Deals",
+            id: "close-won",
+            label: "Mark as Won",
             iconName: "CheckCircle",
-            action: (context) => console.log("List won deals", context)
+            action: (context) => console.log("Close won", context)
           },
           {
-            id: "list-pending-deals",
-            label: "List Pending",
+            id: "schedule-followup",
+            label: "Schedule Follow-up",
             iconName: "Clock",
-            action: (context) => console.log("List pending deals", context)
+            action: (context) => console.log("Schedule follow-up", context)
           }
         ],
         data: [
           {
             id: "opp-1",
-            title: "Enterprise License",
-            subtitle: "Acme Corp",
-            value: "$50K",
-            metadata: { stage: "Negotiation", probability: 80, closeDate: "2024-02-15" }
+            title: "Acme Corp - Enterprise License",
+            subtitle: "Closing Q1 2024",
+            value: "$85K",
+            metadata: { stage: "Negotiation", probability: 80, closeDate: "2024-03-31" }
           },
           {
             id: "opp-2",
-            title: "Platform Upgrade",
-            subtitle: "Beta Inc",
-            value: "$25K",
-            metadata: { stage: "Proposal", probability: 60, closeDate: "2024-03-01" }
+            title: "Beta Inc - Platform Upgrade",
+            subtitle: "Closing Q2 2024",
+            value: "$32K",
+            metadata: { stage: "Proposal", probability: 65, closeDate: "2024-06-15" }
           }
         ]
       }
@@ -149,16 +193,16 @@ export const capabilities: Capability[] = [
   {
     id: "marketing",
     name: "Marketing",
-    description: "Campaigns and lead generation",
+    description: "Marketing campaigns and analytics",
     iconName: "TrendingUp",
     color: "bg-pink-600",
     type: "category",
     actions: [
       {
-        id: "view-campaigns",
-        label: "View Campaigns",
+        id: "view-analytics",
+        label: "View Analytics",
         iconName: "BarChart",
-        action: (context) => console.log("View campaigns", context)
+        action: (context) => console.log("View analytics", context)
       }
     ],
     children: [
@@ -167,22 +211,22 @@ export const capabilities: Capability[] = [
         name: "Campaigns",
         description: "Marketing campaigns and performance",
         iconName: "TrendingUp",
-        color: "bg-purple-500",
+        color: "bg-pink-500",
         type: "list",
         data: [
           {
-            id: "q1-launch",
+            id: "campaign-1",
             title: "Q1 Product Launch",
-            subtitle: "Multi-channel campaign",
-            value: "85% CTR",
-            metadata: { budget: 25000, spent: 18500, leads: 340 }
+            subtitle: "Active Campaign",
+            value: "45% CTR",
+            metadata: { budget: "$50K", spend: "$32K", leads: 1250 }
           },
           {
-            id: "webinar-series",
-            title: "Webinar Series",
-            subtitle: "Educational content",
-            value: "1,250 attendees",
-            metadata: { budget: 5000, spent: 4200, leads: 89 }
+            id: "campaign-2",
+            title: "Holiday Promotion",
+            subtitle: "Completed",
+            value: "38% CTR",
+            metadata: { budget: "$25K", spend: "$24K", leads: 890 }
           }
         ]
       }
@@ -193,21 +237,29 @@ export const capabilities: Capability[] = [
     name: "Projects",
     description: "Project management and tracking",
     iconName: "Briefcase",
-    color: "bg-indigo-600",
+    color: "bg-blue-600",
     type: "category",
     children: [
       {
         id: "active-projects",
         name: "Active Projects",
-        iconName: "Package",
-        color: "bg-green-500",
+        description: "Currently active projects",
+        iconName: "Activity",
+        color: "bg-blue-500",
         type: "list",
         data: [
           {
-            id: "proj-alpha",
-            title: "Project Alpha",
-            subtitle: "Q1 Initiative",
-            value: "75% complete",
+            id: "project-1",
+            title: "Website Redesign",
+            subtitle: "In Progress",
+            value: "75% Complete",
+            metadata: { team: "Design", deadline: "2024-02-15", status: "On Track" }
+          },
+          {
+            id: "project-2",
+            title: "Mobile App Development",
+            subtitle: "Planning",
+            value: "25% Complete",
             metadata: { team: "Engineering", deadline: "2024-03-31", status: "On Track" }
           }
         ]
@@ -238,24 +290,78 @@ export const capabilities: Capability[] = [
     ],
     children: [
       {
-        id: "projects",
-        name: "Projects",
-        description: "Active development projects",
-        iconName: "Briefcase",
+        id: "repositories",
+        name: "Repositories",
+        description: "Code repositories and projects",
+        iconName: "GitBranch",
+        color: "bg-purple-500",
+        type: "list",
+        actions: [
+          {
+            id: "create-repo",
+            label: "Create Repository",
+            iconName: "Plus",
+            action: (context) => console.log("Create repository", context)
+          },
+          {
+            id: "view-commits",
+            label: "View Commits",
+            iconName: "Git",
+            action: (context) => console.log("View commits", context)
+          }
+        ],
+        data: [
+          {
+            id: "repo-1",
+            title: "frontend-app",
+            subtitle: "React Application",
+            value: "Main Branch",
+            metadata: { language: "TypeScript", commits: 1247, contributors: 8 }
+          },
+          {
+            id: "repo-2",
+            title: "backend-api",
+            subtitle: "Node.js API",
+            value: "Main Branch",
+            metadata: { language: "Node.js", commits: 892, contributors: 5 }
+          }
+        ]
+      },
+      {
+        id: "tasks",
+        name: "Tasks",
+        description: "Development tasks and issues",
+        iconName: "CheckSquare",
         color: "bg-blue-500",
         type: "list",
         actions: [
           {
-            id: "add-project",
-            label: "Add Project",
+            id: "create-task",
+            label: "Create Task",
             iconName: "Plus",
-            action: (context) => console.log("Add project", context)
+            action: (context) => console.log("Create task", context)
           },
           {
-            id: "view-tasks",
-            label: "View Tasks",
-            iconName: "List",
-            action: (context) => console.log("View tasks", context)
+            id: "assign-task",
+            label: "Assign Task",
+            iconName: "UserPlus",
+            action: (context) => console.log("Assign task", context)
+          }
+        ],
+        data: [
+          {
+            id: "task-1",
+            title: "Fix authentication bug",
+            subtitle: "High Priority",
+            value: "In Progress",
+            metadata: { assignee: "John Doe", priority: "High", estimate: "4h" }
+          },
+          {
+            id: "task-2",
+            title: "Implement dark mode",
+            subtitle: "Feature Request",
+            value: "Todo",
+            metadata: { assignee: "Jane Smith", priority: "Medium", estimate: "8h" }
           }
         ]
       }
@@ -289,7 +395,7 @@ export const capabilities: Capability[] = [
         name: "Assets",
         description: "Design assets and components",
         iconName: "Package",
-        color: "bg-blue-500",
+        color: "bg-pink-500",
         type: "list",
         actions: [
           {
@@ -303,6 +409,22 @@ export const capabilities: Capability[] = [
             label: "Organize",
             iconName: "FolderOpen",
             action: (context) => console.log("Organize assets", context)
+          }
+        ],
+        data: [
+          {
+            id: "asset-1",
+            title: "Logo Variations",
+            subtitle: "Brand Assets",
+            value: "12 files",
+            metadata: { format: "SVG", size: "2.4MB", updated: "2024-01-20" }
+          },
+          {
+            id: "asset-2",
+            title: "UI Components",
+            subtitle: "Component Library",
+            value: "45 components",
+            metadata: { format: "Figma", size: "18.7MB", updated: "2024-01-22" }
           }
         ]
       }
@@ -336,7 +458,7 @@ export const capabilities: Capability[] = [
         name: "Features",
         description: "Product features and requirements",
         iconName: "Star",
-        color: "bg-yellow-500",
+        color: "bg-indigo-500",
         type: "list",
         actions: [
           {
@@ -351,33 +473,57 @@ export const capabilities: Capability[] = [
             iconName: "ArrowUp",
             action: (context) => console.log("Prioritize features", context)
           }
+        ],
+        data: [
+          {
+            id: "feature-1",
+            title: "User Authentication",
+            subtitle: "Security Feature",
+            value: "In Development",
+            metadata: { priority: "High", effort: "Large", impact: "High" }
+          },
+          {
+            id: "feature-2",
+            title: "Dark Mode",
+            subtitle: "UI Enhancement",
+            value: "Backlog",
+            metadata: { priority: "Medium", effort: "Small", impact: "Medium" }
+          }
         ]
       }
     ]
   }
 ]
 
-// Helper function to find capability by path
+// Helper functions
 export function findCapabilityByPath(path: string[]): Capability | null {
-  let current = capabilities
-  let result: Capability | null = null
+  let current = testCapabilities
+  let found: Capability | null = null
 
-  for (const id of path) {
-    const found = current.find(cap => cap.id === id)
+  for (const pathItem of path) {
+    found = current.find(cap => cap.id === pathItem || cap.name === pathItem) || null
     if (!found) return null
-    
-    result = found
     current = found.children || []
   }
 
-  return result
+  return found
 }
 
-// Helper function to get available actions for current context
 export function getContextualActions(context: CapabilityContext): CapabilityAction[] {
   const currentCapability = context.path[context.path.length - 1]
   if (!currentCapability?.actions) return []
 
   // Filter actions based on context - can be extended
   return currentCapability.actions
+}
+
+export function getCapabilityByTeam(teamName: string): Capability[] {
+  return testCapabilities.filter(cap => 
+    cap.name.toLowerCase().includes(teamName.toLowerCase()) ||
+    teamName.toLowerCase().includes(cap.name.toLowerCase())
+  )
+}
+
+export function getAllCapabilities(): Capability[] {
+  return testCapabilities
 }

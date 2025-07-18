@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { CreativeLayout } from "./creative-layout"
-import { mockSidebarItems, mockNotifications } from "./mock-data"
-import { businessUnits } from "../DigitalColleagues/test-data"
+import { DigitalColleageusLayout } from "./DigitalColleageusLayout"
+import { mockSidebarItems, mockNotifications } from "./test-data"
+import { businessUnits } from "./test-data"
 
-const meta: Meta<typeof CreativeLayout> = {
-  title: "DC/CreativeLayout",
-  component: CreativeLayout,
+const meta: Meta<typeof DigitalColleageusLayout> = {
+  title: "Digital Colleagues/DigitalColleageusLayout",
+  component: DigitalColleageusLayout,
   parameters: {
     layout: "fullscreen",
   },
@@ -17,7 +17,7 @@ const meta: Meta<typeof CreativeLayout> = {
 }
 
 export default meta
-type Story = StoryObj<typeof CreativeLayout>
+type Story = StoryObj<typeof DigitalColleageusLayout>
 
 export const Default: Story = {
   args: {

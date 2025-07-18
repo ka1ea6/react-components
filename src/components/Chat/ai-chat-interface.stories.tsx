@@ -26,7 +26,7 @@ const mockMessages: ChatMessage[] = [
 ]
 
 const meta: Meta<typeof AIChatInterface> = {
-  title: "DC/AIChatInterface",
+  title: "Chat/AIChatInterface",
   component: AIChatInterface,
   parameters: {
     layout: "padded",

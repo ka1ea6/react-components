@@ -3,19 +3,23 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Bot } from "lucide-react"
-import { CreativeLayout } from "../../dc-temp/creative-layout"
+import { DigitalColleageusLayout } from "../DigitalColleageusLayout"
 import { DashboardHero } from "../../Heros/DashboardHero"
 import { AppCard } from "../../.archive/app-card"
 import { FileList } from "../../Projects/file-list"
 import { ProjectCard } from "../../Projects/project-card"
 import { type BusinessUnit } from "../types"
 import {
-  mockSidebarItems,
+  
   mockApps,
   mockRecentFiles,
   mockTutorials,
-  mockNotifications,
+  
 } from "../../dc-temp/mock-data"
+import {
+  mockSidebarItems,
+  mockNotifications,
+} from "../test-data"
 import { mockProjectSummary } from "../test-data"
 import type { App, RecentFile, ProjectSummary } from "../types"
 // import { ColleaguesManagement } from "../colleagues-management"
@@ -279,7 +283,7 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
   }
 
   return (
-    <CreativeLayout
+    <DigitalColleageusLayout
       sidebarItems={mockSidebarItems}
       title={title}
       notifications={mockNotifications}
@@ -307,6 +311,6 @@ export default function Home({ title = "Digital Colleagues", businessUnits }: Ho
           {renderTabContent()}
         </motion.div>
       </AnimatePresence>
-    </CreativeLayout>
+    </DigitalColleageusLayout>
   )
 }
