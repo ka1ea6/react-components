@@ -11,7 +11,7 @@ import {
   SidebarTrigger,
   useSidebar 
 } from '@/components/ui/sidebar';
-import { Epic, Sprint, Project } from '../dc-temp/Views/ProjectView';
+import { Epic, Sprint, Project } from '../Projects/ProjectView';
 import { X, Plus, Edit2, Trash2, Calendar, Kanban, FileText, FolderOpen, Target, Layers } from 'lucide-react';
 
 interface ManagementSidebarProps {

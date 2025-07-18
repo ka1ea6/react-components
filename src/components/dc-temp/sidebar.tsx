@@ -8,9 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { BusinessUnitSwitcher } from "./business-unit-switcher"
+import { BusinessUnitSwitcher } from "../Projects/business-unit-switcher"
 import { cn } from "@/lib/utils"
-import { businessUnits, type BusinessUnit } from "./business-units"
+import { businessUnits, type BusinessUnit } from "../Projects/business-units"
 import type { SidebarItem } from "../DigitalColleagues/types"
 
 interface SidebarProps {

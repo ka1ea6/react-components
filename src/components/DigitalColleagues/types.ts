@@ -1,5 +1,47 @@
 import type React from "react"
 
+export interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+  department: string
+  avatar?: string
+  skills?: string[]
+  location?: string
+  phone?: string
+  timezone?: string
+  bio?: string
+}
+
+export interface Reminder {
+  id: string;
+  title: string;
+  description: string;
+  dueDate: Date;
+  dueTime?: string;
+  colleague: DigitalColleague;
+  isCompleted: boolean;
+  isRecurring: boolean;
+  recurrencePattern?: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  recurrenceInterval?: number; // e.g., every 2 weeks
+  recurrenceEndDate?: Date;
+  priority: 'low' | 'medium' | 'high';
+  reminderEnabled: boolean;
+  reminderMinutes?: number; // minutes before due time
+  createdAt: Date;
+  completedAt?: Date;
+  tags?: string[];
+}
+
+export interface BusinessUnit {
+  id: string
+  name: string
+  description: string
+  icon: React.ReactNode
+  color: string
+  accentColor: string
+}
 
 export interface Project {
   id: string;

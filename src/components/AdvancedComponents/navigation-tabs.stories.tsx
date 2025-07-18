@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { NavigationTabs } from './navigation-tabs'
 
 const meta: Meta<typeof NavigationTabs> = {
-  title: 'AdvancedComponents/NavigationTabs',
+  title: 'Advanced Components/NavigationTabs',
   component: NavigationTabs,
   parameters: {
     layout: 'centered',

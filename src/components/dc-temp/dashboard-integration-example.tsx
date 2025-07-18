@@ -5,7 +5,7 @@
  * Add this case to the renderTabContent switch statement in dashboardpage.tsx
  */
 
-import TeamsIndexView from './Views/TeamsIndexView'
+import TeamsIndexView from '../DigitalColleagues/Views/TeamsIndexView'
 import { mockTeamSummary } from '../DigitalColleagues/test-data'
 
 // This is the complete teams case for the dashboard

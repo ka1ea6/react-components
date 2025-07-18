@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { CreativeLayout } from "./creative-layout"
 import { mockSidebarItems, mockNotifications } from "./mock-data"
-import { businessUnits } from "./business-units"
+import { businessUnits } from "../DigitalColleagues/test-data"
 
 const meta: Meta<typeof CreativeLayout> = {
   title: "DC/CreativeLayout",

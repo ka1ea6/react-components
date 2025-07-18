@@ -6,7 +6,7 @@ import { Switch } from './switch'
  * Built on top of Radix UI Switch primitive with smooth animations and visual feedback.
  */
 const meta = {
-  title: 'AdvancedComponents/Switch',
+  title: 'Advanced Components/Switch',
   component: Switch,
   tags: ['autodocs'],
   argTypes: {
