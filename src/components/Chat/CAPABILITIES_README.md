@@ -1,6 +1,6 @@
-# AI Chat Interface with Capabilities System
+# Chat Interface with Capabilities System
 
-A flexible and extensible capability system for AI chat interfaces that allows users to navigate through hierarchical data structures and perform context-aware actions.
+A flexible and extensible capability system for AI chat interfaces built with Vercel AI SDK v5 that allows users to navigate through hierarchical data structures and perform context-aware actions.
 
 ## Features
 
@@ -9,12 +9,14 @@ A flexible and extensible capability system for AI chat interfaces that allows u
 - **Flexible Data Model**: Support for different data types and structures
 - **Compact UI**: Minimal, card-based interface that fits within chat streams
 - **Extensible**: Easy to add new capabilities and data sources
+- **AI SDK v5 Compatible**: Uses UIMessage and parts system directly
 
 ## Components
 
 ### Core Components
 
-- **`AIChatInterface`**: Main chat interface with integrated capability menu
+- **`ChatInterface`**: Main chat interface with integrated capability menu (uses UIMessage from AI SDK v5)
+- **`CopilotInterface`**: Container component that manages state and provides the interface
 - **`CapabilityMenu`**: The main capability navigation component
 - **`CapabilityCard`**: Individual capability cards with icons and descriptions
 - **`CapabilityDataList`**: List view for displaying data items
@@ -30,17 +32,22 @@ A flexible and extensible capability system for AI chat interfaces that allows u
 ### Basic Integration
 
 ```tsx
-import { AIChatInterface } from "./ai-chat-interface"
+import { CopilotInterface } from "./CopilotInterface"
 import { testCapabilities as capabilities } from "../../test-data/capabilities"
+import type { UIMessage } from 'ai'
 
 function MyChat() {
+  const [messages, setMessages] = useState<UIMessage[]>([])
+  
   return (
-    <AIChatInterface
+    <CopilotInterface
       messages={messages}
       input={input}
       selectedTeam={businessUnit}
       onInputChange={setInput}
       onSendMessage={handleSendMessage}
+      capabilities={capabilities}
+      enableFileUpload={true}
       // ... other props
     />
   )

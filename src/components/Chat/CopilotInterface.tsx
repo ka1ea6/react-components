@@ -8,22 +8,14 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Users, Upload, Paperclip, X, FileText, Image as ImageIcon, File } from "lucide-react"
 import { DigitalColleageusLayout } from "../DigitalColleagues/DigitalColleageusLayout"
 import { ChatSessionSidebar, type ChatSession } from "./chat-session-sidebar"
-import { AIChatInterface, type ChatMessage, type EnhancedChatMessage } from "../.archive/ai-chat-interface"
+import { ChatInterface } from "./ChatInterface"
 import type { Capability } from "../../test-data/capabilities"
 import type { BusinessUnit } from "../DigitalColleagues/types"
+import type { FileUpload } from "./types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-
-// File upload types
-export interface FileUpload {
-  id: string
-  file: File
-  preview?: string
-  status: 'pending' | 'uploading' | 'uploaded' | 'error'
-  progress?: number
-}
 
 interface CopilotInterfaceProps {
   // Required props (but made safe for testing)
@@ -171,75 +163,6 @@ export function CopilotInterface({
     setFileUploads(prev => prev.filter(upload => upload.id !== id))
   }
 
-  // Convert UIMessage to EnhancedChatMessage format for AIChatInterface
-  const convertedMessages = (messages || []).map((msg): EnhancedChatMessage => ({
-    id: msg.id,
-    content: extractContentFromParts(msg.parts),
-    type: msg.role === "user" ? "user" : "ai",
-    timestamp: new Date(), // UIMessage doesn't have timestamp, so we use current date
-    role: msg.role,
-    messageType: getMessageType(msg),
-    data: getMessageData(msg),
-    image: getImageData(msg),
-    file: getFileData(msg),
-    card: getCardData(msg),
-    references: getReferenceData(msg),
-    menu: getMenuData(msg),
-  }))
-
-  // Helper function to extract text content from parts
-  function extractContentFromParts(parts: any[]): string {
-    if (!parts || !Array.isArray(parts)) return ''
-    const textPart = parts.find(part => part?.type === 'text')
-    return textPart?.text || ''
-  }
-
-  // Helper functions to extract data from UIMessage annotations
-  function getMessageType(msg: UIMessage): "text" | "file" | "image" | "card" | "reference" | "menu" | "tool-invocation" {
-    const annotations = (msg as any).annotations
-    const type = annotations?.[0]?.type || 'text'
-    // Map to expected values
-    const typeMap: Record<string, "text" | "file" | "image" | "card" | "reference" | "menu" | "tool-invocation"> = {
-      'image': 'image',
-      'file': 'file', 
-      'card': 'card',
-      'reference': 'reference',
-      'menu': 'menu',
-      'tool-invocation': 'tool-invocation'
-    }
-    return typeMap[type] || 'text'
-  }
-
-  function getMessageData(msg: UIMessage): any {
-    const annotations = (msg as any).annotations
-    return annotations?.[0]?.data || (msg as any).data
-  }
-
-  function getImageData(msg: UIMessage) {
-    const annotations = (msg as any).annotations
-    return annotations?.find((a: any) => a.type === 'image')?.data
-  }
-
-  function getFileData(msg: UIMessage) {
-    const annotations = (msg as any).annotations
-    return annotations?.find((a: any) => a.type === 'file')?.data
-  }
-
-  function getCardData(msg: UIMessage) {
-    const annotations = (msg as any).annotations
-    return annotations?.find((a: any) => a.type === 'card')?.data
-  }
-
-  function getReferenceData(msg: UIMessage) {
-    const annotations = (msg as any).annotations
-    return annotations?.find((a: any) => a.type === 'reference')?.data?.references
-  }
-
-  function getMenuData(msg: UIMessage) {
-    const annotations = (msg as any).annotations
-    return annotations?.find((a: any) => a.type === 'menu')?.data
-  }
-
   const handleSendMessage = () => {
     if (!input.trim() && fileUploads.length === 0) return
 
@@ -315,14 +238,13 @@ export function CopilotInterface({
               />
             </div>
             <div className="flex-1 h-full p-2">
-              <AIChatInterface
-                messages={convertedMessages}
+              <ChatInterface
+                messages={messages || []}
                 input={input}
                 isTyping={isTyping}
                 selectedTeam={selectedTeam}
                 currentSessionTitle={currentSession?.title}
                 capabilities={capabilities || []}
-                showCapabilities={showCapabilities}
                 onInputChange={setInput}
                 onSendMessage={handleSendMessage}
                 onKeyPress={handleKeyPress}

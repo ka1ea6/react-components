@@ -14,7 +14,9 @@ import type { BusinessUnit } from "../DigitalColleagues/types"
 import { CapabilityMenu } from "../Chat/capability-menu"
 import { getContextualActions } from "../../test-data/capabilities"
 import type { CapabilityContext, Capability, CapabilityAction } from "../../test-data/capabilities"
+import type { EnhancedMessage, FileUpload } from "../Chat/types"
 
+// Legacy interface for backward compatibility
 export interface ChatMessage {
   id: string
   content: string
@@ -75,7 +77,7 @@ interface AIChatInterfaceProps {
   onInputChange: (value: string) => void
   onSendMessage: () => void
   onKeyPress?: (e: React.KeyboardEvent) => void
-  fileUploads?: any[]
+  fileUploads?: FileUpload[]
   isDragOver?: boolean
   enableFileUpload?: boolean
   onFileUpload?: (files: FileList | null) => void
@@ -359,7 +361,7 @@ export function AIChatInterface({
       {fileUploads && fileUploads.length > 0 && (
         <div className="border-t p-4 bg-muted/10">
           <div className="flex flex-wrap gap-2">
-            {fileUploads.map((upload: any) => (
+            {fileUploads.map((upload: FileUpload) => (
               <div key={upload.id} className="flex items-center gap-2 bg-background rounded-lg p-2 border">
                 <span className="text-sm font-medium">{upload.file.name}</span>
                 <span className="text-xs text-muted-foreground">
