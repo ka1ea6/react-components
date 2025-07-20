@@ -143,6 +143,40 @@ export function FocusedChatCopilot() {
 }
 
 /**
+ * With file upload capabilities
+ */
+export function FileUploadAICopilot() {
+  // Custom useChat hook with specific configuration for file handling
+  const customChat = useChat({
+    // Custom configuration for file uploads
+    onError: (error) => console.error('File upload chat error:', error),
+    onFinish: (message) => console.log('Message with files completed:', message),
+  })
+
+  return (
+    <CopilotInterface
+      useCustomChat={customChat}
+      enableAI={true}
+      enableFileUpload={true}
+      maxFileSize={10} // 10MB limit
+      allowedFileTypes={['image/*', 'text/*', 'application/pdf']}
+      businessUnits={businessUnits}
+      capabilities={capabilities}
+      sidebarItems={mockSidebarItems}
+      notifications={mockNotifications}
+      sessions={mockChatSessions}
+      onNewChat={() => {
+        customChat.setMessages([])
+        console.log('New file upload chat started - messages cleared')
+      }}
+      onSessionSelect={(session) => console.log('Session selected:', session)}
+      onSessionDelete={(sessionId) => console.log('Session deleted:', sessionId)}
+      title="AI Copilot with File Uploads"
+    />
+  )
+}
+
+/**
  * Required API Route Example
  * 
  * Create this file at: app/api/chat/route.ts (App Router) or pages/api/chat.ts (Pages Router)

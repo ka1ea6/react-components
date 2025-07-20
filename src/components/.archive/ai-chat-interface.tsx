@@ -411,6 +411,32 @@ export function AIChatInterface({
               <Paperclip className="h-4 w-4" />
             </Button>
           )}
+          {/* 
+            To integrate file uploads with AI SDK useChat hook, replace the onClick handler with:
+            
+            const { sendMessage } = useChat()
+            
+            const handleSendWithFiles = () => {
+              if (!input.trim() && fileUploads.length === 0) return
+              
+              // Convert FileUpload[] to FileList for AI SDK
+              const fileList = fileUploads.length > 0 ? createFileList(fileUploads.map(upload => upload.file)) : undefined
+              
+              // Send message with files to AI SDK
+              sendMessage({ text: input, files: fileList })
+              
+              // Clear input and files
+              onInputChange('')
+              setFileUploads([])
+            }
+            
+            // Helper function to create FileList from File objects
+            const createFileList = (files: File[]): FileList => {
+              const dataTransfer = new DataTransfer()
+              files.forEach(file => dataTransfer.items.add(file))
+              return dataTransfer.files
+            }
+          */}
           <Button
             onClick={onSendMessage}
             disabled={!input.trim() && (!fileUploads || fileUploads.length === 0) || isTyping}

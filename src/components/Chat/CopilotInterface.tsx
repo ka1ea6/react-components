@@ -184,14 +184,22 @@ export function CopilotInterface({
     if (!currentInput.trim() && fileUploads.length === 0) return
 
     if (chatHook) {
-      // Use the AI SDK's sendMessage method
-      const userMessage: UIMessage = {
-        id: Date.now().toString(),
-        role: 'user',
-        parts: [{ type: 'text', text: currentInput }]
-      }
+      // Convert FileUpload[] to FileList for AI SDK
+      const fileList = fileUploads.length > 0 ? createFileList(fileUploads.map(upload => upload.file)) : undefined
       
-      chatHook.sendMessage(userMessage)
+      // Use the AI SDK's sendMessage method with files
+      chatHook.sendMessage(
+        { text: currentInput, files: fileList },
+        // Optional: Add custom body fields if needed
+        {
+          body: {
+            // Add any additional data you want to send to your API
+            timestamp: Date.now(),
+            // You can add other metadata here
+          }
+        }
+      )
+      
       setLocalInput('') // Clear the local input
     } else {
       // Fallback for demo/testing purposes
@@ -208,6 +216,13 @@ export function CopilotInterface({
     }
 
     setFileUploads([])
+  }
+
+  // Helper function to create a FileList from File objects
+  const createFileList = (files: File[]): FileList => {
+    const dataTransfer = new DataTransfer()
+    files.forEach(file => dataTransfer.items.add(file))
+    return dataTransfer.files
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
