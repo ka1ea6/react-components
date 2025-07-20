@@ -209,17 +209,17 @@ export function ChatInterface({
               return (
                 <div key={index} className="mb-2 p-2 bg-background/50 rounded-lg">
                   <div className="flex items-center gap-2">
-                    {getFileIcon(filePart.mimeType || 'application/octet-stream')}
+                    {getFileIcon(filePart.mediaType || 'application/octet-stream')}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">
-                        {filePart.name || filePart.url?.split('/').pop() || 'File'}
+                        {filePart.filename || filePart.url?.split('/').pop() || 'File'}
                       </p>
-                      {filePart.size && (
+                      {/* {filePart.size && (
                         <p className="text-xs opacity-70">{formatFileSize(filePart.size)}</p>
                       )}
                       {filePart.mimeType && (
                         <p className="text-xs opacity-70">{filePart.mimeType}</p>
-                      )}
+                      )} */}
                     </div>
                     {filePart.url && (
                       <Button
@@ -403,7 +403,7 @@ export function ChatInterface({
   }
 
   return (
-    <Card className={`h-full flex flex-col shadow-sm ${className || ""}`}>
+    <Card className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ""}`}>
       {/* Chat Messages */}
       <ScrollArea 
         ref={scrollAreaRef}

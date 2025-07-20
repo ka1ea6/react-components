@@ -261,6 +261,7 @@ export const WithCapabilitiesDemo: Story = {
   name: 'Capabilities Demo',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'sales',
     title: 'Sales Copilot with Capabilities',
     messages: [
@@ -309,6 +310,7 @@ export const WithActiveChat: Story = {
   name: 'Active Chat Session',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'design',
     title: 'Design Copilot - Active Session',
     messages: [
@@ -452,6 +454,7 @@ export const AllCapabilitiesShowcase: Story = {
   name: 'All Capabilities Showcase',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'sales',
     title: 'All Capabilities Showcase',
     messages: [
@@ -500,6 +503,7 @@ export const InteractiveCapabilities: Story = {
   name: 'Interactive Capabilities',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'marketing',
     title: 'Marketing Copilot - Interactive',
     messages: [
@@ -548,6 +552,7 @@ export const EnhancedWithFileUpload: Story = {
   name: 'Enhanced with File Upload',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'engineering',
     title: 'Enhanced Engineering Copilot',
     enableFileUpload: true,
@@ -619,6 +624,7 @@ export const LongChatHistory: Story = {
   name: 'Long Chat History',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'engineering',
     title: 'Engineering Copilot',
     messages: [
@@ -707,6 +713,7 @@ export const EnhancedFeaturesShowcase: Story = {
   name: 'Enhanced Features Showcase',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'engineering',
     title: 'Enhanced AI Assistant',
     enableFileUpload: true,
@@ -818,6 +825,7 @@ export const FileUploadDemo: Story = {
   name: 'File Upload Demo',
   args: {
     ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
     initialTeam: 'design',
     title: 'File Upload Assistant',
     enableFileUpload: true,
@@ -977,6 +985,152 @@ export const NoDataProvided: Story = {
     docs: {
       description: {
         story: 'Tests the component with all empty data arrays to ensure it handles undefined/empty state gracefully without errors.',
+      },
+    },
+  },
+}
+
+export const LongTextMessages: Story = {
+  name: 'Long Text Messages',
+  args: {
+    ...baseArgs,
+    enableAI: false, // Disable AI to use static messages
+    initialTeam: 'design',
+    title: 'Design Copilot - Long Messages Test',
+    messages: [
+      {
+        id: "1",
+        role: "user",
+        parts: [
+          {
+            type: "text",
+            text: "Can you provide me with a comprehensive overview of modern design systems, including their key components, implementation strategies, and best practices for maintaining consistency across large-scale digital products and platforms?"
+          }
+        ]
+      },
+      {
+        id: "2",
+        role: "assistant",
+        parts: [
+          {
+            type: "text",
+            text: `Absolutely! Here's a comprehensive overview of modern design systems:
+
+**What is a Design System?**
+
+A design system is a collection of reusable components, patterns, and guidelines that enable teams to build consistent, scalable user interfaces across products and platforms. It serves as the single source of truth for design decisions, bridging the gap between design and development.
+
+**Key Components of a Design System:**
+
+1. **Foundation Elements**
+   • Color palettes with semantic naming conventions
+   • Typography scales and font families
+   • Spacing and grid systems
+   • Iconography and illustration styles
+   • Motion and interaction principles
+
+2. **Component Library**
+   • Basic UI components (buttons, inputs, cards, etc.)
+   • Complex patterns (navigation, forms, modals)
+   • Layout components (headers, footers, sidebars)
+   • Data visualization components
+
+3. **Documentation**
+   • Usage guidelines and best practices
+   • Code examples and implementation guides
+   • Accessibility standards and requirements
+   • Brand voice and tone guidelines
+
+4. **Tokens**
+   • Design tokens for cross-platform consistency
+   • Semantic color definitions
+   • Spacing and sizing values
+   • Animation timing and easing functions
+
+**Implementation Strategies:**
+
+1. **Start Small, Scale Gradually**
+   Begin with core components and foundational elements before expanding to complex patterns. This allows for validation and refinement before wide adoption.
+
+2. **Cross-functional Collaboration**
+   Involve designers, developers, product managers, and content strategists from the beginning to ensure the system meets everyone's needs.
+
+3. **Tool Integration**
+   • Design tools: Figma, Sketch, Adobe XD
+   • Development: React, Vue, Angular component libraries
+   • Documentation: Storybook, Zeroheight, Notion
+   • Version control: Git for both design and code
+
+4. **Governance Model**
+   Establish clear processes for:
+   • Contributing new components
+   • Updating existing patterns
+   • Deprecating outdated elements
+   • Quality assurance and review
+
+**Best Practices for Maintenance:**
+
+1. **Version Control**
+   Treat your design system like any software product with proper versioning, changelogs, and migration guides.
+
+2. **Regular Audits**
+   Conduct quarterly reviews to identify inconsistencies, unused components, and opportunities for improvement.
+
+3. **Community Building**
+   Foster a community of contributors and users through:
+   • Regular office hours and workshops
+   • Feedback channels and feature requests
+   • Success stories and case studies
+
+4. **Measurement and Analytics**
+   Track adoption metrics, component usage, and developer satisfaction to guide future improvements.
+
+**Challenges and Solutions:**
+
+• **Adoption Resistance**: Combat by showing clear ROI and providing excellent developer experience
+• **Maintenance Overhead**: Invest in automation and clear governance processes
+• **Platform Differences**: Use design tokens and platform-specific implementations
+• **Keeping Current**: Regular updates and staying aligned with design trends
+
+**Tools and Technologies:**
+
+• **Design**: Figma with design system libraries, Tokens Studio
+• **Development**: Styled-components, Tailwind CSS, Emotion
+• **Documentation**: Storybook, Chromatic for visual testing
+• **Distribution**: NPM packages, CDNs, or internal registries
+
+Modern design systems are living, breathing entities that evolve with your product and organization. The key to success lies in treating them as products themselves, with dedicated resources, clear ownership, and continuous improvement based on user feedback.
+
+Would you like me to dive deeper into any specific aspect of design systems?`
+          }
+        ]
+      },
+      {
+        id: "3",
+        role: "user",
+        parts: [
+          {
+            type: "text",
+            text: "This is a test of an extremely long user message to ensure that the chat interface properly handles text wrapping and width constraints. When users write very lengthy messages that contain multiple sentences, paragraphs, and extensive content, the interface should maintain proper formatting and not cause the layout to break or become too wide. The message bubble should respect the maximum width constraints while ensuring that the text is still readable and properly formatted. This is especially important in professional environments where users might paste large amounts of text, write detailed specifications, or engage in lengthy discussions about complex topics. The chat interface should gracefully handle all of these scenarios while maintaining a clean, professional appearance that doesn't compromise the overall user experience or visual design of the application."
+          }
+        ]
+      },
+      {
+        id: "4",
+        role: "assistant",
+        parts: [
+          {
+            type: "text",
+            text: "Perfect! Your long message demonstrates exactly what we needed to test. As you can see, the chat interface now properly handles very long text messages by:\n\n• **Width Constraints**: The overall chat container is limited to max-w-4xl to prevent excessive horizontal expansion\n• **Text Wrapping**: Using break-words CSS property to ensure long words don't overflow\n• **Message Bubbles**: Individual messages respect the max-w-[80%] constraint while maintaining readability\n• **Whitespace Handling**: The whitespace-pre-wrap property preserves intentional line breaks\n• **Visual Hierarchy**: Long messages maintain proper spacing and visual separation\n\nThese improvements ensure that whether users are discussing brief topics or engaging in detailed technical conversations, the interface remains functional, visually appealing, and easy to read across all device sizes."
+          }
+        ]
+      }
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates how the CopilotInterface handles very long text messages with proper width constraints, text wrapping, and formatting to ensure readability and visual consistency.',
       },
     },
   },
