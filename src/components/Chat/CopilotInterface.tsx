@@ -104,11 +104,6 @@ export function CopilotInterface({
     accentColor: 'bg-gray-600'
   }
   
-  const [selectedTeam, setSelectedTeam] = useState(() => {
-    if (safeBusinessUnits.length === 0) return fallbackBusinessUnit
-    return safeBusinessUnits.find(unit => unit.id === initialTeam) || safeBusinessUnits[0]
-  })
-  
   const [currentBusinessUnit, setCurrentBusinessUnit] = useState<BusinessUnit>(() => {
     if (safeBusinessUnits.length === 0) return fallbackBusinessUnit
     return safeBusinessUnits.find(unit => unit.id === initialTeam) || safeBusinessUnits[0]
@@ -191,7 +186,6 @@ export function CopilotInterface({
   const handleBusinessUnitChangeInternal = (unit: BusinessUnit) => {
     if (unit) {
       setCurrentBusinessUnit(unit)
-      setSelectedTeam(unit)
       onBusinessUnitChange?.(unit)
     }
   }
@@ -242,7 +236,6 @@ export function CopilotInterface({
                 messages={messages || []}
                 input={input}
                 isTyping={isTyping}
-                selectedTeam={selectedTeam}
                 currentSessionTitle={currentSession?.title}
                 capabilities={capabilities || []}
                 onInputChange={setInput}

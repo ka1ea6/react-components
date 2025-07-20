@@ -14,7 +14,7 @@ import type { BusinessUnit } from "../DigitalColleagues/types"
 import { CapabilityMenu } from "../Chat/capability-menu"
 import { getContextualActions } from "../../test-data/capabilities"
 import type { CapabilityContext, Capability, CapabilityAction } from "../../test-data/capabilities"
-import type { EnhancedMessage, FileUpload } from "../Chat/types"
+import type { FileUpload } from "../Chat/types"
 
 // Legacy interface for backward compatibility
 export interface ChatMessage {
