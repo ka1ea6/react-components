@@ -79,7 +79,7 @@ export function CopilotInterface({
   onNewChat,
   onSessionSelect,
   onSessionDelete,
-  onSessionEdit = () => console.log("Session edit not implemented"),
+  onSessionEdit = () => {},
   onBusinessUnitChange = () => {},
   onNotificationRemove = () => {},
   onRemoveAll = () => {},
