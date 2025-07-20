@@ -116,7 +116,53 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The default copilot interface with enhanced layout features: logo shows in header when sidebar is closed, functional copilot and notification buttons, and acknowledgeable notifications.',
+        story: 'The default copilot interface with enhanced layout features: logo shows in header when sidebar is closed, functional copilot and notification buttons, and acknowledgeable notifications. Uses static messages for demo purposes.',
+      },
+    },
+  },
+}
+
+export const WithAIIntegration: Story = {
+  name: 'With AI Integration (Enabled by Default)',
+  args: {
+    ...baseArgs,
+    // AI is enabled by default - you just need to provide configuration
+    aiConfig: {
+      // In a real app, this would connect to your AI service
+      onError: (error: Error) => action('ai-error')(error),
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'CopilotInterface with AI enabled by default. Simply provide `aiConfig` to configure the AI behavior. In a real application, this would connect to your AI service endpoint.',
+      },
+    },
+  },
+}
+
+export const DisabledAIDemo: Story = {
+  name: 'AI Disabled (Demo Mode)',
+  args: {
+    ...baseArgs,
+    enableAI: false,
+    messages: [
+      {
+        id: "1",
+        role: "assistant",
+        parts: [
+          {
+            type: "text",
+            text: "AI is disabled in this demo. This component can work with or without AI integration - perfect for testing and development!"
+          }
+        ],
+      },
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'CopilotInterface with AI disabled, using static messages instead. This is perfect for development, testing, and Storybook demos.',
       },
     },
   },

@@ -2,6 +2,7 @@
 
 import type React from "react"
 import type { UIMessage } from "ai"
+import { useChat } from '@ai-sdk/react'
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -18,6 +19,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 interface CopilotInterfaceProps {
+  // AI Chat Integration - optional configuration and override
+  aiConfig?: Parameters<typeof useChat>[0] // AI configuration options
+  useCustomChat?: ReturnType<typeof useChat> // Override with custom chat instance
+  enableAI?: boolean // Enable/disable AI functionality (default: true)
+  
   // Required props (but made safe for testing)
   messages?: UIMessage[]
   businessUnits?: BusinessUnit[]
@@ -55,6 +61,11 @@ interface CopilotInterfaceProps {
 }
 
 export function CopilotInterface({
+  // AI Chat Integration
+  aiConfig,
+  useCustomChat,
+  enableAI = true,
+  
   // Required props with defaults for safety
   messages = [],
   businessUnits = [],
@@ -90,8 +101,17 @@ export function CopilotInterface({
   actionIcon = <Users className="mr-2 h-4 w-4" />,
   actionText = "Collaborate",
 }: CopilotInterfaceProps) {
-  const [input, setInput] = useState("")
+  // AI Chat Integration - use internal useChat by default, allow override
+  const internalChat = useChat(aiConfig || {})
+  const chatHook = enableAI ? (useCustomChat || internalChat) : null
+  
+  const [localInput, setLocalInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  
+  // Use chat hook values if available, otherwise use props or local state
+  const currentMessages = chatHook?.messages || messages
+  const currentInput = localInput // Always use local input since useChat doesn't manage input state
+  const currentIsLoading = (chatHook?.status === 'submitted') || isTyping
   
   // Safe initialization of business units with fallback
   const safeBusinessUnits = businessUnits || []
@@ -159,21 +179,33 @@ export function CopilotInterface({
   }
 
   const handleSendMessage = () => {
-    if (!input.trim() && fileUploads.length === 0) return
+    if (!currentInput.trim() && fileUploads.length === 0) return
 
-    // Note: In a real implementation, you would handle the message sending
-    // through props callbacks to the parent component
-    console.log("Message to send:", input)
-    console.log("Files to upload:", fileUploads)
+    if (chatHook) {
+      // Use the AI SDK's sendMessage method
+      const userMessage: UIMessage = {
+        id: Date.now().toString(),
+        role: 'user',
+        parts: [{ type: 'text', text: currentInput }]
+      }
+      
+      chatHook.sendMessage(userMessage)
+      setLocalInput('') // Clear the local input
+    } else {
+      // Fallback for demo/testing purposes
+      console.log("Message to send:", currentInput)
+      console.log("Files to upload:", fileUploads)
 
-    setInput("")
+      setLocalInput("")
+      setIsTyping(true)
+
+      // Simulate typing indicator
+      setTimeout(() => {
+        setIsTyping(false)
+      }, 1500)
+    }
+
     setFileUploads([])
-    setIsTyping(true)
-
-    // Simulate typing indicator
-    setTimeout(() => {
-      setIsTyping(false)
-    }, 1500)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -181,6 +213,11 @@ export function CopilotInterface({
       e.preventDefault()
       handleSendMessage()
     }
+  }
+
+  const handleInputChange = (value: string) => {
+    // Always use local state for input since useChat doesn't manage input
+    setLocalInput(value)
   }
 
   const handleBusinessUnitChangeInternal = (unit: BusinessUnit) => {
@@ -233,12 +270,12 @@ export function CopilotInterface({
             </div>
             <div className="flex-1 h-full p-2">
               <ChatInterface
-                messages={messages || []}
-                input={input}
-                isTyping={isTyping}
+                messages={currentMessages || []}
+                input={currentInput}
+                isTyping={currentIsLoading}
                 currentSessionTitle={currentSession?.title}
                 capabilities={capabilities || []}
-                onInputChange={setInput}
+                onInputChange={handleInputChange}
                 onSendMessage={handleSendMessage}
                 onKeyPress={handleKeyPress}
                 fileUploads={fileUploads}
