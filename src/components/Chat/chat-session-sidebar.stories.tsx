@@ -7,29 +7,21 @@ const mockSessions: ChatSession[] = [
     id: "1",
     title: "Logo Design Review",
     lastMessage: "The color palette looks great! Let's refine the typography...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
-    teamId: "design",
   },
   {
     id: "2",
     title: "React Component Optimization",
     lastMessage: "Here's how you can improve the performance of your component...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-    teamId: "engineering",
   },
   {
     id: "3",
     title: "Campaign Strategy Discussion",
     lastMessage: "The target audience analysis shows promising results...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    teamId: "marketing",
   },
   {
     id: "4",
     title: "Product Roadmap Planning",
     lastMessage: "Based on user feedback, I recommend prioritizing...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
-    teamId: "product",
   },
 ]
 

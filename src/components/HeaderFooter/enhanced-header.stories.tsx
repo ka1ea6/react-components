@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { EnhancedHeader } from "./enhanced-header"
 
 const meta: Meta<typeof EnhancedHeader> = {
-  title: "DC/EnhancedHeader",
+  title: "Header/EnhancedHeader",
   component: EnhancedHeader,
   parameters: {
     layout: "fullscreen",

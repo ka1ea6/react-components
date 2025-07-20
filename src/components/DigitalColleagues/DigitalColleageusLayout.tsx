@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Sidebar } from "../AdvancedComponents/sidebar"
+import { Sidebar } from "./sidebar"
 import { AppHeader } from "../AdvancedComponents/app-header"
 import type { SidebarItem, BusinessUnit } from "./types"
 import type { Notification } from "../AdvancedComponents/notifications-panel"
@@ -18,6 +18,7 @@ interface DigitalColleageusLayoutProps {
   notifications?: Notification[]
   currentBusinessUnit?: BusinessUnit
   onBusinessUnitChange?: (unit: BusinessUnit) => void
+  onSearch?: (query: string) => void
   businessUnits?: BusinessUnit[]
   activeTab?: string
   onTabChange?: (tab: string) => void
@@ -52,6 +53,7 @@ export function DigitalColleageusLayout({
   notifications = [],
   currentBusinessUnit = businessUnits[0], // Default to Design unit
   onBusinessUnitChange,
+  onSearch,
   businessUnits: businessUnitsProp = businessUnits,
   activeTab,
   onTabChange,
@@ -104,6 +106,7 @@ export function DigitalColleageusLayout({
           onClose={() => setMobileMenuOpen(false)}
           currentBusinessUnit={localBusinessUnit}
           onBusinessUnitChange={handleBusinessUnitChange}
+          onSearch={onSearch}
           logo={logo}
           appName={appName}
           tagline={tagline}
@@ -118,6 +121,7 @@ export function DigitalColleageusLayout({
           isMobile={false}
           currentBusinessUnit={localBusinessUnit}
           onBusinessUnitChange={handleBusinessUnitChange}
+          onSearch={onSearch}
           logo={logo}
           appName={appName}
           tagline={tagline}

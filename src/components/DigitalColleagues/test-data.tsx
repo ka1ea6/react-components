@@ -13,6 +13,7 @@ const createKnowledgeDocument = (title: string): import('./types').KnowledgeDocu
 
 export const mockSidebarItems: SidebarItem[] = [
   {
+    id: "home",
     title: "Home",
     icon: <Home />,
     isActive: true,
@@ -39,26 +40,34 @@ export const mockSidebarItems: SidebarItem[] = [
   //   ],
   // },
     {
+    id: "teams",
     title: "Teams",
     icon: <Users />,
-    url: "/teams",
+    maxItems: 2,
     items: [
-      { title: "Design", url: "#" },
-      { title: "Marketing", url: "#" },
-      { title: "Finance", url: "#" },
+      { id: "design", title: "Design", url: "#" },
+      { id: "marketing", title: "Marketing", url: "#" },
+      { id: "finance", title: "Finance", url: "#" },
+      { id: "engineering", title: "Engineering", url: "#" },
+      { id: "sales", title: "Sales", url: "#" },
     ],
   },
   {
+    id: "projects",
     title: "Projects",
     icon: <Layers />,
     badge: "4",
+    maxItems: 2,
     items: [
-      { title: "Active Projects", url: "#", badge: "4" },
-      { title: "Archived", url: "#" },
-      { title: "Templates", url: "#" },
+      { id: "active-projects", title: "Active Projects", url: "#", badge: "4" },
+      { id: "archived", title: "Archived", url: "#" },
+      { id: "templates", title: "Templates", url: "#" },
+      { id: "drafts", title: "Drafts", url: "#" },
+      { id: "shared", title: "Shared with Me", url: "#", badge: "2" },
     ],
   },
   {
+    id: "copilot",
     title: "Copilot",
     icon: <Bot />,
     url: "/copilot",
@@ -95,6 +104,7 @@ export const mockSidebarItems: SidebarItem[] = [
   //   ],
   // },
   {
+    id: "knowledge",
     title: "Knowledge",
     icon: <FileText />,
     url: "/knowledge",

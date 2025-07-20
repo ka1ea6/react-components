@@ -136,12 +136,15 @@ export interface CommunityPost {
 }
 
 export interface SidebarItem {
+  id: string
   title: string
   icon: React.ReactNode
   isActive?: boolean
   badge?: string
   url?: string
+  maxItems?: number
   items?: {
+    id: string
     title: string
     url: string
     badge?: string

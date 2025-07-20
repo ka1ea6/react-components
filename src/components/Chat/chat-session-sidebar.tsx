@@ -11,8 +11,6 @@ export interface ChatSession {
   id: string
   title: string
   lastMessage: string
-  timestamp: Date
-  teamId: string
 }
 
 interface ChatSessionSidebarProps {
@@ -36,16 +34,6 @@ export function ChatSessionSidebar({
   onSessionDelete,
   className,
 }: ChatSessionSidebarProps) {
-  const formatRelativeTime = (date: Date) => {
-    const now = new Date()
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60))
-
-    if (diffInMinutes < 1) return "Just now"
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`
-    return `${Math.floor(diffInMinutes / 1440)}d ago`
-  }
-
   return (
     <div className={`space-y-4 ${className || ""}`}>
       {/* Recent Chats */}
@@ -68,9 +56,7 @@ export function ChatSessionSidebar({
             {sessions.length === 0 ? (
               <div className="p-4 text-center text-sm text-muted-foreground">No chat sessions yet</div>
             ) : (
-              sessions.map((session) => {
-                const team = teams.find((unit) => unit.id === session.teamId)
-                return (
+              sessions.map((session) => (
                   <div
                     key={session.id}
                     className={cn(
@@ -94,9 +80,6 @@ export function ChatSessionSidebar({
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-sm truncate">{session.title}</h4>
                           <div className="flex items-center gap-1">
-                            <span className="text-xs text-muted-foreground flex-shrink-0">
-                              {formatRelativeTime(session.timestamp)}
-                            </span>
                             {/* Action Buttons */}
                             <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                               {onSessionEdit && (
@@ -133,7 +116,7 @@ export function ChatSessionSidebar({
                     </div>
                   </div>
                 )
-              })
+              )
             )}
           </div>
         </ScrollArea>
