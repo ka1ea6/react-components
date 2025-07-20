@@ -32,6 +32,7 @@ interface DigitalColleageusLayoutProps {
   logo?: string
   appName?: string
   tagline?: string
+  sidebarInitiallyClosed?: boolean
 }
 
 const businessUnits: BusinessUnit[] = [
@@ -66,8 +67,9 @@ export function DigitalColleageusLayout({
   logo = "/headerlogo.png",
   appName = "Nuvia",
   tagline = "Collaboration Platform",
+  sidebarInitiallyClosed = false,
 }: DigitalColleageusLayoutProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(!sidebarInitiallyClosed)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [localBusinessUnit, setLocalBusinessUnit] = useState(currentBusinessUnit)
 
@@ -77,7 +79,7 @@ export function DigitalColleageusLayout({
   }
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-background w-[]">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl  bg-background w-[]">
       {/* Animated gradient background
       <motion.div
         className="flex h-full flex-col overflow-hidden rounded-xl border bg-background w-3"

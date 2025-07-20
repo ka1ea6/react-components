@@ -71,6 +71,10 @@ const meta: Meta<typeof CopilotInterface> = {
       control: 'text',
       description: 'The title displayed in the header',
     },
+    sidebarInitiallyClosed: {
+      control: 'boolean',
+      description: 'Whether the sidebar should start closed',
+    },
   },
 }
 
@@ -163,6 +167,23 @@ export const DisabledAIDemo: Story = {
     docs: {
       description: {
         story: 'CopilotInterface with AI disabled, using static messages instead. This is perfect for development, testing, and Storybook demos.',
+      },
+    },
+  },
+}
+
+export const SidebarInitiallyClosed: Story = {
+  name: 'Sidebar Initially Closed',
+  args: {
+    ...baseArgs,
+    messages: defaultMessages,
+    sidebarInitiallyClosed: true,
+    title: 'Copilot with Closed Sidebar',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'CopilotInterface with the sidebar initially closed. Users can still toggle it open using the menu button. This is useful for maximizing the chat area on smaller screens or when focusing on conversation.',
       },
     },
   },

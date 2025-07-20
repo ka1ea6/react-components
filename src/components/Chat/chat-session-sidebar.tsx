@@ -35,9 +35,9 @@ export function ChatSessionSidebar({
   className,
 }: ChatSessionSidebarProps) {
   return (
-    <div className={`space-y-4 ${className || ""}`}>
+    <div className={`space-y-4 h-full ${className || ""}`}>
       {/* Recent Chats */}
-      <Card className="shadow-sm">
+      <Card className="shadow-sm h-full">
         <div className="p-4 border-b">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-sm flex items-center gap-2">

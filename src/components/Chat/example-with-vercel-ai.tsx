@@ -122,6 +122,27 @@ export function AdvancedAICopilot() {
 }
 
 /**
+ * Focused chat experience with sidebar initially closed
+ */
+export function FocusedChatCopilot() {
+  return (
+    <CopilotInterface
+      // AI enabled by default
+      sidebarInitiallyClosed={true}
+      businessUnits={businessUnits}
+      capabilities={capabilities}
+      sidebarItems={mockSidebarItems}
+      notifications={mockNotifications}
+      sessions={mockChatSessions}
+      onNewChat={() => console.log('New chat started')}
+      onSessionSelect={(session) => console.log('Session selected:', session)}
+      onSessionDelete={(sessionId) => console.log('Session deleted:', sessionId)}
+      title="Focused AI Chat"
+    />
+  )
+}
+
+/**
  * Required API Route Example
  * 
  * Create this file at: app/api/chat/route.ts (App Router) or pages/api/chat.ts (Pages Router)

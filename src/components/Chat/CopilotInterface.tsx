@@ -58,6 +58,7 @@ interface CopilotInterfaceProps {
   tagline?: string
   actionIcon?: React.ReactNode
   actionText?: string
+  sidebarInitiallyClosed?: boolean
 }
 
 export function CopilotInterface({
@@ -100,6 +101,7 @@ export function CopilotInterface({
   tagline = "AI-Powered Workspace",
   actionIcon = <Users className="mr-2 h-4 w-4" />,
   actionText = "Collaborate",
+  sidebarInitiallyClosed = false,
 }: CopilotInterfaceProps) {
   // AI Chat Integration - use internal useChat by default, allow override
   const internalChat = useChat(aiConfig || {})
@@ -246,6 +248,7 @@ export function CopilotInterface({
       logo={logo}
       appName={appName}
       tagline={tagline}
+      sidebarInitiallyClosed={sidebarInitiallyClosed}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -257,7 +260,7 @@ export function CopilotInterface({
           transition={{ duration: 0.2 }}
         >
           <div className="h-full flex">
-            <div className="w-80 bg-muted/50 flex-shrink-0 h-full p-2">
+            <div className="w-80 flex-shrink-0 h-full p-2">
               <ChatSessionSidebar
                 sessions={sessions || []}
                 currentSession={currentSession}

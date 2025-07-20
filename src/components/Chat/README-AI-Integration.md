@@ -79,6 +79,18 @@ function MyComponent() {
 }
 ```
 
+### 5. Focused Chat Experience (Sidebar Initially Closed)
+
+```tsx
+<CopilotInterface
+  sidebarInitiallyClosed={true}
+  businessUnits={businessUnits}
+  capabilities={capabilities}
+  // ... other props
+  // Perfect for maximizing chat area or mobile-first experiences
+/>
+```
+
 ## Props Reference
 
 ```tsx
@@ -90,6 +102,9 @@ interface CopilotInterfaceProps {
   
   // Fallback for when AI is disabled
   messages?: UIMessage[]
+  
+  // Layout customization
+  sidebarInitiallyClosed?: boolean           // Start with sidebar closed (default: false)
   
   // ... all other existing props
 }

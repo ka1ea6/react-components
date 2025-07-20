@@ -79,7 +79,7 @@ export function AppHeader({
   return (
     <>
       <header
-        className={`sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-background/95 px-4 backdrop-blur ${className || ""}`}
+        className={`sticky top-0 z-10 flex h-16 items-center gap-3 px-4 backdrop-blur ${className || ""}`}
       >
         <Button variant="ghost" size="icon" className="md:hidden" onClick={onToggleMobileMenu}>
           <Menu className="h-5 w-5" />
