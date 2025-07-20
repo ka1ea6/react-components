@@ -153,7 +153,7 @@ interface CopilotInterfaceProps {
   allowedFileTypes?: string[]
 }
 
-export default function CopilotInterface({
+export function CopilotInterface({
   initialTeam = "design",
   initialMessages,
   initialSessions,

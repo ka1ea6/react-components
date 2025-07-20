@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import CopilotInterface, { type EnhancedMessage } from './CopilotInterface'
+import {CopilotInterface, type EnhancedMessage } from './CopilotInterface'
 import { businessUnits } from '../DigitalColleagues/test-data'
 
 const meta: Meta<typeof CopilotInterface> = {
