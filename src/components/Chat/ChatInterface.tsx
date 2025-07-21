@@ -403,11 +403,11 @@ export function ChatInterface({
   }
 
   return (
-    <Card className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ""}`}>
+    <div className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ""}`}>
       {/* Chat Messages */}
       <ScrollArea 
         ref={scrollAreaRef}
-        className="flex-1 p-4"
+        className="flex-1 p-4 bg-background border-0"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -504,7 +504,7 @@ export function ChatInterface({
       )}
 
       {/* Chat Input */}
-      <div className="border-t p-4 bg-muted/20">
+      <div className="border rounded-2xl p-4 bg-muted/20">
         <div className="flex gap-3">
           <Input
             value={input}
@@ -585,6 +585,6 @@ export function ChatInterface({
           />
         )}
       </div>
-    </Card>
+    </div>
   )
 }
