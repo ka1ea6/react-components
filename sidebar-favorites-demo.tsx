@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Sidebar } from "./src/components/DigitalColleagues/sidebar"
+import { Sidebar } from "./src/components/AdvancedComponents/AppSidebar"
 import { Home, Users, Layers, Bot, FileText, TrendingUp, Wrench, DollarSign, Scale, Package, Zap } from "lucide-react"
 
 // Example of using the enhanced Sidebar component with favorites

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
-import { Sidebar } from "./sidebar"
-import { mockSidebarItems } from "./test-data"
+import { AppSidebar } from "./AppSidebar"
+import { mockSidebarItems } from "../DigitalColleagues/test-data"
 
-const meta: Meta<typeof Sidebar> = {
-  title: "Digital Colleagues/Sidebar",
-  component: Sidebar,
+const meta: Meta<typeof AppSidebar> = {
+  title: "Digital Colleagues/AppSidebar",
+  component: AppSidebar,
   parameters: {
     layout: "fullscreen",
   },
@@ -23,7 +23,7 @@ const meta: Meta<typeof Sidebar> = {
 }
 
 export default meta
-type Story = StoryObj<typeof Sidebar>
+type Story = StoryObj<typeof AppSidebar>
 
 export const Default: Story = {
   args: {

@@ -12,8 +12,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Checkbox } from "@/components/ui/checkbox"
 import { BusinessUnitSwitcher } from "../Projects/business-unit-switcher"
 import { cn } from "@/lib/utils"
-import { businessUnits } from "./test-data"
-import type { BusinessUnit, SidebarItem } from "./types"
+import { businessUnits } from "../DigitalColleagues/test-data"
+import type { BusinessUnit, SidebarItem } from "../DigitalColleagues/types"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 
 interface SidebarProps {
@@ -30,7 +30,7 @@ interface SidebarProps {
   tagline?: string
 }
 
-export function Sidebar({
+export function AppSidebar({
   items,
   isOpen,
   isMobile = false,

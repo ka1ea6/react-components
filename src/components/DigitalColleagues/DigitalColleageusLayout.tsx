@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Sidebar } from "./sidebar"
+import { AppSidebar } from "../AdvancedComponents/AppSidebar"
 import { AppHeader } from "../AdvancedComponents/app-header"
 import type { SidebarItem, BusinessUnit } from "./types"
 import type { Notification } from "../AdvancedComponents/notifications-panel"
@@ -101,7 +101,7 @@ export function DigitalColleageusLayout({
 
       {/* Sidebar - Mobile */}
       <div className="md:hidden">
-        <Sidebar
+        <AppSidebar
           items={sidebarItems}
           isOpen={mobileMenuOpen}
           isMobile={true}
@@ -117,7 +117,7 @@ export function DigitalColleageusLayout({
 
       {/* Sidebar - Desktop */}
       <div className="hidden md:block">
-        <Sidebar
+        <AppSidebar
           items={sidebarItems}
           isOpen={sidebarOpen}
           isMobile={false}
