@@ -4,7 +4,7 @@ import { AppSidebar } from "./AppSidebar"
 import { mockSidebarItems } from "../DigitalColleagues/test-data"
 
 const meta: Meta<typeof AppSidebar> = {
-  title: "Digital Colleagues/AppSidebar",
+  title: "Advanced Components/AppSidebar",
   component: AppSidebar,
   parameters: {
     layout: "fullscreen",
