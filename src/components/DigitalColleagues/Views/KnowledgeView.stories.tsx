@@ -1,21 +1,857 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import React, { useState } from 'react'
 import KnowledgeView from './KnowledgeView'
 import type { KnowledgeDocument, KnowledgeContext } from '../../DigitalColleagues/types'
-import { Server, Code, Users, BookOpen, Database, Shield } from 'lucide-react'
+import { Server, Code, Users, BookOpen, Database, Shield, FileText } from 'lucide-react'
 
 const meta: Meta<typeof KnowledgeView> = {
   title: 'Digital Colleagues/Views/KnowledgeView',
   component: KnowledgeView,
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
+    componentSubtitle: 'A comprehensive knowledge management interface for organizing and accessing team documentation',
+    docs: {
+      description: {
+        component: `
+# KnowledgeView Component
+
+The **KnowledgeView** component is a comprehensive knowledge management interface that provides organized access to documentation and knowledge resources.
+
+## Key Features
+
+### 🔄 Context-based Navigation
+Switch between different organizational views:
+- **All Documentation**: Browse all documents by category and type
+- **Services**: Organize by service and team
+- **Architecture**: View by component and layer
+- **Teams**: Group by team and project
+- **Security**: Filter security documentation
+
+### 📚 Document Browser
+- Interactive document listing with advanced filtering
+- Grouping and sorting capabilities
+- Search functionality
+- Rich metadata display
+- Document selection and highlighting
+
+### 📱 Responsive Design
+- Optimized for desktop and mobile devices
+- Adaptive layout that works across screen sizes
+- Touch-friendly interface elements
+
+### 🛡️ Robust Error Handling
+- Graceful fallbacks for empty states
+- Proper handling of missing contexts
+- User-friendly error messages
+
+## Component Architecture
+
+\` \`\`
+┌─────────────────────────────────────┐
+│            Hero Section             │
+│  (Title, Description, Actions)      │
+├─────────────────────────────────────┤
+│          Context Tabs               │
+│  (All, Services, Architecture...)   │
+├─────────────────────────────────────┤
+│        Knowledge Browser            │
+│  (Document List with Filtering)     │
+└─────────────────────────────────────┘
+\` \`\`
+
+## Use Cases
+
+- **Team Documentation Management**: Organize team-specific guides and procedures
+- **API Documentation**: Browse service and architecture documentation
+- **Knowledge Sharing**: Collaborative access to organizational knowledge
+- **Content Management**: Manage different document types and formats
+
+## Document Types Supported
+
+- **Markdown** (.md): Standard markdown documents
+- **MDX** (.mdx): Markdown with React components
+- **Rich Text**: WYSIWYG formatted content
+- **HTML**: Web-formatted documents
+
+## Context Configuration
+
+Each context defines:
+- **Visual Identity**: Label, icon, and description
+- **Menu Configuration**: Grouping, sorting, and display options
+- **Document Organization**: How documents are structured and presented
+
+## KnowledgeContext Deep Dive
+
+The **KnowledgeContext** system is the core organizational feature that allows users to view the same document collection through different lenses.
+
+### KnowledgeContext Interface
+
+\` \`\`typescript
+interface KnowledgeContext {
+  id: string                    // Unique identifier for the context
+  label: string                 // Display name shown in the tab
+  description?: string          // Optional description shown below tabs
+  icon?: React.ReactNode        // Optional icon for visual identification
+  menuConfig: KnowledgeMenuConfig // Configuration for document organization
+}
+
+interface KnowledgeMenuConfig {
+  groupBy: string[]             // Array of metadata keys to group by (hierarchical)
+  sortBy?: 'title' | 'createdAt' | 'updatedAt'  // Field to sort documents by
+  sortOrder?: 'asc' | 'desc'    // Sort direction
+  showDocumentCount?: boolean   // Whether to show document counts in groups
+}
+\` \`\`
+
+### Creating Contexts
+
+#### Basic Context Example
+\` \`\`typescript
+const allDocsContext: KnowledgeContext = {
+  id: 'all',
+  label: 'All Documents',
+  description: 'Browse all documentation by category',
+  icon: <BookOpen className="h-4 w-4" />,
+  menuConfig: {
+    groupBy: ['category'],        // Group by document category
+    sortBy: 'title',             // Sort alphabetically by title
+    sortOrder: 'asc',            // Ascending order
+    showDocumentCount: true      // Show document counts
+  }
+}
+\` \`\`
+
+#### Multi-level Hierarchical Context
+\` \`\`typescript
+const servicesContext: KnowledgeContext = {
+  id: 'services',
+  label: 'By Services',
+  description: 'Documentation organized by service and team',
+  icon: <Server className="h-4 w-4" />,
+  menuConfig: {
+    groupBy: ['service', 'team'], // First group by service, then by team
+    sortBy: 'updatedAt',         // Sort by last update time
+    sortOrder: 'desc',           // Most recent first
+    showDocumentCount: true
+  }
+}
+\` \`\`
+
+#### Complex Multi-level Organization
+\` \`\`typescript
+const architectureContext: KnowledgeContext = {
+  id: 'architecture',
+  label: 'System Architecture',
+  description: 'Technical documentation by component and layer',
+  icon: <Code className="h-4 w-4" />,
+  menuConfig: {
+    groupBy: ['component', 'layer', 'difficulty'], // Three-level hierarchy
+    sortBy: 'title',
+    sortOrder: 'asc',
+    showDocumentCount: true
+  }
+}
+\` \`\`
+
+### Document Metadata Strategy
+
+For contexts to work effectively, documents need appropriate metadata fields:
+
+\` \`\`typescript
+const exampleDocument: KnowledgeDocument = {
+  id: 'auth-guide',
+  title: 'API Authentication Guide',
+  description: 'Complete implementation guide for API authentication',
+  format: 'markdown',
+  metadata: {
+    // Basic classification
+    category: 'Development',
+    type: 'Guide',
+    
+    // Team organization
+    team: 'Backend Team',
+    service: 'Authentication Service',
+    
+    // Technical details
+    component: 'Auth Module',
+    layer: 'API Layer',
+    difficulty: 'Intermediate',
+    
+    // Project tracking
+    project: 'Security Framework',
+    version: '2.1'
   },
+  tags: ['api', 'security', 'oauth'],
+  createdAt: new Date('2024-01-15'),
+  updatedAt: new Date('2024-07-20')
+}
+\` \`\`
+
+### Context Usage Patterns
+
+#### 1. Role-Based Views
+\` \`\`typescript
+// For developers
+const developerContext = {
+  id: 'developers',
+  label: 'Developer Resources',
+  menuConfig: {
+    groupBy: ['type', 'difficulty'],
+    sortBy: 'updatedAt',
+    sortOrder: 'desc'
+  }
+}
+
+// For managers
+const managementContext = {
+  id: 'management',
+  label: 'Management View',
+  menuConfig: {
+    groupBy: ['team', 'project'],
+    sortBy: 'title',
+    sortOrder: 'asc'
+  }
+}
+\` \`\`
+
+#### 2. Workflow-Based Organization
+\` \`\`typescript
+// Recent updates workflow
+const recentContext = {
+  id: 'recent',
+  label: 'Recently Updated',
+  menuConfig: {
+    groupBy: ['team'],
+    sortBy: 'updatedAt',
+    sortOrder: 'desc'
+  }
+}
+
+// Onboarding workflow
+const onboardingContext = {
+  id: 'onboarding',
+  label: 'New Employee Resources',
+  menuConfig: {
+    groupBy: ['department', 'difficulty'],
+    sortBy: 'title',
+    sortOrder: 'asc'
+  }
+}
+\` \`\`
+
+#### 3. Domain-Specific Views
+\` \`\`typescript
+// Security-focused view
+const securityContext = {
+  id: 'security',
+  label: 'Security Documentation',
+  menuConfig: {
+    groupBy: ['criticality', 'type'],
+    sortBy: 'updatedAt',
+    sortOrder: 'desc',
+    showDocumentCount: true
+  }
+}
+\` \`\`
+
+### Best Practices for Context Design
+
+#### ✅ Do:
+- **Design for users**: Create contexts based on how people actually look for information
+- **Keep it simple**: 2-3 grouping levels maximum for readability
+- **Use consistent metadata**: Establish controlled vocabularies for grouping fields
+- **Provide clear labels**: Use descriptive names and helpful descriptions
+- **Add meaningful icons**: Visual cues help users quickly identify contexts
+
+#### ❌ Don't:
+- **Over-group**: Too many hierarchy levels create confusion
+- **Use inconsistent metadata**: Missing or varied field names break grouping
+- **Create too many contexts**: More than 5-6 contexts overwhelm users
+- **Ignore empty states**: Handle cases where groups have no documents
+- **Forget mobile users**: Test context switching on smaller screens
+
+### Advanced Configuration Examples
+
+#### Time-Based Auto-Sorting
+\` \`\`typescript
+const liveUpdatesContext = {
+  id: 'live',
+  label: 'Live Updates',
+  description: 'Documents sorted by most recent activity',
+  menuConfig: {
+    groupBy: ['team'],
+    sortBy: 'updatedAt',
+    sortOrder: 'desc'
+  }
+}
+\` \`\`
+
+#### Popularity-Based Organization
+\` \`\`typescript
+// Note: This would require extending the KnowledgeDocument interface
+// to include popularity metrics
+const popularContext = {
+  id: 'popular',
+  label: 'Most Accessed',
+  menuConfig: {
+    groupBy: ['category'],
+    sortBy: 'accessCount', // Custom sort field
+    sortOrder: 'desc'
+  }
+}
+\` \`\`
+
+### How Contexts Affect Document Display
+
+The KnowledgeView component uses the active context's menuConfig to:
+
+1. **Group Documents**: Creates a hierarchical tree based on groupBy metadata fields
+2. **Sort Within Groups**: Orders documents using sortBy and sortOrder
+3. **Display Counts**: Shows document numbers if showDocumentCount is true
+4. **Handle Missing Metadata**: Gracefully handles documents with missing grouping fields
+
+#### Example Grouping Behavior
+
+Given this context configuration:
+\` \`\`typescript
+menuConfig: {
+  groupBy: ['team', 'type'],
+  sortBy: 'title',
+  sortOrder: 'asc'
+}
+\` \`\`
+
+Documents will be organized as:
+\` \`\`
+📁 Backend Team (3)
+  📁 Guide (2)
+    📄 API Authentication Guide
+    📄 Database Schema Design
+  📁 Best Practice (1)
+    📄 Error Handling Standards
+📁 Frontend Team (2)
+  📁 Documentation (1)
+    📄 UI Component Library
+  📁 Guide (1)
+    📄 State Management Guide
+\` \`\`
+
+### Integration with KnowledgeBrowser
+
+The KnowledgeView passes the active context's \`menuConfig\` to the underlying \`KnowledgeBrowser\` component, which:
+- Renders the hierarchical document structure
+- Provides search and filtering capabilities  
+- Handles document selection and interaction
+- Manages the responsive layout and user interactions
+
+## Document Content Loading Strategy
+
+The KnowledgeView component supports two content loading strategies:
+
+### 1. **Eager Loading** (Current Sample Data)
+All document content is loaded upfront and stored in the \\\`content\\\` field:
+
+\` \`\`typescript
+const documentsWithContent: KnowledgeDocument[] = [
+  {
+    id: '1',
+    title: 'API Guide',
+    content: '# Complete content loaded immediately...',
+    // ... other fields
+  }
+]
+\` \`\`
+
+**Pros:**
+- Instant content display when documents are selected
+- Simple implementation
+- No loading states needed
+
+**Cons:**
+- Large initial payload (problematic with 100+ documents)
+- Memory usage scales with document count
+- Slower initial page load
+- Content may be loaded but never viewed
+
+### 2. **Lazy Loading** (Recommended for Production) ⭐
+Document content is loaded only when needed via the \\\`onLoadDocumentContent\\\` callback:
+
+\` \`\`typescript
+const documentsMetadataOnly: KnowledgeDocument[] = [
+  {
+    id: '1',
+    title: 'API Guide',
+    description: 'Complete guide for API implementation',
+    // content field is undefined - loaded on demand
+    metadata: { category: 'Development' },
+    // ... other fields
+  }
+]
+
+const handleContentLoad = async (documentId: string): Promise<string> => {
+  const response = await fetch(\`/api/documents/\${documentId}/content\`)
+  return response.text()
+}
+
+<KnowledgeView
+  documents={documentsMetadataOnly}
+  onLoadDocumentContent={handleContentLoad}
+  onDocumentClick={handleDocumentClick}
+/>
+\` \`\`
+
+**Pros:**
+- Fast initial load (only metadata transferred)
+- Reduced memory footprint
+- Content loaded only when needed
+- Scales well with large document collections
+- Better caching strategies possible
+
+**Cons:**
+- Requires loading states and error handling
+- Slight delay when viewing document content
+- More complex implementation
+- Network dependency for content viewing
+
+### Implementation Patterns
+
+#### Pattern 1: Simple Lazy Loading
+\` \`\`typescript
+const DocumentBrowser = () => {
+  const [selectedDocument, setSelectedDocument] = useState<KnowledgeDocument>()
+  const [documentContent, setDocumentContent] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleDocumentClick = async (document: KnowledgeDocument) => {
+    setSelectedDocument(document)
+    
+    if (!document.content) {
+      setIsLoading(true)
+      try {
+        const content = await loadDocumentContent(document.id)
+        setDocumentContent(content)
+      } catch (error) {
+        console.error('Failed to load content:', error)
+        setDocumentContent('Failed to load content')
+      } finally {
+        setIsLoading(false)
+      }
+    } else {
+      setDocumentContent(document.content)
+    }
+  }
+
+  return (
+    <KnowledgeView
+      documents={documents}
+      onDocumentClick={handleDocumentClick}
+      onLoadDocumentContent={loadDocumentContent}
+    />
+  )
+}
+\` \`\`
+
+#### Pattern 2: Caching Strategy
+\` \`\`typescript
+const DocumentBrowserWithCache = () => {
+  const [contentCache, setContentCache] = useState<Map<string, string>>(new Map())
+
+  const loadDocumentContent = async (documentId: string): Promise<string> => {
+    // Check cache first
+    if (contentCache.has(documentId)) {
+      return contentCache.get(documentId)!
+    }
+
+    // Load from API
+    const content = await fetchDocumentContent(documentId)
+    
+    // Cache the result
+    setContentCache(prev => new Map(prev).set(documentId, content))
+    
+    return content
+  }
+
+  return (
+    <KnowledgeView
+      documents={documents}
+      onLoadDocumentContent={loadDocumentContent}
+    />
+  )
+}
+\` \`\`
+
+#### Pattern 3: Optimistic Loading
+\` \`\`typescript
+const OptimisticDocumentBrowser = () => {
+  const handleDocumentClick = (document: KnowledgeDocument) => {
+    // Start loading content optimistically
+    if (!document.content) {
+      prefetchDocumentContent(document.id)
+    }
+    
+    setSelectedDocument(document)
+  }
+
+  return (
+    <KnowledgeView
+      documents={documents}
+      onDocumentClick={handleDocumentClick}
+      onLoadDocumentContent={loadDocumentContent}
+    />
+  )
+}
+\` \`\`
+
+### Performance Considerations
+
+#### When to Use Lazy Loading:
+- **Document collections > 50 items**
+- **Average document size > 10KB**
+- **Mobile or low-bandwidth users**
+- **Documents with rich media content**
+- **Frequently changing content that needs fresh data**
+
+#### When Eager Loading is OK:
+- **Small document collections (< 20 items)**
+- **Lightweight documents (< 5KB each)**
+- **Offline or cached scenarios**
+- **High-speed network environments**
+- **Content that rarely changes**
+
+### API Design Recommendations
+
+#### REST API Pattern:
+\` \`\`
+GET /api/documents              # List with metadata only
+GET /api/documents/:id/content  # Full content for specific document
+GET /api/documents/:id          # Full document with content
+\` \`\`
+
+#### GraphQL Pattern:
+\` \`\`graphql
+query GetDocuments {
+  documents {
+    id
+    title
+    description
+    metadata
+    # content field omitted for list view
+  }
+}
+
+query GetDocumentContent(\$id: ID!) {
+  document(id: \$id) {
+    id
+    content
+  }
+}
+\` \`\`
+
+### Selection State Management
+
+\` \`\`typescript
+// Basic selection handling
+const [selectedDocumentId, setSelectedDocumentId] = useState<string>()
+
+const handleDocumentClick = (document: KnowledgeDocument) => {
+  setSelectedDocumentId(document.id)
+  // Additional logic like opening document details, analytics, etc.
+}
+
+<KnowledgeView
+  documents={documents}
+  contexts={contexts}
+  selectedDocumentId={selectedDocumentId}
+  onDocumentClick={handleDocumentClick}
+/>
+\` \`\`
+
+### Key Selection Features
+
+#### 🎯 **Visual Feedback**
+- Selected documents are highlighted with distinct styling
+- Highlighting persists across context switches
+- Clear visual distinction between selected and unselected states
+
+#### 🔄 **Cross-Context Persistence** 
+- Selection state maintained when switching between contexts
+- Same document highlighted regardless of its group location
+- Useful for maintaining focus while exploring different views
+
+#### ⚡ **Callback Integration**
+- \\\`onDocumentClick\\\`: Triggered when user clicks a document
+- \\\`onDocumentShare\\\`: Triggered when sharing functionality is used
+- Both callbacks receive the full document object with metadata
+
+### Document Interaction Patterns
+
+#### Pattern 1: Simple Selection
+\` \`\`typescript
+const SimpleDocumentView = () => {
+  const [selected, setSelected] = useState<string>()
+  
+  return (
+    <KnowledgeView
+      documents={documents}
+      contexts={contexts}
+      selectedDocumentId={selected}
+      onDocumentClick={(doc) => setSelected(doc.id)}
+    />
+  )
+}
+\` \`\`
+
+#### Pattern 2: Selection with Side Effects
+\` \`\`typescript
+const DocumentViewWithAnalytics = () => {
+  const [selected, setSelected] = useState<string>()
+  
+  const handleSelection = (document: KnowledgeDocument) => {
+    setSelected(document.id)
+    
+    // Track analytics
+    analytics.track('document_viewed', {
+      documentId: document.id,
+      title: document.title,
+      category: document.metadata?.category
+    })
+    
+    // Update URL for bookmarking
+    updateURL(\`/docs/\${document.id}\`)
+  }
+  
+  return (
+    <KnowledgeView
+      selectedDocumentId={selected}
+      onDocumentClick={handleSelection}
+      // ... other props
+    />
+  )
+}
+\` \`\`
+
+#### Pattern 3: Multi-Action Document Interface
+\` \`\`typescript
+const AdvancedDocumentView = () => {
+  const [selected, setSelected] = useState<string>()
+  const [recentlyShared, setRecentlyShared] = useState<KnowledgeDocument[]>([])
+  
+  const handleDocumentClick = (document: KnowledgeDocument) => {
+    setSelected(document.id)
+    openDocumentPreview(document)
+  }
+  
+  const handleDocumentShare = (document: KnowledgeDocument) => {
+    setRecentlyShared(prev => [document, ...prev.slice(0, 4)])
+    openShareDialog(document)
+  }
+  
+  return (
+    <KnowledgeView
+      selectedDocumentId={selected}
+      onDocumentClick={handleDocumentClick}
+      onDocumentShare={handleDocumentShare}
+      // ... other props
+    />
+  )
+}
+\` \`\`
+
+### Best Practices for Document Interaction
+
+#### ✅ **Do:**
+- **Provide immediate feedback**: Update selection state immediately on click
+- **Persist selection**: Maintain selected document across context switches
+- **Handle edge cases**: Gracefully handle missing documents or invalid IDs
+- **Use meaningful callbacks**: Implement proper error handling and user feedback
+- **Consider mobile UX**: Ensure touch interactions work well on mobile devices
+
+#### ❌ **Don't:**
+- **Block the UI**: Avoid long-running operations in click handlers
+- **Ignore accessibility**: Ensure keyboard navigation and screen reader support
+- **Forget error states**: Handle cases where documents fail to load or don't exist
+- **Overload callbacks**: Keep click handlers focused and delegate complex logic
+- **Ignore performance**: Be mindful of re-renders when managing selection state
+
+### Integration with External Systems
+
+The document selection system is designed to integrate with various external systems:
+
+- **Document Viewers**: Pass selected document to preview components
+- **Analytics Systems**: Track user interactions and popular documents  
+- **Collaboration Tools**: Share documents with team members
+- **Search Systems**: Use selection to improve search relevance
+- **Bookmarking**: Allow users to bookmark and return to specific documents
+
+## Props Overview
+
+- \\\`documents\\\`: Knowledge documents to display
+- \\\`contexts\\\`: View configurations for organizing documents
+- \\\`onDocumentClick\\\`: Handler for document selection
+- \\\`onDocumentShare\\\`: Handler for document sharing
+- \\\`selectedDocumentId\\\`: Currently selected document identifier
+
+## Common Troubleshooting
+
+### Documents Not Grouping Correctly
+- **Check metadata fields**: Ensure documents have the metadata fields specified in \\\`groupBy\\\`
+- **Verify field names**: Metadata keys are case-sensitive and must match exactly
+- **Handle missing data**: Documents without required metadata will appear in an "Other" group
+
+### Context Switching Not Working  
+- **Unique IDs**: Ensure each context has a unique \\\`id\\\` field
+- **Valid menuConfig**: Check that \\\`groupBy\\\` array contains valid metadata field names
+- **No empty contexts**: Each context should be able to organize at least some documents
+
+### Performance Issues with Large Document Sets
+- **Limit contexts**: Too many contexts can impact performance
+- **Simplify grouping**: Reduce the number of \\\`groupBy\\\` levels
+- Consider pagination: For 100+ documents, implement pagination in the parent component
+
+### Performance Tip: Lazy Content Loading
+
+For production applications with large document collections (50+ documents) or documents with substantial content (>10KB), consider implementing lazy content loading using the onLoadDocumentContent prop. This loads document content only when clicked, significantly improving initial load performance.
+        `
+      }
+    }
+  },
+  argTypes: {
+    documents: {
+      description: 'Array of knowledge documents to display. Each document contains metadata, content, and organizational information.',
+      control: { type: 'object' },
+      table: {
+        type: { summary: 'KnowledgeDocument[]' },
+        defaultValue: { summary: '[]' }
+      }
+    },
+    contexts: {
+      description: `Array of KnowledgeContext objects that define different organizational views of the documents. 
+      
+Each context represents a different way users can browse and find documents:
+- **All Documents**: General categorization
+- **By Services**: Service and team organization  
+- **Architecture**: Technical component organization
+- **Teams**: Team and project-based grouping
+
+The menuConfig in each context determines how documents are grouped and sorted within that view.`,
+      control: { type: 'object' },
+      table: {
+        type: { summary: 'KnowledgeContext[]' },
+        defaultValue: { summary: '[]' }
+      }
+    },
+    onDocumentClick: {
+      description: `Callback function invoked when a user clicks on a document for selection. 
+
+**Parameters:**
+- \`document\`: The complete KnowledgeDocument object that was clicked
+
+**Common Use Cases:**
+- Update selection state for visual highlighting
+- Open document preview or detailed view
+- Track analytics and user interactions
+- Navigate to document-specific pages
+- Trigger additional UI updates
+
+**Example:**
+\`\`\`typescript
+const handleDocumentClick = (document: KnowledgeDocument) => {
+  setSelectedDocumentId(document.id)
+  openPreviewPanel(document)
+  trackAnalytics('document_clicked', { id: document.id })
+}
+\`\`\``,
+      action: 'document-clicked',
+      table: {
+        type: { summary: '(document: KnowledgeDocument) => void' }
+      }
+    },
+    onDocumentShare: {
+      description: `Callback function invoked when a user initiates sharing of a document.
+
+**Parameters:**  
+- \`document\`: The KnowledgeDocument object being shared
+
+**Common Use Cases:**
+- Open share dialog with team member selection
+- Copy document link to clipboard
+- Send document via email or messaging
+- Track sharing analytics
+- Create collaboration notifications
+
+**Example:**
+\`\`\`typescript
+const handleDocumentShare = (document: KnowledgeDocument) => {
+  copyToClipboard(\`/docs/\${document.id}\`)
+  showNotification('Document link copied!')
+  trackAnalytics('document_shared', { id: document.id })
+}
+\`\`\``,
+      action: 'document-shared',
+      table: {
+        type: { summary: '(document: KnowledgeDocument) => void' }
+      }
+    },
+    onLoadDocumentContent: {
+      description: `Optional async function for lazy loading document content.
+
+**Parameters:**
+- \`documentId\`: The ID of the document to load content for
+
+**Returns:** 
+- \`Promise<string>\`: The document content as a string
+
+**Use Cases:**
+- Large document collections (50+ items)
+- Documents with substantial content (>10KB)
+- Mobile or low-bandwidth environments
+- Fresh content that needs to be fetched from APIs
+
+**Example:**
+\`\`\`typescript
+const loadContent = async (id: string) => {
+  const response = await fetch(\`/api/documents/\${id}/content\`)
+  return response.text()
+}
+\`\`\``,
+      table: {
+        type: { summary: '(documentId: string) => Promise<string>' }
+      }
+    },
+    selectedDocumentId: {
+      description: `ID of the currently selected/highlighted document. 
+
+**Behavior:**
+- Highlights the specified document with distinct styling
+- Selection persists across context switches
+- Used for visual feedback and state management
+- Can be updated through onDocumentClick callback
+
+**Selection States:**
+- \`undefined\`: No document selected
+- \`"valid-id"\`: Document with matching ID is highlighted
+- \`"invalid-id"\`: No visual effect (gracefully handled)
+
+**Example:**
+\`\`\`typescript
+const [selectedId, setSelectedId] = useState<string>('doc-123')
+// Document with ID 'doc-123' will be highlighted
+\`\`\``,
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' }
+      }
+    }
+  }
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 // Sample knowledge documents
-const sampleDocuments: KnowledgeDocument[] = [
+export const sampleDocuments: KnowledgeDocument[] = [
   {
     id: '1',
     title: 'API Authentication Guide',
@@ -243,8 +1079,8 @@ Our Q1 campaigns showed a 25% increase in engagement...
   },
 ]
 
-// Sample contexts for different documentation views
-const sampleContexts: KnowledgeContext[] = [
+// Default contexts that can be used as fallback or example configurations
+export const defaultContexts: KnowledgeContext[] = [
   {
     id: 'all',
     label: 'All Documentation',
@@ -308,44 +1144,574 @@ const sampleContexts: KnowledgeContext[] = [
 ]
 
 export const Default: Story = {
+  name: 'Complete View',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows the KnowledgeView with all default contexts and sample documentation. This is the most comprehensive view showing all features including context switching, document browsing, and metadata display.'
+      }
+    }
+  },
   args: {
     documents: sampleDocuments,
-    contexts: sampleContexts,
+    contexts: defaultContexts,
   },
 }
 
 export const ServicesView: Story = {
+  name: 'Services Context Only',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Displays only the Services context, showing how documents are organized by service and team. This view is useful for service-oriented documentation workflows.'
+      }
+    }
+  },
   args: {
     documents: sampleDocuments,
-    contexts: sampleContexts.filter(c => c.id === 'services'),
+    contexts: defaultContexts.filter(c => c.id === 'services'),
   },
 }
 
 export const ArchitectureView: Story = {
+  name: 'Architecture Context Only',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows only the Architecture context, organizing documents by component and layer. Perfect for technical documentation and system architecture references.'
+      }
+    }
+  },
   args: {
     documents: sampleDocuments,
-    contexts: sampleContexts.filter(c => c.id === 'architecture'),
+    contexts: defaultContexts.filter(c => c.id === 'architecture'),
   },
 }
 
 export const TeamsView: Story = {
+  name: 'Teams Context Only',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Focuses on the Teams context, grouping documents by team and project. Ideal for team-specific documentation management.'
+      }
+    }
+  },
   args: {
     documents: sampleDocuments,
-    contexts: sampleContexts.filter(c => c.id === 'teams'),
+    contexts: defaultContexts.filter(c => c.id === 'teams'),
   },
 }
 
 export const EmptyState: Story = {
+  name: 'No Documents',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows how the component handles an empty document state while still providing context navigation. Useful for testing empty states and initial loading scenarios.'
+      }
+    }
+  },
   args: {
     documents: [],
-    contexts: sampleContexts,
+    contexts: defaultContexts,
   },
 }
 
 export const WithSelection: Story = {
+  name: 'With Selected Document',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the component with a pre-selected document (UI Component Library). Shows how selection highlighting works within the knowledge browser.'
+      }
+    }
+  },
   args: {
     documents: sampleDocuments,
-    contexts: sampleContexts,
+    contexts: defaultContexts,
     selectedDocumentId: '2',
+  },
+}
+
+export const InteractiveDocumentSwitching: Story = {
+  name: 'Interactive Document Selection',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Interactive Document Selection Demo**
+
+This story demonstrates how document selection works in the KnowledgeView component:
+
+1. Click on any document in the browser to select it
+2. The selected document will be highlighted with a different background
+3. The onDocumentClick callback will be triggered with the document data
+4. You can see the selection state change in the Actions panel below
+
+**Key Features:**
+- Visual feedback for selected documents
+- Callback handling for document clicks
+- State management for selection highlighting
+- Integration with the KnowledgeBrowser component
+
+**Use Cases:**
+- Document preview interfaces
+- Multi-step document workflows
+- Document comparison tools
+- Knowledge base navigation
+
+The selection state is managed through the \`selectedDocumentId\` prop and updated via the \`onDocumentClick\` callback.`
+      }
+    }
+  },
+  render: (args) => {
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>(args.selectedDocumentId)
+    
+    const handleDocumentClick = (document: KnowledgeDocument) => {
+      setSelectedDocumentId(document.id)
+      // Call the original callback for Actions panel
+      args.onDocumentClick?.(document)
+    }
+
+    return (
+      <KnowledgeView
+        {...args}
+        selectedDocumentId={selectedDocumentId}
+        onDocumentClick={handleDocumentClick}
+      />
+    )
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: defaultContexts,
+    selectedDocumentId: '1',
+  },
+}
+
+export const DocumentSwitchingWithSharing: Story = {
+  name: 'Document Selection + Sharing',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Document Selection with Sharing Actions**
+
+This story shows how document selection works together with sharing functionality:
+
+1. **Select Documents**: Click any document to select it
+2. **Share Documents**: Use sharing actions (if available in the KnowledgeBrowser)
+3. **Multiple Interactions**: Both selection and sharing callbacks are demonstrated
+
+**Callback Behavior:**
+- \`onDocumentClick\`: Triggers when clicking a document for selection
+- \`onDocumentShare\`: Triggers when sharing a document
+- Both actions are logged to the Actions panel
+
+**Real-world Usage:**
+- Knowledge management systems
+- Document collaboration platforms
+- Team documentation workflows
+- Content sharing interfaces`
+      }
+    }
+  },
+  render: (args) => {
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>(args.selectedDocumentId)
+    const [lastSharedDocument, setLastSharedDocument] = useState<KnowledgeDocument | null>(null)
+    
+    const handleDocumentClick = (document: KnowledgeDocument) => {
+      setSelectedDocumentId(document.id)
+      args.onDocumentClick?.(document)
+    }
+
+    const handleDocumentShare = (document: KnowledgeDocument) => {
+      setLastSharedDocument(document)
+      args.onDocumentShare?.(document)
+    }
+
+    return (
+      <div className="space-y-4">
+        {lastSharedDocument && (
+          <div className="p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              📤 Last shared: <strong>{lastSharedDocument.title}</strong>
+            </p>
+          </div>
+        )}
+        <KnowledgeView
+          {...args}
+          selectedDocumentId={selectedDocumentId}
+          onDocumentClick={handleDocumentClick}
+          onDocumentShare={handleDocumentShare}
+        />
+      </div>
+    )
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: defaultContexts,
+  },
+}
+
+export const MultiContextDocumentSwitching: Story = {
+  name: 'Cross-Context Document Selection',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Cross-Context Document Selection**
+
+This advanced example demonstrates how document selection persists across different context views:
+
+1. **Select a Document**: Click any document in the current context
+2. **Switch Contexts**: Change to a different context using the tabs
+3. **Persistent Selection**: The selected document remains highlighted even in different organizational views
+4. **Context-aware Display**: The same document may appear in different locations depending on the context's grouping rules
+
+**Key Behaviors:**
+- Selection state persists across context switches
+- Documents appear in different groups based on active context
+- Selected document is highlighted regardless of its group location
+- Useful for maintaining focus while exploring different organizational views
+
+**Technical Implementation:**
+- Uses \`selectedDocumentId\` to maintain selection state
+- KnowledgeBrowser handles highlighting across different grouping structures
+- Context switching doesn't reset selection unless explicitly cleared`
+      }
+    }
+  },
+  render: (args) => {
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>('3')
+    
+    const handleDocumentClick = (document: KnowledgeDocument) => {
+      setSelectedDocumentId(document.id)
+      args.onDocumentClick?.(document)
+    }
+
+    return (
+      <div className="space-y-4">
+        <div className="p-4 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg">
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            💡 <strong>Try this:</strong> Select a document, then switch between contexts to see how the selection persists across different organizational views.
+          </p>
+        </div>
+        <KnowledgeView
+          {...args}
+          selectedDocumentId={selectedDocumentId}
+          onDocumentClick={handleDocumentClick}
+        />
+      </div>
+    )
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: defaultContexts,
+  },
+}
+
+export const NoContexts: Story = {
+  name: 'No Contexts Available',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows the fallback state when no contexts are provided. The component gracefully handles this edge case by displaying a message instead of breaking.'
+      }
+    }
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: [],
+  },
+}
+
+export const CustomContextExample: Story = {
+  name: 'Custom Context Configuration',
+  parameters: {
+    docs: {
+      description: {
+        story: `Demonstrates how to create a custom context with specific grouping and sorting rules. 
+        
+This example shows a "Priority View" that groups documents by difficulty and priority levels, sorted by update time. This is useful for creating workflow-specific views of your documentation.`
+      }
+    }
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: [
+      {
+        id: 'priority',
+        label: 'Priority View',
+        description: 'Documents organized by difficulty and sorted by recent updates',
+        icon: <Shield className="h-4 w-4" />,
+        menuConfig: {
+          groupBy: ['difficulty', 'category'],
+          sortBy: 'updatedAt',
+          sortOrder: 'desc',
+          showDocumentCount: true
+        }
+      },
+      {
+        id: 'formats',
+        label: 'By Format',
+        description: 'Documents grouped by their format type',
+        icon: <FileText className="h-4 w-4" />,
+        menuConfig: {
+          groupBy: ['format', 'team'],
+          sortBy: 'title',
+          sortOrder: 'asc',
+          showDocumentCount: true
+        }
+      }
+    ],
+  },
+}
+
+export const DocumentSwitchingWithPreview: Story = {
+  name: 'Document Selection with Preview',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Document Selection with Live Preview**
+
+This story demonstrates a complete document browsing experience with live preview:
+
+1. **Browse Documents**: Use the knowledge browser to explore documents
+2. **Select for Preview**: Click any document to see its details in the preview panel
+3. **Context Switching**: Change contexts while maintaining the preview
+4. **Rich Metadata Display**: See document metadata, tags, and content preview
+
+**Preview Panel Features:**
+- Document title and description
+- Metadata display (category, team, type, etc.)
+- Creation and update dates
+- Tag visualization
+- Content preview (first few lines)
+
+**Real-world Applications:**
+- Knowledge base interfaces
+- Document management systems
+- Research and reference tools
+- Team documentation platforms
+
+This pattern is commonly used in document-heavy applications where users need to quickly preview content before opening the full document.`
+      }
+    }
+  },
+  render: (args) => {
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>()
+    const selectedDocument = selectedDocumentId 
+      ? sampleDocuments.find(doc => doc.id === selectedDocumentId)
+      : null
+    
+    const handleDocumentClick = (document: KnowledgeDocument) => {
+      setSelectedDocumentId(document.id)
+      args.onDocumentClick?.(document)
+    }
+
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
+        {/* Knowledge View - Takes up 2/3 of the space */}
+        <div className="lg:col-span-2">
+          <KnowledgeView
+            {...args}
+            selectedDocumentId={selectedDocumentId}
+            onDocumentClick={handleDocumentClick}
+          />
+        </div>
+        
+        {/* Document Preview Panel - Takes up 1/3 of the space */}
+        <div className="lg:col-span-1 border border-border rounded-lg bg-card">
+          {selectedDocument ? (
+            <div className="p-4 space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {selectedDocument.title}
+                </h3>
+                {selectedDocument.description && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {selectedDocument.description}
+                  </p>
+                )}
+              </div>
+              
+              {/* Metadata */}
+              {selectedDocument.metadata && (
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium text-foreground">Metadata</h4>
+                  <div className="grid grid-cols-1 gap-1 text-xs">
+                    {Object.entries(selectedDocument.metadata).map(([key, value]) => (
+                      <div key={key} className="flex justify-between">
+                        <span className="text-muted-foreground capitalize">{key}:</span>
+                        <span className="text-foreground font-medium">{String(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Tags */}
+              {selectedDocument.tags && selectedDocument.tags.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium text-foreground">Tags</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {selectedDocument.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Dates */}
+              <div className="space-y-1 text-xs text-muted-foreground">
+                <div>Created: {selectedDocument.createdAt.toLocaleDateString()}</div>
+                {selectedDocument.updatedAt && (
+                  <div>Updated: {selectedDocument.updatedAt.toLocaleDateString()}</div>
+                )}
+              </div>
+              
+              {/* Content Preview */}
+              {selectedDocument.content && (
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium text-foreground">Preview</h4>
+                  <div className="p-3 bg-muted rounded text-xs text-muted-foreground font-mono max-h-32 overflow-y-auto">
+                    {selectedDocument.content.split('\n').slice(0, 8).join('\n')}
+                    {selectedDocument.content.split('\n').length > 8 && '\n...'}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="p-4 text-center text-muted-foreground">
+              <div className="py-8">
+                <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                <p className="text-sm">Select a document to see its preview</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  },
+  args: {
+    documents: sampleDocuments,
+    contexts: defaultContexts,
+  },
+}
+
+export const LazyContentLoading: Story = {
+  name: 'Lazy Content Loading',
+  parameters: {
+    docs: {
+      description: {
+        story: `**Lazy Content Loading Pattern**
+
+This story demonstrates how to implement lazy content loading for better performance:
+
+- Documents loaded with metadata only initially
+- Content fetched on-demand when clicked  
+- Loading states and caching
+- Better performance for large collections
+
+**Use Cases:** 50+ documents, >10KB content, mobile users`
+      }
+    }
+  },
+  render: (args) => {
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>()
+    const [loadedContent, setLoadedContent] = useState<Map<string, string>>(new Map())
+    const [loadingContent, setLoadingContent] = useState<Set<string>>(new Set())
+
+    // Documents without pre-loaded content
+    const documentsWithoutContent = sampleDocuments.map(doc => ({
+      ...doc,
+      content: undefined
+    }))
+
+    // Simulate API loading
+    const simulateContentLoading = async (documentId: string): Promise<string> => {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      const originalDoc = sampleDocuments.find(doc => doc.id === documentId)
+      return originalDoc?.content || `# ${originalDoc?.title}\n\nContent loaded dynamically...`
+    }
+
+    const handleDocumentClick = async (document: KnowledgeDocument) => {
+      setSelectedDocumentId(document.id)
+      args.onDocumentClick?.(document)
+
+      if (!loadedContent.has(document.id)) {
+        setLoadingContent(prev => new Set(prev).add(document.id))
+        try {
+          const content = await simulateContentLoading(document.id)
+          setLoadedContent(prev => new Map(prev).set(document.id, content))
+        } finally {
+          setLoadingContent(prev => {
+            const newSet = new Set(prev)
+            newSet.delete(document.id)
+            return newSet
+          })
+        }
+      }
+    }
+
+    const selectedDocument = selectedDocumentId 
+      ? documentsWithoutContent.find(doc => doc.id === selectedDocumentId)
+      : null
+
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
+        <div className="lg:col-span-2">
+          <KnowledgeView
+            {...args}
+            documents={documentsWithoutContent}
+            selectedDocumentId={selectedDocumentId}
+            onDocumentClick={handleDocumentClick}
+            onLoadDocumentContent={simulateContentLoading}
+          />
+        </div>
+        
+        <div className="lg:col-span-1 border border-border rounded-lg bg-card">
+          {selectedDocument ? (
+            <div className="p-4 space-y-4">
+              <h3 className="text-lg font-semibold">
+                {selectedDocument.title}
+              </h3>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-medium">Content</h4>
+                  {loadingContent.has(selectedDocument.id) && (
+                    <div className="flex items-center space-x-2 text-xs">
+                      <div className="animate-spin h-3 w-3 border border-current border-t-transparent rounded-full"></div>
+                      <span>Loading...</span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-3 bg-muted rounded text-xs font-mono max-h-40 overflow-y-auto">
+                  {loadingContent.has(selectedDocument.id) 
+                    ? 'Loading content...'
+                    : loadedContent.get(selectedDocument.id) || 'Content not loaded'
+                  }
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Cached: {loadedContent.size} documents
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 text-center text-muted-foreground">
+              <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
+              <p className="text-sm">Select a document to load its content</p>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  },
+  args: {
+    documents: [],
+    contexts: defaultContexts,
   },
 }
