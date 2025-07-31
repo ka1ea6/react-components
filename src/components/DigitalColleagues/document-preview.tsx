@@ -1,20 +1,77 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { File, FileText, Edit3 } from "lucide-react"
+import { File, FileText, Edit3, Type } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DocumentEdit } from "./document-edit"
 import type { KnowledgeDocument } from "./types"
+import type { ReactNode } from "react"
+
+// Default markdown renderer (can be replaced with react-markdown or similar)
+const defaultMarkdownRenderer = (content: string): ReactNode => (
+  <div 
+    className="prose prose-slate dark:prose-invert max-w-none"
+    dangerouslySetInnerHTML={{
+      __html: content
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-sm">$1</code>')
+        .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
+        .replace(/^## (.*$)/gm, '<h2 class="text-xl font-semibold mb-3">$1</h2>')
+        .replace(/^### (.*$)/gm, '<h3 class="text-lg font-medium mb-2">$1</h3>')
+    }}
+  />
+)
+
+// Default text renderer
+const defaultTextRenderer = (content: string): ReactNode => (
+  <div className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
+    {content}
+  </div>
+)
+
+// Default richtext renderer (placeholder for PayloadCMS richtext)
+const defaultRichTextRenderer = (content: string): ReactNode => (
+  <div className="prose prose-slate dark:prose-invert max-w-none">
+    <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
+      <p className="text-amber-800 dark:text-amber-200 text-sm">
+        <strong>RichText Renderer:</strong> This is a placeholder. Integrate with @payloadcms/richtext-lexical for full rendering.
+      </p>
+    </div>
+    <pre className="text-sm">{content}</pre>
+  </div>
+)
+
+// Default MDX renderer (placeholder for @mdx-js/react)
+const defaultMDXRenderer = (content: string): ReactNode => (
+  <div className="prose prose-slate dark:prose-invert max-w-none">
+    <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+      <p className="text-blue-800 dark:text-blue-200 text-sm">
+        <strong>MDX Renderer:</strong> This is a placeholder. Integrate with @mdx-js/react for full MDX rendering.
+      </p>
+    </div>
+    {defaultMarkdownRenderer(content)}
+  </div>
+)
+
+export interface DocumentRenderers {
+  markdown?: (content: string) => ReactNode
+  mdx?: (content: string) => ReactNode
+  richtext?: (content: string) => ReactNode
+  text?: (content: string) => ReactNode
+}
 
 interface DocumentPreviewProps {
   document: KnowledgeDocument
   onDocumentUpdate?: (document: KnowledgeDocument) => void
   editable?: boolean
+  renderers?: DocumentRenderers
 }
 
-export function DocumentPreview({ document, onDocumentUpdate, editable = true }: DocumentPreviewProps) {
+export function DocumentPreview({ document, onDocumentUpdate, editable = true, renderers }: DocumentPreviewProps) {
   const [isEditing, setIsEditing] = useState(false)
 
   const formatIcon = (format: string) => {
@@ -24,6 +81,8 @@ export function DocumentPreview({ document, onDocumentUpdate, editable = true }:
         return <FileText className="h-6 w-6 text-primary" />
       case 'richtext':
         return <File className="h-6 w-6 text-success" />
+      case 'text':
+        return <Type className="h-6 w-6 text-muted-foreground" />
       default:
         return <File className="h-6 w-6 text-muted-foreground" />
     }
@@ -37,9 +96,29 @@ export function DocumentPreview({ document, onDocumentUpdate, editable = true }:
         return 'bg-secondary/10 text-secondary border-secondary/20'
       case 'richtext':
         return 'bg-success/10 text-success border-success/20'
+      case 'text':
+        return 'bg-muted/50 text-muted-foreground border-muted-foreground/20'
       default:
         return 'bg-muted text-muted-foreground border-border'
     }
+  }
+
+  const renderContent = (content: string, format: string): ReactNode => {
+    const defaultRenderers = {
+      markdown: defaultMarkdownRenderer,
+      mdx: defaultMDXRenderer,
+      richtext: defaultRichTextRenderer,
+      text: defaultTextRenderer
+    }
+
+    const renderer = renderers?.[format as keyof DocumentRenderers] || defaultRenderers[format as keyof typeof defaultRenderers]
+    
+    if (renderer) {
+      return renderer(content)
+    }
+
+    // Fallback to text rendering
+    return defaultTextRenderer(content)
   }
 
   const handleSave = (updatedDocument: KnowledgeDocument) => {
@@ -146,17 +225,8 @@ export function DocumentPreview({ document, onDocumentUpdate, editable = true }:
             {document.content ? (
               <div className="relative">
                 <div className="bg-card border border-border rounded-xl p-6 overflow-hidden">
-                  <pre className="text-card-foreground text-sm leading-relaxed whitespace-pre-wrap font-mono">
-                    {document.content.substring(0, 1500)}
-                    {document.content.length > 1500 && '...'}
-                  </pre>
+                  {renderContent(document.content, document.format)}
                 </div>
-                
-                {document.content.length > 1500 && (
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card to-transparent rounded-b-xl flex items-end justify-center pb-2">
-                    <span className="text-muted-foreground text-xs">Content truncated</span>
-                  </div>
-                )}
               </div>
             ) : (
               <div className="text-center py-12 bg-muted rounded-xl border-2 border-dashed border-border">

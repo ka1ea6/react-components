@@ -208,7 +208,7 @@ export interface KnowledgeDocument {
   description?: string
   metadata?: Record<string, any>
   content?: string
-  format: 'markdown' | 'mdx' | 'richtext'
+  format: 'markdown' | 'mdx' | 'richtext' | 'text'
   tags?: string[]
   createdAt: Date
   updatedAt?: Date
