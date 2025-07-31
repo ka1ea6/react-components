@@ -1,6 +1,6 @@
 export { default as KnowledgeView } from '../DigitalColleagues/Views/KnowledgeView'
 export { default as TeamsIndexView } from '../DigitalColleagues/Views/TeamsIndexView'
 export { default as FileView } from '../Projects/FileView'
-export { KnowledgeBrowser } from './knowledge-browser'
+export { KnowledgeBrowser } from '../DigitalColleagues/knowledge-browser'
 export { TeamCard } from '../Projects/team-card'
 export { FileList } from '../Projects/file-list'

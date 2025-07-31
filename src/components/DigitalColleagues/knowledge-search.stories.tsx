@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { KnowledgeSearch } from './knowledge-search'
-import type { KnowledgeDocument } from '../DigitalColleagues/types'
+import type { KnowledgeDocument } from './types'
 import { mockKnowledgeDocuments } from '../../../tests/mockKnowledgeDocuments'
 
 const meta: Meta<typeof KnowledgeSearch> = {

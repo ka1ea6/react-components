@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { KnowledgeDocument } from "../DigitalColleagues/types"
+import type { KnowledgeDocument } from "./types"
 
 interface KnowledgeSearchProps {
   selectedDocuments: KnowledgeDocument[]

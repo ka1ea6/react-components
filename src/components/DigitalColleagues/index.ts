@@ -19,6 +19,12 @@ export { default as DashboardPage } from './Pages/dashboardpage';
 // Views
 export * from './Views';
 
+// Knowledge Components
+export { KnowledgeBrowser } from './knowledge-browser';
+export { DocumentPreview } from './document-preview';
+export { DocumentEdit } from './document-edit';
+export { KnowledgeSearch } from './knowledge-search';
+
 // Types and Test Data
 // export * from './types';
 // export * from './test-data';

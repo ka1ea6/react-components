@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { EditableField } from './EditableField';
 
 const meta: Meta<typeof EditableField> = {
-  title: 'Digital Colleagues/EditableField',
+  title: 'Advanced Components/EditableField',
   component: EditableField,
   parameters: {
     layout: 'padded',

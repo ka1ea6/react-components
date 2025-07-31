@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import type { Colleague, DigitalColleague, KnowledgeDocument } from "./types"
-import { KnowledgeSearch } from "../dc-temp/knowledge-search"
+import { KnowledgeSearch } from "./knowledge-search"
 
 interface ColleagueFormProps {
   colleague?: DigitalColleague
