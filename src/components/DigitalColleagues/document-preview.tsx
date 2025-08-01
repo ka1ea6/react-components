@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DocumentEdit } from "./document-edit"
-import type { KnowledgeDocument } from "./types"
+import type { KnowledgeDocument, KnowledgeContext } from "./types"
 import type { ReactNode } from "react"
 
 // Default markdown renderer (can be replaced with react-markdown or similar)
@@ -69,9 +69,18 @@ interface DocumentPreviewProps {
   onDocumentUpdate?: (document: KnowledgeDocument) => void
   editable?: boolean
   renderers?: DocumentRenderers
+  availableDocuments?: KnowledgeDocument[]
+  knowledgeContexts?: KnowledgeContext[]
 }
 
-export function DocumentPreview({ document, onDocumentUpdate, editable = true, renderers }: DocumentPreviewProps) {
+export function DocumentPreview({ 
+  document, 
+  onDocumentUpdate, 
+  editable = true, 
+  renderers,
+  availableDocuments = [],
+  knowledgeContexts = []
+}: DocumentPreviewProps) {
   const [isEditing, setIsEditing] = useState(false)
 
   const formatIcon = (format: string) => {
@@ -136,6 +145,8 @@ export function DocumentPreview({ document, onDocumentUpdate, editable = true, r
         document={document}
         onSave={handleSave}
         onCancel={handleCancel}
+        availableDocuments={availableDocuments}
+        knowledgeContexts={knowledgeContexts}
       />
     )
   }

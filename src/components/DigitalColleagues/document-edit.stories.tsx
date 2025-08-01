@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import { BookOpen, Code, Users, Server } from 'lucide-react'
 import { DocumentEdit } from './document-edit'
-import type { KnowledgeDocument } from './types'
+import type { KnowledgeDocument, KnowledgeContext } from './types'
 
 const meta: Meta<typeof DocumentEdit> = {
   title: 'Digital Colleagues/DocumentEdit',
@@ -27,12 +27,109 @@ const meta: Meta<typeof DocumentEdit> = {
     onCancel: {
       action: 'edit-cancelled',
       description: 'Callback fired when editing is cancelled'
+    },
+    availableDocuments: {
+      control: false,
+      description: 'Array of available documents to suggest metadata values from'
+    },
+    knowledgeContexts: {
+      control: false,
+      description: 'Array of knowledge contexts to suggest metadata keys from'
     }
   },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
+
+// Sample knowledge contexts for metadata suggestions
+const sampleKnowledgeContexts: KnowledgeContext[] = [
+  {
+    id: 'all',
+    label: 'All Documentation',
+    description: 'Browse all documentation organized by category and type',
+    icon: <BookOpen className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['category', 'type'],
+      sortBy: 'title',
+      sortOrder: 'asc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'development',
+    label: 'Development',
+    description: 'Development documentation organized by team and difficulty',
+    icon: <Code className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['team', 'difficulty'],
+      sortBy: 'updatedAt',
+      sortOrder: 'desc',
+      showDocumentCount: true
+    }
+  },
+  {
+    id: 'teams',
+    label: 'Teams',
+    description: 'Documentation organized by team and project',
+    icon: <Users className="h-4 w-4" />,
+    menuConfig: {
+      groupBy: ['team', 'project'],
+      sortBy: 'updatedAt',
+      sortOrder: 'desc',
+      showDocumentCount: true
+    }
+  }
+]
+
+// Sample documents to provide metadata suggestions
+const sampleAvailableDocuments: KnowledgeDocument[] = [
+  {
+    id: '1',
+    title: 'API Authentication Guide',
+    description: 'Complete guide for implementing API authentication',
+    format: 'markdown',
+    metadata: {
+      category: 'Development',
+      type: 'Guide',
+      team: 'Backend',
+      difficulty: 'Intermediate',
+      project: 'Auth System',
+      priority: 'High'
+    },
+    createdAt: new Date('2024-01-10'),
+  },
+  {
+    id: '2',
+    title: 'UI Component Library',
+    description: 'Design system and component documentation',
+    format: 'mdx',
+    metadata: {
+      category: 'Design',
+      type: 'Reference',
+      team: 'Frontend',
+      difficulty: 'Beginner',
+      project: 'Design System',
+      priority: 'Medium'
+    },
+    createdAt: new Date('2024-02-15'),
+  },
+  {
+    id: '3',
+    title: 'Database Schema Design',
+    description: 'Guidelines for designing scalable database schemas',
+    format: 'markdown',
+    metadata: {
+      category: 'Development',
+      type: 'Best Practice',
+      team: 'Backend',
+      difficulty: 'Advanced',
+      project: 'Database Migration',
+      priority: 'High'
+    },
+    createdAt: new Date('2024-03-01'),
+  }
+]
 
 // Sample documents for stories
 const sampleMarkdownDocument: KnowledgeDocument = {
@@ -44,9 +141,10 @@ const sampleMarkdownDocument: KnowledgeDocument = {
     category: 'Development', 
     difficulty: 'Intermediate',
     author: 'Dev Team',
-    lastReviewed: '2024-06-01'
+    lastReviewed: '2024-06-01',
+    team: 'Frontend',
+    type: 'Guide'
   },
-  tags: ['react', 'javascript', 'frontend'],
   createdAt: new Date('2024-01-15'),
   updatedAt: new Date('2024-06-20'),
   content: `# React Development Best Practices
@@ -127,9 +225,9 @@ const sampleRichTextDocument: KnowledgeDocument = {
     category: 'Management', 
     difficulty: 'Beginner',
     department: 'HR',
-    priority: 'High'
+    type: 'Guidelines',
+    team: 'HR'
   },
-  tags: ['communication', 'team', 'guidelines'],
   createdAt: new Date('2024-02-10'),
   updatedAt: new Date('2024-05-15'),
   content: `Team Communication Guidelines
@@ -162,7 +260,6 @@ const emptyDocument: KnowledgeDocument = {
   title: '',
   description: '',
   format: 'markdown',
-  tags: [],
   createdAt: new Date(),
   content: ''
 }
@@ -177,36 +274,11 @@ const documentWithoutTags: KnowledgeDocument = {
   content: 'Simple content for testing purposes.'
 }
 
-// Wrapper component to handle state management
-const DocumentEditWrapper = (args: any) => {
-  const [currentDocument, setCurrentDocument] = useState<KnowledgeDocument>(args.document)
-  
-  const handleSave = (savedDocument: KnowledgeDocument) => {
-    setCurrentDocument(savedDocument)
-    args.onSave?.(savedDocument)
-  }
-
-  const handleCancel = () => {
-    // Reset to original document
-    setCurrentDocument(args.document)
-    args.onCancel?.()
-  }
-
-  return (
-    <div className="h-screen bg-background">
-      <DocumentEdit
-        document={currentDocument}
-        onSave={handleSave}
-        onCancel={handleCancel}
-      />
-    </div>
-  )
-}
-
 export const EditMarkdownDocument: Story = {
-  render: DocumentEditWrapper,
   args: {
-    document: sampleMarkdownDocument
+    document: sampleMarkdownDocument,
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -218,9 +290,10 @@ export const EditMarkdownDocument: Story = {
 }
 
 export const EditRichTextDocument: Story = {
-  render: DocumentEditWrapper,
   args: {
-    document: sampleRichTextDocument
+    document: sampleRichTextDocument,
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -232,9 +305,10 @@ export const EditRichTextDocument: Story = {
 }
 
 export const EditEmptyDocument: Story = {
-  render: DocumentEditWrapper,
   args: {
-    document: emptyDocument
+    document: emptyDocument,
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -246,9 +320,10 @@ export const EditEmptyDocument: Story = {
 }
 
 export const EditDocumentWithoutTags: Story = {
-  render: DocumentEditWrapper,
   args: {
-    document: documentWithoutTags
+    document: documentWithoutTags,
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -260,7 +335,6 @@ export const EditDocumentWithoutTags: Story = {
 }
 
 export const EditLongContent: Story = {
-  render: DocumentEditWrapper,
   args: {
     document: {
       ...sampleMarkdownDocument,
@@ -269,7 +343,9 @@ export const EditLongContent: Story = {
         sampleMarkdownDocument.content + '\n\n' +
         'Even more content to test the textarea scrolling behavior. '.repeat(30) + '\n\n' +
         '## Additional Section\n\nMore content here to make it really long and test the editing experience with substantial content.'
-    }
+    },
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -281,7 +357,6 @@ export const EditLongContent: Story = {
 }
 
 export const EditMinimalDocument: Story = {
-  render: DocumentEditWrapper,
   args: {
     document: {
       id: '5',
@@ -289,7 +364,9 @@ export const EditMinimalDocument: Story = {
       format: 'markdown' as const,
       createdAt: new Date(),
       content: 'Just basic content.'
-    }
+    },
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
@@ -301,7 +378,6 @@ export const EditMinimalDocument: Story = {
 }
 
 export const EditMdxDocument: Story = {
-  render: DocumentEditWrapper,
   args: {
     document: {
       id: '6',
@@ -311,9 +387,10 @@ export const EditMdxDocument: Story = {
       metadata: { 
         category: 'Documentation', 
         interactive: true,
-        complexity: 'Advanced'
+        complexity: 'Advanced',
+        type: 'Guide',
+        team: 'Frontend'
       },
-      tags: ['mdx', 'components', 'react', 'documentation'],
       createdAt: new Date('2024-03-01'),
       updatedAt: new Date('2024-06-15'),
       content: `# MDX Component Guide
@@ -348,12 +425,55 @@ MDX allows you to:
 2. Document component props clearly
 3. Test interactive elements thoroughly
 4. Maintain good performance`
-    }
+    },
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
   },
   parameters: {
     docs: {
       description: {
         story: 'Document editor for an MDX document with React components and interactive content.'
+      }
+    }
+  }
+}
+
+export const EditDocumentWithMetadataSuggestions: Story = {
+  name: 'Metadata Suggestions Demo',
+  args: {
+    document: {
+      id: '7',
+      title: 'New Project Documentation',
+      description: 'Documentation for a new project',
+      format: 'markdown' as const,
+      metadata: { 
+        category: 'Development'
+      },
+      createdAt: new Date(),
+      content: '# New Project\n\nThis is documentation for a new project.'
+    },
+    availableDocuments: sampleAvailableDocuments,
+    knowledgeContexts: sampleKnowledgeContexts
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `**Metadata Suggestions Feature Demo**
+
+This story demonstrates the enhanced metadata editing features:
+
+1. **Suggested Keys**: Field names are suggested based on knowledge contexts (category, type, team, difficulty, project)
+2. **Suggested Values**: When you select a field name that exists in other documents, common values are suggested
+3. **Context-based Hints**: The interface shows which fields are commonly used for organizing documents
+4. **Dynamic Interface**: Fields with existing values show a dropdown, while new fields use free text input
+
+Try adding these metadata fields to see the suggestions:
+- **category**: Will suggest Development, Design, Management, etc.
+- **team**: Will suggest Backend, Frontend, HR, etc.  
+- **difficulty**: Will suggest Beginner, Intermediate, Advanced
+- **type**: Will suggest Guide, Reference, Best Practice, etc.
+
+The suggestions come from the sample documents and knowledge contexts provided to the component.`
       }
     }
   }
