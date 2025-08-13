@@ -168,12 +168,29 @@ export default function ProjectView({
   const router = useRouter()
 
   useEffect(() => {
+    setTasks(initialTasks)
+  }, [initialTasks])
+  useEffect(() => {
+    setSprints(initialSprints)
+  }, [initialSprints])
+  useEffect(() => {
     setEpics(initialEpics)
   }, [initialEpics])
+  useEffect(() => {
+    setProjects(initialProjects)
+  }, [initialProjects])
 
   useEffect(() => {
-    console.log('epics inside', epics, initialEpics)
-  }, [epics])
+    setFiles(initialFiles)
+  }, [initialFiles])
+
+  useEffect(() => {
+    setColleagues(initialColleagues)
+  }, [initialColleagues])
+
+  useEffect(() => {
+    setReminders(initialReminders)
+  }, [initialReminders])
 
   const selectedEpics = epics.filter((epic) => epic.isSelected).map((epic) => epic.id)
   const selectedSprint = sprints.find((sprint) => sprint.isSelected)
@@ -215,7 +232,7 @@ export default function ProjectView({
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdAt'>) => {
     const task: Task = { ...newTask, id: Date.now().toString(), createdAt: new Date() }
     setTasks((prev) => [...prev, task])
-    onUpdateTask?.(task.id, task)
+    onAddTask?.(task)
   }
 
   const handleUpdateTask = (taskId: string, updates: Partial<Task>) => {
@@ -232,6 +249,7 @@ export default function ProjectView({
     if (selectedTask?.id === taskId) {
       setSelectedTask(null)
     }
+    onDeleteTask?.(taskId)
   }
 
   const handleDeleteTaskAsync = async (taskId: string) => {
@@ -250,7 +268,7 @@ export default function ProjectView({
         if (project.id === projectId) {
           // If selecting this project, deselect all others and navigate
           if (updates.isSelected) {
-            router.push(`/kanban/${projectId}`)
+            router.push(`/project/${projectId}`)
             return { ...project, ...updates }
           }
           return { ...project, ...updates }
@@ -274,7 +292,6 @@ export default function ProjectView({
     const epic: Epic = { ...newEpic, id: Date.now().toString(), isSelected: true }
     setEpics((prev) => [...prev, epic])
     onAddEpic?.({ ...epic })
-    console.log('Adding epic:', epic)
   }
 
   const handleAddEpicClick = () => {

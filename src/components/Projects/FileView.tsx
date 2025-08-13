@@ -56,12 +56,10 @@ export default function FileView({
 
   const handleAddFile = () => {
     // This would typically open a file upload dialog
-    console.log('Add file clicked')
     onFileAdd?.()
   }
 
   const handleEditFile = (file: RecentFile) => {
-    console.log('Edit file:', file.name)
     onFileEdit?.(file)
   }
 
@@ -71,7 +69,6 @@ export default function FileView({
   }
 
   const handleFileClick = (file: RecentFile) => {
-    console.log('File clicked:', file.name)
     onFileClick?.(file)
   }
 
@@ -106,7 +103,7 @@ export default function FileView({
             />
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Total Files</CardTitle>
@@ -139,7 +136,7 @@ export default function FileView({
                   <p className="text-xs text-muted-foreground">files modified today</p>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
 
             {/* Filters */}
             <Card>
@@ -156,7 +153,7 @@ export default function FileView({
                       />
                     </div>
                   </div>
-                  <Select value={appFilter} onValueChange={setAppFilter}>
+                  {/* <Select value={appFilter} onValueChange={setAppFilter}>
                     <SelectTrigger className="w-full md:w-[180px]">
                       <SelectValue placeholder="Filter by app" />
                     </SelectTrigger>
@@ -168,7 +165,7 @@ export default function FileView({
                         </SelectItem>
                       ))}
                     </SelectContent>
-                  </Select>
+                  </Select> */}
                   {(searchTerm || appFilter !== 'all') && (
                     <Button variant="outline" onClick={clearFilters} className="gap-2">
                       <Filter className="h-4 w-4" />
@@ -187,7 +184,7 @@ export default function FileView({
                 tabOptions={[
                   { value: 'all', label: `All Files (${filteredFiles.length})` },
                   { value: 'recent', label: `Recent (${recentFiles.length})` },
-                  { value: 'shared', label: `Shared (${sharedFiles.length})` },
+                  // { value: 'shared', label: `Shared (${sharedFiles.length})` },
                 ]}
                 maxWidth="500px"
                 gridCols={3}
