@@ -10,7 +10,7 @@ import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
-import { getTotalDaysBetween, isDayOff, getIsMultipleDays } from '@/lib/utils/DaysUtil'
+import { getTotalDaysBetween, getIsMultipleDays } from '@/lib/utils/DaysUtil'
 
 interface RequestLeaveProps {
   remainingDays: number
