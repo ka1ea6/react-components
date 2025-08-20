@@ -94,921 +94,7 @@ export function ChatDemoToolCalling() {
   )
 }
 
-// Markdown and Rich Text Demo
-export function ChatDemoMarkdownResponses() {
-  const [messages, setMessages] = useState<UIMessage[]>([
-    {
-      id: '1',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Can you show me some examples of markdown formatting?' }
-      ]
-    },
-    {
-      id: '2',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `# Markdown Formatting Examples
 
-Here are various markdown elements that should render properly in the chat:
-
-## Headers and Text Formatting
-
-**Bold text** and *italic text* and ***bold italic text***
-
-~~Strikethrough text~~
-
-\`Inline code\` and regular text.
-
-## Code Blocks
-
-Here's a JavaScript function:
-
-\`\`\`javascript
-function calculateRevenue(deals) {
-  return deals.reduce((total, deal) => {
-    return total + deal.amount;
-  }, 0);
-}
-
-const deals = [
-  { id: 1, amount: 5000, status: 'closed' },
-  { id: 2, amount: 3500, status: 'pending' },
-  { id: 3, amount: 7200, status: 'closed' }
-];
-
-console.log('Total Revenue:', calculateRevenue(deals));
-\`\`\`
-
-## Lists
-
-### Unordered List:
-- Project management features
-- Real-time collaboration
-- Advanced analytics
-  - Revenue tracking
-  - Performance metrics
-  - Custom dashboards
-
-### Ordered List:
-1. **Setup** - Configure your workspace
-2. **Import** - Upload your data
-3. **Analyze** - Review insights
-4. **Action** - Implement changes
-
-## Tables
-
-| Feature | Basic | Pro | Enterprise |
-|---------|-------|-----|------------|
-| Users | 5 | 50 | Unlimited |
-| Storage | 1GB | 100GB | 1TB |
-| Support | Email | Priority | 24/7 |
-| Price | $0 | $29/mo | $99/mo |
-
-## Links and Images
-
-Visit our [documentation](https://docs.example.com) for more details.
-
-## Blockquotes
-
-> "The best way to predict the future is to create it."
-> 
-> — Peter Drucker
-
-## Horizontal Rule
-
----
-
-That covers the main markdown elements! They should all render properly in the chat interface.` 
-        }
-      ]
-    },
-    {
-      id: '3',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Can you show me a complex code example with syntax highlighting?' }
-      ]
-    },
-    {
-      id: '4',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `# Complex Code Examples
-
-Here are some advanced code examples with different languages:
-
-## React Component with TypeScript
-
-\`\`\`typescript
-import React, { useState, useEffect, useCallback } from 'react';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: 'admin' | 'user' | 'viewer';
-}
-
-interface UserListProps {
-  initialUsers?: User[];
-  onUserSelect: (user: User) => void;
-  filterByRole?: User['role'];
-}
-
-const UserList: React.FC<UserListProps> = ({ 
-  initialUsers = [], 
-  onUserSelect, 
-  filterByRole 
-}) => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchUsers = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const response = await fetch('/api/users');
-      if (!response.ok) {
-        throw new Error(\`HTTP error! status: \${response.status}\`);
-      }
-      
-      const userData: User[] = await response.json();
-      setUsers(userData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (initialUsers.length === 0) {
-      fetchUsers();
-    }
-  }, [fetchUsers, initialUsers.length]);
-
-  const filteredUsers = filterByRole 
-    ? users.filter(user => user.role === filterByRole)
-    : users;
-
-  if (loading) return <div className="spinner">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-
-  return (
-    <div className="user-list">
-      {filteredUsers.map(user => (
-        <UserCard 
-          key={user.id} 
-          user={user} 
-          onClick={() => onUserSelect(user)}
-        />
-      ))}
-    </div>
-  );
-};
-
-export default UserList;
-\`\`\`
-
-## Python Data Analysis
-
-\`\`\`python
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-class SalesAnalyzer:
-    def __init__(self, data_path: str):
-        self.data = pd.read_csv(data_path)
-        self.prepare_data()
-    
-    def prepare_data(self):
-        """Clean and prepare the sales data for analysis."""
-        # Convert date columns
-        self.data['date'] = pd.to_datetime(self.data['date'])
-        self.data['month'] = self.data['date'].dt.to_period('M')
-        
-        # Handle missing values
-        self.data['revenue'].fillna(0, inplace=True)
-        self.data['customer_id'].fillna('unknown', inplace=True)
-        
-        # Create derived metrics
-        self.data['revenue_category'] = pd.cut(
-            self.data['revenue'], 
-            bins=[0, 1000, 5000, 10000, float('inf')],
-            labels=['Small', 'Medium', 'Large', 'Enterprise']
-        )
-    
-    def monthly_trends(self) -> pd.DataFrame:
-        """Calculate monthly revenue trends."""
-        monthly_data = self.data.groupby('month').agg({
-            'revenue': ['sum', 'mean', 'count'],
-            'customer_id': 'nunique'
-        }).round(2)
-        
-        monthly_data.columns = [
-            'total_revenue', 'avg_deal_size', 
-            'deal_count', 'unique_customers'
-        ]
-        
-        # Calculate growth rates
-        monthly_data['revenue_growth'] = (
-            monthly_data['total_revenue']
-            .pct_change() * 100
-        ).round(2)
-        
-        return monthly_data
-    
-    def visualize_trends(self, save_path: str = None):
-        """Create visualizations of sales trends."""
-        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-        
-        # Monthly revenue trend
-        monthly = self.monthly_trends()
-        axes[0, 0].plot(monthly.index.astype(str), monthly['total_revenue'])
-        axes[0, 0].set_title('Monthly Revenue Trend')
-        
-        plt.tight_layout()
-        return fig
-
-# Usage example
-if __name__ == "__main__":
-    analyzer = SalesAnalyzer('sales_data.csv')
-    trends = analyzer.monthly_trends()
-    print("Monthly Trends:")
-    print(trends)
-\`\`\`
-
-This demonstrates complex syntax highlighting with multiple languages and should render properly with appropriate color coding!` 
-        }
-      ]
-    }
-  ])
-
-  return (
-    <div className="h-screen w-full">
-      <CopilotInterface
-        messages={messages}
-        capabilities={testCapabilities}
-        enableFileUpload={true}
-        maxFileSize={10}
-        allowedFileTypes={['*']}
-        businessUnits={[]}
-        sessions={[]}
-        notifications={[]}
-        onNewChat={() => setMessages([])}
-        onSessionSelect={() => {}}
-        onSessionDelete={() => {}}
-        showCapabilities={true}
-      />
-    </div>
-  )
-}
-
-// UI Components Demo
-export function ChatDemoUIComponents() {
-  const [messages, setMessages] = useState<UIMessage[]>([
-    {
-      id: '1',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Can you show me some interactive dashboard components?' }
-      ]
-    },
-    {
-      id: '2',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `I'll create some interactive dashboard components for you. Here are various UI elements:
-
-## 📊 Sales Dashboard
-
-### Key Metrics
-- **Total Revenue:** $125,000 (+12.5% ↗️)
-- **New Customers:** 47 (+8.3% ↗️)
-- **Conversion Rate:** 3.2% (-2.1% ↘️)
-- **Average Deal Size:** $8,333 (+5.7% ↗️)
-
-### Customer Overview
-| Customer | Company | Revenue | Status | Last Contact |
-|----------|---------|---------|--------|-------------|
-| Alice Johnson | Acme Corp | $85,000 | 🟢 Active | 2024-01-15 |
-| Bob Smith | Beta Inc | $45,000 | 🟡 Pending | 2024-01-12 |
-| Carol Davis | Gamma LLC | $15,000 | 🔴 Inactive | 2024-01-08 |
-| David Wilson | Delta Systems | $125,000 | 🟢 Active | 2024-01-18 |
-
-### Project Progress
-**Website Redesign Project** - 65% Complete
-
-- ✅ Discovery & Planning (100%)
-- ✅ Design & Prototyping (100%)
-- 🔄 Development (75% - In Progress)
-  - ✅ Frontend development
-  - 🔄 Backend integration
-  - ⏳ Testing & QA
-- ⏳ Launch & Deployment (0% - Pending)
-
-### Revenue Trend
-\`\`\`
-Jan  ████████████████████ $52K
-Feb  ███████████████████████ $58K  
-Mar  ██████████████████████████ $65K
-Apr  ████████████████████████████ $71K
-May  ██████████████████████████████ $75K
-\`\`\`
-
-These components demonstrate how the chat interface can display rich, interactive data visualizations and structured information.` 
-        }
-      ]
-    }
-  ])
-
-  return (
-    <div className="h-screen w-full">
-      <CopilotInterface
-        messages={messages}
-        capabilities={testCapabilities}
-        enableFileUpload={true}
-        maxFileSize={10}
-        allowedFileTypes={['*']}
-        businessUnits={[]}
-        sessions={[]}
-        notifications={[]}
-        onNewChat={() => setMessages([])}
-        onSessionSelect={() => {}}
-        onSessionDelete={() => {}}
-        showCapabilities={true}
-      />
-    </div>
-  )
-}
-
-// File Upload Demo
-export function ChatDemoFileUploads() {
-  const [messages, setMessages] = useState<UIMessage[]>([
-    {
-      id: '1',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'I want to upload some files for analysis' }
-      ]
-    },
-    {
-      id: '2',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: 'Perfect! I can help you analyze various file types. You can upload:\n\n📊 **Data Files:**\n- CSV/Excel spreadsheets\n- JSON data files\n- Database exports\n\n📄 **Documents:**\n- PDF reports\n- Word documents\n- Text files\n\n🖼️ **Media Files:**\n- Images (PNG, JPG, GIF)\n- Charts and diagrams\n\n**File Upload Features:**\n- ✅ Drag & drop support\n- ✅ Multiple file selection\n- ✅ Progress indicators\n- ✅ File type validation\n- ✅ Size limit checking (max 10MB)\n\nTry uploading some files using the attachment button below!' 
-        }
-      ]
-    },
-    {
-      id: '3',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'I uploaded sales_data.csv and quarterly_report.pdf' }
-      ]
-    },
-    {
-      id: '4',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `Great! I can see you've uploaded two files:
-
-## 📁 Uploaded Files
-
-### 1. 📊 sales_data.csv (15.4 KB)
-- **Type:** CSV Spreadsheet
-- **Status:** ✅ Successfully uploaded
-- **Preview:** Contains sales transaction data
-- **Columns:** Date, Customer, Product, Revenue, Region
-
-### 2. 📄 quarterly_report.pdf (2.6 MB)
-- **Type:** PDF Document  
-- **Status:** ✅ Successfully uploaded
-- **Pages:** 24 pages
-- **Content:** Q4 2023 Business Report
-
-## 🔍 Analysis Results
-
-**CSV Data Summary:**
-- **Total Records:** 1,247 sales transactions
-- **Date Range:** January 1, 2023 - December 31, 2023
-- **Total Revenue:** $1,250,000
-- **Average Deal Size:** $1,002.40
-
-**PDF Report Highlights:**
-- **Q4 Revenue:** $485,000 (from report)
-- **Annual Growth:** 15.2%
-- **Top Region:** North America
-- **Key Sections:** Executive Summary, Financial Performance, Sales Analysis
-
-## 🔍 Data Comparison
-- **Variance Found:** $70,000 difference between CSV total ($1,250,000) and PDF annual total ($1,180,000)
-- **Recommendation:** Investigate timing differences or adjustments
-
-Would you like me to:
-- 📊 Create detailed visualizations
-- 🔍 Investigate the revenue variance
-- 📈 Generate trend analysis
-- 📋 Create a unified report?`
-        }
-      ]
-    }
-  ])
-
-  return (
-    <div className="h-screen w-full">
-      <CopilotInterface
-        messages={messages}
-        capabilities={testCapabilities}
-        enableFileUpload={true}
-        maxFileSize={10}
-        allowedFileTypes={['*']}
-        businessUnits={[]}
-        sessions={[]}
-        notifications={[]}
-        onNewChat={() => setMessages([])}
-        onSessionSelect={() => {}}
-        onSessionDelete={() => {}}
-        showCapabilities={true}
-      />
-    </div>
-  )
-}
-
-// Error Handling Demo
-export function ChatDemoErrorHandling() {
-  const [messages, setMessages] = useState<UIMessage[]>([
-    {
-      id: '1',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Can you fetch my latest sales data?' }
-      ]
-    },
-    {
-      id: '2',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `I'll fetch your latest sales data right away.
-
-*🔧 Calling function: fetch_sales_data(period="latest")*
-
-⚠️ **Database Connection Timeout**
-
-\`\`\`
-Error: Database connection timeout
-Code: DB_TIMEOUT
-Retry after: 30 seconds
-Timestamp: 2024-01-20T10:15:23Z
-\`\`\`
-
-This is usually a temporary issue. I'll retry the request in 30 seconds. In the meantime, you can:
-
-1. Check if there are any ongoing system maintenance notifications
-2. Try refreshing the page
-3. Contact support if the issue persists
-
-Would you like me to try again now or wait for the suggested retry time?` 
-        }
-      ]
-    },
-    {
-      id: '3',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Please try again now' }
-      ]
-    },
-    {
-      id: '4',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `Retrying the sales data fetch...
-
-*🔧 Calling function: fetch_sales_data(period="latest", retry=true)*
-
-🚫 **Access Denied**
-
-\`\`\`
-Error: Insufficient permissions
-Code: AUTH_ERROR
-Required permissions: ['sales:read', 'data:access']
-Contact admin: true
-\`\`\`
-
-I'm unable to fetch the sales data due to insufficient permissions.
-
-**Required Permissions:**
-- \`sales:read\` - Read access to sales data
-- \`data:access\` - General data access rights
-
-**Next Steps:**
-1. **Contact your administrator** to request the necessary permissions
-2. **Verify your role** - You may need a sales or data analyst role
-3. **Check group memberships** - Ensure you're in the appropriate security groups
-
-**Alternative Options:**
-- Upload a sales data file directly (CSV, Excel)
-- Request data from a colleague with appropriate access
-- Use the capabilities menu to explore other available features
-
-Would you like to try uploading a file instead, or explore other features I can help you with?` 
-        }
-      ]
-    },
-    {
-      id: '5',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'What about creating a report with invalid data?' }
-      ]
-    },
-    {
-      id: '6',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `I'll attempt to create a report with the data available.
-
-*🔧 Calling function: generate_report(data_source="invalid_source", report_type="sales_summary")*
-
-❌ **Invalid Data Source**
-
-\`\`\`
-Error: Invalid data source specified
-Code: INVALID_SOURCE
-Valid sources: ['sales_db', 'crm_system', 'uploaded_files']
-Suggestion: Please specify a valid data source
-\`\`\`
-
-The report generation failed because the specified data source is not valid.
-
-**Available Data Sources:**
-- \`sales_db\` - Main sales database
-- \`crm_system\` - Customer relationship management system
-- \`uploaded_files\` - Files you've uploaded to the chat
-
-**How to Fix This:**
-1. **Choose a valid source** from the list above
-2. **Upload data files** if you want to use your own data
-3. **Check data permissions** for database sources
-
-**Example:** "Generate a sales report using the CRM system data"
-
-Would you like me to try generating a report with one of the valid data sources?` 
-        }
-      ]
-    },
-    {
-      id: '7',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Let me try uploading some corrupted data' }
-      ]
-    },
-    {
-      id: '8',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `I see you're trying to upload a file. Let me analyze it.
-
-*🔧 Processing file: corrupted_data.xlsx*
-
-💾 **Corrupted or Empty File**
-
-\`\`\`
-Error: File appears to be corrupted or empty
-Code: CORRUPTED_FILE
-File size: 0 bytes
-MIME type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-\`\`\`
-
-The uploaded Excel file appears to be corrupted or empty (0 bytes).
-
-**Possible Causes:**
-- File upload was interrupted
-- Original file is corrupted
-- File format is not supported
-- Network issues during upload
-
-**Troubleshooting Steps:**
-
-1. **Re-save the file:**
-   - Open in Excel and save as a new file
-   - Try "Save As" → Excel Workbook (.xlsx)
-
-2. **Try different format:**
-   - Export as CSV (.csv) for better compatibility
-   - Save as Excel 97-2003 (.xls) if needed
-
-3. **Check file integrity:**
-   - Verify you can open the file locally
-   - Check file size (should be > 0 bytes)
-
-4. **Re-upload:**
-   - Clear browser cache
-   - Try uploading again
-
-**Alternative Solutions:**
-- Copy data into a new spreadsheet
-- Use Google Sheets and export as Excel
-- Upload as a text/CSV file instead
-
-Would you like to try uploading the file again or in a different format?` 
-        }
-      ]
-    }
-  ])
-
-  return (
-    <div className="h-screen w-full">
-      <CopilotInterface
-        messages={messages}
-        capabilities={testCapabilities}
-        enableFileUpload={true}
-        maxFileSize={10}
-        allowedFileTypes={['*']}
-        businessUnits={[]}
-        sessions={[]}
-        notifications={[]}
-        onNewChat={() => setMessages([])}
-        onSessionSelect={() => {}}
-        onSessionDelete={() => {}}
-        showCapabilities={true}
-      />
-    </div>
-  )
-}
-
-// Capabilities Interaction Demo
-export function ChatDemoCapabilitiesInteraction() {
-  const [messages, setMessages] = useState<UIMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `Welcome! I can help you with various business tasks. Use the capabilities menu at the bottom to explore what I can do, or ask me directly about:
-
-🏢 **Sales & CRM**
-- Customer management
-- Sales pipeline tracking
-- Revenue analysis
-
-📊 **Marketing**
-- Campaign management
-- Analytics and reporting
-- Lead generation
-
-👥 **HR & Operations**
-- Employee management
-- Project tracking
-- Document processing
-
-💰 **Finance**
-- Financial reporting
-- Budget analysis
-- Expense tracking
-
-Try clicking on any capability in the menu below to get started!` 
-        }
-      ]
-    },
-    {
-      id: '2',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'I clicked on Sales → Customers → Acme Corp' }
-      ]
-    },
-    {
-      id: '3',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `Great! You've selected **Acme Corp** from the customers list. Here's what I found:
-
-## 🏢 Acme Corp - Customer Profile
-
-### 📋 Basic Information
-- **Company:** Acme Corp
-- **Type:** Enterprise Customer
-- **Revenue:** $125,000 ARR
-- **Industry:** Technology
-- **Employees:** 500
-- **Status:** 🟢 Active
-- **Last Contact:** January 15, 2024
-
-### 👥 Key Contacts
-| Name | Role | Email |
-|------|------|-------|
-| John Smith | CTO | john@acme.com |
-| Sarah Johnson | Procurement | sarah@acme.com |
-
-### 📈 Recent Activity
-- **Jan 15:** Contract renewal discussion
-- **Jan 10:** Product demo scheduled
-- **Jan 05:** Support ticket resolved
-
-### 🎯 Current Opportunities
-- **Enterprise License Renewal** - $150K (Negotiation stage)
-- **Additional Modules** - $25K (Proposal stage)
-
-**Available Actions for Acme Corp:**
-
-🎯 **Sales Actions**
-- Schedule follow-up meeting
-- Update opportunity status
-- Send contract renewal proposal
-
-📞 **Communication**
-- Log customer call
-- Send email update
-- Schedule product demo
-
-📊 **Analytics**
-- View customer health score
-- Generate account report
-- Analyze usage patterns
-
-What would you like to do next?` 
-        }
-      ]
-    },
-    {
-      id: '4',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Now I want to explore Marketing → Campaign Management' }
-      ]
-    },
-    {
-      id: '5',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `Perfect! You've navigated to **Campaign Management**. Here's an overview of your marketing campaigns:
-
-## 📈 Active Marketing Campaigns
-
-### Campaign Performance Dashboard
-
-| Campaign | Type | Status | Budget | Spent | Leads | Conv. | ROI |
-|----------|------|--------|--------|-------|-------|-------|-----|
-| Winter Promotion 2024 | Email + Social | 🟢 Active | $15K | $8.5K | 247 | 23 | 180% |
-| New Product Launch | Multi-channel | 🟡 Planning | $25K | $0 | 0 | 0 | TBD |
-| Retargeting Campaign | Digital Ads | 🟢 Active | $8K | $3.2K | 89 | 12 | 150% |
-
-### 📊 Performance Insights
-
-**Winter Promotion 2024** (Best Performer)
-- Launch Date: Jan 1, 2024
-- Duration: 59 days remaining
-- Conversion Rate: 9.3%
-- Cost per Lead: $34.41
-- Average Deal Size: $3,261
-
-**Campaign Management Actions:**
-
-📝 **Create & Edit**
-- Create new campaign
-- Duplicate existing campaign
-- Edit campaign settings
-
-📊 **Analytics & Reporting**
-- View detailed performance
-- Generate ROI report
-- Compare campaign metrics
-
-⚙️ **Management**
-- Pause/resume campaigns
-- Adjust budgets
-- Update target audiences
-
-🎯 **Optimization**
-- A/B test variations
-- Optimize targeting
-- Adjust bidding strategies
-
-Which campaign would you like to work with, or what action would you like to take?` 
-        }
-      ]
-    },
-    {
-      id: '6',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Let me check HR → Employee Management → Performance Reviews' }
-      ]
-    },
-    {
-      id: '7',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `You've accessed **Performance Reviews** in HR. Here's the current status of performance reviews:
-
-## 👥 Performance Review Dashboard - Q4 2023
-
-### 📊 Overview
-- **Total Employees:** 127
-- **Reviews Completed:** 89 (70.1%)
-- **Reviews Pending:** 23 (18.1%)
-- **Reviews Overdue:** 15 (11.8%)
-
-### 🏢 Department Breakdown
-
-| Department | Employees | Completed | Pending | Overdue | Avg Rating |
-|------------|-----------|-----------|---------|---------|------------|
-| Engineering | 45 | 38 | 5 | 2 | ⭐ 4.2/5 |
-| Sales | 28 | 22 | 4 | 2 | ⭐ 3.9/5 |
-| Marketing | 18 | 12 | 3 | 3 | ⭐ 4.0/5 |
-| Operations | 15 | 9 | 4 | 2 | ⭐ 3.8/5 |
-
-### ⚠️ Upcoming Deadlines (This Week)
-- **Alex Chen** (Engineering) - Due Jan 25
-- **Maria Garcia** (Sales) - Due Jan 27  
-- **David Kim** (Marketing) - Due Jan 30
-
-**Performance Review Actions:**
-
-✅ **Review Management**
-- Schedule new reviews
-- Send completion reminders
-- Mark reviews as complete
-
-📋 **Templates & Forms**
-- Create review templates
-- Customize evaluation forms
-- Set review criteria
-
-📊 **Analytics & Reports**
-- Generate department reports
-- Track completion rates
-- Analyze performance trends
-
-🔔 **Notifications**
-- Send deadline reminders
-- Notify managers of overdue reviews
-- Schedule follow-up meetings
-
-**⚠️ Attention Required:**
-- 15 reviews are **overdue**
-- 23 reviews are **pending**
-- 3 employees have upcoming deadlines this week
-
-Would you like me to send reminder notifications or help with any specific review tasks?` 
-        }
-      ]
-    }
-  ])
-
-  return (
-    <div className="h-screen w-full">
-      <CopilotInterface
-        messages={messages}
-        capabilities={testCapabilities}
-        enableFileUpload={true}
-        maxFileSize={10}
-        allowedFileTypes={['*']}
-        businessUnits={[]}
-        sessions={[]}
-        notifications={[]}
-        onNewChat={() => setMessages([])}
-        onSessionSelect={() => {}}
-        onSessionDelete={() => {}}
-        showCapabilities={true}
-      />
-    </div>
-  )
-}
 
 // Markdown and Rich Text Demo
 export function ChatDemoMarkdownResponses() {
@@ -1544,27 +630,7 @@ export function ChatDemoFileUploads() {
       id: '1',
       role: 'user',
       parts: [
-        { type: 'text', text: 'I want to upload some files for analysis' },
-        {
-          type: 'file',
-          file: {
-            name: 'sales_data.csv',
-            size: 15420,
-            type: 'text/csv',
-            lastModified: Date.now()
-          } as File,
-          url: '/uploads/sales_data.csv'
-        },
-        {
-          type: 'file',
-          file: {
-            name: 'quarterly_report.pdf',
-            size: 2580000,
-            type: 'application/pdf',
-            lastModified: Date.now()
-          } as File,
-          url: '/uploads/quarterly_report.pdf'
-        }
+        { type: 'text', text: 'I want to upload some files for analysis. I have a sales_data.csv file and a quarterly_report.pdf that I need to analyze.' }
       ]
     },
     {
@@ -1573,7 +639,30 @@ export function ChatDemoFileUploads() {
       parts: [
         { 
           type: 'text', 
-          text: 'Great! I can see you\'ve uploaded two files:\n\n1. **sales_data.csv** (15.4 KB) - CSV spreadsheet\n2. **quarterly_report.pdf** (2.6 MB) - PDF document\n\nI can help you analyze this data. What would you like me to do with these files?' 
+          text: `Perfect! I can help you analyze various file types. You can upload:
+
+📊 **Data Files:**
+- CSV/Excel spreadsheets
+- JSON data files
+- Database exports
+
+📄 **Documents:**
+- PDF reports
+- Word documents
+- Text files
+
+🖼️ **Media Files:**
+- Images (PNG, JPG, GIF)
+- Charts and diagrams
+
+**File Upload Features:**
+- ✅ Drag & drop support
+- ✅ Multiple file selection
+- ✅ Progress indicators
+- ✅ File type validation
+- ✅ Size limit checking (max 10MB)
+
+Try uploading your files using the attachment button below! I'll analyze them once uploaded.` 
         }
       ]
     },
@@ -1581,196 +670,58 @@ export function ChatDemoFileUploads() {
       id: '3',
       role: 'user',
       parts: [
-        { type: 'text', text: 'Can you analyze the CSV and summarize the key findings?' }
+        { type: 'text', text: 'I just uploaded sales_data.csv (15.4 KB) and quarterly_report.pdf (2.6 MB)' }
       ]
     },
     {
       id: '4',
       role: 'assistant',
       parts: [
-        { type: 'text', text: 'I\'ll analyze the sales data CSV file for you.' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_1',
-          toolName: 'analyze_csv',
-          args: { 
-            file_path: '/uploads/sales_data.csv',
-            analysis_type: 'summary_statistics'
-          }
-        }
-      ]
-    },
-    {
-      id: '5',
-      role: 'tool',
-      parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_1',
-          toolName: 'analyze_csv',
-          result: {
-            rows: 1247,
-            columns: 8,
-            date_range: '2023-01-01 to 2023-12-31',
-            total_revenue: 1250000,
-            avg_deal_size: 1002.40,
-            columns_info: {
-              date: 'Date of sale',
-              customer_id: 'Customer identifier',
-              customer_name: 'Customer name',
-              product: 'Product sold',
-              revenue: 'Sale amount',
-              region: 'Sales region',
-              sales_rep: 'Sales representative',
-              deal_stage: 'Current deal stage'
-            }
-          }
-        }
-      ]
-    },
-    {
-      id: '6',
-      role: 'assistant',
-      parts: [
         { 
           type: 'text', 
-          text: `# Sales Data Analysis Summary
+          text: `Great! I can see you've uploaded two files:
 
-I've analyzed your sales data CSV file. Here are the key findings:
+## 📁 Uploaded Files
 
-## Dataset Overview
+### 1. 📊 sales_data.csv (15.4 KB)
+- **Type:** CSV Spreadsheet
+- **Status:** ✅ Successfully uploaded
+- **Preview:** Contains sales transaction data
+- **Columns:** Date, Customer, Product, Revenue, Region
+
+### 2. 📄 quarterly_report.pdf (2.6 MB)
+- **Type:** PDF Document  
+- **Status:** ✅ Successfully uploaded
+- **Pages:** 24 pages
+- **Content:** Q4 2023 Business Report
+
+*🔧 Analyzing CSV file: sales_data.csv*
+
+## 🔍 Analysis Results
+
+**CSV Data Summary:**
 - **Total Records:** 1,247 sales transactions
-- **Time Period:** January 1, 2023 - December 31, 2023
-- **Data Columns:** 8 fields including customer info, product details, and revenue
-
-## Financial Summary
+- **Date Range:** January 1, 2023 - December 31, 2023
 - **Total Revenue:** $1,250,000
 - **Average Deal Size:** $1,002.40
-- **Revenue Range:** Full year 2023 performance
 
-## Data Structure
-The CSV contains these key fields:
-- **Date:** Sale transaction dates
-- **Customer Info:** ID and name
-- **Product:** Items sold
-- **Revenue:** Transaction amounts
-- **Region:** Sales territories
-- **Sales Rep:** Account managers
-- **Deal Stage:** Transaction status
+*🔧 Extracting PDF content: quarterly_report.pdf*
 
-Would you like me to dive deeper into any specific aspect of this data, such as:
-- Regional performance comparison
-- Top-performing sales representatives
-- Product category analysis
-- Monthly/quarterly trends
-- Customer segmentation analysis?` 
-        }
-      ]
-    },
-    {
-      id: '7',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Now analyze the PDF report and compare it with the CSV data' }
-      ]
-    },
-    {
-      id: '8',
-      role: 'assistant',
-      parts: [
-        { type: 'text', text: 'I\'ll extract and analyze the PDF report to compare with the CSV data.' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_2',
-          toolName: 'extract_pdf_content',
-          args: { 
-            file_path: '/uploads/quarterly_report.pdf',
-            extract_tables: true,
-            extract_charts: true
-          }
-        }
-      ]
-    },
-    {
-      id: '9',
-      role: 'tool',
-      parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_2',
-          toolName: 'extract_pdf_content',
-          result: {
-            title: 'Q4 2023 Quarterly Business Report',
-            pages: 24,
-            sections: [
-              'Executive Summary',
-              'Financial Performance',
-              'Sales Analysis',
-              'Regional Breakdown',
-              'Product Performance',
-              'Future Outlook'
-            ],
-            key_metrics: {
-              q4_revenue: 485000,
-              annual_revenue: 1180000,
-              q4_deals: 312,
-              top_region: 'North America',
-              growth_rate: '15.2%'
-            },
-            tables_found: 6,
-            charts_found: 8
-          }
-        }
-      ]
-    },
-    {
-      id: '10',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: `# Comparative Analysis: CSV Data vs PDF Report
+**PDF Report Highlights:**
+- **Q4 Revenue:** $485,000 (from report)
+- **Annual Growth:** 15.2%
+- **Top Region:** North America
+- **Key Sections:** Executive Summary, Financial Performance, Sales Analysis
 
-I've analyzed both files and found some interesting insights:
-
-## Data Comparison
-
-### Revenue Figures
-- **CSV Data Total:** $1,250,000 (full year)
-- **PDF Report Total:** $1,180,000 (reported annual)
-- **Difference:** $70,000 variance (5.9% higher in CSV)
-
-### Q4 2023 Performance
-- **PDF Q4 Revenue:** $485,000
-- **CSV Q4 Deals:** 312 transactions (from PDF)
-- **Average Q4 Deal Size:** ~$1,554 (calculated)
-
-## Key Findings
-
-### ✅ Consistent Areas
-- Both sources show strong performance in North America region
-- Deal volume aligns between datasets
-- Growth trajectory matches expectations
-
-### ⚠️ Discrepancies to Investigate
-1. **Revenue Variance:** $70K difference in annual totals
-   - Could be due to timing differences
-   - Possible adjustments or refunds
-   - Different reporting periods
-
-2. **Data Completeness:** CSV has more granular transaction data
-3. **Regional Performance:** Need to cross-reference regional breakdowns
-
-## Recommendations
-1. **Reconcile Revenue:** Investigate the $70K variance
-2. **Data Integration:** Use CSV granular data to validate PDF summaries
-3. **Regional Deep Dive:** Leverage CSV data for detailed regional analysis
-4. **Trend Analysis:** Use CSV timestamps for precise trend analysis
+## 🔍 Data Comparison
+- **Variance Found:** $70,000 difference between CSV total ($1,250,000) and PDF annual total ($1,180,000)
+- **Recommendation:** Investigate timing differences or adjustments
 
 Would you like me to:
-- Investigate specific discrepancies?
-- Create a unified dashboard combining both datasets?
-- Generate detailed regional or product analysis?` 
+- 📊 Create detailed visualizations
+- 🔍 Investigate the revenue variance
+- 📈 Generate trend analysis
+- 📋 Create a unified report?`
         }
       ]
     }
@@ -1810,29 +761,36 @@ export function ChatDemoErrorHandling() {
       id: '2',
       role: 'assistant',
       parts: [
-        { type: 'text', text: 'I\'ll fetch your latest sales data right away.' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_1',
-          toolName: 'fetch_sales_data',
-          args: { period: 'latest' }
+        { 
+          type: 'text', 
+          text: `I'll fetch your latest sales data right away.
+
+*🔧 Calling function: fetch_sales_data(period="latest")*
+
+⚠️ **Database Connection Timeout**
+
+\`\`\`
+Error: Database connection timeout
+Code: DB_TIMEOUT
+Retry after: 30 seconds
+Timestamp: 2024-01-20T10:15:23Z
+\`\`\`
+
+This is usually a temporary issue. I'll retry the request in 30 seconds. In the meantime, you can:
+
+1. Check if there are any ongoing system maintenance notifications
+2. Try refreshing the page
+3. Contact support if the issue persists
+
+Would you like me to try again now or wait for the suggested retry time?` 
         }
       ]
     },
     {
       id: '3',
-      role: 'tool',
+      role: 'user',
       parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_1',
-          toolName: 'fetch_sales_data',
-          result: {
-            error: 'Database connection timeout',
-            error_code: 'DB_TIMEOUT',
-            retry_after: 30
-          }
-        }
+        { type: 'text', text: 'Please try again now' }
       ]
     },
     {
@@ -1841,7 +799,36 @@ export function ChatDemoErrorHandling() {
       parts: [
         { 
           type: 'text', 
-          text: '⚠️ I encountered an issue while fetching your sales data:\n\n**Error:** Database connection timeout\n**Error Code:** DB_TIMEOUT\n\nThis is usually a temporary issue. I\'ll retry the request in 30 seconds. In the meantime, you can:\n\n1. Check if there are any ongoing system maintenance notifications\n2. Try refreshing the page\n3. Contact support if the issue persists\n\nWould you like me to try again now or wait for the suggested retry time?' 
+          text: `Retrying the sales data fetch...
+
+*🔧 Calling function: fetch_sales_data(period="latest", retry=true)*
+
+🚫 **Access Denied**
+
+\`\`\`
+Error: Insufficient permissions
+Code: AUTH_ERROR
+Required permissions: ['sales:read', 'data:access']
+Contact admin: true
+\`\`\`
+
+I'm unable to fetch the sales data due to insufficient permissions.
+
+**Required Permissions:**
+- \`sales:read\` - Read access to sales data
+- \`data:access\` - General data access rights
+
+**Next Steps:**
+1. **Contact your administrator** to request the necessary permissions
+2. **Verify your role** - You may need a sales or data analyst role
+3. **Check group memberships** - Ensure you're in the appropriate security groups
+
+**Alternative Options:**
+- Upload a sales data file directly (CSV, Excel)
+- Request data from a colleague with appropriate access
+- Use the capabilities menu to explore other available features
+
+Would you like to try uploading a file instead, or explore other features I can help you with?` 
         }
       ]
     },
@@ -1849,37 +836,51 @@ export function ChatDemoErrorHandling() {
       id: '5',
       role: 'user',
       parts: [
-        { type: 'text', text: 'Please try again now' }
+        { type: 'text', text: 'What about creating a report with invalid data?' }
       ]
     },
     {
       id: '6',
       role: 'assistant',
       parts: [
-        { type: 'text', text: 'Retrying the sales data fetch...' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_2',
-          toolName: 'fetch_sales_data',
-          args: { period: 'latest', retry: true }
+        { 
+          type: 'text', 
+          text: `I'll attempt to create a report with the data available.
+
+*🔧 Calling function: generate_report(data_source="invalid_source", report_type="sales_summary")*
+
+❌ **Invalid Data Source**
+
+\`\`\`
+Error: Invalid data source specified
+Code: INVALID_SOURCE
+Valid sources: ['sales_db', 'crm_system', 'uploaded_files']
+Suggestion: Please specify a valid data source
+\`\`\`
+
+The report generation failed because the specified data source is not valid.
+
+**Available Data Sources:**
+- \`sales_db\` - Main sales database
+- \`crm_system\` - Customer relationship management system
+- \`uploaded_files\` - Files you've uploaded to the chat
+
+**How to Fix This:**
+1. **Choose a valid source** from the list above
+2. **Upload data files** if you want to use your own data
+3. **Check data permissions** for database sources
+
+**Example:** "Generate a sales report using the CRM system data"
+
+Would you like me to try generating a report with one of the valid data sources?` 
         }
       ]
     },
     {
       id: '7',
-      role: 'tool',
+      role: 'user',
       parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_2',
-          toolName: 'fetch_sales_data',
-          result: {
-            error: 'Insufficient permissions',
-            error_code: 'AUTH_ERROR',
-            required_permissions: ['sales:read', 'data:access'],
-            contact_admin: true
-          }
-        }
+        { type: 'text', text: 'Let me try uploading some corrupted data (corrupted_data.xlsx - 0 bytes)' }
       ]
     },
     {
@@ -1888,7 +889,51 @@ export function ChatDemoErrorHandling() {
       parts: [
         { 
           type: 'text', 
-          text: '🚫 **Access Denied**\n\nI\'m unable to fetch the sales data due to insufficient permissions.\n\n**Required Permissions:**\n- `sales:read` - Read access to sales data\n- `data:access` - General data access rights\n\n**Next Steps:**\n1. **Contact your administrator** to request the necessary permissions\n2. **Verify your role** - You may need a sales or data analyst role\n3. **Check group memberships** - Ensure you\'re in the appropriate security groups\n\n**Alternative Options:**\n- Upload a sales data file directly (CSV, Excel)\n- Request data from a colleague with appropriate access\n- Use the capabilities menu to explore other available features\n\nWould you like to try uploading a file instead, or explore other features I can help you with?' 
+          text: `I see you're trying to upload a file. Let me analyze it.
+
+*🔧 Processing file: corrupted_data.xlsx*
+
+💾 **Corrupted or Empty File**
+
+\`\`\`
+Error: File appears to be corrupted or empty
+Code: CORRUPTED_FILE
+File size: 0 bytes
+MIME type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+\`\`\`
+
+The uploaded Excel file appears to be corrupted or empty (0 bytes).
+
+**Possible Causes:**
+- File upload was interrupted
+- Original file is corrupted
+- File format is not supported
+- Network issues during upload
+
+**Troubleshooting Steps:**
+
+1. **Re-save the file:**
+   - Open in Excel and save as a new file
+   - Try "Save As" → Excel Workbook (.xlsx)
+
+2. **Try different format:**
+   - Export as CSV (.csv) for better compatibility
+   - Save as Excel 97-2003 (.xls) if needed
+
+3. **Check file integrity:**
+   - Verify you can open the file locally
+   - Check file size (should be > 0 bytes)
+
+4. **Re-upload:**
+   - Clear browser cache
+   - Try uploading again
+
+**Alternative Solutions:**
+- Copy data into a new spreadsheet
+- Use Google Sheets and export as Excel
+- Upload as a text/CSV file instead
+
+Would you like to try uploading the file again or in a different format?` 
         }
       ]
     },
@@ -1896,110 +941,56 @@ export function ChatDemoErrorHandling() {
       id: '9',
       role: 'user',
       parts: [
-        { type: 'text', text: 'What about creating a report with invalid data?' }
+        { type: 'text', text: 'What about network connectivity issues?' }
       ]
     },
     {
       id: '10',
       role: 'assistant',
       parts: [
-        { type: 'text', text: 'I\'ll attempt to create a report with the data available.' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_3',
-          toolName: 'generate_report',
-          args: { 
-            data_source: 'invalid_source',
-            report_type: 'sales_summary'
-          }
-        }
-      ]
-    },
-    {
-      id: '11',
-      role: 'tool',
-      parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_3',
-          toolName: 'generate_report',
-          result: {
-            error: 'Invalid data source specified',
-            error_code: 'INVALID_SOURCE',
-            valid_sources: ['sales_db', 'crm_system', 'uploaded_files'],
-            suggestion: 'Please specify a valid data source'
-          }
-        }
-      ]
-    },
-    {
-      id: '12',
-      role: 'assistant',
-      parts: [
         { 
           type: 'text', 
-          text: '❌ **Invalid Data Source**\n\nThe report generation failed because the specified data source is not valid.\n\n**Available Data Sources:**\n- `sales_db` - Main sales database\n- `crm_system` - Customer relationship management system\n- `uploaded_files` - Files you\'ve uploaded to the chat\n\n**How to Fix This:**\n1. **Choose a valid source** from the list above\n2. **Upload data files** if you want to use your own data\n3. **Check data permissions** for database sources\n\n**Example:** "Generate a sales report using the CRM system data"\n\nWould you like me to try generating a report with one of the valid data sources?' 
-        }
-      ]
-    },
-    {
-      id: '13',
-      role: 'user',
-      parts: [
-        { type: 'text', text: 'Let me try uploading some corrupted data' },
-        {
-          type: 'file',
-          file: {
-            name: 'corrupted_data.xlsx',
-            size: 0,
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            lastModified: Date.now()
-          } as File,
-          url: '/uploads/corrupted_data.xlsx'
-        }
-      ]
-    },
-    {
-      id: '14',
-      role: 'assistant',
-      parts: [
-        { type: 'text', text: 'I\'ll analyze the uploaded Excel file.' },
-        {
-          type: 'tool-call',
-          toolCallId: 'call_4',
-          toolName: 'analyze_excel',
-          args: { file_path: '/uploads/corrupted_data.xlsx' }
-        }
-      ]
-    },
-    {
-      id: '15',
-      role: 'tool',
-      parts: [
-        {
-          type: 'tool-result',
-          toolCallId: 'call_4',
-          toolName: 'analyze_excel',
-          result: {
-            error: 'File appears to be corrupted or empty',
-            error_code: 'CORRUPTED_FILE',
-            file_size: 0,
-            suggestions: [
-              'Try re-saving the file in Excel',
-              'Export as CSV format instead',
-              'Check if the file was fully uploaded'
-            ]
-          }
-        }
-      ]
-    },
-    {
-      id: '16',
-      role: 'assistant',
-      parts: [
-        { 
-          type: 'text', 
-          text: '💾 **Corrupted or Empty File**\n\nThe uploaded Excel file appears to be corrupted or empty (0 bytes).\n\n**Possible Causes:**\n- File upload was interrupted\n- Original file is corrupted\n- File format is not supported\n- Network issues during upload\n\n**Troubleshooting Steps:**\n\n1. **Re-save the file:**\n   - Open in Excel and save as a new file\n   - Try "Save As" → Excel Workbook (.xlsx)\n\n2. **Try different format:**\n   - Export as CSV (.csv) for better compatibility\n   - Save as Excel 97-2003 (.xls) if needed\n\n3. **Check file integrity:**\n   - Verify you can open the file locally\n   - Check file size (should be > 0 bytes)\n\n4. **Re-upload:**\n   - Clear browser cache\n   - Try uploading again\n\n**Alternative Solutions:**\n- Copy data into a new spreadsheet\n- Use Google Sheets and export as Excel\n- Upload as a text/CSV file instead\n\nWould you like to try uploading the file again or in a different format?' 
+          text: `Let me check the network connectivity and system status.
+
+*🔧 Calling function: check_system_status()*
+
+🌐 **Network Connectivity Issues**
+
+\`\`\`
+Error: Unable to reach external services
+Code: NETWORK_ERROR
+Status: Multiple service endpoints unreachable
+Last successful connection: 5 minutes ago
+\`\`\`
+
+It appears there are network connectivity issues affecting several services:
+
+**Affected Services:**
+- ❌ Customer Database (timeout)
+- ❌ File Processing Service (unreachable)
+- ❌ Analytics Engine (connection refused)
+- ✅ Chat Service (operational)
+- ✅ Authentication (operational)
+
+**Impact:**
+- File uploads may fail or be delayed
+- Data retrieval functions unavailable
+- Real-time analytics temporarily disabled
+- Chat functionality remains available
+
+**Troubleshooting:**
+1. **Check your internet connection**
+2. **Try refreshing the page**
+3. **Wait 2-3 minutes and retry**
+4. **Contact IT if issues persist**
+
+**What you can still do:**
+- Continue chatting for general assistance
+- Review previously uploaded data
+- Access cached reports and documents
+- Plan future actions for when services restore
+
+I'll continue monitoring the connection status. Services typically restore within 5-10 minutes during maintenance windows.` 
         }
       ]
     }
