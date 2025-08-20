@@ -17,6 +17,8 @@ import { ChatCardArtefact } from "./ChatCardArtefact"
 import type { UIMessage, FileUpload } from "./types"
 import { getTextContent, hasToolPart, getToolPart, hasFilePart, getFileParts, hasDataPart, getDataPart } from "./types"
 
+import { PartAuthenticateTool } from "./PartTypes"
+
 interface ChatInterfaceProps {
   messages: UIMessage[]
   input: string
@@ -27,6 +29,7 @@ interface ChatInterfaceProps {
   isDragOver: boolean
   enableFileUpload: boolean
   onInputChange: (value: string) => void
+  addToolResult?: (toolCallId: string, tool: string, output: any) => void
   onSendMessage: () => void
   onKeyPress?: (e: React.KeyboardEvent) => void
   onFileUpload: (files: FileList | null) => void
@@ -45,6 +48,7 @@ export function ChatInterface({
   isDragOver,
   enableFileUpload,
   onInputChange,
+  addToolResult,
   onSendMessage,
   onKeyPress,
   onFileUpload,
@@ -263,6 +267,18 @@ export function ChatInterface({
                   default:
                     return null
                 }
+              }
+
+              if (part.type === 'tool-requestEndpointLogin') {
+                return (
+                  <div key={index} className="mb-2">
+                    <PartAuthenticateTool
+                      toolPart={toolPart}
+                      index={index}
+                      addToolResult={addToolResult ?? (() => {})}
+                    />
+                  </div>
+                )
               }
 
               // Handle artefact tool

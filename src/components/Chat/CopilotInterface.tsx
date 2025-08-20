@@ -13,10 +13,6 @@ import { ChatInterface } from "./ChatInterface"
 import type { Capability } from "../../test-data/capabilities"
 import type { BusinessUnit } from "../DigitalColleagues/types"
 import type { FileUpload } from "./types"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 
 interface CopilotInterfaceProps {
   // AI Chat Integration - optional configuration and override
@@ -114,7 +110,15 @@ export function CopilotInterface({
   const currentMessages = chatHook?.messages || messages
   const currentInput = localInput // Always use local input since useChat doesn't manage input state
   const currentIsLoading = (chatHook?.status === 'submitted') || isTyping
-  
+  // Adapt addToolResult to match ChatInterface's expected signature
+  const addToolResult =
+    chatHook?.addToolResult
+      ? (toolCallId: string, tool: string, output: any) => {
+          // Call the AI SDK's addToolResult with the correct argument shape
+          // Ignore the returned promise for compatibility
+          void chatHook.addToolResult({ tool, toolCallId, output })
+        }
+      : () => {}
   // Safe initialization of business units with fallback
   const safeBusinessUnits = businessUnits || []
   const fallbackBusinessUnit: BusinessUnit = {
@@ -294,6 +298,7 @@ export function CopilotInterface({
                 currentSessionTitle={currentSession?.title}
                 capabilities={capabilities || []}
                 onInputChange={handleInputChange}
+                addToolResult={addToolResult}
                 onSendMessage={handleSendMessage}
                 onKeyPress={handleKeyPress}
                 fileUploads={fileUploads}
