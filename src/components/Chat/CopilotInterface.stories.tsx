@@ -11,7 +11,7 @@ import { testCapabilities as capabilities } from '../../test-data/capabilities'
 const mockChatSessions = [
   {
     id: "1",
-    title: "Logo Design Review",
+    title: "Logo Design Review and some really long text that should wrap properly in the chat interface",
     lastMessage: "The color palette looks great! Let's refine the typography...",
   },
   {
