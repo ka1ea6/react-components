@@ -393,6 +393,80 @@ export const WithComponents: Story = {
 }
 
 
+export const WithMarkDownComponents: Story = {
+  render: (args) => <ChatInterfaceWrapper 
+    {...args} 
+    messages={[...mockMessages, 
+    
+    {
+        "parts": [
+            {
+                "type": "text",
+                "text": "give me my stats from github"
+            }
+        ],
+        "id": "viZjOQTxcC5F0CZX",
+        "role": "user"
+    },
+
+    {
+    "id": "7b9f5dbe-b8d6-441e-abe7-ad09757a99c4",
+    "role": "assistant",
+    "parts": [
+        {
+            "type": "step-start"
+        },
+        {
+            "type": "dynamic-tool",
+            "toolName": "get_me",
+            "toolCallId": "call_71bg9UVSUYFba0EqYNOVzaoW",
+            "state": "output-available",
+            "input": {},
+            "output": {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "{\"login\":\"rob-at-cortex\",\"id\":50111225,\"profile_url\":\"https://github.com/rob-at-cortex\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/50111225?v=4\",\"details\":{\"name\":\"Rob Ellison\",\"company\":\"@cortex-reply\",\"public_repos\":11,\"public_gists\":0,\"followers\":1,\"following\":1,\"created_at\":\"2019-04-29T14:47:37Z\",\"updated_at\":\"2025-08-14T20:23:22Z\",\"total_private_repos\":7,\"owned_private_repos\":7}}"
+                    }
+                ],
+                "isError": false
+            },
+            "callProviderMetadata": {
+                "openai": {
+                    "itemId": "fc_68a60a0ce3c48199b6c6523cf2a860c3003c1a806e67eeb4"
+                }
+            }
+        },
+        {
+            "type": "step-start"
+        },
+        {
+            "type": "text",
+            "text": "Here are your GitHub stats:\n- Username: rob-at-cortex\n- Name: Rob Ellison\n- Company: @cortex-reply\n- Public repositories: 11\n- Public gists: 0\n- Followers: 1\n- Following: 1\n- Account created on: April 29, 2019\n- Last updated: August 14, 2025\n- Total private repositories: 7\n- Owned private repositories: 7\n\nIs there anything specific you'd like to know or do with this information?",
+            "providerMetadata": {
+                "openai": {
+                    "itemId": "msg_68a60a11a55c8199b87f0ffd2ebeb584003c1a806e67eeb4"
+                }
+            },
+            "state": "done"
+        }
+    ]
+}
+
+
+
+
+    ]}
+  />,
+  name: 'With Markdown and Components',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows the interface with various components integrated.',
+      },
+    },
+  },
+}
 
 export const FileUploadDisabled: Story = {
   render: (args) => <ChatInterfaceWrapper {...args} enableFileUpload={false} />,

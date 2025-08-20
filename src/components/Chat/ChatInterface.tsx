@@ -1,23 +1,44 @@
-import React, { useRef, useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Send, Bot, User, Menu, Upload, Paperclip, X, FileText, Image as ImageIcon, File, Download, ExternalLink } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
-import { CapabilityMenu } from "./capability-menu"
-import { getContextualActions } from "../../test-data/capabilities"
-import type { CapabilityContext, Capability } from "../../test-data/capabilities"
-import { ChatCardTask } from "./ChatCardTask"
-import { ChatCardArtefact } from "./ChatCardArtefact"
-import type { UIMessage, FileUpload } from "./types"
-import { getTextContent, hasToolPart, getToolPart, hasFilePart, getFileParts, hasDataPart, getDataPart } from "./types"
+import React, { useRef, useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Send,
+  Bot,
+  User,
+  Menu,
+  Upload,
+  Paperclip,
+  X,
+  FileText,
+  Image as ImageIcon,
+  File,
+  Download,
+  ExternalLink,
+} from 'lucide-react'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import { CapabilityMenu } from './capability-menu'
+import { getContextualActions } from '../../test-data/capabilities'
+import type { CapabilityContext, Capability } from '../../test-data/capabilities'
+import { ChatCardTask } from './ChatCardTask'
+import { ChatCardArtefact } from './ChatCardArtefact'
+import type { UIMessage, FileUpload } from './types'
+import {
+  getTextContent,
+  hasToolPart,
+  getToolPart,
+  hasFilePart,
+  getFileParts,
+  hasDataPart,
+  getDataPart,
+} from './types'
 
-import { PartAuthenticateTool } from "./PartTypes"
+import { PartAuthenticateTool, PartText } from './PartTypes'
 
 interface ChatInterfaceProps {
   messages: UIMessage[]
@@ -63,18 +84,18 @@ export function ChatInterface({
   const [currentCapabilityContext, setCurrentCapabilityContext] = useState<CapabilityContext>({
     path: [],
     selectedItems: [],
-    filters: {}
+    filters: {},
   })
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   // Scroll to bottom when capability menu opens to ensure it's visible
   useEffect(() => {
     if (isCapabilityMenuOpen) {
       setTimeout(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
       }, 100) // Small delay to allow animation to start
     }
   }, [isCapabilityMenuOpen])
@@ -87,50 +108,57 @@ export function ChatInterface({
   // Generate quick suggestions from capabilities
   const getQuickSuggestions = () => {
     const suggestions: Array<{ label: string; action: () => void }> = []
-    
+
     // Add top-level capabilities as suggestions
-    capabilities.forEach(capability => {
+    capabilities.forEach((capability) => {
       if (capability.actions) {
-        capability.actions.forEach(action => {
+        capability.actions.forEach((action) => {
           suggestions.push({
             label: action.label,
-            action: () => handleCapabilityAction(action.id, { path: [capability], selectedItems: [], filters: {} })
+            action: () =>
+              handleCapabilityAction(action.id, {
+                path: [capability],
+                selectedItems: [],
+                filters: {},
+              }),
           })
         })
       }
-      
+
       // Add quick access to common lists
       if (capability.children) {
-        capability.children.forEach(child => {
-          if (child.type === "list" && child.data) {
+        capability.children.forEach((child) => {
+          if (child.type === 'list' && child.data) {
             suggestions.push({
               label: `View ${child.name}`,
-              action: () => setIsCapabilityMenuOpen(true)
+              action: () => setIsCapabilityMenuOpen(true),
             })
           }
         })
       }
     })
-    
+
     // Limit to 4-5 suggestions to avoid clutter
     return suggestions.slice(0, 5)
   }
 
   const handleCapabilityAction = (actionId: string, context: CapabilityContext) => {
     // Handle capability action - could send message, update state, etc.
-    console.log("Capability action:", actionId, context)
-    
+    console.log('Capability action:', actionId, context)
+
     // Example: Add a message to chat about the action
-    const actionMessage = `Executing ${actionId} with context: ${JSON.stringify(context.path.map(p => p.name))}`
+    const actionMessage = `Executing ${actionId} with context: ${JSON.stringify(
+      context.path.map((p) => p.name),
+    )}`
     // You would call your onSendMessage or similar function here
-    
+
     setIsCapabilityMenuOpen(false)
   }
 
   const contextualActions = getContextualActions({
     path: [],
     selectedItems: [],
-    filters: {}
+    filters: {},
   })
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,38 +201,43 @@ export function ChatInterface({
   const renderMessage = (message: UIMessage) => {
     const isAssistant = message.role === 'assistant'
     const isUser = message.role === 'user'
-    const textContent = getTextContent(message)
+    // const textContent = getTextContent(message)
 
     return (
-      <div className={cn(
-        "flex items-start gap-3",
-        isUser ? "flex-row-reverse" : ""
-      )}>
+      <div className={cn('flex items-start gap-3', isUser ? 'flex-row-reverse' : '')}>
         <Avatar className="h-8 w-8 shrink-0">
-          <AvatarFallback className={cn(
-            isUser 
-              ? "bg-primary text-primary-foreground" 
-              : "bg-gradient-to-br from-purple-600 to-blue-600 text-white"
-          )}>
+          <AvatarFallback
+            className={cn(
+              isUser
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-gradient-to-br from-purple-600 to-blue-600 text-white',
+            )}
+          >
             {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
           </AvatarFallback>
         </Avatar>
-        <div className={cn(
-          "max-w-[80%] rounded-2xl px-4 py-3 shadow-sm",
-          isUser ? "bg-primary text-primary-foreground" : "bg-muted"
-        )}>
+        <div
+          className={cn(
+            'max-w-[80%] rounded-2xl px-4 py-3 shadow-sm',
+            isUser ? 'bg-primary text-primary-foreground' : 'bg-muted',
+          )}
+        >
           {/* Render text content if present */}
-          {textContent && (
+          {/* {textContent && (
             <div className="mb-2 last:mb-0">
               <p className="text-sm">{textContent}</p>
             </div>
-          )}
+          )} */}
 
           {/* Render each part */}
           {message.parts.map((part, index) => {
             // Skip text parts as they're already rendered above
+            // if (part.type === 'text') {
+            //   return null
+            // }
+
             if (part.type === 'text') {
-              return null
+              return <PartText key={`${message.id}-text`} id={message.id} content={part.text} />
             }
 
             // Handle file parts
@@ -249,21 +282,29 @@ export function ChatInterface({
               if (toolName === 'task') {
                 switch (toolPart.state) {
                   case 'input-available':
-                    return <div key={index} className="text-sm opacity-70">Loading task...</div>
+                    return (
+                      <div key={index} className="text-sm opacity-70">
+                        Loading task...
+                      </div>
+                    )
                   case 'output-available':
                     return (
                       <div key={index} className="mb-2">
-                        <ChatCardTask 
+                        <ChatCardTask
                           data={{
                             id: toolPart.output?.id || toolPart.input?.id,
                             fetchLatest: false,
-                            taskData: toolPart.output || toolPart.input
+                            taskData: toolPart.output || toolPart.input,
                           }}
                         />
                       </div>
                     )
                   case 'output-error':
-                    return <div key={index} className="text-sm text-red-500">Error: {toolPart.errorText}</div>
+                    return (
+                      <div key={index} className="text-sm text-red-500">
+                        Error: {toolPart.errorText}
+                      </div>
+                    )
                   default:
                     return null
                 }
@@ -285,11 +326,15 @@ export function ChatInterface({
               if (toolName === 'artefact') {
                 switch (toolPart.state) {
                   case 'input-available':
-                    return <div key={index} className="text-sm opacity-70">Loading artefact...</div>
+                    return (
+                      <div key={index} className="text-sm opacity-70">
+                        Loading artefact...
+                      </div>
+                    )
                   case 'output-available':
                     return (
                       <div key={index} className="mb-2">
-                        <ChatCardArtefact 
+                        <ChatCardArtefact
                           artefact={toolPart.output?.description || ''}
                           taskId={toolPart.output?.id || toolPart.input?.id}
                           taskData={toolPart.output || toolPart.input}
@@ -297,7 +342,11 @@ export function ChatInterface({
                       </div>
                     )
                   case 'output-error':
-                    return <div key={index} className="text-sm text-red-500">Error: {toolPart.errorText}</div>
+                    return (
+                      <div key={index} className="text-sm text-red-500">
+                        Error: {toolPart.errorText}
+                      </div>
+                    )
                   default:
                     return null
                 }
@@ -338,12 +387,17 @@ export function ChatInterface({
                       <CardContent className="p-4">
                         <div className="space-y-2">
                           {dataPart.data?.references?.map((ref: any, refIndex: number) => (
-                            <div key={refIndex} className="flex items-center gap-2 p-2 rounded-md bg-muted/50">
+                            <div
+                              key={refIndex}
+                              className="flex items-center gap-2 p-2 rounded-md bg-muted/50"
+                            >
                               <Badge variant="outline">{ref.type || 'link'}</Badge>
                               <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{ref.title}</p>
                                 {ref.description && (
-                                  <p className="text-xs text-muted-foreground truncate">{ref.description}</p>
+                                  <p className="text-xs text-muted-foreground truncate">
+                                    {ref.description}
+                                  </p>
                                 )}
                               </div>
                               {ref.url && (
@@ -384,7 +438,9 @@ export function ChatInterface({
                               <div className="text-left">
                                 <p className="font-medium">{item.label}</p>
                                 {item.description && (
-                                  <p className="text-xs text-muted-foreground">{item.description}</p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {item.description}
+                                  </p>
                                 )}
                               </div>
                             </Button>
@@ -419,26 +475,31 @@ export function ChatInterface({
   }
 
   return (
-    <div className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ""}`}>
+    <div className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ''}`}>
       {/* Chat Messages */}
-      <ScrollArea 
+      <ScrollArea
         ref={scrollAreaRef}
         className="flex-1 p-4 bg-background border-0"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <div className={cn(
-          "space-y-4",
-          isDragOver && "ring-2 ring-primary ring-offset-2 bg-primary/5"
-        )}>
+        <div
+          className={cn(
+            'space-y-4',
+            isDragOver && 'ring-2 ring-primary ring-offset-2 bg-primary/5',
+          )}
+        >
           <AnimatePresence>
             {messages.map((message) => (
               <motion.div
                 key={message.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={cn("flex gap-3", message.role === "user" ? "flex-row-reverse" : "flex-row")}
+                className={cn(
+                  'flex gap-3',
+                  message.role === 'user' ? 'flex-row-reverse' : 'flex-row',
+                )}
               >
                 {renderMessage(message)}
               </motion.div>
@@ -469,9 +530,13 @@ export function ChatInterface({
               </div>
             </motion.div>
           )}
-          
+
           {isTyping && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex gap-3"
+            >
               <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-gradient-to-br from-purple-600 to-blue-600 text-white">
                   <Bot className="h-4 w-4" />
@@ -482,11 +547,11 @@ export function ChatInterface({
                   <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"></div>
                   <div
                     className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                    style={{ animationDelay: "0.1s" }}
+                    style={{ animationDelay: '0.1s' }}
                   ></div>
                   <div
                     className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                    style={{ animationDelay: "0.2s" }}
+                    style={{ animationDelay: '0.2s' }}
                   ></div>
                 </div>
               </div>
@@ -501,10 +566,15 @@ export function ChatInterface({
         <div className="p-4 border-t bg-muted/10">
           <div className="flex flex-wrap gap-2">
             {fileUploads.map((upload) => (
-              <div key={upload.id} className="flex items-center gap-2 bg-background rounded-lg p-2 border">
+              <div
+                key={upload.id}
+                className="flex items-center gap-2 bg-background rounded-lg p-2 border"
+              >
                 {getFileIcon(upload.file.type)}
                 <span className="text-sm font-medium">{upload.file.name}</span>
-                <span className="text-xs text-muted-foreground">{formatFileSize(upload.file.size)}</span>
+                <span className="text-xs text-muted-foreground">
+                  {formatFileSize(upload.file.size)}
+                </span>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -542,7 +612,7 @@ export function ChatInterface({
           )}
           <Button
             onClick={onSendMessage}
-            disabled={!input.trim() && fileUploads.length === 0 || isTyping}
+            disabled={(!input.trim() && fileUploads.length === 0) || isTyping}
             size="icon"
             className="rounded-2xl h-10 w-10 shadow-sm"
           >
@@ -559,9 +629,9 @@ export function ChatInterface({
             className="rounded-full text-xs flex-shrink-0"
           >
             <Menu className="h-3 w-3 mr-1" />
-            {isCapabilityMenuOpen ? "Hide" : "Show"} Capabilities
+            {isCapabilityMenuOpen ? 'Hide' : 'Show'} Capabilities
           </Button>
-          
+
           <div className="flex flex-wrap gap-2 overflow-hidden">
             {/* Show contextual actions first if available */}
             {getCurrentContextActions().map((action, index) => (
@@ -575,19 +645,20 @@ export function ChatInterface({
                 {action.label}
               </Button>
             ))}
-            
+
             {/* Show quick suggestions from capabilities when no context actions */}
-            {getCurrentContextActions().length === 0 && getQuickSuggestions().map((suggestion, index) => (
-              <Button
-                key={`suggestion-${index}`}
-                variant="outline"
-                size="sm"
-                className="rounded-full text-xs"
-                onClick={suggestion.action}
-              >
-                {suggestion.label}
-              </Button>
-            ))}
+            {getCurrentContextActions().length === 0 &&
+              getQuickSuggestions().map((suggestion, index) => (
+                <Button
+                  key={`suggestion-${index}`}
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full text-xs"
+                  onClick={suggestion.action}
+                >
+                  {suggestion.label}
+                </Button>
+              ))}
           </div>
         </div>
 
