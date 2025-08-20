@@ -281,6 +281,7 @@ export const WithComponents: Story = {
   render: (args) => <ChatInterfaceWrapper 
     {...args} 
     messages={[...mockMessages, 
+    
     {
         "parts": [
             {
@@ -359,7 +360,23 @@ export const WithComponents: Story = {
                 }
             }
         ]
+    },
+    {
+        "parts": [
+            {
+                "type": "text",
+                "text": "what is my github id ?"
+            }
+        ],
+        "id": "7bKMFeQ6Q2QGQYWH",
+        "role": "user"
+    },
+    {
+        "id": "b41b6445-e9ed-4a57-99bc-9161e8a7947c",
+        "role": "assistant",
+        "parts": []
     }
+
 
 
 

@@ -117,6 +117,7 @@ export function CopilotInterface({
           // Call the AI SDK's addToolResult with the correct argument shape
           // Ignore the returned promise for compatibility
           void chatHook.addToolResult({ tool, toolCallId, output })
+          void chatHook.sendMessage()
         }
       : () => {}
   // Safe initialization of business units with fallback
