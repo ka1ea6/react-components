@@ -99,8 +99,23 @@ export function CopilotInterface({
   actionText = "Collaborate",
   sidebarInitiallyClosed = false,
 }: CopilotInterfaceProps) {
+
+  const mergedConfig = {
+    ...aiConfig,
+    onError: (error: any) => {
+          // console.error("Error in CopilotInterface:", error);
+          chatHook?.sendMessage({
+            text: error.message,
+          })
+          console.log(error.code, error.message);
+        },
+    // Add any default AI configuration here
+    // e.g., apiKey: process.env.AI_API_KEY,
+  }
+
+
   // AI Chat Integration - use internal useChat by default, allow override
-  const internalChat = useChat(aiConfig || {})
+  const internalChat = useChat(mergedConfig || {})
   const chatHook = enableAI ? (useCustomChat || internalChat) : null
   
   const [localInput, setLocalInput] = useState("")
