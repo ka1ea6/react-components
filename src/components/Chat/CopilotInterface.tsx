@@ -116,17 +116,8 @@ export function CopilotInterface({
               ]
             },
           ])
-          // Optionally log the error to console or external service
-          // e.g., console.error("AI Error:", error);
-          // If you have a custom error handling function, call it here
-          // customErrorHandler?.(error)
-          // For example, if you want to send an error message to the chat:
-          // This assumes chatHook has a method to send messages
-          // If not, you can handle it differently based on your chat implementation
-          // e.g., chatHook?.sendMessage({ text: error.message })
-          // Or simply log it for now
-          // console.error("Error in CopilotInterface:", error);
-          console.log(error.code, error.message);
+          
+          console.error("Error in CopilotInterface:", error);
         },
     // Add any default AI configuration here
     // e.g., apiKey: process.env.AI_API_KEY,
