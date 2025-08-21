@@ -11,7 +11,7 @@ import { ProjectCard } from '../../Projects/project-card'
 import { mockApps, mockRecentFiles, mockTutorials } from '../../dc-temp/mock-data'
 import { mockSidebarItems, mockNotifications } from '../test-data'
 import { mockProjectSummary } from '../test-data'
-import type { App, ProjectSummary, FileType, BusinessUnit } from '../types'
+import type { App, ProjectSummary, FileType, BusinessUnit, Project } from '../types'
 // import { ColleaguesManagement } from "../colleagues-management"
 import ColleaguesView from './../Views/ColleaguesView'
 import KnowledgeView from '../Views/KnowledgeView'
@@ -32,9 +32,22 @@ const AnimatedCircles = () => (
 interface HomeProps {
   title?: string
   businessUnits: BusinessUnit[]
+  projects: ProjectSummary[]
+  fileCount: number
+  teamMemberCount: number
+  onCreateProject: () => void
+  onOpenProject: (project: ProjectSummary) => void
 }
 
-export default function Home({ title = 'Digital Colleagues', businessUnits }: HomeProps) {
+export default function Home({
+  title = 'Digital Colleagues',
+  businessUnits,
+  projects,
+  fileCount,
+  teamMemberCount,
+  onCreateProject,
+  onOpenProject,
+}: HomeProps) {
   const [activeTab, setActiveTab] = useState('home')
   const [currentBusinessUnit, setCurrentBusinessUnit] = useState<BusinessUnit>(businessUnits[0]) // Default to Design
 
@@ -57,6 +70,7 @@ export default function Home({ title = 'Digital Colleagues', businessUnits }: Ho
 
   const handleProjectOpen = (project: ProjectSummary) => {
     console.log('Opening project:', project.name)
+    onOpenProject(project)
   }
 
   const handleProjectShare = (project: ProjectSummary) => {
@@ -100,17 +114,17 @@ export default function Home({ title = 'Digital Colleagues', businessUnits }: Ho
             <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-card p-6 rounded-lg border">
                 <h3 className="text-lg font-semibold mb-2">Projects</h3>
-                <p className="text-3xl font-bold text-primary">12</p>
+                <p className="text-3xl font-bold text-primary">{projects.length}</p>
                 <p className="text-sm text-muted-foreground">Active projects</p>
               </div>
               <div className="bg-card p-6 rounded-lg border">
                 <h3 className="text-lg font-semibold mb-2">Team Members</h3>
-                <p className="text-3xl font-bold text-primary">8</p>
+                <p className="text-3xl font-bold text-primary">{teamMemberCount}</p>
                 <p className="text-sm text-muted-foreground">Collaborators</p>
               </div>
               <div className="bg-card p-6 rounded-lg border">
                 <h3 className="text-lg font-semibold mb-2">Files</h3>
-                <p className="text-3xl font-bold text-primary">156</p>
+                <p className="text-3xl font-bold text-primary">{fileCount}</p>
                 <p className="text-sm text-muted-foreground">Project files</p>
               </div>
             </section>
@@ -226,14 +240,14 @@ export default function Home({ title = 'Digital Colleagues', businessUnits }: Ho
               gradient="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600"
               primaryAction={{
                 label: 'New Project',
-                onClick: () => console.log('New project clicked'),
+                onClick: onCreateProject,
               }}
             />
 
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold">Active Projects</h2>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-                {mockProjectSummary.map((project) => (
+                {projects.map((project) => (
                   <ProjectCard
                     key={project.name}
                     project={project}
