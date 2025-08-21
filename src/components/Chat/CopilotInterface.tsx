@@ -103,10 +103,29 @@ export function CopilotInterface({
   const mergedConfig = {
     ...aiConfig,
     onError: (error: any) => {
+
+          // chatHook.
+          chatHook?.setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              role: 'assistant',
+              id: `error-${Date.now()}`,
+              createdAt: new Date(),
+              parts: [
+                { type: 'text', text: error.message }
+              ]
+            },
+          ])
+          // Optionally log the error to console or external service
+          // e.g., console.error("AI Error:", error);
+          // If you have a custom error handling function, call it here
+          // customErrorHandler?.(error)
+          // For example, if you want to send an error message to the chat:
+          // This assumes chatHook has a method to send messages
+          // If not, you can handle it differently based on your chat implementation
+          // e.g., chatHook?.sendMessage({ text: error.message })
+          // Or simply log it for now
           // console.error("Error in CopilotInterface:", error);
-          chatHook?.sendMessage({
-            text: error.message,
-          })
           console.log(error.code, error.message);
         },
     // Add any default AI configuration here
@@ -117,7 +136,6 @@ export function CopilotInterface({
   // AI Chat Integration - use internal useChat by default, allow override
   const internalChat = useChat(mergedConfig || {})
   const chatHook = enableAI ? (useCustomChat || internalChat) : null
-  
   const [localInput, setLocalInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   
