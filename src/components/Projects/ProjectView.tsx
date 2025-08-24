@@ -513,7 +513,7 @@ export default function ProjectView({
             onDeleteTask={handleDeleteTask}
             onTaskClick={handleTaskClick}
             // Epic handlers
-            onAddEpic={handleAddEpicClick}
+            onAddEpic={handleAddEpic}
           />
         </div>
       )}

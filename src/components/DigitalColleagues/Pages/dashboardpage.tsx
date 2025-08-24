@@ -11,7 +11,16 @@ import { ProjectCard } from '../../Projects/project-card'
 import { mockApps, mockRecentFiles, mockTutorials } from '../../dc-temp/mock-data'
 import { mockSidebarItems, mockNotifications } from '../test-data'
 import { mockProjectSummary } from '../test-data'
-import type { App, ProjectSummary, FileType, BusinessUnit, Project } from '../types'
+import type {
+  App,
+  ProjectSummary,
+  FileType,
+  BusinessUnit,
+  Project,
+  SidebarItem,
+  Colleague,
+  User,
+} from '../types'
 // import { ColleaguesManagement } from "../colleagues-management"
 import ColleaguesView from './../Views/ColleaguesView'
 import KnowledgeView from '../Views/KnowledgeView'
@@ -37,6 +46,12 @@ interface HomeProps {
   teamMemberCount: number
   onCreateProject: () => void
   onOpenProject: (project: ProjectSummary) => void
+  sidebarItems: SidebarItem[]
+  initialColleagues: Colleague[]
+  users: User[]
+  onColleagueAdd: (colleague: Colleague) => void
+  onColleagueEdit: (colleague: Colleague) => void
+  onColleagueDelete: (colleagueId: string) => void
 }
 
 export default function Home({
@@ -47,6 +62,12 @@ export default function Home({
   teamMemberCount,
   onCreateProject,
   onOpenProject,
+  sidebarItems,
+  initialColleagues,
+  users,
+  onColleagueAdd,
+  onColleagueEdit,
+  onColleagueDelete,
 }: HomeProps) {
   const [activeTab, setActiveTab] = useState('home')
   const [currentBusinessUnit, setCurrentBusinessUnit] = useState<BusinessUnit>(businessUnits[0]) // Default to Design
@@ -140,7 +161,15 @@ export default function Home({
           </div>
         )
       case 'colleagues':
-        return <ColleaguesView />
+        return (
+          <ColleaguesView
+            initialColleagues={initialColleagues}
+            availableUsers={users}
+            onColleagueAdd={onColleagueAdd}
+            onColleagueEdit={onColleagueEdit}
+            onColleagueDelete={onColleagueDelete}
+          />
+        )
       case 'chat':
         return (
           <div className="px-2 md:px-4 py-4 space-y-8">
