@@ -14,7 +14,7 @@ import { DigitalColleagueClone } from "../digital-colleague-clone"
 import { ColleagueTypeSelection } from "../colleague-type-selection"
 import { DigitalColleagueOptions } from "../digital-colleague-options"
 import { type Colleague, type HumanColleague, type DigitalColleague, type KnowledgeDocument, type User as UserType } from "../types"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { DashboardHero } from "../../Heros/DashboardHero"
 interface ColleaguesViewProps {
   initialColleagues?: Colleague[]

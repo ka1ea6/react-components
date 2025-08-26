@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { Bot } from "lucide-react"
 import { DigitalColleageusLayout } from "../DigitalColleageusLayout"
 import { DashboardHero } from "../../Heros/DashboardHero"

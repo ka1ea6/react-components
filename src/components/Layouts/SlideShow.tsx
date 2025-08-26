@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Page, Media, ContentBlock } from '@/payload-types'
 import { RenderBlocks } from '../Blocks'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { Header } from '../HeaderFooter'
 

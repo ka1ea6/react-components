@@ -5,7 +5,7 @@ import type { UIMessage } from "ai"
 import { useChat } from '@ai-sdk/react'
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { Users, Upload, Paperclip, X, FileText, Image as ImageIcon, File } from "lucide-react"
 import { DigitalColleageusLayout } from "../DigitalColleagues/DigitalColleageusLayout"
 import { ChatSessionSidebar, type ChatSession } from "./chat-session-sidebar"

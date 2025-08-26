@@ -1,7 +1,7 @@
 "use client"
 
 import type { Meta, StoryObj } from "@storybook/react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { DashboardHero } from "./DashboardHero"
 
 const meta: Meta<typeof DashboardHero> = {

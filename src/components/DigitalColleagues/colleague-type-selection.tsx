@@ -3,7 +3,7 @@
 import { User, Bot, ChevronLeft, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 
 interface ColleagueTypeSelectionProps {
   onSelectHuman: () => void

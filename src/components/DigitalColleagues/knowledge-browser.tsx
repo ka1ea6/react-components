@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { ChevronDown, ChevronRight, File, FileText, Folder, Search } from "lucide-react"
 import { useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"

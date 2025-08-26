@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useRef, useEffect, useState, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { Send, Bot, User, Menu, X, Paperclip } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"

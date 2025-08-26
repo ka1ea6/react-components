@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { DashboardHero } from "../../Heros/DashboardHero/DashboardHero"
 import { TeamCard } from "../../Projects/team-card"
 import { type TeamSummary } from "../types"
