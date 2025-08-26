@@ -16,7 +16,7 @@ import { NavigationTabs } from '../AdvancedComponents/navigation-tabs'
 import { FileList } from './file-list'
 import { DashboardHero } from '../Heros/DashboardHero/DashboardHero'
 import { FileType, type RecentFile } from '../DigitalColleagues/types'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 
 interface FileViewProps {
   initialFiles?: FileType[]

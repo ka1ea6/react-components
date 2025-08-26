@@ -26,7 +26,7 @@ import {
   type KnowledgeDocument,
   type User as UserType,
 } from '../types'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { DashboardHero } from '../../Heros/DashboardHero'
 interface ColleaguesViewProps {
   initialColleagues?: Colleague[]
