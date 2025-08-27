@@ -125,6 +125,7 @@ export interface FileType {
 }
 
 export interface ProjectSummary {
+  id: number
   name: string
   description: string
   progress: number
