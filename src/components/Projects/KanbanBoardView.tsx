@@ -9,13 +9,15 @@ import { TaskDetailsModal } from './TaskDetailsModal'
 import { AddEpicModal } from './AddEpicModal'
 import { DashboardHero } from '../Heros/DashboardHero'
 
-import { Project, Epic, Sprint, Task } from '../DigitalColleagues/types'
+import { Project, Epic, Sprint, Task, DigitalColleague, User } from '../DigitalColleagues/types'
 
 export interface KanbanBoardProps {
   initialTasks?: Task[]
   initialEpics?: Epic[]
   initialSprints?: Sprint[]
   initialProjects?: Project[]
+  initialUsers?: User[]
+  initialColleagues?: DigitalColleague[]
   // Task handlers
   onAddTask?: (newTask: Omit<Task, 'id' | 'createdAt'>) => void
   onUpdateTask?: (taskId: string, updates: Partial<Task>) => void
@@ -29,6 +31,8 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
   initialTasks = [],
   initialEpics = [],
   initialSprints = [],
+  initialUsers = [],
+  initialColleagues = [],
   initialProjects = [],
   // Task handlers
   onAddTask,
@@ -45,6 +49,8 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
   const [isAddEpicModalOpen, setIsAddEpicModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [draggedTask, setDraggedTask] = useState<Task | null>(null)
+  const [users, setUsers] = useState<User[]>(initialUsers)
+  const [colleagues, setColleagues] = useState<DigitalColleague[]>(initialColleagues)
 
   const selectedEpics = epics.filter((epic) => true).map((epic) => epic.id)
   const selectedSprint = sprints.find((sprint) => sprint.isSelected)
@@ -215,6 +221,7 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
               isOpen={isAddTaskModalOpen}
               onClose={() => setIsAddTaskModalOpen(false)}
               onAddTask={handleAddTask}
+              assignees={[...colleagues, ...users]}
               epics={epics}
               sprints={sprints}
             />

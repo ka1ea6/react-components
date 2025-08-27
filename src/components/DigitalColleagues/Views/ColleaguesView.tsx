@@ -64,19 +64,27 @@ export default function ColleaguesView({
     setColleagues(initialColleagues || [])
   }, [initialColleagues])
 
+  // Ensure props are arrays to prevent iteration errors
+  const safeAvailableUsers = Array.isArray(availableUsers) ? availableUsers : []
+  const safeExistingDigitalColleagues = Array.isArray(existingDigitalColleagues)
+    ? existingDigitalColleagues
+    : []
+
   // New state for selection flows
   const [currentView, setCurrentView] = useState<
     'main' | 'typeSelection' | 'userSelection' | 'digitalOptions' | 'digitalClone' | 'form' | 'view'
   >('main')
 
   const filteredColleagues = colleagues.filter((colleague) => {
+    if (!colleague || !colleague.name) return false
+
     const matchesSearch =
       colleague.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (colleague.type === 'human' &&
-        (colleague.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          colleague.role.toLowerCase().includes(searchTerm.toLowerCase()))) ||
+        (colleague.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          colleague.role?.toLowerCase().includes(searchTerm.toLowerCase()))) ||
       (colleague.type === 'digital' &&
-        colleague.jobDescription.toLowerCase().includes(searchTerm.toLowerCase()))
+        colleague.jobDescription?.toLowerCase().includes(searchTerm.toLowerCase()))
 
     const matchesDepartment =
       departmentFilter === 'all' ||
@@ -113,6 +121,8 @@ export default function ColleaguesView({
 
   // New handler functions
   const handleUserSelect = (user: UserType) => {
+    // Validate user object
+
     // Convert User to HumanColleague
     const humanColleague: HumanColleague = {
       id: `human-${Date.now()}`,
@@ -124,7 +134,7 @@ export default function ColleaguesView({
       phone: user.phone,
       location: user.location,
       timezone: user.timezone,
-      skills: user.skills,
+      skills: user.skills || [],
       bio: user.bio,
       status: 'active',
       joinedDate: new Date(),
@@ -137,6 +147,14 @@ export default function ColleaguesView({
   }
 
   const handleDigitalColleagueClone = (clonedColleague: DigitalColleague) => {
+    if (!clonedColleague || !clonedColleague.id) {
+      console.error(
+        'Invalid cloned colleague provided to handleDigitalColleagueClone:',
+        clonedColleague,
+      )
+      return
+    }
+
     setColleagues((prev) => [...prev, clonedColleague])
     onColleagueAdd?.(clonedColleague)
     setCurrentView('main')
@@ -148,6 +166,11 @@ export default function ColleaguesView({
   }
 
   const handleSaveColleague = (colleague: DigitalColleague) => {
+    if (!colleague || !colleague.id) {
+      console.error('Invalid colleague provided to handleSaveColleague:', colleague)
+      return
+    }
+
     if (editingColleague) {
       // Update existing colleague
       setColleagues((prev) => prev.map((c) => (c.id === colleague.id ? colleague : c)))
@@ -197,14 +220,24 @@ export default function ColleaguesView({
     const allDocuments: KnowledgeDocument[] = []
 
     // Get documents from existing digital colleagues
-    existingDigitalColleagues.forEach((colleague) => {
-      allDocuments.push(...colleague.knowledge, ...colleague.coreKnowledge)
+    safeExistingDigitalColleagues.forEach((colleague) => {
+      if (colleague.knowledge && Array.isArray(colleague.knowledge)) {
+        allDocuments.push(...colleague.knowledge)
+      }
+      if (colleague.coreKnowledge && Array.isArray(colleague.coreKnowledge)) {
+        allDocuments.push(...colleague.coreKnowledge)
+      }
     })
 
     // Get documents from current colleagues in state
     colleagues.forEach((colleague) => {
       if (colleague.type === 'digital') {
-        allDocuments.push(...colleague.knowledge, ...colleague.coreKnowledge)
+        if (colleague.knowledge && Array.isArray(colleague.knowledge)) {
+          allDocuments.push(...colleague.knowledge)
+        }
+        if (colleague.coreKnowledge && Array.isArray(colleague.coreKnowledge)) {
+          allDocuments.push(...colleague.coreKnowledge)
+        }
       }
     })
 
@@ -230,7 +263,7 @@ export default function ColleaguesView({
   if (currentView === 'userSelection') {
     return (
       <UserSelection
-        users={availableUsers}
+        users={safeAvailableUsers}
         onUserSelect={handleUserSelect}
         onCancel={() => setCurrentView('typeSelection')}
       />
@@ -250,7 +283,7 @@ export default function ColleaguesView({
   if (currentView === 'digitalClone') {
     return (
       <DigitalColleagueClone
-        digitalColleagues={existingDigitalColleagues}
+        digitalColleagues={safeExistingDigitalColleagues}
         onColleagueClone={handleDigitalColleagueClone}
         onCancel={() => setCurrentView('digitalOptions')}
       />
@@ -433,7 +466,7 @@ export default function ColleaguesView({
                 >
                   {filteredColleagues.map((colleague) => (
                     <ColleagueCard
-                      key={colleague.id}
+                      key={`${colleague}-${colleague.id}`}
                       colleague={colleague}
                       onEdit={handleEditColleague}
                       onDelete={handleDeleteColleague}

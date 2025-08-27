@@ -20,7 +20,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { BookOpen, Bug, Zap, AlertCircle } from 'lucide-react'
-import { Task, Epic, Sprint } from '../DigitalColleagues/types'
+import { Task, Epic, Sprint, User, DigitalColleague } from '../DigitalColleagues/types'
 
 interface AddTaskModalProps {
   isOpen: boolean
@@ -28,6 +28,7 @@ interface AddTaskModalProps {
   onAddTask: (task: Omit<Task, 'id' | 'createdAt'>) => void
   epics: Epic[]
   sprints: Sprint[]
+  assignees: (User | DigitalColleague)[]
   defaultEpicId?: string
 }
 
@@ -55,6 +56,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
   onAddTask,
   epics,
   sprints,
+  assignees,
   defaultEpicId,
 }) => {
   const [formData, setFormData] = useState({
@@ -86,7 +88,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         priority: 'medium',
         type: 'story',
         points: 1,
-        epicId: '',
+        epicId: defaultEpicId || '',
         sprintId: 'none',
         assignee: '',
       })
@@ -114,7 +116,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         priority: 'medium',
         type: 'story',
         points: 1,
-        epicId: '',
+        epicId: defaultEpicId || '',
         sprintId: 'none',
         assignee: '',
       })
@@ -216,27 +218,29 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
           </div>
 
           {/* Epic Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="epic">Epic</Label>
-            <Select
-              value={formData.epicId}
-              onValueChange={(value) => handleChange('epicId', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select an epic" />
-              </SelectTrigger>
-              <SelectContent>
-                {epics.map((epic) => (
-                  <SelectItem key={epic.id} value={epic.id}>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full ${epic.color}`}></div>
-                      {epic.name}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          {!defaultEpicId && (
+            <div className="space-y-2">
+              <Label htmlFor="epic">Epic</Label>
+              <Select
+                value={formData.epicId}
+                onValueChange={(value) => handleChange('epicId', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select an epic" />
+                </SelectTrigger>
+                <SelectContent>
+                  {epics.map((epic) => (
+                    <SelectItem key={epic.id} value={epic.id}>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded-full ${epic.color}`}></div>
+                        {epic.name}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {/* Sprint Selection */}
           <div className="space-y-2">
@@ -267,6 +271,26 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="sprint">Assignee</Label>
+            <Select
+              value={formData.assignee}
+              onValueChange={(value) => handleChange('assignee', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select an Assignee" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">No Assignee</SelectItem>
+                {assignees.map((user) => (
+                  <SelectItem key={user.id} value={user.id}>
+                    <div className="flex items-center gap-2">{user.name}</div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* <div className="space-y-2">
             <Label htmlFor="assignee">Assignee</Label>
             <Input
               id="assignee"
@@ -274,7 +298,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
               onChange={(e) => handleChange('assignee', e.target.value)}
               placeholder="Enter assignee name"
             />
-          </div>
+          </div> */}
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>

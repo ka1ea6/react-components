@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -133,15 +133,19 @@ const AddReminderModal: React.FC<{
     reminderMinutes: 15,
     tags: '',
   })
+  const [isColleagueError, setIsColleagueError] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const colleague = colleagues.find((c) => c?.id === formData.colleagueId)
+    const colleague = colleagues.find((c) => c?.id.toString() === formData.colleagueId.toString())
     if (!colleague) {
       console.error('No valid colleague selected')
+      setIsColleagueError(true)
       return
     }
+
+    setIsColleagueError(false)
 
     const newReminder: Omit<Reminder, 'id' | 'createdAt'> = {
       title: formData.title,
@@ -177,7 +181,13 @@ const AddReminderModal: React.FC<{
     })
   }
 
-  // Filter out any undefined colleagues
+  useEffect(() => {
+    if (formData.colleagueId) {
+      setIsColleagueError(false)
+    }
+  }, [formData.colleagueId])
+
+  // Filter out any undefined colleague
   const validColleagues = colleagues.filter(Boolean)
 
   return (
@@ -252,13 +262,26 @@ const AddReminderModal: React.FC<{
           </div>
 
           <div>
-            <Label htmlFor="colleague">Assigned Colleague</Label>
+            <Label className={`${isColleagueError ? 'text-destructive' : ''}`} htmlFor="colleague">
+              Assigned Colleague
+            </Label>
             <Select
               value={formData.colleagueId}
-              onValueChange={(value) => setFormData({ ...formData, colleagueId: value })}
+              onValueChange={(value) => {
+                setFormData({ ...formData, colleagueId: value })
+              }}
+              required
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a digital colleague" />
+              <SelectTrigger
+                className={`${isColleagueError ? 'text-destructive border-red-500' : ''}`}
+              >
+                <SelectValue
+                  className={`${isColleagueError ? 'text-destructive border-red-500' : ''}`}
+                  placeholder="Select a digital colleague"
+                >
+                  {colleagues.find((c) => c?.id.toString() === formData.colleagueId.toString())
+                    ?.name || 'Select a digital colleague'}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {validColleagues.map((colleague) => (
@@ -268,6 +291,9 @@ const AddReminderModal: React.FC<{
                 ))}
               </SelectContent>
             </Select>
+            {isColleagueError && (
+              <p className="text-destructive text-sm">Please select a digital colleague</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -506,6 +532,7 @@ const EditReminderModal: React.FC<{
             <Select
               value={formData.colleagueId}
               onValueChange={(value) => setFormData({ ...formData, colleagueId: value })}
+              required
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a digital colleague" />
