@@ -248,6 +248,7 @@ export const mockRecentFiles: FileType[] = [
 
 export const mockProjects: ProjectSummary[] = [
   {
+    id: 1,
     name: 'Website Redesign',
     description: 'Complete overhaul of company website',
     progress: 75,
@@ -256,6 +257,7 @@ export const mockProjects: ProjectSummary[] = [
     files: 23,
   },
   {
+    id: 2,
     name: 'Mobile App Launch',
     description: 'Design and assets for new mobile application',
     progress: 60,
@@ -264,6 +266,7 @@ export const mockProjects: ProjectSummary[] = [
     files: 42,
   },
   {
+    id: 3,
     name: 'Brand Identity',
     description: 'New brand guidelines and assets',
     progress: 90,
@@ -272,6 +275,7 @@ export const mockProjects: ProjectSummary[] = [
     files: 18,
   },
   {
+    id: 4,
     name: 'Marketing Campaign',
     description: 'Summer promotion materials',
     progress: 40,

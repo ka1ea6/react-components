@@ -32,6 +32,7 @@ export const mockProjects: Project[] = [
 
 export const mockProjectSummary: ProjectSummary[] = [
   {
+    id: 1,
     name: "Website Redesign",
     description: "Complete overhaul of company website",
     progress: 75,
@@ -40,22 +41,23 @@ export const mockProjectSummary: ProjectSummary[] = [
     files: 23,
   },
   {
+    id: 2,
     name: "Mobile App Launch",
     description: "Design and assets for new mobile application",
     progress: 60,
     dueDate: "July 30, 2025",
     members: 6,
-    files: 42,
-  },
-  {
+    files: 0
+  },{
+    id: 3,
     name: "Brand Identity",
     description: "New brand guidelines and assets",
     progress: 90,
     dueDate: "May 25, 2025",
     members: 3,
     files: 18,
-  },
-  {
+  },{
+    id: 4,
     name: "Marketing Campaign",
     description: "Summer promotion materials",
     progress: 40,
