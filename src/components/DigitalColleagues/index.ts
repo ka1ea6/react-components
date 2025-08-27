@@ -12,6 +12,7 @@ export { ColleagueForm } from './colleague-form';
 export { ColleagueTypeSelection } from './colleague-type-selection';
 export { DigitalColleagueClone } from './digital-colleague-clone';
 export { DigitalColleagueOptions } from './digital-colleague-options';
+export { TeamForm } from './team-form';
 
 // Pages
 export { default as DashboardPage } from './Pages/dashboardpage';

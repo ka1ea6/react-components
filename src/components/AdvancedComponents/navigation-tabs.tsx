@@ -43,7 +43,7 @@ export function NavigationTabs({
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
       {/* Desktop Tabs */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <Tabs value={activeTab} onValueChange={onTabChange}>
           <TabsList 
             className="grid w-full rounded-2xl p-0 h-10"
@@ -73,7 +73,7 @@ export function NavigationTabs({
       </div>
 
       {/* Mobile Dropdown */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="rounded-2xl min-w-[140px] justify-between">
