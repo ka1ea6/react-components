@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react"
 import { DashboardHero } from "../../Heros/DashboardHero/DashboardHero"
 import { TeamCard } from "../../Projects/team-card"
 import { type TeamSummary } from "../types"
+import { TeamForm, type Team } from "../team-form"
 import {
   Dialog,
   DialogContent,
@@ -15,7 +16,7 @@ import {
 
 interface TeamsIndexViewProps {
   teams?: TeamSummary[]
-  onCreateTeam?: () => void
+  onCreateTeam?: (team: Team) => void
   onTeamOpen?: (team: TeamSummary) => void
 }
 
@@ -28,7 +29,15 @@ export default function TeamsIndexView({
 
   const handleNewTeamClick = () => {
     setIsNewTeamDialogOpen(true)
-    onCreateTeam?.()
+  }
+
+  const handleTeamSave = (team: Team) => {
+    onCreateTeam?.(team)
+    setIsNewTeamDialogOpen(false)
+  }
+
+  const handleTeamCancel = () => {
+    setIsNewTeamDialogOpen(false)
   }
 
   const handleTeamOpen = (team: TeamSummary) => {
@@ -81,18 +90,23 @@ export default function TeamsIndexView({
         </motion.div>
       </AnimatePresence>
 
-      {/* Future: New Team Dialog */}
+      {/* New Team Dialog */}
       <Dialog open={isNewTeamDialogOpen} onOpenChange={setIsNewTeamDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Create New Team</DialogTitle>
-            <DialogDescription>
-              Set up a new team to collaborate with colleagues on projects.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="p-6 text-center text-muted-foreground">
-            <p>Team creation form coming soon...</p>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
+          <div className="sr-only">
+            <DialogHeader>
+              <DialogTitle>Create New Team</DialogTitle>
+              <DialogDescription>
+                Set up a new team to collaborate with colleagues on projects.
+              </DialogDescription>
+            </DialogHeader>
           </div>
+          <TeamForm
+            title="Create New Team"
+            submitLabel="Create Team"
+            onSave={handleTeamSave}
+            onCancel={handleTeamCancel}
+          />
         </DialogContent>
       </Dialog>
     </div>
