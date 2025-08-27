@@ -12,7 +12,7 @@ import { DashboardHero } from '../Heros/DashboardHero/DashboardHero'
 import { AddTaskModal } from './AddTaskModal'
 import { AddEpicModal } from './AddEpicModal'
 import { TaskDetailsModal } from './TaskDetailsModal'
-import type { Reminder, DigitalColleague, FileType } from '../DigitalColleagues/types'
+import type { Reminder, DigitalColleague, FileType, User } from '../DigitalColleagues/types'
 // import { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
 import { useRouter } from 'next/navigation'
 
@@ -70,6 +70,7 @@ interface Props {
   initialProjects?: Project[]
   initialReminders?: Reminder[]
   initialColleagues?: DigitalColleague[]
+  initialUsers?: User[]
   initialFiles?: FileType[]
   initialView?: View
   // Task handlers
@@ -117,6 +118,7 @@ export default function ProjectView({
   initialProjects = [],
   initialReminders = [],
   initialColleagues = [],
+  initialUsers = [],
   initialFiles = [],
   initialView = 'kanban',
   // Task handlers
@@ -160,6 +162,7 @@ export default function ProjectView({
   const [projects, setProjects] = useState<Project[]>(initialProjects)
   const [reminders, setReminders] = useState<Reminder[]>(initialReminders)
   const [colleagues, setColleagues] = useState<DigitalColleague[]>(initialColleagues)
+  const [users, setUsers] = useState<User[]>(initialUsers)
   const [files, setFiles] = useState<FileType[]>(initialFiles)
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false)
   const [isAddEpicModalOpen, setIsAddEpicModalOpen] = useState(false)
@@ -186,6 +189,10 @@ export default function ProjectView({
   useEffect(() => {
     setFiles(initialFiles)
   }, [initialFiles])
+
+  useEffect(() => {
+    setUsers(initialUsers)
+  }, [initialUsers])
 
   useEffect(() => {
     setColleagues(initialColleagues)
@@ -509,6 +516,8 @@ export default function ProjectView({
             initialEpics={epics}
             initialSprints={sprints}
             initialTasks={tasks}
+            initialColleagues={colleagues}
+            initialUsers={users}
             // Task handlers
             onAddTask={handleAddTask}
             onUpdateTask={handleUpdateTask}
@@ -577,6 +586,7 @@ export default function ProjectView({
         onAddTask={handleAddTask}
         epics={epics}
         sprints={sprints}
+        assignees={[...colleagues, ...users]}
         defaultEpicId={selectedEpicForTask || undefined}
       />
 
@@ -586,7 +596,7 @@ export default function ProjectView({
         onAddEpic={handleAddEpic}
       />
 
-      {selectedTask && (
+      {/* {selectedTask && (
         <TaskDetailsModal
           isOpen={!!selectedTask}
           onClose={() => setSelectedTask(null)}
@@ -596,7 +606,7 @@ export default function ProjectView({
           epics={epics}
           sprints={sprints}
         />
-      )}
+      )} */}
     </ManagementSidebar>
   )
 }
