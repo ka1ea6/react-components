@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import * as motion from 'motion/react-client'
 import {
   Send,
   Bot,
@@ -474,6 +474,8 @@ export function ChatInterface({
     )
   }
 
+  motion
+
   return (
     <div className={`h-full flex flex-col shadow-sm max-w-4xl mx-auto ${className || ''}`}>
       {/* Chat Messages */}
@@ -490,7 +492,7 @@ export function ChatInterface({
             isDragOver && 'ring-2 ring-primary ring-offset-2 bg-primary/5',
           )}
         >
-          <AnimatePresence>
+          <motion.animate>
             {messages.map((message) => (
               <motion.div
                 key={message.id}
@@ -504,7 +506,7 @@ export function ChatInterface({
                 {renderMessage(message)}
               </motion.div>
             ))}
-          </AnimatePresence>
+          </motion.animate>
 
           {/* Capability Menu within Chat */}
           {isCapabilityMenuOpen && (
