@@ -1,12 +1,22 @@
-import { Project, Epic, Sprint, Task , ProjectSummary, TeamSummary, Colleague } from '../DigitalColleagues/types';
+import {
+  Project,
+  Epic,
+  Sprint,
+  Task,
+  ProjectSummary,
+  TeamSummary,
+  Colleague,
+} from '../DigitalColleagues/types'
 
 // Helper function to convert strings to KnowledgeDocument objects
-const createKnowledgeDocument = (title: string): import('../DigitalColleagues/types').KnowledgeDocument => ({
+const createKnowledgeDocument = (
+  title: string,
+): import('../DigitalColleagues/types').KnowledgeDocument => ({
   id: Math.random().toString(36).substr(2, 9),
   title,
   format: 'markdown' as const,
   createdAt: new Date(),
-});
+})
 
 // Mock data for testing and stories
 export const mockProjects: Project[] = [
@@ -28,40 +38,42 @@ export const mockProjects: Project[] = [
     description: 'Native mobile application for iOS and Android',
     isSelected: false,
   },
-];
+]
 
 export const mockProjectSummary: ProjectSummary[] = [
   {
     id: 1,
-    name: "Website Redesign",
-    description: "Complete overhaul of company website",
+    name: 'Website Redesign',
+    description: 'Complete overhaul of company website',
     progress: 75,
-    dueDate: "June 15, 2025",
+    dueDate: 'June 15, 2025',
     members: 4,
     files: 23,
   },
   {
     id: 2,
-    name: "Mobile App Launch",
-    description: "Design and assets for new mobile application",
+    name: 'Mobile App Launch',
+    description: 'Design and assets for new mobile application',
     progress: 60,
-    dueDate: "July 30, 2025",
+    dueDate: 'July 30, 2025',
     members: 6,
-    files: 0
-  },{
+    files: 0,
+  },
+  {
     id: 3,
-    name: "Brand Identity",
-    description: "New brand guidelines and assets",
+    name: 'Brand Identity',
+    description: 'New brand guidelines and assets',
     progress: 90,
-    dueDate: "May 25, 2025",
+    dueDate: 'May 25, 2025',
     members: 3,
     files: 18,
-  },{
+  },
+  {
     id: 4,
-    name: "Marketing Campaign",
-    description: "Summer promotion materials",
+    name: 'Marketing Campaign',
+    description: 'Summer promotion materials',
     progress: 40,
-    dueDate: "August 10, 2025",
+    dueDate: 'August 10, 2025',
     members: 5,
     files: 31,
   },
@@ -69,49 +81,51 @@ export const mockProjectSummary: ProjectSummary[] = [
 
 export const mockTeamSummary: TeamSummary[] = [
   {
-    id: "1",
-    name: "Product Development",
-    description: "Core product development team responsible for building and maintaining our main platform",
+    id: '1',
+    name: 'Product Development',
+    description:
+      'Core product development team responsible for building and maintaining our main platform',
     humanColleagues: 8,
     digitalColleagues: 3,
     projects: 5,
   },
   {
-    id: "2",
-    name: "Design & UX",
-    description: "Creative team focused on user experience design and visual identity",
+    id: '2',
+    name: 'Design & UX',
+    description: 'Creative team focused on user experience design and visual identity',
     humanColleagues: 5,
     digitalColleagues: 2,
     projects: 3,
   },
   {
-    id: "3",
-    name: "Marketing",
-    description: "Growth and marketing team driving customer acquisition and retention",
+    id: '3',
+    name: 'Marketing',
+    description: 'Growth and marketing team driving customer acquisition and retention',
     humanColleagues: 6,
     digitalColleagues: 4,
     projects: 7,
   },
   {
-    id: "4",
-    name: "Data Science",
-    description: "Analytics and machine learning team providing insights and intelligent features",
+    id: '4',
+    name: 'Data Science',
+    description: 'Analytics and machine learning team providing insights and intelligent features',
     humanColleagues: 4,
     digitalColleagues: 6,
     projects: 2,
   },
   {
-    id: "5",
-    name: "Customer Success",
-    description: "Support and success team ensuring customer satisfaction and retention",
+    id: '5',
+    name: 'Customer Success',
+    description: 'Support and success team ensuring customer satisfaction and retention',
     humanColleagues: 7,
     digitalColleagues: 2,
     projects: 4,
   },
   {
-    id: "6",
-    name: "Operations",
-    description: "Infrastructure and operations team maintaining system reliability and performance",
+    id: '6',
+    name: 'Operations',
+    description:
+      'Infrastructure and operations team maintaining system reliability and performance',
     humanColleagues: 3,
     digitalColleagues: 5,
     projects: 3,
@@ -167,7 +181,7 @@ export const mockEpics: Epic[] = [
     progress: 90,
     isSelected: true,
   },
-];
+]
 
 export const mockSprints: Sprint[] = [
   {
@@ -206,12 +220,12 @@ export const mockSprints: Sprint[] = [
     isActive: true,
     isSelected: false,
   },
-];
+]
 
 export const mockTasks: Task[] = [
   {
     id: '1',
-    title: 'Design login page',
+    name: 'Design login page',
     description: 'Create wireframes and mockups for the login interface',
     status: 'todo',
     priority: 'high',
@@ -224,7 +238,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '2',
-    title: 'Implement OAuth integration',
+    name: 'Implement OAuth integration',
     description: 'Add Google and GitHub OAuth authentication',
     status: 'review',
     priority: 'high',
@@ -237,7 +251,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '3',
-    title: 'Create dashboard widgets',
+    name: 'Create dashboard widgets',
     description: 'Build analytics and metrics widgets for the main dashboard',
     status: 'todo',
     priority: 'medium',
@@ -250,7 +264,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '4',
-    title: 'Fix login redirect bug',
+    name: 'Fix login redirect bug',
     description: 'Resolve issue where users are not redirected after login',
     status: 'done',
     priority: 'high',
@@ -263,7 +277,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '5',
-    title: 'Research mobile frameworks',
+    name: 'Research mobile frameworks',
     description: 'Investigate best practices for mobile responsive design',
     status: 'in-progress',
     priority: 'medium',
@@ -275,7 +289,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '6',
-    title: 'Update user profile page',
+    name: 'Update user profile page',
     description: 'Enhance user profile with new settings and preferences',
     status: 'review',
     priority: 'medium',
@@ -288,7 +302,7 @@ export const mockTasks: Task[] = [
   },
   {
     id: '7',
-    title: 'Performance optimization',
+    name: 'Performance optimization',
     description: 'Optimize database queries and improve page load times',
     status: 'done',
     priority: 'high',
@@ -299,14 +313,14 @@ export const mockTasks: Task[] = [
     assignee: 'Tom Wilson',
     createdAt: new Date('2024-01-13'),
   },
-];
+]
 
 // Additional tasks for high density testing
 export const highDensityTasks: Task[] = [
   ...mockTasks,
   {
     id: '8',
-    title: 'Add search functionality',
+    name: 'Add search functionality',
     description: 'Implement search across all dashboard widgets',
     status: 'todo',
     priority: 'medium',
@@ -319,7 +333,7 @@ export const highDensityTasks: Task[] = [
   },
   {
     id: '9',
-    title: 'Fix mobile responsive issues',
+    name: 'Fix mobile responsive issues',
     description: 'Resolve layout problems on mobile devices',
     status: 'in-progress',
     priority: 'high',
@@ -332,7 +346,7 @@ export const highDensityTasks: Task[] = [
   },
   {
     id: '10',
-    title: 'Implement dark mode',
+    name: 'Implement dark mode',
     description: 'Add dark theme support across the application',
     status: 'review',
     priority: 'low',
@@ -345,7 +359,7 @@ export const highDensityTasks: Task[] = [
   },
   {
     id: '11',
-    title: 'API rate limiting',
+    name: 'API rate limiting',
     description: 'Implement rate limiting for API endpoints',
     status: 'done',
     priority: 'high',
@@ -358,7 +372,7 @@ export const highDensityTasks: Task[] = [
   },
   {
     id: '12',
-    title: 'User onboarding flow',
+    name: 'User onboarding flow',
     description: 'Create guided tour for new users',
     status: 'todo',
     priority: 'medium',
@@ -369,7 +383,7 @@ export const highDensityTasks: Task[] = [
     assignee: 'Casey Johnson',
     createdAt: new Date('2024-01-23'),
   },
-];
+]
 
 // Additional projects for testing
 export const extendedProjects: Project[] = [
@@ -386,7 +400,7 @@ export const extendedProjects: Project[] = [
     description: 'Microservices API management layer',
     isSelected: false,
   },
-];
+]
 
 // Empty state data
 export const emptyStateData = {
@@ -411,7 +425,7 @@ export const emptyStateData = {
     },
   ],
   tasks: [],
-};
+}
 
 // Single epic focus data
 export const singleEpicData = {
@@ -429,29 +443,29 @@ export const singleEpicData = {
       isSelected: true,
     },
   ],
-  tasks: mockTasks.filter(task => task.epicId === '1'),
-};
+  tasks: mockTasks.filter((task) => task.epicId === '1'),
+}
 
 // Utility functions for common data manipulations
 export const getTasksByStatus = (tasks: Task[], status: Task['status']) => {
-  return tasks.filter(task => task.status === status);
-};
+  return tasks.filter((task) => task.status === status)
+}
 
 export const getTasksByEpic = (tasks: Task[], epicId: string) => {
-  return tasks.filter(task => task.epicId === epicId);
-};
+  return tasks.filter((task) => task.epicId === epicId)
+}
 
 export const getTasksBySprint = (tasks: Task[], sprintId: string) => {
-  return tasks.filter(task => task.sprintId === sprintId);
-};
+  return tasks.filter((task) => task.sprintId === sprintId)
+}
 
 export const getSelectedEpics = (epics: Epic[]) => {
-  return epics.filter(epic => epic.isSelected);
-};
+  return epics.filter((epic) => epic.isSelected)
+}
 
 export const getActiveSprints = (sprints: Sprint[]) => {
-  return sprints.filter(sprint => sprint.isActive);
-};
+  return sprints.filter((sprint) => sprint.isActive)
+}
 
 // Data presets for common testing scenarios
 export const testScenarios = {
@@ -485,96 +499,120 @@ export const testScenarios = {
     initialSprints: mockSprints,
     initialTasks: mockTasks,
   },
-};
-
-
-
+}
 
 export const mockColleagues: Colleague[] = [
   {
-    id: "1",
-    type: "human",
-    name: "Sarah Johnson",
-    email: "sarah.johnson@company.com",
-    role: "Senior Designer",
-    department: "Design",
-    status: "active",
-    joinedDate: new Date("2023-01-15"),
+    id: '1',
+    type: 'human',
+    name: 'Sarah Johnson',
+    email: 'sarah.johnson@company.com',
+    role: 'Senior Designer',
+    department: 'Design',
+    status: 'active',
+    joinedDate: new Date('2023-01-15'),
     lastActive: new Date(),
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA",
-    timezone: "PST",
-    skills: ["UI/UX Design", "Figma", "Adobe Creative Suite", "Prototyping", "User Research"],
-    bio: "Passionate designer with 8+ years of experience creating user-centered digital experiences.",
+    phone: '+1 (555) 123-4567',
+    location: 'San Francisco, CA',
+    timezone: 'PST',
+    skills: ['UI/UX Design', 'Figma', 'Adobe Creative Suite', 'Prototyping', 'User Research'],
+    bio: 'Passionate designer with 8+ years of experience creating user-centered digital experiences.',
   },
   {
-    id: "2",
-    type: "digital",
-    name: "CodeAssist Pro",
-    status: "active",
-    joinedDate: new Date("2024-01-01"),
+    id: '2',
+    type: 'digital',
+    name: 'CodeAssist Pro',
+    status: 'active',
+    joinedDate: new Date('2024-01-01'),
     lastActive: new Date(),
-    jobDescription: "AI-powered coding assistant that helps with code review, debugging, and documentation generation.",
-    workInstructions: "Review pull requests for code quality and best practices. Generate comprehensive documentation for new features. Assist with debugging complex issues. Provide code suggestions and optimizations.",
-    capabilities: ["Code Review", "Documentation Generation", "Debugging", "Code Optimization", "Testing"],
-    knowledge: ["JavaScript", "TypeScript", "React", "Node.js", "Python", "Git"].map(createKnowledgeDocument),
-    coreKnowledge: ["Company coding standards", "Architecture patterns", "Security guidelines"].map(createKnowledgeDocument),
-    version: "2",
-    lastUpdated: new Date("2024-01-15"),
-    isActive: true,
-  },
-  {
-    id: "3",
-    type: "human",
-    name: "Michael Chen",
-    email: "michael.chen@company.com",
-    role: "Product Manager",
-    department: "Product",
-    status: "inactive",
-    joinedDate: new Date("2022-08-20"),
-    lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    phone: "+1 (555) 987-6543",
-    location: "New York, NY",
-    timezone: "EST",
-    skills: ["Product Strategy", "Agile", "Data Analysis", "User Stories", "Roadmapping"],
-    bio: "Strategic product manager focused on driving user engagement and business growth.",
-  },
-  {
-    id: "4",
-    type: "digital",
-    name: "MarketingBot",
-    status: "active",
-    joinedDate: new Date("2024-02-01"),
-    lastActive: new Date(),
-    jobDescription: "Specialized AI assistant for marketing campaigns, content creation, and social media management.",
-    workInstructions: "Create engaging social media content. Analyze campaign performance metrics. Generate marketing copy and headlines. Schedule and manage social media posts.",
+    jobDescription:
+      'AI-powered coding assistant that helps with code review, debugging, and documentation generation.',
+    workInstructions:
+      'Review pull requests for code quality and best practices. Generate comprehensive documentation for new features. Assist with debugging complex issues. Provide code suggestions and optimizations.',
     capabilities: [
-      "Content Creation",
-      "Social Media Management",
-      "Analytics",
-      "SEO Optimization",
-      "Campaign Management",
+      'Code Review',
+      'Documentation Generation',
+      'Debugging',
+      'Code Optimization',
+      'Testing',
     ],
-    knowledge: ["Digital Marketing", "Social Media Platforms", "Content Strategy", "Analytics Tools"].map(createKnowledgeDocument),
-    coreKnowledge: ["Brand guidelines", "Target audience personas", "Marketing objectives"].map(createKnowledgeDocument),
-    version: "52",
-    lastUpdated: new Date("2024-02-10"),
+    knowledge: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Git'].map(
+      createKnowledgeDocument,
+    ),
+    coreKnowledge: ['Company coding standards', 'Architecture patterns', 'Security guidelines'].map(
+      createKnowledgeDocument,
+    ),
+    version: '2',
+    lastUpdated: new Date('2024-01-15'),
     isActive: true,
   },
   {
-    id: "5",
-    type: "human",
-    name: "Emily Rodriguez",
-    email: "emily.rodriguez@company.com",
-    role: "UX Researcher",
-    department: "Design",
-    status: "inactive",
-    joinedDate: new Date("2023-06-10"),
+    id: '3',
+    type: 'human',
+    name: 'Michael Chen',
+    email: 'michael.chen@company.com',
+    role: 'Product Manager',
+    department: 'Product',
+    status: 'inactive',
+    joinedDate: new Date('2022-08-20'),
+    lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+    phone: '+1 (555) 987-6543',
+    location: 'New York, NY',
+    timezone: 'EST',
+    skills: ['Product Strategy', 'Agile', 'Data Analysis', 'User Stories', 'Roadmapping'],
+    bio: 'Strategic product manager focused on driving user engagement and business growth.',
+  },
+  {
+    id: '4',
+    type: 'digital',
+    name: 'MarketingBot',
+    status: 'active',
+    joinedDate: new Date('2024-02-01'),
+    lastActive: new Date(),
+    jobDescription:
+      'Specialized AI assistant for marketing campaigns, content creation, and social media management.',
+    workInstructions:
+      'Create engaging social media content. Analyze campaign performance metrics. Generate marketing copy and headlines. Schedule and manage social media posts.',
+    capabilities: [
+      'Content Creation',
+      'Social Media Management',
+      'Analytics',
+      'SEO Optimization',
+      'Campaign Management',
+    ],
+    knowledge: [
+      'Digital Marketing',
+      'Social Media Platforms',
+      'Content Strategy',
+      'Analytics Tools',
+    ].map(createKnowledgeDocument),
+    coreKnowledge: ['Brand guidelines', 'Target audience personas', 'Marketing objectives'].map(
+      createKnowledgeDocument,
+    ),
+    version: '52',
+    lastUpdated: new Date('2024-02-10'),
+    isActive: true,
+  },
+  {
+    id: '5',
+    type: 'human',
+    name: 'Emily Rodriguez',
+    email: 'emily.rodriguez@company.com',
+    role: 'UX Researcher',
+    department: 'Design',
+    status: 'inactive',
+    joinedDate: new Date('2023-06-10'),
     lastActive: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
-    phone: "+1 (555) 456-7890",
-    location: "Austin, TX",
-    timezone: "CST",
-    skills: ["User Research", "Usability Testing", "Data Analysis", "Survey Design", "Interview Techniques"],
-    bio: "User researcher dedicated to understanding user needs and improving product experiences.",
+    phone: '+1 (555) 456-7890',
+    location: 'Austin, TX',
+    timezone: 'CST',
+    skills: [
+      'User Research',
+      'Usability Testing',
+      'Data Analysis',
+      'Survey Design',
+      'Interview Techniques',
+    ],
+    bio: 'User researcher dedicated to understanding user needs and improving product experiences.',
   },
 ]

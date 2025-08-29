@@ -12,7 +12,13 @@ import { DashboardHero } from '../Heros/DashboardHero/DashboardHero'
 import { AddTaskModal } from './AddTaskModal'
 import { AddEpicModal } from './AddEpicModal'
 import { TaskDetailsModal } from './TaskDetailsModal'
-import type { Reminder, DigitalColleague, FileType, User } from '../DigitalColleagues/types'
+import type {
+  Reminder,
+  DigitalColleague,
+  FileType,
+  User,
+  Comment,
+} from '../DigitalColleagues/types'
 // import { Epic, Sprint, Project, Task } from "@/components/DigitalColleagues/KanbanBoard"
 import { useRouter } from 'next/navigation'
 
@@ -48,7 +54,7 @@ export interface Sprint {
 
 export interface Task {
   id: string
-  title: string
+  name: string
   description: string
   status: 'todo' | 'in-progress' | 'review' | 'done'
   priority: 'low' | 'medium' | 'high'
@@ -58,6 +64,7 @@ export interface Task {
   sprintId?: string
   assignee: string
   createdAt: Date
+  comments?: Comment[]
 }
 
 type View = 'kanban' | 'planning' | 'tasks' | 'files' | 'epics'
@@ -75,7 +82,7 @@ interface Props {
   initialView?: View
   // Task handlers
   onAddTask?: (newTask: Omit<Task, 'id' | 'createdAt'>) => void
-  onUpdateTask?: (taskId: string, updates: Partial<Task>) => void
+  onUpdateTask?: (taskId: string, updates: Partial<Task>) => Promise<Task>
   onDeleteTask?: (taskId: string) => void
   onTaskClick?: (task: Task) => void
   // Epic handlers
@@ -107,6 +114,8 @@ interface Props {
   onTeamClick?: (teamId: string) => void
   onTeamChange?: (team: any) => void
   onCopilotClick?: () => void
+  handleAddComment?: ({ content, taskId }: { taskId: string; content: string }) => Promise<Task>
+
   //   businessUnits: BusinessUnit[]
 }
 
@@ -155,6 +164,7 @@ export default function ProjectView({
   onTeamClick,
   onTeamChange,
   onCopilotClick,
+  handleAddComment,
 }: Props) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
   const [epics, setEpics] = useState<Epic[]>(initialEpics)
@@ -249,9 +259,9 @@ export default function ProjectView({
     onAddTask?.(task)
   }
 
-  const handleUpdateTask = (taskId: string, updates: Partial<Task>) => {
+  const handleUpdateTask = async (taskId: string, updates: Partial<Task>): Promise<Task> => {
     setTasks((prev) => prev.map((task) => (task.id === taskId ? { ...task, ...updates } : task)))
-    onUpdateTask?.(taskId, updates)
+    return (await onUpdateTask?.(taskId, updates)) as Task
   }
 
   const handleUpdateTaskAsync = async (taskId: string, updates: Partial<Task>) => {
@@ -525,6 +535,7 @@ export default function ProjectView({
             onTaskClick={handleTaskClick}
             // Epic handlers
             onAddEpic={handleAddEpic}
+            onAddComment={handleAddComment}
           />
         </div>
       )}

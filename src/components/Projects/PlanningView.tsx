@@ -150,7 +150,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
         <div className="space-y-2">
           <div className="flex items-start justify-between">
             <h4 className="font-medium text-sm text-foreground line-clamp-1 select-none pointer-events-none">
-              {task.title}
+              {task.name}
             </h4>
             <Badge
               className={`text-xs select-none pointer-events-none ${getPriorityColor(
