@@ -216,7 +216,7 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
         <div 
           className="h-full"
           style={{
-            height: calculatedHeight
+            height: heroHeight > 0 ? `calc(100vh - ${heroHeight + 120}px)` : 'calc(100vh - 12rem)'
           }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
@@ -293,11 +293,13 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
         <TaskDetailsModal
           isOpen={!!selectedTask}
           onClose={() => setSelectedTask(null)}
-          task={selectedTask}
+          initialTask={selectedTask}
           epics={epics}
           sprints={sprints}
           onUpdateTask={handleUpdateTask}
           onDeleteTask={handleDeleteTask}
+          colleagues={[...colleagues, ...users]}
+          onAddComment={onAddComment}
         />
       )}
     </div>
