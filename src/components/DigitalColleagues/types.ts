@@ -73,9 +73,18 @@ export interface Sprint {
   isSelected?: boolean
 }
 
+export interface Comment {
+  id: string
+  content: string
+  timestamp: string
+  user: User
+  taskId: string
+  taskTitle: string
+}
+
 export interface Task {
   id: string
-  title: string
+  name: string
   description: string
   status: 'todo' | 'in-progress' | 'review' | 'done'
   priority: 'low' | 'medium' | 'high'
@@ -84,6 +93,7 @@ export interface Task {
   epicId: string
   sprintId?: string
   assignee: string
+  comments?: Comment[]
   createdAt: Date
 }
 

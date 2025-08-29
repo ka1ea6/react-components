@@ -20,11 +20,12 @@ export interface KanbanBoardProps {
   initialColleagues?: DigitalColleague[]
   // Task handlers
   onAddTask?: (newTask: Omit<Task, 'id' | 'createdAt'>) => void
-  onUpdateTask?: (taskId: string, updates: Partial<Task>) => void
+  onUpdateTask?: (taskId: string, updates: Partial<Task>) => Promise<Task>
   onDeleteTask?: (taskId: string) => void
   onTaskClick?: (task: Task) => void
   // Epic handlers
   onAddEpic?: (newEpic: Omit<Epic, 'id'>) => void
+  onAddComment?: ({ content, taskId }: { taskId: string; content: string }) => Promise<Task>
 }
 
 export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
@@ -41,6 +42,7 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
   onTaskClick,
   // Epic handlers
   onAddEpic,
+  onAddComment,
 }) => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
   const [epics, setEpics] = useState<Epic[]>(initialEpics)
@@ -112,11 +114,13 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
     onAddTask?.(newTask)
   }
 
-  const handleUpdateTask = async (taskId: string, updates: Partial<Task>): Promise<void> => {
+  const handleUpdateTask = async (taskId: string, updates: Partial<Task>): Promise<Task> => {
     setTasks((prev) => prev.map((task) => (task.id === taskId ? { ...task, ...updates } : task)))
     if (onUpdateTask) {
-      await onUpdateTask(taskId, updates)
+      return await onUpdateTask(taskId, updates)
     }
+
+    return tasks.find((task) => task.id === taskId) as Task
   }
 
   const handleDeleteTask = async (taskId: string): Promise<void> => {
@@ -236,11 +240,13 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
               <TaskDetailsModal
                 isOpen={!!selectedTask}
                 onClose={() => setSelectedTask(null)}
-                task={selectedTask}
+                initialTask={selectedTask}
                 epics={epics}
                 sprints={sprints}
                 onUpdateTask={handleUpdateTask}
                 onDeleteTask={handleDeleteTask}
+                colleagues={[...colleagues, ...users]}
+                onAddComment={onAddComment}
               />
             )}
           </>

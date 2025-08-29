@@ -60,7 +60,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
   defaultEpicId,
 }) => {
   const [formData, setFormData] = useState({
-    title: '',
+    name: '',
     description: '',
     status: 'todo' as Task['status'],
     priority: 'medium' as Task['priority'],
@@ -82,7 +82,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
     if (isOpen) {
       // Set default values or reset the form when the modal opens
       setFormData({
-        title: '',
+        name: '',
         description: '',
         status: 'todo',
         priority: 'medium',
@@ -97,9 +97,9 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (formData.title.trim()) {
+    if (formData.name.trim()) {
       onAddTask({
-        title: formData.title.trim(),
+        name: formData.name.trim(),
         description: formData.description.trim(),
         status: 'todo',
         priority: formData.priority as Task['priority'],
@@ -110,7 +110,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
         assignee: formData.assignee.trim() || 'Unassigned',
       })
       setFormData({
-        title: '',
+        name: '',
         description: '',
         status: 'todo',
         priority: 'medium',
@@ -137,11 +137,11 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Task Title</Label>
+            <Label htmlFor="name">Task Title</Label>
             <Input
-              id="title"
-              value={formData.title}
-              onChange={(e) => handleChange('title', e.target.value)}
+              id="name"
+              value={formData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
               placeholder="Enter task title"
               required
             />
