@@ -4,7 +4,6 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -26,15 +25,12 @@ interface ManagementSidebarProps {
   onUpdateEpic: (epicId: string, updates: Partial<Epic>) => void;
   onDeleteEpic: (epicId: string) => void;
   onAddEpic: () => void;
-  onAddSprint: (sprint: Omit<Sprint, 'id'>) => void;
-  onUpdateSprint: (sprintId: string, updates: Partial<Sprint>) => void;
-  onDeleteSprint: (sprintId: string) => void;
   onViewChange: (view: 'kanban' | 'planning' | 'tasks' | 'files' | 'epics') => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
 
-type SectionType = 'projects' | 'epics' | 'sprints' | 'files' | null;
+type SectionType = 'projects' | 'epics' | null;
 
 const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   projects,
@@ -47,9 +43,6 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   onUpdateEpic,
   onDeleteEpic,
   onAddEpic,
-  onAddSprint,
-  onUpdateSprint,
-  onDeleteSprint,
   onViewChange,
   mobileMenuOpen,
   onToggleMobileMenu,
@@ -57,7 +50,6 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
   const [activeSection, setActiveSection] = useState<SectionType>(null);
   const [editingProject, setEditingProject] = useState<string | null>(null);
   const [editingEpic, setEditingEpic] = useState<string | null>(null);
-  const [editingSprintId, setEditingSprintId] = useState<string | null>(null);
   const [projectEditForm, setProjectEditForm] = useState({ name: '', description: '' });
   const [epicEditForm, setEpicEditForm] = useState({
     name: '',
@@ -69,25 +61,10 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
     endDate: '',
     progress: 0,
   });
-  const [sprintEditForm, setSprintEditForm] = useState({
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    isActive: false,
-  });
   const [showAddProject, setShowAddProject] = useState(false);
-  const [showAddSprint, setShowAddSprint] = useState(false);
   const [newProjectForm, setNewProjectForm] = useState({
     name: '',
     description: '',
-  });
-  const [newSprintForm, setNewSprintForm] = useState({
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    isActive: false,
   });
 
   const colorOptions = [
@@ -202,60 +179,6 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
     });
   };
 
-  const handleSprintEditStart = (sprint: Sprint) => {
-    setEditingSprintId(sprint.id);
-    setSprintEditForm({
-      name: sprint.name,
-      description: sprint.description || '',
-      startDate: sprint.startDate.toISOString().split('T')[0],
-      endDate: sprint.endDate.toISOString().split('T')[0],
-      isActive: sprint.isActive,
-    });
-  };
-
-  const handleSprintEditSave = () => {
-    if (editingSprintId && sprintEditForm.name.trim()) {
-      onUpdateSprint(editingSprintId, {
-        name: sprintEditForm.name.trim(),
-        description: sprintEditForm.description.trim(),
-        startDate: new Date(sprintEditForm.startDate),
-        endDate: new Date(sprintEditForm.endDate),
-        isActive: sprintEditForm.isActive,
-      });
-      setEditingSprintId(null);
-    }
-  };
-
-  const handleSprintEditCancel = () => {
-    setEditingSprintId(null);
-    setSprintEditForm({
-      name: '',
-      description: '',
-      startDate: '',
-      endDate: '',
-      isActive: false,
-    });
-  };
-
-  const handleAddSprintSave = () => {
-    if (newSprintForm.name.trim()) {
-      onAddSprint({
-        name: newSprintForm.name.trim(),
-        description: newSprintForm.description.trim(),
-        startDate: new Date(newSprintForm.startDate),
-        endDate: new Date(newSprintForm.endDate),
-        isActive: newSprintForm.isActive,
-        isSelected: false,
-      });
-      setNewSprintForm({ name: '', description: '', startDate: '', endDate: '', isActive: false });
-      setShowAddSprint(false);
-    }
-  };
-
-  const handleSprintSelect = (sprintId: string) => {
-    onUpdateSprint(sprintId, { isSelected: true });
-  };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
@@ -278,15 +201,15 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
       } md:translate-x-0`}>
         
         {/* View Toggle */}
-        <div className="border-b border-sidebar-border">
+        <div className="flex-1 flex flex-col">
           <button
             onClick={() => {
               onViewChange('kanban');
               setActiveSection(null);
             }}
-            className={`w-12 h-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+            className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
               currentView === 'kanban' ? 'bg-primary' : 'bg-primary/75 hover:bg-primary'
-            } hover:w-28 hover:justify-start hover:pl-3 z-50`}
+            } hover:w-28 hover:justify-start hover:pl-3`}
             title="Kanban View"
           >
             <Kanban className="h-4 w-4 flex-shrink-0" />
@@ -294,12 +217,13 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
               Kanban
             </span>
           </button>
+          
           <button
             onClick={() => {
               onViewChange('planning');
               setActiveSection(null);
             }}
-            className={`w-12 h-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+            className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
               currentView === 'planning' ? 'bg-brand-plum' : 'bg-brand-plum/75 hover:bg-brand-plum'
             } hidden md:flex hover:w-28 hover:justify-start hover:pl-3`}
             title="Planning View"
@@ -309,82 +233,84 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
               Planning
             </span>
           </button>
+
+          <button
+            onClick={() => {
+              onViewChange('epics');
+              setActiveSection(null);
+            }}
+            className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+              currentView === 'epics' ? 'bg-brand-orange' : 'bg-brand-orange/75 hover:bg-brand-orange'
+            } hover:w-28 hover:justify-start hover:pl-3`}
+            title="Epic Planning"
+          >
+            <Target className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Epics
+            </span>
+          </button>
+          
+          <button
+            onClick={() => {
+              onViewChange('files');
+              setActiveSection(null);
+            }}
+            className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+              currentView === 'files' ? 'bg-brand-green' : 'bg-brand-green/75 hover:bg-brand-green'
+            } hover:w-28 hover:justify-start hover:pl-3`}
+            title="Files"
+          >
+            <FileText className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Files
+            </span>
+          </button>
+          
+          <button
+            onClick={() => {
+              onViewChange('tasks');
+              setActiveSection(null);
+            }}
+            className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+              currentView === 'tasks' ? 'bg-brand-cyan' : 'bg-brand-cyan/75 hover:bg-brand-cyan'
+            } hover:w-28 hover:justify-start hover:pl-3`}
+            title="Tasks"
+          >
+            <Calendar className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Tasks
+            </span>
+          </button>
         </div>
 
-        {/* ...existing code... */}
-        <button
-          onClick={() => setActiveSection(activeSection === 'projects' ? null : 'projects')}
-          className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
-            activeSection === 'projects' ? 'bg-sidebar-accent' : 'bg-sidebar-primary hover:bg-sidebar-accent'
-          } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Projects"
-        >
-          <FolderOpen className="h-4 w-4 flex-shrink-0" />
-          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Projects
-          </span>
-        </button>
-        
-        <button
-          onClick={() => {
-            onViewChange('epics');
-            setActiveSection(null);
-          }}
-          className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
-            currentView === 'epics' ? 'bg-primary' : 'bg-primary/75 hover:bg-primary'
-          } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Epic Planning"
-        >
-          <Target className="h-4 w-4 flex-shrink-0" />
-          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Epics
-          </span>
-        </button>
-        
-        <button
-          onClick={() => setActiveSection(activeSection === 'sprints' ? null : 'sprints')}
-          className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
-            activeSection === 'sprints' ? 'bg-brand-green' : 'bg-brand-green/75 hover:bg-brand-green'
-          } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Sprints"
-        >
-          <Layers className="h-4 w-4 flex-shrink-0" />
-          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Sprints
-          </span>
-        </button>
-        
-        <button
-          onClick={() => {
-            onViewChange('files');
-            setActiveSection(null);
-          }}
-          className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
-            currentView === 'files' ? 'bg-brand-orange' : 'bg-brand-orange/75 hover:bg-brand-orange'
-          } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Files"
-        >
-          <FileText className="h-4 w-4 flex-shrink-0" />
-          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Files
-          </span>
-        </button>
-        
-        <button
-          onClick={() => {
-            onViewChange('tasks');
-            setActiveSection(null);
-          }}
-          className={`flex-1 w-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
-            currentView === 'tasks' ? 'bg-brand-cyan' : 'bg-brand-cyan/75 hover:bg-brand-cyan'
-          } hover:w-28 hover:justify-start hover:pl-3`}
-          title="Tasks"
-        >
-          <Calendar className="h-4 w-4 flex-shrink-0" />
-          <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
-            Tasks
-          </span>
-        </button>
+        {/* Management Section */}
+        {/* <div className="border-t border-sidebar-border">
+          <button
+            onClick={() => setActiveSection(activeSection === 'projects' ? null : 'projects')}
+            className={`w-12 h-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+              activeSection === 'projects' ? 'bg-sidebar-accent' : 'bg-sidebar-primary hover:bg-sidebar-accent'
+            } hover:w-28 hover:justify-start hover:pl-3`}
+            title="Projects"
+          >
+            <FolderOpen className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Projects
+            </span>
+          </button>
+          
+          <button
+            onClick={() => setActiveSection(activeSection === 'epics' ? null : 'epics')}
+            className={`w-12 h-12 flex items-center justify-center text-sidebar-foreground transition-all duration-200 relative overflow-hidden group/btn ${
+              activeSection === 'epics' ? 'bg-sidebar-accent' : 'bg-sidebar-primary hover:bg-sidebar-accent'
+            } hover:w-28 hover:justify-start hover:pl-3`}
+            title="Manage Epics"
+          >
+            <Layers className="h-4 w-4 flex-shrink-0" />
+            <span className="text-xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 absolute left-8">
+              Manage
+            </span>
+          </button>
+        </div> */}
       </div>
 
       {/* Mobile Overlay - Truly full screen */}
@@ -411,8 +337,6 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
               <h2 className="text-base md:text-lg font-semibold">
                 {activeSection === 'projects' && 'Projects'}
                 {activeSection === 'epics' && 'Manage Epics'}
-                {activeSection === 'sprints' && 'Manage Sprints'}
-                {activeSection === 'files' && 'Files'}
               </h2>
               <Button variant="ghost" size="sm" onClick={() => setActiveSection(null)}>
                 <X className="h-4 w-4" />
@@ -570,33 +494,31 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
                               <div className="grid grid-cols-2 gap-2">
                                 <div className="space-y-1">
                                   <label className="text-xs font-medium">Confidence</label>
-                                  <Select value={epicEditForm.confidence} onValueChange={(value: 'low' | 'medium' | 'high') => setEpicEditForm(prev => ({ ...prev, confidence: value }))}>
-                                    <SelectTrigger className="h-8 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {confidenceOptions.map(option => (
-                                        <SelectItem key={option.value} value={option.value}>
-                                          <span className={option.color}>{option.label}</span>
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
-                                  </Select>
+                                  <select 
+                                    value={epicEditForm.confidence} 
+                                    onChange={(e) => setEpicEditForm(prev => ({ ...prev, confidence: e.target.value as 'low' | 'medium' | 'high' }))}
+                                    className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                  >
+                                    {confidenceOptions.map(option => (
+                                      <option key={option.value} value={option.value}>
+                                        {option.label}
+                                      </option>
+                                    ))}
+                                  </select>
                                 </div>
                                 <div className="space-y-1">
                                   <label className="text-xs font-medium">Phase</label>
-                                  <Select value={epicEditForm.phase.toString()} onValueChange={(value) => setEpicEditForm(prev => ({ ...prev, phase: parseInt(value) }))}>
-                                    <SelectTrigger className="h-8 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {phaseOptions.map(option => (
-                                        <SelectItem key={option.value} value={option.value.toString()}>
-                                          <span className={option.color}>{option.label}</span>
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
-                                  </Select>
+                                  <select 
+                                    value={epicEditForm.phase.toString()} 
+                                    onChange={(e) => setEpicEditForm(prev => ({ ...prev, phase: parseInt(e.target.value) }))}
+                                    className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                  >
+                                    {phaseOptions.map(option => (
+                                      <option key={option.value} value={option.value.toString()}>
+                                        {option.label}
+                                      </option>
+                                    ))}
+                                  </select>
                                 </div>
                               </div>
 
@@ -707,152 +629,6 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
                                 >
                                   <Trash2 className="h-3 w-3" />
                                 </Button>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              {/* Sprints Section */}
-              {activeSection === 'sprints' && (
-                <Card className="p-3">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-medium text-foreground">Sprints (Select One)</h3>
-                      <Button size="sm" onClick={() => setShowAddSprint(true)} className="gap-1">
-                        <Plus className="h-3 w-3" />
-                        Add Sprint
-                      </Button>
-                    </div>
-
-                    {/* Add Sprint Form */}
-                    {showAddSprint && (
-                      <div className="border rounded-lg p-2 space-y-2">
-                        <Input
-                          value={newSprintForm.name}
-                          onChange={(e) => setNewSprintForm(prev => ({ ...prev, name: e.target.value }))}
-                          placeholder="Sprint name"
-                          className="text-sm"
-                        />
-                        <div className="grid grid-cols-2 gap-1">
-                          <Input
-                            type="date"
-                            value={newSprintForm.startDate}
-                            onChange={(e) => setNewSprintForm(prev => ({ ...prev, startDate: e.target.value }))}
-                            className="text-xs"
-                          />
-                          <Input
-                            type="date"
-                            value={newSprintForm.endDate}
-                            onChange={(e) => setNewSprintForm(prev => ({ ...prev, endDate: e.target.value }))}
-                            className="text-xs"
-                          />
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            checked={newSprintForm.isActive}
-                            onChange={(e) => setNewSprintForm(prev => ({ ...prev, isActive: e.target.checked }))}
-                            className="w-3 h-3"
-                          />
-                          <span className="text-xs">Active</span>
-                        </div>
-                        <div className="flex gap-1">
-                          <Button size="sm" onClick={handleAddSprintSave} className="text-xs h-6">Save</Button>
-                          <Button size="sm" variant="outline" onClick={() => setShowAddSprint(false)} className="text-xs h-6">Cancel</Button>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="space-y-2">
-                      {sprints.map(sprint => (
-                        <div key={sprint.id} className="border rounded p-2">
-                          {editingSprintId === sprint.id ? (
-                            <div className="space-y-2">
-                              <Input
-                                value={sprintEditForm.name}
-                                onChange={(e) => setSprintEditForm(prev => ({ ...prev, name: e.target.value }))}
-                                placeholder="Sprint name"
-                                className="text-sm"
-                                disabled={sprint.id === 'backlog' || sprint.id === 'all-tasks'}
-                              />
-                              {sprint.id !== 'backlog' && sprint.id !== 'all-tasks' && (
-                                <>
-                                  <div className="grid grid-cols-2 gap-1">
-                                    <Input
-                                      type="date"
-                                      value={sprintEditForm.startDate}
-                                      onChange={(e) => setSprintEditForm(prev => ({ ...prev, startDate: e.target.value }))}
-                                      className="text-xs"
-                                    />
-                                    <Input
-                                      type="date"
-                                      value={sprintEditForm.endDate}
-                                      onChange={(e) => setSprintEditForm(prev => ({ ...prev, endDate: e.target.value }))}
-                                      className="text-xs"
-                                    />
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={sprintEditForm.isActive}
-                                      onChange={(e) => setSprintEditForm(prev => ({ ...prev, isActive: e.target.checked }))}
-                                      className="w-3 h-3"
-                                    />
-                                    <span className="text-xs">Active</span>
-                                  </div>
-                                </>
-                              )}
-                              <div className="flex gap-1">
-                                <Button size="sm" onClick={handleSprintEditSave} className="text-xs h-6">Save</Button>
-                                <Button size="sm" variant="outline" onClick={handleSprintEditCancel} className="text-xs h-6">Cancel</Button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div 
-                              className={`cursor-pointer p-1 rounded transition-colors ${
-                                sprint.isSelected ? 'bg-brand-green/10 border-brand-green ring-2 ring-brand-green/20' : 'hover:bg-muted'
-                              }`}
-                              onClick={() => handleSprintSelect(sprint.id)}
-                            >
-                              <div className="flex items-center gap-2 mb-1">
-                                <Calendar className="h-3 w-3 text-muted-foreground" />
-                                <span className="font-medium text-xs">{sprint.name}</span>
-                                {sprint.isActive && (
-                                  <span className="text-xs bg-brand-green/20 text-brand-green px-1 py-0.5 rounded">Active</span>
-                                )}
-                                {(sprint.id === 'backlog' || sprint.id === 'all-tasks') && (
-                                  <span className="text-xs bg-muted text-muted-foreground px-1 py-0.5 rounded">System</span>
-                                )}
-                              </div>
-                              {sprint.id !== 'backlog' && sprint.id !== 'all-tasks' && (
-                                <p className="text-xs text-muted-foreground mb-1">
-                                  {sprint.startDate.toLocaleDateString()} - {sprint.endDate.toLocaleDateString()}
-                                </p>
-                              )}
-                              <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                                <Button 
-                                  size="sm" 
-                                  variant="ghost" 
-                                  onClick={() => handleSprintEditStart(sprint)}
-                                  className="h-5 px-1"
-                                >
-                                  <Edit2 className="h-3 w-3" />
-                                </Button>
-                                {sprint.id !== 'backlog' && sprint.id !== 'all-tasks' && (
-                                  <Button 
-                                    size="sm" 
-                                    variant="ghost" 
-                                    onClick={() => onDeleteSprint(sprint.id)}
-                                    className="h-5 px-1 text-destructive hover:text-destructive"
-                                  >
-                                    <Trash2 className="h-3 w-3" />
-                                  </Button>
-                                )}
                               </div>
                             </div>
                           )}

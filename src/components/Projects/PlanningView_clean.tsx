@@ -85,14 +85,13 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     return colors[priority as keyof typeof colors] || colors.medium
   }
 
-  const getDisplayName = (name: string): string => {
-    const parts = name.trim().split(' ')
-    if (parts.length === 1) {
-      return parts[0] // Just first name if only one part
-    }
-    const firstName = parts[0]
-    const lastInitial = parts[parts.length - 1][0].toUpperCase()
-    return `${firstName} ${lastInitial}.`
+  const getInitials = (name: string): string => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
   }
 
   // Get tasks by epic for grouping
@@ -134,8 +133,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     selectedSprintIds.includes(sprint.id)
   )
 
-  const backlogTasks = tasks.filter((task) => !task.sprintId || task.sprintId === 'backlog' || task.sprintId === 'Backlog')
-  const backlogStoryPoints = backlogTasks.reduce((sum, task) => sum + (task.points || 0), 0)
+  const backlogTasks = tasks.filter((task) => task.sprintId === 'backlog')
 
   // Sprint management functions
   const toggleSprintView = (sprintId: string) => {
@@ -170,7 +168,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     setEditingSprintId(sprint.id)
     setSprintEditForm({
       name: sprint.name,
-      description: sprint.description || '',
+      description: sprint.description,
       startDate: sprint.startDate instanceof Date ? sprint.startDate.toISOString().split('T')[0] : sprint.startDate,
       endDate: sprint.endDate instanceof Date ? sprint.endDate.toISOString().split('T')[0] : sprint.endDate,
       isActive: sprint.isActive,
@@ -224,17 +222,9 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     e.preventDefault()
     setDragOverTarget(null)
     
-    if (!draggedTask) return
-    
-    // Normalize the sprint IDs for comparison
-    const currentSprint = draggedTask.sprintId || undefined
-    const targetSprint = targetSprintId === 'backlog' ? undefined : targetSprintId
-    
-    // Only update if moving to a different sprint
-    if (currentSprint !== targetSprint) {
-      onUpdateTask(draggedTask.id, { sprintId: targetSprint })
+    if (draggedTask && draggedTask.sprintId !== targetSprintId) {
+      onUpdateTask(draggedTask.id, { sprintId: targetSprintId })
     }
-    
     setDraggedTask(null)
   }
 
@@ -246,52 +236,39 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     const epic = task.epicId ? getEpicById(task.epicId) : null
     const sprint = task.sprintId ? getSprintById(task.sprintId) : null
 
-    const handleCardClick = (e: React.MouseEvent) => {
-      // Only trigger click if not dragging
-      if (draggedTask === null) {
-        onTaskClick(task)
-      }
-    }
-
-    const handleCardDragStart = (e: React.DragEvent) => {
-      // Ensure we can identify this as a drag operation
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData('text/plain', task.id)
-      handleDragStart(e, task)
-    }
-
     return (
       <Card
-        className="p-3 cursor-grab active:cursor-grabbing hover:shadow-md transition-all duration-200 border border-border bg-card hover:bg-accent/50"
-        draggable={true}
-        onDragStart={handleCardDragStart}
-        onClick={handleCardClick}
-        style={{ userSelect: 'none' }}
+        className="p-3 cursor-pointer hover:shadow-md transition-all duration-200 border border-border bg-card hover:bg-accent/50"
+        draggable
+        onDragStart={(e) => handleDragStart(e, task)}
+        onClick={() => onTaskClick(task)}
       >
-        <div className="space-y-2 pointer-events-none">
+        <div className="space-y-2">
           <div className="flex items-start justify-between gap-2">
-            <h4 className="font-medium text-sm text-foreground line-clamp-1">
+            <h4 className="font-medium text-sm text-foreground line-clamp-1 select-none pointer-events-none">
               {task.name}
             </h4>
             <Badge
-              className={`text-xs ${getPriorityColor(task.priority)}`}
+              className={`text-xs select-none pointer-events-none ${getPriorityColor(
+                task.priority,
+              )}`}
             >
               {task.priority[0].toUpperCase()}
             </Badge>
           </div>
 
-          <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center justify-between text-xs pointer-events-none">
             <div className="flex items-center gap-1">
               {epic && <div className={`w-2 h-2 rounded-full ${epic.color}`}></div>}
-              <span className="text-muted-foreground truncate">{epic?.name}</span>
+              <span className="text-muted-foreground truncate select-none">{epic?.name}</span>
             </div>
-            <span className="text-muted-foreground">{getDisplayName(task.assignee)}</span>
+            <span className="text-muted-foreground select-none">{getInitials(task.assignee)}</span>
           </div>
 
           {showSprint && sprint && (
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground pointer-events-none">
               <Calendar className="h-3 w-3" />
-              <span>{sprint.name}</span>
+              <span className="select-none">{sprint.name}</span>
             </div>
           )}
         </div>
@@ -327,15 +304,15 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                 <div className="flex items-center gap-3">
                   <div>
                     <h3 className="font-semibold text-foreground text-sm">Sprint Board</h3>
-                    {/* <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {selectedSprintIds.length}/3 selected
-                    </p> */}
+                    </p>
                   </div>
                   
                   {/* Current Selection - Always Visible */}
                   {selectedSprintIds.length > 0 && (
                     <div className="flex items-center gap-2">
-                      {/* <span className="text-xs text-muted-foreground">Viewing:</span> */}
+                      <span className="text-xs text-muted-foreground">Viewing:</span>
                       <div className="flex flex-wrap gap-1">
                         {visibleSprints.map((sprint) => (
                           <div
@@ -346,9 +323,9 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                             {sprint.isActive && <span className="text-success text-[10px]">●</span>}
                             <button
                               onClick={() => toggleSprintView(sprint.id)}
-                              className="ml-0.5 hover:bg-primary/20 h-8 rounded p-0.5"
+                              className="ml-0.5 hover:bg-primary/20 rounded p-0.5"
                             >
-                              <X className="h-4 w-4" />
+                              <X className="h-2 w-2" />
                             </button>
                           </div>
                         ))}
@@ -597,16 +574,11 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
               >
                 <div className="flex items-center justify-between mb-4 flex-shrink-0">
                   <h3 className="font-semibold text-foreground select-none text-lg">Backlog</h3>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                      {backlogTasks.length} tasks
-                    </Badge>
-                    <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
-                      {backlogStoryPoints} pts
-                    </Badge>
-                  </div>
+                  <Badge variant="secondary" className="bg-muted text-muted-foreground">
+                    {backlogTasks.length}
+                  </Badge>
                 </div>
-                
+
                 <div
                   className={`flex-1 overflow-y-auto space-y-3 min-h-0 p-3 rounded transition-colors ${
                     dragOverTarget === 'backlog' ? 'bg-primary/10' : ''
@@ -687,16 +659,6 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                             Drop tasks here to move to backlog
                           </div>
                         )}
-                        
-                        {/* Fallback: Show all backlog tasks if nothing else is showing */}
-                        {backlogTasks.length > 0 && Object.keys(tasksByEpic).length === 0 && unassignedTasks.length === 0 && (
-                          <div className="space-y-2">
-                            <div className="text-xs text-muted-foreground mb-2">Direct backlog tasks:</div>
-                            {backlogTasks.map((task) => (
-                              <CompactTaskCard key={task.id} task={task} />
-                            ))}
-                          </div>
-                        )}
                       </>
                     )
                   })()}
@@ -709,7 +671,6 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
               const sprintTasksFiltered = tasks.filter(
                 (task) => task.sprintId === sprint.id,
               )
-              const totalStoryPoints = sprintTasksFiltered.reduce((sum, task) => sum + (task.points || 0), 0)
 
               return (
                 <Card
@@ -734,10 +695,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                        {sprintTasksFiltered.length} tasks
-                      </Badge>
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        {totalStoryPoints} pts
+                        {sprintTasksFiltered.length}
                       </Badge>
                       <Button
                         size="sm"

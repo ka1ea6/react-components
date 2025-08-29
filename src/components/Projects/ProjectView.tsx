@@ -512,9 +512,6 @@ export default function ProjectView({
       onUpdateEpic={handleUpdateEpic}
       onDeleteEpic={handleDeleteEpic}
       onAddEpic={handleAddEpicClick}
-      onAddSprint={handleAddSprint}
-      onUpdateSprint={handleUpdateSprint}
-      onDeleteSprint={handleDeleteSprint}
       onViewChange={handleViewChange}
       mobileMenuOpen={mobileMenuOpen}
       onToggleMobileMenu={handleToggleMobileMenu}
@@ -535,7 +532,6 @@ export default function ProjectView({
             onTaskClick={handleTaskClick}
             // Epic handlers
             onAddEpic={handleAddEpic}
-            onAddComment={handleAddComment}
           />
         </div>
       )}
@@ -548,6 +544,8 @@ export default function ProjectView({
             onUpdateTask={handleUpdateTask}
             onTaskClick={handleTaskClick}
             onAddSprint={handleAddSprint}
+            onUpdateSprint={handleUpdateSprint}
+            onDeleteSprint={handleDeleteSprint}
           />
         </div>
       )}

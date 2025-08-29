@@ -50,57 +50,131 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
   const heroRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Calculate hero height for proper layout
+  // Measure hero height and adjust when it changes
   useEffect(() => {
-    const updateHeroHeight = () => {
+    const measureHeroHeight = () => {
       if (heroRef.current) {
-        setHeroHeight(heroRef.current.offsetHeight)
+        const height = heroRef.current.offsetHeight
+        setHeroHeight(height)
       }
     }
 
-    updateHeroHeight()
-    const resizeObserver = new ResizeObserver(updateHeroHeight)
+    // Initial measurement
+    measureHeroHeight()
+
+    // Set up ResizeObserver to watch for changes in hero height
+    const resizeObserver = new ResizeObserver(measureHeroHeight)
     if (heroRef.current) {
       resizeObserver.observe(heroRef.current)
     }
 
-    return () => resizeObserver.disconnect()
+    // Also listen for storage events in case the minimized state changes in another tab
+    const handleStorageChange = () => {
+      setTimeout(measureHeroHeight, 100) // Small delay to let the animation complete
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
-  // Helper functions
-  const getEpicById = (epicId: string): Epic | undefined => {
-    return epics.find((epic) => epic.id === epicId)
-  }
+  // Re-measure when the hero content might change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (heroRef.current) {
+        setHeroHeight(heroRef.current.offsetHeight)
+      }
+    }, 300) // Wait for any animations to complete
 
-  const getSprintById = (sprintId: string): Sprint | undefined => {
-    return sprints.find((sprint) => sprint.id === sprintId)
-  }
+    return () => clearTimeout(timer)
+  }, [isAddSprintModalOpen, editingSprintId]) // Re-measure when modals/editing states change
 
-  const getPriorityColor = (priority: string): string => {
-    const colors = {
-      high: 'bg-red-100 text-red-800 border-red-200',
-      medium: 'bg-orange-100 text-orange-800 border-orange-200',
-      low: 'bg-green-100 text-green-800 border-green-200',
+  // Handle escape key to close sprint selector
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isSprintSelectorOpen) {
+        setIsSprintSelectorOpen(false)
+      }
     }
-    return colors[priority as keyof typeof colors] || colors.medium
-  }
 
-  const getDisplayName = (name: string): string => {
-    const parts = name.trim().split(' ')
-    if (parts.length === 1) {
-      return parts[0] // Just first name if only one part
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [isSprintSelectorOpen])
+
+  // Filter and organize tasks
+  const backlogTasks = tasks.filter((task) => !task.sprintId)
+  const availableSprints = sprints
+    .filter((s) => s.id !== 'backlog' && s.id !== 'all-tasks')
+    .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+  
+  // Auto-select active and upcoming sprints on initial load
+  useEffect(() => {
+    if (selectedSprintIds.length === 0 && availableSprints.length > 0) {
+      const activeSprintIds = availableSprints
+        .filter(sprint => sprint.isActive)
+        .slice(0, 3)
+        .map(sprint => sprint.id)
+      
+      if (activeSprintIds.length > 0) {
+        setSelectedSprintIds(activeSprintIds)
+      } else {
+        // If no active sprints, select the next 3 upcoming sprints
+        const now = new Date()
+        const upcomingSprintIds = availableSprints
+          .filter(sprint => sprint.startDate >= now)
+          .slice(0, 3)
+          .map(sprint => sprint.id)
+        
+        if (upcomingSprintIds.length > 0) {
+          setSelectedSprintIds(upcomingSprintIds)
+        } else {
+          // Fallback to the 3 most recent sprints
+          const recentSprintIds = availableSprints
+            .slice(-3)
+            .map(sprint => sprint.id)
+          setSelectedSprintIds(recentSprintIds)
+        }
+      }
     }
-    const firstName = parts[0]
-    const lastInitial = parts[parts.length - 1][0].toUpperCase()
-    return `${firstName} ${lastInitial}.`
-  }
+  }, [availableSprints.length]) // Only run when sprints are loaded
+  
+  // Filter sprints based on selected filter
+  const filteredSprints = availableSprints.filter((sprint) => {
+    switch (sprintFilter) {
+      case 'active':
+        return sprint.isActive
+      case 'upcoming':
+        // Get the next 3 sprints based on start date
+        const now = new Date()
+        return sprint.startDate >= now
+      case 'all':
+      default:
+        return true
+    }
+  })
 
-  // Get tasks by epic for grouping
-  const getTasksByEpic = (taskList: Task[]) => {
-    const tasksByEpic: Record<string, Task[]> = {}
+  // For upcoming filter, limit to next 3 sprints
+  const displayedSprints = sprintFilter === 'upcoming' 
+    ? filteredSprints.slice(0, 3)
+    : filteredSprints
+  
+  // Limit to 3 visible sprints
+  const visibleSprints = selectedSprintIds
+    .map((id) => availableSprints.find((s) => s.id === id))
+    .filter(Boolean)
+    .slice(0, 3) as Sprint[]
+
+  const getEpicById = (epicId: string) => epics.find((epic) => epic.id === epicId)
+  const getSprintById = (sprintId: string) => sprints.find((sprint) => sprint.id === sprintId)
+
+  // Group tasks by epic for better organization
+  const getTasksByEpic = (tasks: Task[]) => {
+    const tasksByEpic: { [epicId: string]: Task[] } = {}
     const unassignedTasks: Task[] = []
 
-    taskList.forEach((task) => {
+    tasks.forEach(task => {
       if (task.epicId) {
         if (!tasksByEpic[task.epicId]) {
           tasksByEpic[task.epicId] = []
@@ -114,38 +188,71 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     return { tasksByEpic, unassignedTasks }
   }
 
-  // Filter and manage sprints
-  const availableSprints = sprints.filter((sprint) => 
-    sprint.id !== 'backlog' && sprint.id !== 'all-tasks'
-  )
-
-  const displayedSprints = availableSprints.filter((sprint) => {
-    switch (sprintFilter) {
-      case 'active':
-        return sprint.isActive
-      case 'upcoming':
-        return !sprint.isActive
+  const getPriorityColor = (priority: Task['priority']) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-destructive/20 text-destructive'
+      case 'medium':
+        return 'bg-warning/20 text-warning'
+      case 'low':
+        return 'bg-success/20 text-success'
       default:
-        return true
+        return 'bg-muted text-muted-foreground'
     }
-  })
+  }
 
-  const visibleSprints = availableSprints.filter((sprint) =>
-    selectedSprintIds.includes(sprint.id)
-  )
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+  }
 
-  const backlogTasks = tasks.filter((task) => !task.sprintId || task.sprintId === 'backlog' || task.sprintId === 'Backlog')
-  const backlogStoryPoints = backlogTasks.reduce((sum, task) => sum + (task.points || 0), 0)
+  const handleDragStart = (task: Task) => {
+    setDraggedTask(task)
+  }
 
-  // Sprint management functions
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+  }
+
+  const handleDragEnter = (sprintId: string) => {
+    setDragOverTarget(sprintId)
+  }
+
+  const handleDragLeave = () => {
+    setDragOverTarget(null)
+  }
+
+  const handleDrop = (e: React.DragEvent, sprintId: string) => {
+    e.preventDefault()
+    setDragOverTarget(null)
+    if (draggedTask) {
+      onUpdateTask(draggedTask.id, {
+        sprintId: sprintId === 'backlog' ? undefined : sprintId,
+      })
+      setDraggedTask(null)
+    }
+  }
+
   const toggleSprintView = (sprintId: string) => {
+    if (sprintId === 'backlog' || sprintId === 'all-tasks') return
+
     setSelectedSprintIds((prev) => {
       if (prev.includes(sprintId)) {
         return prev.filter((id) => id !== sprintId)
       } else if (prev.length < 3) {
-        return [...prev, sprintId]
+        const newSelection = [...prev, sprintId]
+        // Auto-close selector if we've reached 3 sprints
+        if (newSelection.length === 3) {
+          setTimeout(() => setIsSprintSelectorOpen(false), 500)
+        }
+        return newSelection
+      } else {
+        // Replace the first sprint with the new one if at limit
+        return [prev[1], prev[2], sprintId]
       }
-      return prev
     })
   }
 
@@ -161,8 +268,8 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     })
   }
 
-  const handleAddSprint = (sprintData: Omit<Sprint, 'id'>) => {
-    onAddSprint(sprintData)
+  const handleAddSprint = (sprint: Omit<Sprint, 'id'>) => {
+    onAddSprint(sprint)
     setIsAddSprintModalOpen(false)
   }
 
@@ -171,17 +278,17 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     setSprintEditForm({
       name: sprint.name,
       description: sprint.description || '',
-      startDate: sprint.startDate instanceof Date ? sprint.startDate.toISOString().split('T')[0] : sprint.startDate,
-      endDate: sprint.endDate instanceof Date ? sprint.endDate.toISOString().split('T')[0] : sprint.endDate,
+      startDate: sprint.startDate.toISOString().split('T')[0],
+      endDate: sprint.endDate.toISOString().split('T')[0],
       isActive: sprint.isActive,
     })
   }
 
   const handleSprintEditSave = () => {
-    if (editingSprintId) {
+    if (editingSprintId && sprintEditForm.name.trim()) {
       onUpdateSprint(editingSprintId, {
-        name: sprintEditForm.name,
-        description: sprintEditForm.description,
+        name: sprintEditForm.name.trim(),
+        description: sprintEditForm.description.trim(),
         startDate: new Date(sprintEditForm.startDate),
         endDate: new Date(sprintEditForm.endDate),
         isActive: sprintEditForm.isActive,
@@ -201,97 +308,69 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
     })
   }
 
-  // Drag and drop handlers
-  const handleDragStart = (e: React.DragEvent, task: Task) => {
-    setDraggedTask(task)
-    e.dataTransfer.effectAllowed = 'move'
+  const handleSprintSelect = (sprintId: string) => {
+    onUpdateSprint(sprintId, { isSelected: true })
   }
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'move'
-  }
-
-  const handleDragEnter = (targetSprintId: string) => {
-    setDragOverTarget(targetSprintId)
-  }
-
-  const handleDragLeave = () => {
-    setDragOverTarget(null)
-  }
-
-  const handleDrop = (e: React.DragEvent, targetSprintId: string) => {
-    e.preventDefault()
-    setDragOverTarget(null)
-    
-    if (!draggedTask) return
-    
-    // Normalize the sprint IDs for comparison
-    const currentSprint = draggedTask.sprintId || undefined
-    const targetSprint = targetSprintId === 'backlog' ? undefined : targetSprintId
-    
-    // Only update if moving to a different sprint
-    if (currentSprint !== targetSprint) {
-      onUpdateTask(draggedTask.id, { sprintId: targetSprint })
-    }
-    
-    setDraggedTask(null)
-  }
-
-  // Compact task card component
-  const CompactTaskCard: React.FC<{ task: Task; showSprint?: boolean }> = ({ 
-    task, 
-    showSprint = false 
+  const CompactTaskCard: React.FC<{ task: Task; showSprint?: boolean }> = ({
+    task,
+    showSprint = false,
   }) => {
-    const epic = task.epicId ? getEpicById(task.epicId) : null
+    const epic = getEpicById(task.epicId)
     const sprint = task.sprintId ? getSprintById(task.sprintId) : null
+    const [isDragging, setIsDragging] = useState(false)
 
-    const handleCardClick = (e: React.MouseEvent) => {
-      // Only trigger click if not dragging
-      if (draggedTask === null) {
-        onTaskClick(task)
-      }
+    const handleClick = (e: React.MouseEvent) => {
+      // Don't trigger click when dragging
+      if (e.defaultPrevented || isDragging) return
+      onTaskClick(task)
     }
 
     const handleCardDragStart = (e: React.DragEvent) => {
-      // Ensure we can identify this as a drag operation
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData('text/plain', task.id)
-      handleDragStart(e, task)
+      setIsDragging(true)
+      handleDragStart(task)
+    }
+
+    const handleCardDragEnd = () => {
+      setIsDragging(false)
     }
 
     return (
       <Card
-        className="p-3 cursor-grab active:cursor-grabbing hover:shadow-md transition-all duration-200 border border-border bg-card hover:bg-accent/50"
-        draggable={true}
+        className={`p-3 cursor-grab transition-all duration-200 hover:shadow-md bg-card border-border hover:border-border/80 active:cursor-grabbing ${
+          isDragging ? 'opacity-50 shadow-lg scale-105' : ''
+        } ${draggedTask?.id === task.id ? 'ring-2 ring-primary' : ''}`}
+        draggable
         onDragStart={handleCardDragStart}
-        onClick={handleCardClick}
-        style={{ userSelect: 'none' }}
+        onDragEnd={handleCardDragEnd}
+        onClick={handleClick}
       >
-        <div className="space-y-2 pointer-events-none">
-          <div className="flex items-start justify-between gap-2">
-            <h4 className="font-medium text-sm text-foreground line-clamp-1">
+        <div className="space-y-2">
+          <div className="flex items-start justify-between">
+            <h4 className="font-medium text-sm text-foreground line-clamp-1 select-none pointer-events-none">
               {task.name}
             </h4>
             <Badge
-              className={`text-xs ${getPriorityColor(task.priority)}`}
+              className={`text-xs select-none pointer-events-none ${getPriorityColor(
+                task.priority,
+              )}`}
             >
               {task.priority[0].toUpperCase()}
             </Badge>
           </div>
 
-          <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center justify-between text-xs pointer-events-none">
             <div className="flex items-center gap-1">
               {epic && <div className={`w-2 h-2 rounded-full ${epic.color}`}></div>}
-              <span className="text-muted-foreground truncate">{epic?.name}</span>
+              <span className="text-muted-foreground truncate select-none">{epic?.name}</span>
             </div>
-            <span className="text-muted-foreground">{getDisplayName(task.assignee)}</span>
+            <span className="text-muted-foreground select-none">{getInitials(task.assignee)}</span>
           </div>
 
           {showSprint && sprint && (
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground pointer-events-none">
               <Calendar className="h-3 w-3" />
-              <span>{sprint.name}</span>
+              <span className="select-none">{sprint.name}</span>
             </div>
           )}
         </div>
@@ -312,7 +391,6 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
           }}
         />
       </div>
-      
       <div className="flex-1 min-h-0 mt-8">
         <div 
           className="h-full"
@@ -327,15 +405,15 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                 <div className="flex items-center gap-3">
                   <div>
                     <h3 className="font-semibold text-foreground text-sm">Sprint Board</h3>
-                    {/* <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {selectedSprintIds.length}/3 selected
-                    </p> */}
+                    </p>
                   </div>
                   
                   {/* Current Selection - Always Visible */}
                   {selectedSprintIds.length > 0 && (
                     <div className="flex items-center gap-2">
-                      {/* <span className="text-xs text-muted-foreground">Viewing:</span> */}
+                      <span className="text-xs text-muted-foreground">Viewing:</span>
                       <div className="flex flex-wrap gap-1">
                         {visibleSprints.map((sprint) => (
                           <div
@@ -346,9 +424,9 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                             {sprint.isActive && <span className="text-success text-[10px]">●</span>}
                             <button
                               onClick={() => toggleSprintView(sprint.id)}
-                              className="ml-0.5 hover:bg-primary/20 h-8 rounded p-0.5"
+                              className="ml-0.5 hover:bg-primary/20 rounded p-0.5"
                             >
-                              <X className="h-4 w-4" />
+                              <X className="h-2 w-2" />
                             </button>
                           </div>
                         ))}
@@ -597,16 +675,11 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
               >
                 <div className="flex items-center justify-between mb-4 flex-shrink-0">
                   <h3 className="font-semibold text-foreground select-none text-lg">Backlog</h3>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                      {backlogTasks.length} tasks
-                    </Badge>
-                    <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
-                      {backlogStoryPoints} pts
-                    </Badge>
-                  </div>
+                  <Badge variant="secondary" className="bg-muted text-muted-foreground">
+                    {backlogTasks.length}
+                  </Badge>
                 </div>
-                
+
                 <div
                   className={`flex-1 overflow-y-auto space-y-3 min-h-0 p-3 rounded transition-colors ${
                     dragOverTarget === 'backlog' ? 'bg-primary/10' : ''
@@ -687,16 +760,6 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                             Drop tasks here to move to backlog
                           </div>
                         )}
-                        
-                        {/* Fallback: Show all backlog tasks if nothing else is showing */}
-                        {backlogTasks.length > 0 && Object.keys(tasksByEpic).length === 0 && unassignedTasks.length === 0 && (
-                          <div className="space-y-2">
-                            <div className="text-xs text-muted-foreground mb-2">Direct backlog tasks:</div>
-                            {backlogTasks.map((task) => (
-                              <CompactTaskCard key={task.id} task={task} />
-                            ))}
-                          </div>
-                        )}
                       </>
                     )
                   })()}
@@ -709,7 +772,6 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
               const sprintTasksFiltered = tasks.filter(
                 (task) => task.sprintId === sprint.id,
               )
-              const totalStoryPoints = sprintTasksFiltered.reduce((sum, task) => sum + (task.points || 0), 0)
 
               return (
                 <Card
@@ -734,10 +796,7 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                        {sprintTasksFiltered.length} tasks
-                      </Badge>
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        {totalStoryPoints} pts
+                        {sprintTasksFiltered.length}
                       </Badge>
                       <Button
                         size="sm"
@@ -843,6 +902,372 @@ export const PlanningView: React.FC<PlanningViewProps> = ({
                 </Card>
               )
             })}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-1"
+                          size="sm"
+                        >
+                          <Plus className="h-3 w-3" />
+                          Add
+                        </Button>
+                        <Button
+                          onClick={() => setIsSprintSelectorOpen(!isSprintSelectorOpen)}
+                          variant="outline"
+                          size="sm"
+                          className="gap-1"
+                        >
+                          <Calendar className="h-3 w-3" />
+                          {isSprintSelectorOpen ? 'Close' : 'Select'}
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+
+                  {/* Backdrop Overlay */}
+                  {isSprintSelectorOpen && (
+                    <div 
+                      className="fixed inset-0 bg-black/20 z-[5]"
+                      onClick={() => setIsSprintSelectorOpen(false)}
+                    />
+                  )}
+
+                  {/* Sliding Sprint Selector Panel */}
+                  <div
+                    className={`fixed top-0 right-0 h-full w-80 bg-background border-l shadow-xl z-10 transition-all duration-300 ease-in-out ${
+                      isSprintSelectorOpen
+                        ? 'translate-x-0 opacity-100 visible'
+                        : 'translate-x-full opacity-0 invisible'
+                    }`}
+                  >
+                    <Card className="p-4 bg-card shadow-lg border-0 rounded-none h-full">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="font-semibold text-foreground text-base">Select Sprints</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Choose up to 3 sprints • {selectedSprintIds.length}/3 selected
+                          </p>
+                        </div>
+                        
+                        <Button
+                          onClick={() => setIsSprintSelectorOpen(false)}
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+
+                      {/* Sprint Filter Tabs */}
+                      <div className="flex gap-1 mb-4">
+                        {[
+                          { key: 'upcoming', label: 'Upcoming', count: availableSprints.filter(s => s.startDate >= new Date()).slice(0, 3).length },
+                          { key: 'active', label: 'Active', count: availableSprints.filter(s => s.isActive).length },
+                          { key: 'all', label: 'All', count: availableSprints.length }
+                        ].map((filter) => (
+                          <Button
+                            key={filter.key}
+                            variant={sprintFilter === filter.key ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => setSprintFilter(filter.key as 'all' | 'active' | 'upcoming')}
+                            className="text-xs h-8 px-3 flex-1"
+                          >
+                            {filter.label} ({filter.count})
+                          </Button>
+                        ))}
+                      </div>
+
+                      {/* Sprint List */}
+                      <div className="space-y-2 flex-1 overflow-y-auto">
+                        {displayedSprints.length > 0 ? (
+                          displayedSprints.map((sprint) => {
+                            const isSelected = selectedSprintIds.includes(sprint.id)
+                            const taskCount = tasks.filter(task => task.sprintId === sprint.id).length
+                            const canSelect = !isSelected && selectedSprintIds.length < 3
+
+                            return (
+                              <div
+                                key={sprint.id}
+                                className={`p-3 rounded-lg border transition-all ${
+                                  isSelected 
+                                    ? 'bg-primary/10 border-primary/30' 
+                                    : canSelect
+                                    ? 'bg-card border-border hover:border-primary/50'
+                                    : 'bg-muted/30 border-border/30 opacity-60'
+                                }`}
+                              >
+                                {editingSprintId === sprint.id ? (
+                                  /* Inline Edit Form */
+                                  <div className="space-y-3" onClick={(e) => e.stopPropagation()}>
+                                    <Input
+                                      value={sprintEditForm.name}
+                                      onChange={(e) => setSprintEditForm(prev => ({ ...prev, name: e.target.value }))}
+                                      placeholder="Sprint name"
+                                      className="text-sm"
+                                    />
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <Input
+                                        type="date"
+                                        value={sprintEditForm.startDate}
+                                        onChange={(e) => setSprintEditForm(prev => ({ ...prev, startDate: e.target.value }))}
+                                        className="text-xs"
+                                      />
+                                      <Input
+                                        type="date"
+                                        value={sprintEditForm.endDate}
+                                        onChange={(e) => setSprintEditForm(prev => ({ ...prev, endDate: e.target.value }))}
+                                        className="text-xs"
+                                      />
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={sprintEditForm.isActive}
+                                        onChange={(e) => setSprintEditForm(prev => ({ ...prev, isActive: e.target.checked }))}
+                                        className="w-4 h-4"
+                                      />
+                                      <span className="text-sm">Active Sprint</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={handleSprintEditSave} className="text-xs flex-1">Save</Button>
+                                      <Button size="sm" variant="outline" onClick={handleSprintEditCancel} className="text-xs flex-1">Cancel</Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  /* Normal Display */
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-2">
+                                        <div className={`w-2 h-2 rounded-full ${sprint.isActive ? 'bg-success' : 'bg-muted-foreground/30'}`} />
+                                        <span className="font-medium text-sm">{sprint.name}</span>
+                                        {sprint.isActive && (
+                                          <Badge variant="secondary" className="text-xs bg-success/20 text-success">
+                                            Active
+                                          </Badge>
+                                        )}
+                                      </div>
+                                      <div className="flex items-center gap-1">
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            handleSprintEditStart(sprint)
+                                          }}
+                                          className="h-6 w-6 p-0"
+                                        >
+                                          <Edit2 className="h-3 w-3" />
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            onDeleteSprint(sprint.id)
+                                          }}
+                                          className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                                        >
+                                          <Trash2 className="h-3 w-3" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                    <div className="text-xs text-muted-foreground">
+                                      {sprint.startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {sprint.endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                    </div>
+                                    <div className="text-xs text-muted-foreground">
+                                      {taskCount} tasks
+                                    </div>
+                                    <div className="flex items-center justify-between mt-2">
+                                      <Button
+                                        variant={isSelected ? "default" : "outline"}
+                                        size="sm"
+                                        className="text-xs w-full h-8 flex items-center justify-center cursor-pointer"
+                                        onClick={() => toggleSprintView(sprint.id)}
+                                        disabled={!isSelected && selectedSprintIds.length >= 3}
+                                      >
+                                        <span className="pointer-events-none select-none">
+                                          {isSelected ? "Deselect" : selectedSprintIds.length >= 3 ? "Limit Reached" : "Select"}
+                                        </span>
+                                      </Button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })
+                        ) : (
+                          <div className="text-center py-8 text-muted-foreground">
+                            <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">No sprints found for "{sprintFilter}" filter</p>
+                            <Button
+                              variant="link"
+                              size="sm"
+                              onClick={() => setSprintFilter('all')}
+                              className="text-xs"
+                            >
+                              Show all sprints
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+
+                      {selectedSprintIds.length === 0 && (
+                        <div className="mt-4 p-4 bg-muted/50 rounded-lg border-2 border-dashed border-border">
+                          <div className="text-center">
+                            <Calendar className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground font-medium">Select sprints to start planning</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Choose up to 3 sprints to view alongside your backlog
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </Card>
+                  </div>
+                </div>
+                {/* Sprint Columns */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {visibleSprints.map((sprint) => {
+                    const sprintTasksFiltered = tasks.filter(
+                      (task) => task.sprintId === sprint.id,
+                    )
+
+                      return (
+                        <Card
+                          key={sprint.id}
+                          className="p-4 bg-card border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-full"
+                          onDragOver={handleDragOver}
+                          onDragEnter={() => handleDragEnter(sprint.id)}
+                          onDragLeave={handleDragLeave}
+                          onDrop={(e) => handleDrop(e, sprint.id)}
+                        >
+                          <div className="flex items-center justify-between mb-4 flex-shrink-0">
+                            <div>
+                              <h3 className="font-semibold text-foreground select-none text-lg">
+                                {sprint.name}
+                              </h3>
+                              {sprint.isActive && (
+                                <span className="text-xs text-success font-medium select-none">
+                                  Active Sprint
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary" className="bg-muted text-muted-foreground">
+                                {sprintTasksFiltered.length}
+                              </Badge>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => handleSprintEditStart(sprint)}
+                                className="h-6 px-2"
+                              >
+                                <Edit2 className="h-3 w-3" />
+                              </Button>
+                              {sprint.id !== 'backlog' && sprint.id !== 'all-tasks' && (
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => onDeleteSprint(sprint.id)}
+                                  className="h-6 px-2 text-destructive hover:text-destructive"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+
+                          <div
+                            className={`flex-1 overflow-y-auto space-y-3 min-h-0 p-3 rounded transition-colors ${
+                              dragOverTarget === sprint.id
+                                ? 'bg-primary/10'
+                                : ''
+                            }`}
+                          >
+                            {(() => {
+                              const { tasksByEpic, unassignedTasks } = getTasksByEpic(sprintTasksFiltered)
+                              
+                              return (
+                                <>
+                                  {/* Epic Groups */}
+                                  {Object.entries(tasksByEpic).map(([epicId, epicTasks]) => {
+                                    const epic = getEpicById(epicId)
+                                    if (!epic) return null
+                                    const isCollapsed = collapsedEpics.has(epicId)
+
+                                    return (
+                                      <div key={epicId} className="space-y-2">
+                                        <div 
+                                          className="flex items-center gap-2 px-2 py-1 bg-muted/50 rounded text-xs cursor-pointer hover:bg-muted/70 transition-colors"
+                                          onClick={() => toggleEpicCollapse(epicId)}
+                                        >
+                                          <div className={`w-3 h-3 rounded-full ${epic.color}`} />
+                                          <span className="font-medium text-muted-foreground">{epic.name}</span>
+                                          <span className="text-muted-foreground">({epicTasks.length})</span>
+                                          <div className="ml-auto">
+                                            {isCollapsed ? (
+                                              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                                            ) : (
+                                              <ChevronUp className="h-3 w-3 text-muted-foreground" />
+                                            )}
+                                          </div>
+                                        </div>
+                                        {!isCollapsed && (
+                                          <div className="space-y-2 pl-2">
+                                            {epicTasks.map((task) => (
+                                              <CompactTaskCard key={task.id} task={task} />
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    )
+                                  })}
+
+                                  {/* Unassigned Tasks */}
+                                  {unassignedTasks.length > 0 && (() => {
+                                    const isCollapsed = collapsedEpics.has('no-epic')
+                                    return (
+                                      <div className="space-y-2">
+                                        <div 
+                                          className="flex items-center gap-2 px-2 py-1 bg-muted/50 rounded text-xs cursor-pointer hover:bg-muted/70 transition-colors"
+                                          onClick={() => toggleEpicCollapse('no-epic')}
+                                        >
+                                          <div className="w-3 h-3 rounded-full bg-gray-400" />
+                                          <span className="font-medium text-muted-foreground">No Epic</span>
+                                          <span className="text-muted-foreground">({unassignedTasks.length})</span>
+                                          <div className="ml-auto">
+                                            {isCollapsed ? (
+                                              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                                            ) : (
+                                              <ChevronUp className="h-3 w-3 text-muted-foreground" />
+                                            )}
+                                          </div>
+                                        </div>
+                                        {!isCollapsed && (
+                                          <div className="space-y-2 pl-2">
+                                            {unassignedTasks.map((task) => (
+                                              <CompactTaskCard key={task.id} task={task} />
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    )
+                                  })()}
+
+                                  {sprintTasksFiltered.length === 0 && (
+                                    <div className="flex items-center justify-center h-32 text-muted-foreground text-sm select-none">
+                                      Drop tasks here
+                                    </div>
+                                  )}
+                                </>
+                              )
+                            })()}
+                          </div>
+                        </Card>
+                      )
+                    })}
+                </div>
+                
+              </div>
+            </div>
           </div>
 
           <AddSprintModal

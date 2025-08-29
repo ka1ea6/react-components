@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -7,13 +7,6 @@ import { TaskCard } from './TaskCard'
 import { Plus, Move, Edit2, Trash2, Check, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { DashboardHero } from '../Heros/DashboardHero/DashboardHero'
 
 interface EpicsViewProps {
@@ -42,6 +35,51 @@ export const EpicsView: React.FC<EpicsViewProps> = ({
   const [draggedTask, setDraggedTask] = useState<Task | null>(null)
   const [editingEpic, setEditingEpic] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<Partial<Epic>>({})
+  const [heroHeight, setHeroHeight] = useState(0)
+  
+  const heroRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Measure hero height and adjust when it changes
+  useEffect(() => {
+    const measureHeroHeight = () => {
+      if (heroRef.current) {
+        const height = heroRef.current.offsetHeight
+        setHeroHeight(height)
+      }
+    }
+
+    // Initial measurement
+    measureHeroHeight()
+
+    // Set up ResizeObserver to watch for changes in hero height
+    const resizeObserver = new ResizeObserver(measureHeroHeight)
+    if (heroRef.current) {
+      resizeObserver.observe(heroRef.current)
+    }
+
+    // Also listen for storage events in case the minimized state changes in another tab
+    const handleStorageChange = () => {
+      setTimeout(measureHeroHeight, 100) // Small delay to let the animation complete
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
+
+  // Re-measure when the hero content might change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (heroRef.current) {
+        setHeroHeight(heroRef.current.offsetHeight)
+      }
+    }, 300) // Wait for any animations to complete
+
+    return () => clearTimeout(timer)
+  }, [editingEpic]) // Re-measure when editing states change
 
   const handleDragStart = (task: Task) => {
     setDraggedTask(task)
@@ -128,30 +166,44 @@ export const EpicsView: React.FC<EpicsViewProps> = ({
   }
 
   return (
-    <div className="px-2 md:px-4 py-4 space-y-8">
-      <DashboardHero
-        title="Epic Planning"
-        description="Organize and manage your project epics, track progress, and assign tasks."
-        gradient="bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600"
-        primaryAction={{
-          label: 'Add epic',
-          onClick: onAddEpic,
-        }}
-      />
-      <div className="flex-1">
-        <div className="w-full">
+    <div ref={containerRef} className="h-full flex flex-col px-2 md:px-4 py-4">
+      <div ref={heroRef} className="flex-shrink-0">
+        <DashboardHero
+          title="Epic Planning"
+          description="Organize and manage your project epics, track progress, and assign tasks."
+          gradient="bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600"
+          primaryAction={{
+            label: 'Add epic',
+            onClick: onAddEpic,
+          }}
+        />
+      </div>
+      <div className="flex-1 min-h-0 mt-8">
+        <div 
+          className="h-full overflow-y-auto"
+          style={{
+            height: heroHeight > 0 ? `calc(100vh - ${heroHeight + 120}px)` : 'calc(100vh - 12rem)'
+          }}
+        >
           {/* Epics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max">
             {epics.map((epic) => {
               const epicTasks = getTasksByEpic(epic.id)
               const totalPoints = epicTasks.reduce((sum, task) => sum + task.points, 0)
+              
+              // Calculate dynamic height based on available space
+              const availableHeight = heroHeight > 0 ? `calc(100vh - ${heroHeight + 200}px)` : 'calc(100vh - 14rem)'
 
               return (
                 <Card
                   key={epic.id}
                   className={`flex flex-col ${
-                    editingEpic === epic.id ? 'h-auto' : 'h-[600px]'
+                    editingEpic === epic.id ? 'h-auto' : ''
                   } bg-card shadow-sm`}
+                  style={{
+                    height: editingEpic === epic.id ? 'auto' : availableHeight,
+                    minHeight: '400px'
+                  }}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, epic.id)}
                 >
@@ -199,44 +251,36 @@ export const EpicsView: React.FC<EpicsViewProps> = ({
                         <div className="grid grid-cols-2 gap-2">
                           <div>
                             <label className="text-xs text-muted-foreground">Confidence</label>
-                            <Select
+                            <select
                               value={editForm.confidence || epic.confidence}
-                              onValueChange={(value) =>
+                              onChange={(e) =>
                                 setEditForm({
                                   ...editForm,
-                                  confidence: value as Epic['confidence'],
+                                  confidence: e.target.value as Epic['confidence'],
                                 })
                               }
+                              className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             >
-                              <SelectTrigger className="text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="low">Low</SelectItem>
-                                <SelectItem value="medium">Medium</SelectItem>
-                                <SelectItem value="high">High</SelectItem>
-                              </SelectContent>
-                            </Select>
+                              <option value="low">Low</option>
+                              <option value="medium">Medium</option>
+                              <option value="high">High</option>
+                            </select>
                           </div>
                           <div>
                             <label className="text-xs text-muted-foreground">Phase</label>
-                            <Select
+                            <select
                               value={editForm.phase?.toString() || epic.phase.toString()}
-                              onValueChange={(value) =>
-                                setEditForm({ ...editForm, phase: parseInt(value) })
+                              onChange={(e) =>
+                                setEditForm({ ...editForm, phase: parseInt(e.target.value) })
                               }
+                              className="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             >
-                              <SelectTrigger className="text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((phase) => (
-                                  <SelectItem key={phase} value={phase.toString()}>
-                                    Phase {phase}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((phase) => (
+                                <option key={phase} value={phase.toString()}>
+                                  Phase {phase}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
 
