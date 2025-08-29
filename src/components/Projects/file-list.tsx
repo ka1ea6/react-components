@@ -52,7 +52,7 @@ export function FileList({
               <span className="text-sm md:text-base">
                 {typeof file.createdAt === 'string'
                   ? file.createdAt
-                  : file.createdAt.toLocaleDateString()}
+                  : new Date(file.createdAt).toLocaleDateString()}
               </span>
               <div className="flex gap-1">
                 {/* <Button
