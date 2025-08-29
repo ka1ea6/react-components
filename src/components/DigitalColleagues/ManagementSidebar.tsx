@@ -873,8 +873,7 @@ const ManagementSidebarContent: React.FC<ManagementSidebarProps> = ({
 export const ManagementSidebar: React.FC<ManagementSidebarProps & { children?: React.ReactNode }> = (props) => {
   return (
     <SidebarProvider>
-      {/* <div className="flex w-full  h-[calc(100vh-4rem)]"> */}
-        <div className="flex w-full">
+      <div className="flex w-full h-full">
         {/* Desktop sidebar - always visible */}
         <div className="hidden md:block w-12 fixed h-full">
           <ManagementSidebarContent {...props} />
@@ -886,8 +885,8 @@ export const ManagementSidebar: React.FC<ManagementSidebarProps & { children?: R
         </div>
         
         {/* Main content area - takes remaining space */}
-        <div className="flex-1 min-w-0 ml-16 px-4 md:px-6">
-          <div className="w-full">
+        <div className="flex-1 min-w-0 ml-16 px-4 md:px-6 h-full">
+          <div className="w-full h-full">
             {props.children}
           </div>
         </div>

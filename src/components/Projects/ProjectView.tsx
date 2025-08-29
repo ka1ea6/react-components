@@ -510,7 +510,7 @@ export default function ProjectView({
       onToggleMobileMenu={handleToggleMobileMenu}
     >
       {currentView === 'kanban' && (
-        <div className="h-full">
+        <div className="h-full overflow-hidden">
           <KanbanBoardView
             initialProjects={projects}
             initialEpics={epics}

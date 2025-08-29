@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { KanbanColumn } from './KanbanColumn'
@@ -51,6 +51,10 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
   const [draggedTask, setDraggedTask] = useState<Task | null>(null)
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [colleagues, setColleagues] = useState<DigitalColleague[]>(initialColleagues)
+  const [heroHeight, setHeroHeight] = useState(0)
+  
+  const heroRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const selectedEpics = epics.filter((epic) => true).map((epic) => epic.id)
   const selectedSprint = sprints.find((sprint) => sprint.isSelected)
@@ -68,6 +72,47 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
   useEffect(() => {
     setSprints(initialSprints)
   }, [initialSprints])
+
+  // Measure hero height and adjust when it changes
+  useEffect(() => {
+    const measureHeroHeight = () => {
+      if (heroRef.current) {
+        const height = heroRef.current.offsetHeight
+        setHeroHeight(height)
+      }
+    }
+
+    // Initial measurement
+    measureHeroHeight()
+
+    // Set up ResizeObserver to watch for changes in hero height
+    const resizeObserver = new ResizeObserver(measureHeroHeight)
+    if (heroRef.current) {
+      resizeObserver.observe(heroRef.current)
+    }
+
+    // Also listen for storage events in case the minimized state changes in another tab
+    const handleStorageChange = () => {
+      setTimeout(measureHeroHeight, 100) // Small delay to let the animation complete
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
+
+  // Re-measure when the hero content might change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (heroRef.current) {
+        setHeroHeight(heroRef.current.offsetHeight)
+      }
+    }, 300) // Wait for any animations to complete
+
+    return () => clearTimeout(timer)
+  }, [isAddTaskModalOpen, isAddEpicModalOpen]) // Re-measure when modals change
 
   // Filter tasks by selected epics and sprint
   const filteredTasks = tasks.filter((task) => {
@@ -147,26 +192,34 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
     { id: 'done', title: 'Done', status: 'done' as const },
   ]
 
-  return (
-    <div className="px-2 md:px-4 py-4 space-y-8">
-      <DashboardHero
-        title="Project Board"
-        description="Manage tasks and track progress across your project sprints."
-        gradient="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600"
-        primaryAction={{
-          label: 'Add task',
-          onClick: () => setIsAddTaskModalOpen(true),
-        }}
-        secondaryAction={{
-          label: 'Add epic',
-          onClick: () => setIsAddEpicModalOpen(true),
-        }}
-      />
-      <div className="flex-1">
-        <div className="w-full">
-          {/* Page Title */}
+  // Calculate the height to pass to columns
+  const calculatedHeight = heroHeight > 0 ? `calc(100vh - ${heroHeight + 120}px)` : 'calc(100vh - 12rem)'
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+  return (
+    <div ref={containerRef} className="h-full flex flex-col px-2 md:px-4 py-4">
+      <div ref={heroRef} className="flex-shrink-0">
+        <DashboardHero
+          title="Project Board"
+          description="Manage tasks and track progress across your project sprints."
+          gradient="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600"
+          primaryAction={{
+            label: 'Add task',
+            onClick: () => setIsAddTaskModalOpen(true),
+          }}
+          secondaryAction={{
+            label: 'Add epic',
+            onClick: () => setIsAddEpicModalOpen(true),
+          }}
+        />
+      </div>
+      <div className="flex-1 min-h-0 mt-8">
+        <div 
+          className="h-full"
+          style={{
+            height: calculatedHeight
+          }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
             {columns.map((column) => {
               const columnTasks = getTasksByStatus(column.status)
               const tasksByEpic = getTasksByEpic(columnTasks)
@@ -179,6 +232,7 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
                   taskCount={columnTasks.length}
                   onDrop={handleDrop}
                   isCompact={column.status === 'done'}
+                  height={calculatedHeight}
                 >
                   {selectedEpics.map((epicId) => {
                     const epic = epics.find((e) => e.id === epicId)
@@ -216,36 +270,36 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
               )
             })}
           </div>
-          <>
-            <AddTaskModal
-              isOpen={isAddTaskModalOpen}
-              onClose={() => setIsAddTaskModalOpen(false)}
-              onAddTask={handleAddTask}
-              assignees={[...colleagues, ...users]}
-              epics={epics}
-              sprints={sprints}
-            />
-
-            <AddEpicModal
-              isOpen={isAddEpicModalOpen}
-              onClose={() => setIsAddEpicModalOpen(false)}
-              onAddEpic={handleAddEpic}
-            />
-
-            {selectedTask && (
-              <TaskDetailsModal
-                isOpen={!!selectedTask}
-                onClose={() => setSelectedTask(null)}
-                task={selectedTask}
-                epics={epics}
-                sprints={sprints}
-                onUpdateTask={handleUpdateTask}
-                onDeleteTask={handleDeleteTask}
-              />
-            )}
-          </>
         </div>
       </div>
+
+      {/* Modals - moved outside the main content area */}
+      <AddTaskModal
+        isOpen={isAddTaskModalOpen}
+        onClose={() => setIsAddTaskModalOpen(false)}
+        onAddTask={handleAddTask}
+        assignees={[...colleagues, ...users]}
+        epics={epics}
+        sprints={sprints}
+      />
+
+      <AddEpicModal
+              isOpen={isAddEpicModalOpen}
+        onClose={() => setIsAddEpicModalOpen(false)}
+        onAddEpic={handleAddEpic}
+      />
+
+      {selectedTask && (
+        <TaskDetailsModal
+          isOpen={!!selectedTask}
+          onClose={() => setSelectedTask(null)}
+          task={selectedTask}
+          epics={epics}
+          sprints={sprints}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      )}
     </div>
   )
 }

@@ -75,3 +75,65 @@ export const Default: Story = {
     onCopilotClick: action('onCopilotClick'),
   },
 };
+
+export const HighDensityTasks: Story = {
+  args: {
+    initialProjects: mockProjects,
+    initialEpics: mockEpics,
+    initialSprints: mockSprints,
+    initialTasks: highDensityTasks,
+    initialReminders: mockReminders,
+    initialColleagues: mockDigitalColleagues,
+    // Task handlers (used by KanbanBoard)
+    onAddTask: action('onAddTask'),
+    onUpdateTask: action('onUpdateTask'),
+    onDeleteTask: action('onDeleteTask'),
+    onTaskClick: action('onTaskClick'),
+    // Epic handlers (used by KanbanBoard and EpicsView)
+    onAddEpic: action('onAddEpic'),
+    onUpdateEpic: action('onUpdateEpic'),
+    onDeleteEpic: action('onDeleteEpic'),
+    onAddTaskToEpic: action('onAddTaskToEpic'),
+    // Sprint handlers (used by PlanningView)
+    onAddSprint: action('onAddSprint'),
+    onUpdateSprint: action('onUpdateSprint'),
+    onDeleteSprint: action('onDeleteSprint'),
+    // Project handlers (used by ManagementSidebar)
+    onAddProject: action('onAddProject'),
+    onUpdateProject: action('onUpdateProject'),
+    onDeleteProject: action('onDeleteProject'),
+    // Reminder handlers (used by TasksView)
+    onAddReminder: action('onAddReminder'),
+    onUpdateReminder: action('onUpdateReminder'),
+    onDeleteReminder: action('onDeleteReminder'),
+    // View handlers (used by ManagementSidebar)
+    onViewChange: action('onViewChange'),
+    onToggleMobileMenu: action('onToggleMobileMenu'),
+    // Team handlers (used by ProjectView)
+    onTeamClick: action('onTeamClick'),
+    onTeamChange: action('onTeamChange'),
+    onCopilotClick: action('onCopilotClick'),
+  },
+};
+
+export const EmptyState: Story = {
+  args: {
+    initialProjects: [],
+    initialEpics: [],
+    initialSprints: [],
+    initialTasks: [],
+    initialReminders: [],
+    initialColleagues: [],
+  },
+};
+
+export const ManyTasks: Story = {
+  args: {
+    initialProjects: mockProjects,
+    initialEpics: mockEpics,
+    initialSprints: mockSprints,
+    initialTasks: [ ...highDensityTasks, ...highDensityTasks, ...highDensityTasks ],
+    initialReminders: mockReminders,
+    initialColleagues: mockDigitalColleagues,
+  },
+};

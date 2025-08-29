@@ -62,3 +62,10 @@ export const Default: Story = {
     onCopilotClick: action('onCopilotClick'),
   },
 };
+
+export const ManyTasks: Story = {
+  args: {
+    ...Default.args,
+    tasks: [ ...highDensityTasks, ...highDensityTasks, ...highDensityTasks ],
+  }
+}

@@ -150,7 +150,7 @@ export function DigitalColleageusLayout({
           tagline={tagline}
         />
 
-        <main className="flex-1 p-0 flex flex-col h-[calc(100vh-4rem)] overflow-auto">{children}</main>
+        <main className="flex-1 p-0 flex flex-col h-[calc(100vh-4rem)] overflow-hidden">{children}</main>
       </div>
     </div>
   )

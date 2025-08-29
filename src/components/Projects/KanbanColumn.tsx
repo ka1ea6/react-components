@@ -11,6 +11,7 @@ interface KanbanColumnProps {
   children: React.ReactNode;
   onDrop: (status: Task['status']) => void;
   isCompact?: boolean;
+  height?: string; // Add dynamic height prop
 }
 
 export const KanbanColumn: React.FC<KanbanColumnProps> = ({
@@ -20,6 +21,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
   children,
   onDrop,
   isCompact = false,
+  height,
 }) => {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -47,13 +49,14 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
 
   return (
     <Card 
-      className={`p-4 bg-card border-l-4 ${getColumnColor()} shadow-sm hover:shadow-md transition-shadow duration-200 ${
+      className={`p-4 bg-card border-l-4 ${getColumnColor()} shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col ${
         isCompact ? 'lg:max-w-xs' : ''
       }`}
+      style={{ height: height || 'calc(100vh - 350px)' }}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h3 className={`font-semibold text-foreground select-none-important ${
           isCompact ? 'text-base' : 'text-lg'
         }`}>
@@ -64,7 +67,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
         </Badge>
       </div>
       
-      <div className="space-y-4 min-h-[200px]">
+      <div className="flex-1 overflow-y-auto space-y-4 min-h-0">
         {children}
       </div>
     </Card>
