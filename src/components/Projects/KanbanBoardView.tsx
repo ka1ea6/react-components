@@ -164,8 +164,11 @@ export const KanbanBoardView: React.FC<KanbanBoardProps> = ({
     if (onUpdateTask) {
       return await onUpdateTask(taskId, updates)
     }
-
-    return tasks.find((task) => task.id === taskId) as Task
+    const task = tasks.find((task) => task.id === taskId)
+    if (!task) {
+      throw new Error('Task not found')
+    }
+    return { ...task, ...updates }
   }
 
   const handleDeleteTask = async (taskId: string): Promise<void> => {
